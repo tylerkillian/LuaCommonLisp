@@ -28,7 +28,9 @@ function Parser:readCharacter_scan(character)
 end
 
 function Parser:readCharacter_symbol(character)
-  if character == "(" then
+  if character == ")" then
+  end
+end
 
 function Parser:readCharacter(character)
   if self.mode == "scan" then
