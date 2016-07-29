@@ -14,6 +14,6 @@ end
 local parser = Parser:new()
 local code = [[(format t "hello~t")]]
 for codeIdx = 1, string.len(code) do
-  local nextCharacter
+  local nextCharacter = string.sub(code,
   parser:readCharacter(nextCharacter)
 end
