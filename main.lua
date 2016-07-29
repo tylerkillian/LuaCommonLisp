@@ -1,7 +1,8 @@
 Parser = {}
 
 function Parser:new()
-  local parser = {}
+  local parser = {
+  }
   setmetatable(parser, self)
   self.__index = self
 
