@@ -13,4 +13,4 @@ end
 
 local parser = Parser:new()
 local code = [[(format t "hello~t")]]
-parser:readCharacter
+parser:readCharacter(nextCharacter)
