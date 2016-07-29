@@ -27,6 +27,9 @@ function Parser:readCharacter_scan(character)
   end
 end
 
+function Parser:readCharacter_scan(character)
+  if character == "(" then
+
 function Parser:readCharacter(character)
   if self.mode == "scan" then
     return self:readCharacter_scan(character)
