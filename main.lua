@@ -2,6 +2,7 @@ Parser = {}
 
 function Parser:new()
   local parser = {
+    mode = "scan",
   }
   setmetatable(parser, self)
   self.__index = self
