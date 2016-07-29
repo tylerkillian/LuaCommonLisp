@@ -14,6 +14,8 @@ function Parser:readCharacter_scan(character)
 end
 
 function Parser:readCharacter(character)
+  if mode == "scan" then
+    return self:readCharacter(character)
 end
 
 local parser = Parser:new()
