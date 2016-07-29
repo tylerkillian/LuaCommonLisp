@@ -19,6 +19,8 @@ function Parser:readCharacter_scan(character)
       self.code = {}
       self.currentTable = self.code
     else
+      table.insert(self.code, {})
+      self.currentTable = self.code[#self.code]
     end
   end
 end
