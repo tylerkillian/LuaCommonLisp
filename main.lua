@@ -3,6 +3,8 @@ Parser = {}
 function Parser:new()
   local parser = {
     mode = "scan",
+    buffer = "",
+    code = nil,
   }
   setmetatable(parser, self)
   self.__index = self
