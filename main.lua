@@ -14,6 +14,7 @@ end
 
 function Parser:readCharacter_scan(character)
   if character == "(" then
+    self.mode = "symbol"
   end
 end
 
