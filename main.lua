@@ -10,6 +10,9 @@ function Parser:new()
   return parser
 end
 
+function Parser:readCharacter_scan(character)
+end
+
 function Parser:readCharacter(character)
 end
 
