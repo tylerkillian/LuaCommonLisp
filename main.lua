@@ -11,4 +11,6 @@ end
 function Parser:readCharacter(character)
 end
 
-local parser = Parser:new
+local parser = Parser:new()
+local code = [[(format t "hello~t")]]
+parser:readCharacter
