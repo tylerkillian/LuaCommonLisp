@@ -11,6 +11,8 @@ function Parser:new()
 end
 
 function Parser:readCharacter_scan(character)
+  if character == "(" then
+  end
 end
 
 function Parser:readCharacter(character)
