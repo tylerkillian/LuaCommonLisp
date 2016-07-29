@@ -13,4 +13,7 @@ end
 
 local parser = Parser:new()
 local code = [[(format t "hello~t")]]
-parser:readCharacter(nextCharacter)
+for codeIdx = 1, string.len(code) do
+  local nextCharacter
+  parser:readCharacter(nextCharacter)
+end
