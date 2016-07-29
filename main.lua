@@ -14,7 +14,6 @@ end
 
 function Parser:readCharacter_scan(character)
   if character == "(" then
-    self.mode = "symbol"
     if not self.code then
       self.code = {}
       self.currentTable = self.code
@@ -22,6 +21,8 @@ function Parser:readCharacter_scan(character)
       table.insert(self.code, {})
       self.currentTable = self.code[#self.code]
     end
+  else
+    self.mode = "symbol"
   end
 end
 
