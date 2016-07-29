@@ -23,6 +23,7 @@ function Parser:readCharacter_scan(character)
     end
   elseif character ~= " " then
     self.mode = "symbol"
+    self.buffer = character
   end
 end
 
