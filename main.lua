@@ -15,6 +15,10 @@ end
 function Parser:readCharacter_scan(character)
   if character == "(" then
     self.mode = "symbol"
+    if not self.code then
+      self.code = {}
+      self.currentTable = self.code
+    end
   end
 end
 
