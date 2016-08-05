@@ -29,6 +29,7 @@ end
 
 function Parser:readCharacter_symbol(character)
   if character == " " then
+print("got " .. self.buffer)
     table.insert(self.currentTable, self.buffer)
     self.buffer = ""
     self.mode = "scan"
