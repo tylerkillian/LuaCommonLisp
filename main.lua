@@ -29,6 +29,7 @@ end
 
 function Parser:readCharacter_symbol(character)
   if character == " " then
+    table.insert(self.currentTable, self.buffer)
   elseif character == ")" then
   end
 end
