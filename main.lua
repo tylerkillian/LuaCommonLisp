@@ -35,6 +35,8 @@ print("got " .. self.buffer)
     self.mode = "scan"
   elseif character == ")" then
 print("got right parenthesis")
+  else
+    self.buffer = self.buffer .. character
   end
 end
 
