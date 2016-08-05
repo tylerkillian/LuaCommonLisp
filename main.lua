@@ -33,6 +33,7 @@ function Parser:readCharacter_symbol(character)
     self.buffer = ""
     self.mode = "scan"
   elseif character == ")" then
+print("got right parenthesis")
   end
 end
 
