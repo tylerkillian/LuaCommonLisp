@@ -34,6 +34,9 @@ print("got " .. self.buffer)
     self.buffer = ""
     self.mode = "scan"
   elseif character == ")" then
+    table.insert(self.currentTable, self.buffer)
+    self.buffer = ""
+    self.mode = "scan"
 print("got right parenthesis")
   else
     self.buffer = self.buffer .. character
