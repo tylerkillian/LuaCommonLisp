@@ -36,6 +36,8 @@ end
 function Parser:readCharacter(character)
   if self.mode == "scan" then
     return self:readCharacter_scan(character)
+  elseif self.mode == "symbol" then
+    return self:readCharacter_symbol(character)
   end
 end
 
