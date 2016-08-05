@@ -34,6 +34,7 @@ print("got " .. self.buffer)
     self.buffer = ""
     self.mode = "scan"
   elseif character == ")" then
+print(self.buffer)
     table.insert(self.currentTable, self.buffer)
     self.buffer = ""
     self.mode = "scan"
