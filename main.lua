@@ -20,6 +20,7 @@ function Parser:readCharacter_scan(character)
       self.previousTable = nil
     else
       table.insert(self.code, {})
+      table.insert(self.tableStack, self.currentTable)
       self.currentTable = self.code[#self.code]
     end
   elseif character ~= " " then
