@@ -17,6 +17,7 @@ function Parser:readCharacter_scan(character)
     if not self.code then
       self.code = {}
       self.currentTable = self.code
+      self.previousTable = nil
     else
       table.insert(self.code, {})
       self.currentTable = self.code[#self.code]
