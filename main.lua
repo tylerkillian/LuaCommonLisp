@@ -44,6 +44,7 @@ print("got right parenthesis")
     if #self.tableStack == 0 then
       local code = self.code
       self.code = nil
+      self.currentTable = nil
       return code
     else
       self.currentTable = self.tableStack[#self.tableStack]
@@ -64,6 +65,7 @@ end
 
 local parser = Parser:new()
 local code = [[(format t (concatenate 'string "hel" "lo~t"))]]
+local returnCode
 for codeIdx = 1, string.len(code) do
   local nextCharacter = string.sub(code, codeIdx, codeIdx)
   parser:readCharacter(nextCharacter)
