@@ -70,3 +70,4 @@ for codeIdx = 1, string.len(code) do
   local nextCharacter = string.sub(code, codeIdx, codeIdx)
   returnCode = parser:readCharacter(nextCharacter)
 end
+print(type(returnCode))
