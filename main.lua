@@ -41,6 +41,9 @@ print(self.buffer)
     self.buffer = ""
     self.mode = "scan"
 print("got right parenthesis")
+    if #self.tableStack == 0 then
+      local code = self.code
+      return code
     self.currentTable = self.tableStack[#self.tableStack]
   else
     self.buffer = self.buffer .. character
