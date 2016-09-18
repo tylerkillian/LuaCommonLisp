@@ -82,6 +82,7 @@ for codeIdx = 1, string.len(code) do
   returnCode = parser:readCharacter(nextCharacter)
 end
 assert(type(returnCode) == "table")
+assert(#returnCode == 3)
 assert(returnCode[1] == "format")
 assert(returnCode[2] == "t")
-assert(type(returnCode) == "table")
+assert(type(returnCode[3]) == "table")
