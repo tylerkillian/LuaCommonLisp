@@ -68,5 +68,5 @@ local code = [[(format t (concatenate 'string "hel" "lo~t"))]]
 local returnCode
 for codeIdx = 1, string.len(code) do
   local nextCharacter = string.sub(code, codeIdx, codeIdx)
-  parser:readCharacter(nextCharacter)
+  returnCode = parser:readCharacter(nextCharacter)
 end
