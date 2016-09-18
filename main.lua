@@ -47,6 +47,7 @@ print("got right parenthesis")
       return code
     else
       self.currentTable = self.tableStack[#self.tableStack]
+      table.remove(self.tableStack)
     end
   else
     self.buffer = self.buffer .. character
