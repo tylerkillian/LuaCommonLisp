@@ -89,6 +89,6 @@ assert(type(returnCode[3]) == "table")
 assert(#returnCode[3] == 4)
 assert(#returnCode[3][1] == "concatenate")
 assert(#returnCode[3][2] == "'string")
-assert(#returnCode[3][3] == "concatenate")
-assert(#returnCode[3][4] == "concatenate")
+assert(#returnCode[3][3] == "\"hel\"")
+assert(#returnCode[3][4] == "\"lo~t\"")
 
