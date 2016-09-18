@@ -43,8 +43,12 @@ print(self.buffer)
 print("got right parenthesis")
     if #self.tableStack == 0 then
       local code = self.code
+      self.code = nil
       return code
-    self.currentTable = self.tableStack[#self.tableStack]
+    else
+      self.currentTable = self.tableStack[#self.tableStack]
+      return
+    end
   else
     self.buffer = self.buffer .. character
   end
