@@ -24,8 +24,6 @@ function Parser:readCharacter_scan(character)
       self.currentTable = self.code[#self.code]
     end
   elseif character == ")" then
-    self.buffer = ""
-    self.mode = "scan"
 print("got right parenthesis")
     if #self.tableStack == 0 then
       local code = self.code
