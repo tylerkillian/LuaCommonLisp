@@ -84,3 +84,4 @@ end
 assert(type(returnCode) == "table")
 assert(returnCode[1] == "format")
 assert(returnCode[2] == "t")
+assert(type(returnCode) == "table")
