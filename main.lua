@@ -53,7 +53,7 @@ function Parser:readCharacter(character)
 end
 
 local parser = Parser:new()
-local code = [[(format t (concatenate 'string "hel" "lo~t")]]
+local code = [[(format t (concatenate 'string "hel" "lo~t"))]]
 for codeIdx = 1, string.len(code) do
   local nextCharacter = string.sub(code, codeIdx, codeIdx)
   parser:readCharacter(nextCharacter)
