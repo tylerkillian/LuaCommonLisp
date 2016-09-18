@@ -88,4 +88,7 @@ assert(returnCode[2] == "t")
 assert(type(returnCode[3]) == "table")
 assert(#returnCode[3] == 4)
 assert(#returnCode[3][1] == "concatenate")
+assert(#returnCode[3][2] == "concatenate")
+assert(#returnCode[3][3] == "concatenate")
+assert(#returnCode[3][4] == "concatenate")
 
