@@ -23,11 +23,9 @@ function Parser:readCharacter_scan(character)
       table.insert(self.code, {})
       self.currentTable = self.code[#self.code]
     end
-    return
   elseif character ~= " " then
     self.mode = "symbol"
     self.buffer = character
-    return
   end
 end
 
@@ -49,7 +47,6 @@ print("got right parenthesis")
       return code
     else
       self.currentTable = self.tableStack[#self.tableStack]
-      return
     end
   else
     self.buffer = self.buffer .. character
