@@ -23,6 +23,7 @@ function Parser:readCharacter_scan(character)
       table.insert(self.code, {})
       self.currentTable = self.code[#self.code]
     end
+  elseif character == ")" then
     return self:readCharacter_symbol(character)
   elseif character ~= " " then
     self.mode = "symbol"
