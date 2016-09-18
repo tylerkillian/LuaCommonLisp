@@ -24,7 +24,18 @@ function Parser:readCharacter_scan(character)
       self.currentTable = self.code[#self.code]
     end
   elseif character == ")" then
-    return self:readCharacter_symbol(character)
+    self.buffer = ""
+    self.mode = "scan"
+print("got right parenthesis")
+    if #self.tableStack == 0 then
+      local code = self.code
+      self.code = nil
+      self.currentTable = nil
+      return code
+    else
+      self.currentTable = self.tableStack[#self.tableStack]
+      table.remove(self.tableStack)
+    end
   elseif character ~= " " then
     self.mode = "symbol"
     self.buffer = character
