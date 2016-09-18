@@ -5,6 +5,7 @@ function Parser:new()
     mode = "scan",
     buffer = "",
     code = nil,
+    tableStack = {},
   }
   setmetatable(parser, self)
   self.__index = self
@@ -17,7 +18,6 @@ function Parser:readCharacter_scan(character)
     if not self.code then
       self.code = {}
       self.currentTable = self.code
-      self.previousTable = nil
     else
       table.insert(self.code, {})
       table.insert(self.tableStack, self.currentTable)
