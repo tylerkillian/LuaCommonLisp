@@ -77,7 +77,8 @@ end
 Environment = {}
 
 function Environment_format(theString)
-  io.write(string.gsub(theString, "~%%", "\n"))
+  local formattedString = string.gsub(theString, "~%%", "\n")
+  io.write(formattedString)
 end
 
 function Environment:new()
