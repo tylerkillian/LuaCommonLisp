@@ -89,6 +89,9 @@ function Environment:new()
   return environment
 end
 
+function Environment:eval(code)
+end
+
 local parser = Parser:new()
 local code = [[(format t (concatenate 'string "hel" "lo~t"))]]
 local returnCode
