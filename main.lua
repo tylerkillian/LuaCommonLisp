@@ -24,7 +24,6 @@ function Parser:readCharacter_scan(character)
       self.currentTable = self.code[#self.code]
     end
   elseif character == ")" then
-print("got right parenthesis")
     if #self.tableStack == 0 then
       local code = self.code
       self.code = nil
@@ -42,16 +41,13 @@ end
 
 function Parser:readCharacter_symbol(character)
   if character == " " then
-print("got " .. self.buffer)
     table.insert(self.currentTable, self.buffer)
     self.buffer = ""
     self.mode = "scan"
   elseif character == ")" then
-print(self.buffer)
     table.insert(self.currentTable, self.buffer)
     self.buffer = ""
     self.mode = "scan"
-print("got right parenthesis")
     if #self.tableStack == 0 then
       local code = self.code
       self.code = nil
