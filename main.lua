@@ -90,7 +90,7 @@ function Environment:new()
 end
 
 function Environment:eval(code)
-  if code) == string" then
+  if type(code) == "string" then
     return code
   end
   if code[1] == "format" then
