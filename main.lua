@@ -97,7 +97,7 @@ function Environment:eval(code)
     Environment_format(self:eval(code[3]))
   end
   if code[1] == "concatenate" then
-    return code[3] .. code[4]
+    return string.sub(code[3],2,-2) .. string.sub(code[4],2,-2)
   end
 end
 
