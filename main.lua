@@ -98,6 +98,7 @@ end
 local parser = Parser:new()
 local codeString = [[(format t (concatenate 'string "hel" "lo~t"))]]
 local returnCode
+local environment = Environment:new()
 for codeStringIdx = 1, string.len(codeString) do
   local nextCharacter = string.sub(codeString, codeStringIdx, codeStringIdx)
   returnCode = parser:readCharacter(nextCharacter)
