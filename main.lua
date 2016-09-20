@@ -102,7 +102,7 @@ function Environment:eval(code)
 end
 
 local parser = Parser:new()
-local codeString = [[(format t (concatenate 'string "hel" "lo~t"))]]
+local codeString = [[(format t (concatenate 'string "hel" "lo~%"))]]
 local code
 local environment = Environment:new()
 for codeStringIdx = 1, string.len(codeString) do
@@ -121,5 +121,5 @@ assert(#code[3] == 4)
 assert(code[3][1] == "concatenate")
 assert(code[3][2] == "'string")
 assert(code[3][3] == "\"hel\"")
-assert(code[3][4] == "\"lo~t\"")
+assert(code[3][4] == "\"lo~%\"")
 
