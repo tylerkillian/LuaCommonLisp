@@ -96,6 +96,9 @@ function Environment:eval(code)
   if code[1] == "format" then
     Environment_format(self:eval(code[3]))
   end
+  if code[1] == "concatenate" then
+    return code[3] .. code[4]
+  end
 end
 
 local parser = Parser:new()
