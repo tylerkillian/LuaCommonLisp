@@ -114,5 +114,3 @@ assert(#code[3] == 4)
 assert(code[3][1] == "concatenate")
 assert(code[3][2] == "'string")
 assert(code[3][3] == "\"hel\"")
-assert(code[3][4] == "\"lo~t\"")
-
