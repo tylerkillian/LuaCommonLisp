@@ -75,8 +75,12 @@ function Parser:readCharacter(character)
 end
 
 function Environment:new()
-  setmetatable(parser, self)
+  local environment = {
+  }
+  setmetatable(environment, self)
   self.__index = self
+
+  return environment
 end
 
 local parser = Parser:new()
