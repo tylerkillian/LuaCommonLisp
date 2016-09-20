@@ -96,11 +96,14 @@ function Environment:eval(code)
 end
 
 local parser = Parser:new()
-local code = [[(format t (concatenate 'string "hel" "lo~t"))]]
+local codeString = [[(format t (concatenate 'string "hel" "lo~t"))]]
 local returnCode
-for codeIdx = 1, string.len(code) do
-  local nextCharacter = string.sub(code, codeIdx, codeIdx)
+for codeIdx = 1, string.len(codeString) do
+  local nextCharacter = string.sub(codeString, codeIdx, codeIdx)
   returnCode = parser:readCharacter(nextCharacter)
+  if returnCode then
+    environment:eval(returnCode)
+  end
 end
 assert(type(returnCode) == "table")
 assert(#returnCode == 3)
