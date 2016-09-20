@@ -96,23 +96,20 @@ function Environment:eval(code)
 end
 
 local parser = Parser:new()
-local codeString = [[(format t (concatenate 'string "hel" "lo~t"))]]
-local code
-for codeIdx = 1, string.len(codeString) do
-  local nextCharacter = string.sub(codeString, codeIdx, codeIdx)
-  code = parser:readCharacter(nextCharacter)
-  if code then
-    environment:eval(code)
-  end
+local code = [[(format t (concatenate 'string "hel" "lo~t"))]]
+local returnCode
+for codeIdx = 1, string.len(code) do
+  local nextCharacter = string.sub(code, codeIdx, codeIdx)
+  returnCode = parser:readCharacter(nextCharacter)
 end
-assert(type(code) == "table")
-assert(#code == 3)
-assert(code[1] == "format")
-assert(code[2] == "t")
-assert(type(code[3]) == "table")
-assert(#code[3] == 4)
-assert(code[3][1] == "concatenate")
-assert(code[3][2] == "'string")
-assert(code[3][3] == "\"hel\"")
-assert(code[3][4] == "\"lo~t\"")
+assert(type(returnCode) == "table")
+assert(#returnCode == 3)
+assert(returnCode[1] == "format")
+assert(returnCode[2] == "t")
+assert(type(returnCode[3]) == "table")
+assert(#returnCode[3] == 4)
+assert(returnCode[3][1] == "concatenate")
+assert(returnCode[3][2] == "'string")
+assert(returnCode[3][3] == "\"hel\"")
+assert(returnCode[3][4] == "\"lo~t\"")
 
