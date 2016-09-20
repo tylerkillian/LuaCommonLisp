@@ -94,7 +94,7 @@ function Environment:eval(code)
     return code
   end
   if code[1] == "format" then
-    Environment_format(code[3])
+    Environment_format(self:eval(code[3]))
   end
 end
 
