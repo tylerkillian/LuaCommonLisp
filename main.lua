@@ -76,7 +76,8 @@ end
 
 Environment = {}
 
-function Environment_format()
+function Environment_format(theString)
+  io.write(theString)
 end
 
 function Environment:new()
