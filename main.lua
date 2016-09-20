@@ -74,6 +74,11 @@ function Parser:readCharacter(character)
   end
 end
 
+Environment = {}
+
+function Environment_format()
+end
+
 function Environment:new()
   local environment = {
   }
