@@ -74,6 +74,11 @@ function Parser:readCharacter(character)
   end
 end
 
+function Environment:new()
+  setmetatable(parser, self)
+  self.__index = self
+end
+
 local parser = Parser:new()
 local code = [[(format t (concatenate 'string "hel" "lo~t"))]]
 local returnCode
