@@ -1,1 +1,2 @@
-(defun read-character (theCharacter
+(defun read-character (theCharacter)
+)
