@@ -1,2 +1,0 @@
-(defun read-character (theCharacter)
-)
