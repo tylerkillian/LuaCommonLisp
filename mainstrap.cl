@@ -1,3 +1,3 @@
-(defun read-character (theCharacter) (format t "~t" theCharacter))
+(defun read-character (theCharacter) (format t "~at" theCharacter))
 
 (read-character "a")
