@@ -1,2 +1,1 @@
-(let ((a 23))
-  (assert (= a 23)))
+(let ((a 23)) (assert (= a 23)))
