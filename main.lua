@@ -126,5 +126,7 @@ local environment = Environment:new()
 local nextCharacter = input:read(1)
 while nextCharacter do
   code = parser:readCharacter(nextcharacter)
+  if code then
+    environment:eval(code)
   nextCharacter = input:read(1)
 end
