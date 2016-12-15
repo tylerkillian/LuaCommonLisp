@@ -121,6 +121,10 @@ assert(code[3][3] == "\"hel\"")
 assert(code[3][4] == "\"lo~%\"")
 
 local input = io.open("allTests.cl")
+local parser = Parser:new()
+local environment = Environment:new()
 local nextCharacter = input:read(1)
 while nextCharacter do
+  code = parser:readCharacter(nextcharacter)
+  nextCharacter = input:read(1)
 end
