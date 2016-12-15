@@ -1,4 +1,5 @@
-Parser = {}
+require "Parser"
+require "Environment"
 
 function Parser:new()
   local parser = {
