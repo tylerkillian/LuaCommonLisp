@@ -128,5 +128,6 @@ while nextCharacter do
   code = parser:readCharacter(nextcharacter)
   if code then
     environment:eval(code)
+  end
   nextCharacter = input:read(1)
 end
