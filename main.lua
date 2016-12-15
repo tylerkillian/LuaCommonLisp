@@ -121,4 +121,6 @@ assert(code[3][3] == "\"hel\"")
 assert(code[3][4] == "\"lo~%\"")
 
 local input = io.open("allTests.cl")
-
+local nextCharacter = input:read(1)
+while nextCharacter do
+end
