@@ -24,6 +24,10 @@ assert(code[3][3] == "\"hel\"")
 assert(code[3][4] == "\"lo~%\"")
 
 function codeToString(code)
+  if type(code) == "string" then
+    return code
+  end
+
   return theString
 end
 
