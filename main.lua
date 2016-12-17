@@ -30,6 +30,7 @@ function codeToString(code)
 local theString = "("
 for _,value in iapri(code) do
 theString = theString ..
+end
 
   return theString
 end
