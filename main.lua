@@ -30,7 +30,7 @@ function codeToString(code)
 
   local theString = "("
   for _, value in ipairs(code) do
-    theString = theString .. codeToString(value)
+    theString = theString .. " " .. codeToString(value)
   end
   theString = theString .. ")"
 
