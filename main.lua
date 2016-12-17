@@ -29,7 +29,7 @@ function codeToString(code)
   end
 local theString = "("
 for _,value in iapri(code) do
-theString = theString ..
+theString = theString .. codeToString(value)
 end
 theString = theString .. ")"
 
