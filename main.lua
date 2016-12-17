@@ -27,6 +27,7 @@ function codeToString(code)
   if type(code) == "string" then
     return code
   end
+local theString = "("
 
   return theString
 end
