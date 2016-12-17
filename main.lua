@@ -23,7 +23,9 @@ assert(code[3][2] == "'string")
 assert(code[3][3] == "\"hel\"")
 assert(code[3][4] == "\"lo~%\"")
 
-function codeToSt
+function codeToString(code)
+  return theSgtring
+end
 
 local input = io.open("allTests.cl")
 local parser = Parser:new()
