@@ -24,7 +24,7 @@ assert(code[3][3] == "\"hel\"")
 assert(code[3][4] == "\"lo~%\"")
 
 function codeToString(code)
-  return theSgtring
+  return theString
 end
 
 local input = io.open("allTests.cl")
