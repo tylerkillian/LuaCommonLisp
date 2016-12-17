@@ -43,7 +43,7 @@ local environment = Environment:new()
 local nextCharacter = input:read(1)
 while nextCharacter do
 print(nextCharacter)
-  code = parser:readCharacter(nextcharacter)
+  code = parser:readCharacter(nextCharacter)
   if code then
     print(codeToString(code))
     environment:eval(code)
