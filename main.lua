@@ -28,6 +28,8 @@ function codeToString(code)
     return code
   end
 local theString = "("
+for _,value in iapri(code) do
+theString = theString ..
 
   return theString
 end
