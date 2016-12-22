@@ -31,7 +31,7 @@ function Parser:readCharacter_scan(character)
       self.currentTable = self.tableStack[#self.tableStack]
       table.remove(self.tableStack)
     end
-  elseif character ~= " " and chracter ~= " " then
+  elseif character ~= " " and chracter ~= "\n" then
     self.mode = "symbol"
     self.buffer = character
   end
