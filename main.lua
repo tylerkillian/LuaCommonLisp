@@ -28,7 +28,7 @@ local nextCharacter = input:read(1)
 while nextCharacter do
   code = parser:readCharacter(nextCharacter)
   if code then
-    print(codeToString(code))
+    print("> " .. codeToString(code))
     environment:eval(code)
   end
   nextCharacter = input:read(1)
