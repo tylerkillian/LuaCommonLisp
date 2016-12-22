@@ -16,11 +16,10 @@ end
 function Parser:readCharacter_scan(character)
   if character == "(" then
     if not self.currentTable then
-      self.code = {}
       self.currentTable = {}
     else
       table.insert(self.tableStack, self.currentTable)
-      table.insert(self.code, {})
+      table.insert(self.ccurrentTable, {})
       self.currentTable = self.code[#self.code]
     end
   elseif character == ")" then
