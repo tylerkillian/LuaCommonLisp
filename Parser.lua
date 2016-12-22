@@ -4,8 +4,8 @@ function Parser:new()
   local parser = {
     mode = "scan",
     buffer = "",
-    code = nil,
     tableStack = {},
+    currentTable = nil,
   }
   setmetatable(parser, self)
   self.__index = self
