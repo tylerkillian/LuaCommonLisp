@@ -29,6 +29,7 @@ function codeToString(code)
   end
 
   local theString = "("
+  local first = true
   for _, value in ipairs(code) do
     theString = theString .. " " .. codeToString(value)
   end
