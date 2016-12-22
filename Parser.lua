@@ -15,7 +15,7 @@ end
 
 function Parser:readCharacter_scan(character)
   if character == "(" then
-    if not self.code then
+    if not self.currentTable then
       self.code = {}
       self.currentTable = self.code
     else
