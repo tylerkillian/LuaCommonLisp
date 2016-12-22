@@ -31,6 +31,9 @@ function codeToString(code)
   local theString = "("
   local first = true
   for _, value in ipairs(code) do
+    if first then
+      theString = theString .. " "
+    end
     theString = theString .. " " .. codeToString(value)
   end
   theString = theString .. ")"
