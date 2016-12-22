@@ -20,7 +20,7 @@ function Parser:readCharacter_scan(character)
     else
       table.insert(self.tableStack, self.currentTable)
       table.insert(self.currentTable, {})
-      self.currentTable = self.code[#self.code]
+      self.currentTable = self.currentTable[#self.currentTable]
     end
   elseif character == ")" then
     if #self.tableStack == 0 then
