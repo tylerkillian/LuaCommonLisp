@@ -34,7 +34,9 @@ function codeToString(code)
     if first then
       theString = theString .. " "
     end
-    theString = theString .. " " .. codeToString(value)
+    theString = theString .. codeToString(value)
+
+    first = false
   end
   theString = theString .. ")"
 
