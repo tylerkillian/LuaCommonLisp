@@ -47,8 +47,7 @@ function Parser:readCharacter_symbol(character)
     self.buffer = ""
     self.mode = "scan"
     if #self.tableStack == 0 then
-      local code = self.code
-      self.code = nil
+      local code = self.currentTable
       self.currentTable = nil
       return code
     else
