@@ -24,8 +24,7 @@ function Parser:readCharacter_scan(character)
     end
   elseif character == ")" then
     if #self.tableStack == 0 then
-      local code = self.code
-      self.code = nil
+      local code = self.currentTable
       self.currentTable = nil
       return code
     else
