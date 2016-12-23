@@ -26,6 +26,8 @@ local function appendtoTable(theTable, theEntry)
   return newTable
 end
 
+local function makeBinarngs(
+
 function Environment:eval(code, lookupTable)
   if type(code) == "string" then
     return code
@@ -37,7 +39,7 @@ function Environment:eval(code, lookupTable)
     return string.sub(code[3], 2, -2) .. string.sub(code[4], 2, -2)
   end
   if code[1] == "let" then
-    local newLookup = appendToTable(lookupTable or {global}, makeBindings(code[2]))
+    local newLookup = appendToTable(lookupTable or {global}, makeBindings(code[2], lookupTable or {global}))
     for idx, subcode in ipairs(code) do
       self:eval(subcode, newLookup)
     end
