@@ -26,6 +26,7 @@ function Environment:eval(code)
     return string.sub(code[3], 2, -2) .. string.sub(code[4], 2, -2)
   end
   if code[1] == "let" then
+    local newLookup = {global, makeBindings(code[2])}
   end
 end
 
