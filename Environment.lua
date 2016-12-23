@@ -15,7 +15,7 @@ function Environment:new()
   return environment
 end
 
-function Environment:eval(code)
+function Environment:eval(code, lookupTable)
   if type(code) == "string" then
     return code
   end
