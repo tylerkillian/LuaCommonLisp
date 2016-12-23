@@ -26,7 +26,8 @@ local function appendtoTable(theTable, theEntry)
   return newTable
 end
 
-local function makeBinarngs(
+local function makeBindings(assignments, lookupTable)
+end
 
 function Environment:eval(code, lookupTable)
   if type(code) == "string" then
