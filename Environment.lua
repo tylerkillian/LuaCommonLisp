@@ -28,9 +28,11 @@ end
 
 function Environment:makeBindings(assignments, lookupTable)
   local bindings = {}
+
   for idx, pair in ipairs(assignments) do
     bindings[pair[1]] = self:eval(pair[2], lookupTable)
   end
+
   return bindings
 end
 
