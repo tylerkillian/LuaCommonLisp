@@ -17,6 +17,7 @@ end
 
 function appendtoTable(theTable, theEntry)
   local newTable = {}
+
   for _, v in ipairs(theTable) do
     table.insert(newTable, v)
   end
