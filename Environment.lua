@@ -16,6 +16,13 @@ function Environment:new()
 end
 
 function appendtoTable(theTable, theEntry)
+  local newTable = {}
+  for _, v in ipairs(theTable) do
+    table.insert(newTable, v)
+  end
+  table.insert(newTable,theEntry)
+
+  return newTable
 end
 
 function Environment:eval(code, lookupTable)
