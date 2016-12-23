@@ -25,5 +25,7 @@ function Environment:eval(code)
   if code[1] == "concatenate" then
     return string.sub(code[3], 2, -2) .. string.sub(code[4], 2, -2)
   end
+  if code[1] == "let" then
+  end
 end
 
