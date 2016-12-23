@@ -49,7 +49,9 @@ function Environment:eval(code, lookupTable)
   if code[1] == "let" then
     local newLookup = appendToTable(lookupTable or {global}, makeBindings(code[2], lookupTable or {global}))
     for idx, subcode in ipairs(code) do
-      self:eval(subcode, newLookup)
+      if idx > 2 then
+        self:eval(subcode, newLookup)
+      end
     end
   end
 end
