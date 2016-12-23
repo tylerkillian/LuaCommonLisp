@@ -27,6 +27,8 @@ local function appendtoTable(theTable, theEntry)
 end
 
 local function makeBindings(assignments, lookupTable)
+  local bindings = {}
+  return bindings
 end
 
 function Environment:eval(code, lookupTable)
