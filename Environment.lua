@@ -15,7 +15,7 @@ function Environment:new()
   return environment
 end
 
-function appendtoTable(theTable, theEntry)
+local function appendtoTable(theTable, theEntry)
   local newTable = {}
 
   for _, v in ipairs(theTable) do
