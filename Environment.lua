@@ -27,6 +27,9 @@ function Environment:eval(code)
   end
   if code[1] == "let" then
     local newLookup = {global, makeBindings(code[2])}
+    for idx, subcode in ipairs(code) do
+      self:eval(subcode)
+    end
   end
 end
 
