@@ -28,6 +28,8 @@ end
 
 local function makeBindings(assignments, lookupTable)
   local bindings = {}
+  for idx, pair in ipairs(assignments) do
+  end
   return bindings
 end
 
