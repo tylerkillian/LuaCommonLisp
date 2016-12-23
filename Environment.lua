@@ -7,6 +7,7 @@ end
 
 function Environment:new()
   local environment = {
+    global = {},
   }
   setmetatable(environment, self)
   self.__index = self
