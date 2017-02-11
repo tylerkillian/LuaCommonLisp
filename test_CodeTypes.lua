@@ -11,7 +11,7 @@ local function Symbol_construct()
 end
 
 local function Expression_construct()
-  local expression = Express:new()
+  local expression = Expression:new()
   assert("()" == expression:toString())
 end
 

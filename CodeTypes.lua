@@ -46,3 +46,8 @@ function Expression:new()
   return expression
 end
 
+function Expression:toString()
+  return "()"
+end
+
+
