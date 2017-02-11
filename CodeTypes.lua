@@ -10,3 +10,14 @@ function LString:new(value)
   return lString
 end
 
+Symbol = {}
+
+function Symbol:new(value)
+  local symbol = {
+    data = value
+  }
+  setmetatable(Symbol, self)
+  self.__index = self
+
+  return symbol
+end
