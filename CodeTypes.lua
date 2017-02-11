@@ -10,6 +10,10 @@ function LString:new(value)
   return lString
 end
 
+function LString:getValue()
+  return self.data
+end
+
 Symbol = {}
 
 function Symbol:new(value)
