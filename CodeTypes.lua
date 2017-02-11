@@ -1,8 +1,8 @@
 LString = {}
 
-function LString:new()
+function LString:new(value)
   local lString = {
-    data = ""
+    data = value
   }
   setmetatable(lString, self)
   self.__index = self
