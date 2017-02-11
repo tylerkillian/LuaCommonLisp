@@ -16,7 +16,7 @@ function Symbol:new(value)
   local symbol = {
     data = value
   }
-  setmetatable(Symbol, self)
+  setmetatable(symbol, self)
   self.__index = self
 
   return symbol
