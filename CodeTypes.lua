@@ -52,4 +52,5 @@ function Expression:toString()
   return "()"
 end
 
+TickOperator = {}
 
