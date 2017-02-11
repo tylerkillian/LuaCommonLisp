@@ -39,6 +39,8 @@ Expression = {}
 
 function Expression:new()
   local expression = {
+    evaluate = true,
+    data = {}
   }
   setmetatable(expression, self)
   self.__index = self
