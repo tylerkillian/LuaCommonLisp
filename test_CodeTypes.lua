@@ -10,9 +10,16 @@ local function Symbol_construct()
   assert("true:abc" == symbol:toString())
 end
 
+local function Expression_construct()
+  local expression = Express:new()
+  assert("()" == expression:toString())
+end
+
 function testCodeTypes()
   LString_construct()
 
   Symbol_construct()
+
+  Expression_construct()
 end
 
