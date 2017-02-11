@@ -10,7 +10,7 @@ function LString:new(value)
   return lString
 end
 
-function LString:getValue()
+function LString:toString()
   return self.data
 end
 
@@ -18,12 +18,21 @@ Symbol = {}
 
 function Symbol:new(value)
   local symbol = {
-    data = value
+    evaluate = true,
+    data = value or ""
   }
   setmetatable(symbol, self)
   self.__index = self
 
   return symbol
+end
+
+function Symbol:toString()
+  if self.evaluate then
+    return "true:" .. self.data
+  else
+    return "false:" .. self.data
+  end
 end
 
 Expression = {}
