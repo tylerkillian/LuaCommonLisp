@@ -94,11 +94,11 @@ end
 function Parser:nextCharacter(character)
   local result = self.nextLink(character)
 
-  if not self.nextLink:isDone() then
+  if not result then
     return
   end
 
-  if character == " then
+  if character == "\"" then
     self.nextLink = StringReader:new()
   end
 
