@@ -93,6 +93,9 @@ end
 
 function Parser:nextCharacter(character)
   local result = self.nextLink(character)
+
+  if result == Scanner.STRING then
+  end
   return result
 end
 
