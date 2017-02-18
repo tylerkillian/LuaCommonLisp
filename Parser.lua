@@ -94,8 +94,14 @@ end
 function Parser:nextCharacter(character)
   local result = self.nextLink(character)
 
-  if result == Scanner.STRING then
+  if not result then
+    return
   end
+
+  if result == Scanner.STRING then
+    self.nextLink = StringReader:new()
+  end
+
   return result
 end
 
