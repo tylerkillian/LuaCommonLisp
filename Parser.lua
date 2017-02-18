@@ -67,3 +67,16 @@ function Parser2:readCharacter(character)
   end
 end
 
+Parser = {}
+
+function Parser:new()
+  local parser = {
+    nextLink = Scanner:new(),
+    operatorQueue = {},
+  }
+  setmetatable(parser, self)
+  self.__index = self
+
+  return parser
+end
+
