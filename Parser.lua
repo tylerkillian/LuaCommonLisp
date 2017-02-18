@@ -67,6 +67,17 @@ function Parser2:readCharacter(character)
   end
 end
 
+Scanner = {}
+
+function Scanner:new()
+  local scanner = {
+  }
+  setmetatable(scanner, self)
+  self.__index = self
+
+  return scanner
+end
+
 Parser = {}
 
 function Parser:new()
@@ -78,5 +89,10 @@ function Parser:new()
   self.__index = self
 
   return parser
+end
+
+function Parser:nextCharacter(character)
+  local result = self.nextLink(character)
+  return result
 end
 
