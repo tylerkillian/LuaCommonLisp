@@ -97,12 +97,6 @@ function Parser:nextCharacter(character)
   if not self.nextLink:isDone() then
     return
   end
-  local result
-  if isDone
-
-  if not result then
-    return
-  end
 
   if character == " then
     self.nextLink = StringReader:new()
