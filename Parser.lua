@@ -1,6 +1,6 @@
-Parser = {}
+Parser2 = {}
 
-function Parser:new()
+function Parser2:new()
   local parser = {
     mode = "scan",
     buffer = "",
@@ -13,7 +13,7 @@ function Parser:new()
   return parser
 end
 
-function Parser:readCharacter_scan(character)
+function Parser2:readCharacter_scan(character)
   if character == "(" then
     if not self.currentTable then
       self.currentTable = {}
@@ -37,7 +37,7 @@ function Parser:readCharacter_scan(character)
   end
 end
 
-function Parser:readCharacter_symbol(character)
+function Parser2:readCharacter_symbol(character)
   if character == " " then
     table.insert(self.currentTable, self.buffer)
     self.buffer = ""
@@ -59,7 +59,7 @@ function Parser:readCharacter_symbol(character)
   end
 end
 
-function Parser:readCharacter(character)
+function Parser2:readCharacter(character)
   if self.mode == "scan" then
     return self:readCharacter_scan(character)
   elseif self.mode == "symbol" then
