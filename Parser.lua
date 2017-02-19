@@ -230,7 +230,7 @@ function ExpressionReader:callNextLink(character)
   return linkResult
 end
 
-function ExpressionReader:returnExpression(character)
+function ExpressionReader:returningExpression(character)
   if self.returnBy == "collection" and self.state ~= "expression" and character == ")" then
     return true
   else
