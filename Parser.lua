@@ -155,6 +155,18 @@ function ExpressionReader:new()
   return expressionReader
 end
 
+function ExpressionReader:toString()
+  if #self.expression == 0 then
+    return "()"
+  end
+
+  local result = ""
+  for _, current in ipairs(self.expression) do
+    result = result .. " " .. current
+  end
+  return "(" .. string.sub(result, 2) .. ")"
+end
+
 Parser = {
 }
 
