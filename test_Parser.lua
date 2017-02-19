@@ -100,7 +100,6 @@ end
 function test_ExpressionReader.addSymbolToExpressionWhenReachSpace()
   local expressionReader = ExpressionReader:new()
   feedCharactersOneAtATime(expressionReader, "ab ")
-print(expressionReader:toString())
   assert("(ab):scan" == expressionReader:toString())
 end
 
