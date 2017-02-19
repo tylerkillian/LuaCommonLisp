@@ -32,6 +32,12 @@ local function SymbolReader_terminateWithSpace()
   assert("ab" == symbolReader:readCharacter(" "))
 end
 
+local function SymbolReader_resetAfterTerminate()
+  local symbolReader = SymbolReader:new()
+  feedCharactersOneAtATime(symbolReader, "ab ")
+  assert("" == symbolReader:toString())
+end
+
 local function Parser_construct()
   local defaultParser = Parser:new()
   assert("scan" == defaultParser:toString())
