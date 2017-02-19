@@ -251,7 +251,7 @@ if false then
 
   local result = self:getReturnValue(linkResult, character)
 
-  self:getReadyForNextCharacter(character)
+  self:prepareForNextCharacter(character)
 
   return result
 end
