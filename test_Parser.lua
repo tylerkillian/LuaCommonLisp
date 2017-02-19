@@ -142,7 +142,6 @@ end
 function test_ExpressionReader.nested()
   local expressionReader = ExpressionReader:new()
   feedCharactersOneAtATime(expressionReader, 'a (b c)')
-print(convertExpressionToString(expressionReader:readCharacter(")")))
   assert("(a (b c))" == convertExpressionToString(expressionReader:readCharacter(")")))
 end
 
