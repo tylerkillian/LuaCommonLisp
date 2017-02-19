@@ -246,18 +246,8 @@ function ExpressionReader:readCharacter(character)
   if self.returnBy == "element" then
     return result
   end
-
 if false then
-  local linkTerminated = self:sendCharacterToNextLink(character)
-
-  if linkTerminated then
-    
-  end
-
-  local result2
-  if not result then
-    result2 = nil
-  end
+  local linkResult = callNextLink(character)
 end
 end
 
