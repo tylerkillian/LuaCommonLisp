@@ -151,7 +151,6 @@ function ExpressionReader:new(returnBy,name)
     returnBy = returnBy or "collection",
 name = name or "base",
   }
-print("new with " .. expressionReader.name)
   setmetatable(expressionReader, self)
   self.__index = self
 
