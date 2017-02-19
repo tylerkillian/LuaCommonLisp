@@ -5,7 +5,7 @@ local function Parser_construct()
   assert("scan" == defaultParser:toString())
 end
 
-function testCodeTypes()
+function testParser()
   Parser_construct()
 end
 

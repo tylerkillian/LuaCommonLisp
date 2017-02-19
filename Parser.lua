@@ -129,19 +129,6 @@ function Parser:nextCharacter(character)
     return
   end
 
-  local stateChanges = {
-    ["scan"] = {
-      ["\""] = "string",
-      ["("] = "expression",
-      [
-  }
-
-  if character == "\"" then
-    self.nextLink = StringReader:new()
-  elseif character == " " or character == "\n" then
-    self.nextLink = Scanner:new()
-  end
-
   return result
 end
 
