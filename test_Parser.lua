@@ -212,6 +212,5 @@ function testParser()
   runTests("SymbolReader", test_SymbolReader)
   runTests("StringReader", test_StringReader)
   runTests("ExpressionReader", test_ExpressionReader)
-  runTests("Parser", test_Parser)
 end
 
