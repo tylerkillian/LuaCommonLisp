@@ -220,6 +220,7 @@ function ExpressionReader:changeState(currentStateTerminalCharacter)
     elseif self.state == "expression" then
       self.nextLink = ExpressionReader:new()
     end
+print("new state = " .. self.state)
 end
 
 function ExpressionReader:callNextLink(character)
