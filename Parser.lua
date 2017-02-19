@@ -172,10 +172,15 @@ function Parser:readCharacter(character)
   if isOperator(character) then
   else
     local newState = getNewState(self.state, character)
+
     if newState == "symbol" then
       self.nextLink = SymbolReader:new()
       self.state = "symbol"
+    elseif newState == "scan" then
+      self.nextLink = Scanner:new()
+      self.state = "scan"
     end
+
   end
 
   return result
