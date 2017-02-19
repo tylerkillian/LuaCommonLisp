@@ -45,12 +45,12 @@ end
 
 function testParser()
   local Parser_tests = {
-    Scanner_readSpace,
-    SymbolReader_addSingleCharacter,
-    SymbolReader_addTwoCharacters,
-    SymbolReader_terminateWithSpace,
-    Parser_construct,
-    Parser_switchFromScanToSymbol,
+    Scanner_readSpace = Scanner_readSpace,
+    SymbolReader_addSingleCharacter = SymbolReader_addSingleCharacter,
+    SymbolReader_addTwoCharacters = SymbolReader_addTwoCharacters,
+    SymbolReader_terminateWithSpace = SymbolReader_terminateWithSpace,
+    Parser_construct = Parser_construct,
+    Parser_switchFromScanToSymbol = Parser_switchFromScanToSymbol,
   }
 
   for testName, theTest in pairs(Parser_tests) do
