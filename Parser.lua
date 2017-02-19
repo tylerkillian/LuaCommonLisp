@@ -240,7 +240,7 @@ print(self.name .. "storing " .. type(linkResult))
 end
 
 function ExpressionReader:returningExpression(character)
-  if self.state ~= "expression" and character == ")" then
+  if self.returnBy == "collection" and self.state ~= "expression" and character == ")" then
     return true
   else
     return false
@@ -248,26 +248,13 @@ function ExpressionReader:returningExpression(character)
 end
 
 function ExpressionReader:getReturnValue(linkResult, character)
-  if self.returnBy == "collection" and self.state ~= "expression" and character == ")" then
+  if self:returningExpression(character) then
     return self.expression
   end
 
   if not linkResult or self.state == "scan" then
     return
   end
-
-  if self.returnBy == "collection" then
-print(self.name .. " a1")
-print(self.name .. " " .. self.state)
-print(self.name .. " " .. character)
-  if self:returningExpression(character) then
-print(self.name .. " a2")
-    return self.expression
-else 
-print(self.name .. " a3")
-return
-  end
-end
 
   return linkResult
 end
