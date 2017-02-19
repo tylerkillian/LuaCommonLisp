@@ -224,6 +224,8 @@ function ExpressionReader:callNextLink(character)
   return self.nextLink:readCharacter(character)
 end
 
+function ExpressionReader:getReturnValue(linkResult, character)
+
 function ExpressionReader:readCharacter(character)
   local result = self.nextLink:readCharacter(character)
 
