@@ -231,8 +231,6 @@ function ExpressionReader:readCharacter(character)
     end
 
   end
-
-  return result
 end
 
 function ExpressionReader:toString()
