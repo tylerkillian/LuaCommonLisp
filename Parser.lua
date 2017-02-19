@@ -199,8 +199,6 @@ local function getNewState(currentState, terminalCharacter, self)
 
   end
 
-print(self.name .. " " .. currentState)
-print(self.name .. " " .. terminalCharacter)
   assert(false)
 end
 
@@ -209,7 +207,6 @@ local function isOperator()
 end
 
 function ExpressionReader:changeState(currentStateTerminalCharacter)
-print(self.name .. " old state = " .. self.state)
     self.state = getNewState(self.state, currentStateTerminalCharacter, self)
 
     if self.state == "scan" then
@@ -220,18 +217,14 @@ print(self.name .. " old state = " .. self.state)
     elseif self.state == "string" then
       self.nextLink = StringReader:new()
     elseif self.state == "expression" then
-print("new expression")
       self.nextLink = ExpressionReader:new(_, "child")
     end
-print(self.name .. " new state = " .. self.state)
 end
 
 function ExpressionReader:callNextLink(character)
   local linkResult = self.nextLink:readCharacter(character)
 
   if linkResult and self.state ~= "scan" and self.returnBy == "collection" then
---print(self.name .. " storing " .. linkResult)
-print(self.name .. "storing " .. type(linkResult))
     table.insert(self.expression, linkResult)
   end
 
