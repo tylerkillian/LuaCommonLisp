@@ -149,6 +149,10 @@ function ExpressionReader:new()
     state = "scan",
     expression = {},
   }
+  setmetatable(expressionReader, self)
+  self.__index = self
+
+  return expressionReader
 end
 
 Parser = {
