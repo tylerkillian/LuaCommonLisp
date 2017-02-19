@@ -248,8 +248,11 @@ function ExpressionReader:readCharacter(character)
   end
 if false then
   local linkResult = self:callNextLink(character)
+
   local result = self:getReturnValue(linkResult, character)
+
   self:getReadyForNextCharacter(character)
+
   return result
 end
 end
