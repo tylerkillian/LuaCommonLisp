@@ -56,15 +56,15 @@ function test_StringReader.addTwoCharacters()
   assert("ab" == stringReader:toString())
 end
 
-function test_StringReader.terminateWithSpace()
+function test_StringReader.terminate()
   local stringReader = StringReader:new()
   feedCharactersOneAtATime(stringReader, "ab")
-  assert("ab" == stringReader:readCharacter(" "))
+  assert("ab" == stringReader:readCharacter("\""))
 end
 
 function test_StringReader.resetAfterTerminate()
   local stringReader = StringReader:new()
-  feedCharactersOneAtATime(stringReader, "ab ")
+  feedCharactersOneAtATime(stringReader, "ab\"")
   assert("" == stringReader:toString())
 end
 

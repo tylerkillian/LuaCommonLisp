@@ -126,7 +126,7 @@ function StringReader:new()
 end
 
 function StringReader:readCharacter(character)
-  if character == " " then
+  if character == "\"" then
     local result = self.queue
     self.queue = ""
     return result
