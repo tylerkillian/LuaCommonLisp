@@ -105,6 +105,12 @@ function test_Parser.returnStringWhenReachEndQuotationMark()
   assert("ab" == parser:readCharacter('"'))
 end
 
+function test_Parser.switchFromStringToScan()
+  local parser = Parser:new()
+  feedCharactersOneAtATime(parser, '"ab"')
+  assert("scan" == parser:toString())
+end
+
 -- End unit tests
 
 local function runTests(testCategory, tests)
