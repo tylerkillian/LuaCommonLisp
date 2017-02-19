@@ -242,7 +242,10 @@ function ExpressionReader:getReturnValue(linkResult, character)
   return linkResult
 end
 
-function ExpressionReader:prepareForNextCharacter(character)
+function ExpressionReader:prepareForNextCharacter(linkResult, character)
+  if not linkResult then
+    return
+  end
 end
 
 function ExpressionReader:readCharacter(character)
