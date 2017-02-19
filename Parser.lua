@@ -221,6 +221,7 @@ function ExpressionReader:changeState(currentStateTerminalCharacter)
 end
 
 function ExpressionReader:callNextLink(character)
+print(character)
   local linkResult = self.nextLink:readCharacter(character)
 
   if self.state ~= "scan" and self.returnBy == "collection" then
