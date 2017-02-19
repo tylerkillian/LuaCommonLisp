@@ -101,8 +101,8 @@ end
 
 function test_ExpressionReader.returnStringWhenReachEndQuotationMark()
   local expressionReader = ExpressionReader:new()
-  feedCharactersOneAtATime(expressionReader, '"ab')
-  assert("ab" == expressionReader:readCharacter('"'))
+  feedCharactersOneAtATime(expressionReader, '"ab"')
+  assert("(ab):scan" == expressionReader:toString())
 end
 
 function test_ExpressionReader.switchFromStringToScan()
