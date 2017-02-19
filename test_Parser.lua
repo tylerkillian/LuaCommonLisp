@@ -135,6 +135,12 @@ function test_ExpressionReader.terminate()
   assert("(ab cd)" == convertExpressionToString(expressionReader:readCharacter(")")))
 end
 
+function test_ExpressionReader.nested()
+  local expressionReader = ExpressionReader:new()
+  feedCharactersOneAtATime(expressionReader, 'a b cd')
+  assert("(a (b c))" == convertExpressionToString(expressionReader:readCharacter(")")))
+end
+
 local test_Parser = {}
 
 function test_Parser.construct()
