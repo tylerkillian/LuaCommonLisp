@@ -155,6 +155,13 @@ function ExpressionReader:new()
   return expressionReader
 end
 
+function ExpressionReader:reset()
+  self.nextLink = Scanner:new()
+  self.operatorQueue = {}
+  self.state = "scan"
+  self.expression = {}
+end
+
 local function getNewState(currentState, terminalCharacter)
   if currentState == "scan" then
 
@@ -197,6 +204,12 @@ function ExpressionReader:readCharacter(character)
     return
   end
 
+  if character == ")" then
+    table.insert(self.expression, result)
+    local expressionToReturn = self.expression
+    self.expression = {}
+  end
+
   if isOperator(character) then
   else
     local newState = getNewState(self.state, character)
@@ -220,14 +233,14 @@ end
 
 function ExpressionReader:toString()
   if #self.expression == 0 then
-    return "()"
+    return "():" .. self.state
   end
 
   local result = ""
   for _, current in ipairs(self.expression) do
     result = result .. " " .. current
   end
-  return self.state .. ":(" .. string.sub(result, 2) .. ")"
+  return "(" .. string.sub(result, 2) .. "):" .. self.state
 end
 
 Parser = {
