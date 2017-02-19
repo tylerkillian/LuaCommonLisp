@@ -195,7 +195,7 @@ function test_Parser.switchFromStringToScan()
 end
 
 function test_Parser.switchFromSymbolToString()
-  local parser = Parser:new()
+  local parser = ExpressionReader:new("element")
   feedCharactersOneAtATime(parser, 'ab"')
   assert("string" == parser:toString())
 end
