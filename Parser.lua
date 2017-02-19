@@ -251,6 +251,10 @@ function ExpressionReader:readCharacter(character)
 end
 
 function ExpressionReader:toString()
+  if self.returnBy == "element" then
+    return self.state
+  end
+
   if #self.expression == 0 then
     return "():" .. self.state
   end
