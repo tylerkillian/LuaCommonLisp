@@ -78,7 +78,8 @@ function Scanner:new()
   return scanner
 end
 
-Parser = {}
+Parser = {
+}
 
 function Parser:new()
   local parser = {
@@ -91,6 +92,33 @@ function Parser:new()
   return parser
 end
 
+local function getNewState(currentState, terminalCharacter)
+  if currentState == "scan" then
+
+    if terminalCharacter == "\"" then
+      return "string"
+    elseif terminalCharacter == "(" then
+      return "expression"
+    else
+      return "symbol"
+    end
+
+  elseif currentState == "symbol" then
+
+    if terminalCharacter == "\"" then
+      return "string"
+    elseif terminalCharacter == "(" then
+      return "expression"
+    else
+      return "scan"
+    end
+
+  elseif currentState == "string" then
+    if terminal
+
+  end
+end
+
 function Parser:nextCharacter(character)
   local result = self.nextLink(character)
 
@@ -98,8 +126,17 @@ function Parser:nextCharacter(character)
     return
   end
 
+  local stateChanges = {
+    ["scan"] = {
+      ["\""] = "string",
+      ["("] = "expression",
+      [
+  }
+
   if character == "\"" then
     self.nextLink = StringReader:new()
+  elseif character == " " or character == "\n" then
+    self.nextLink = Scanner:new()
   end
 
   return result
