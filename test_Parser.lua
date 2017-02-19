@@ -7,6 +7,18 @@ local function feedCharactersOneAtATime(reader, characters)
   end
 end
 
+function ExpressionReader:toString()
+  if #self.expression == 0 then
+    return "():" .. self.state
+  end
+
+  local result = ""
+  for _, current in ipairs(self.expression) do
+    result = result .. " " .. current
+  end
+  return "(" .. string.sub(result, 2) .. "):" .. self.state
+end
+
 -- Begin unit tests
 
 local test_Scanner = {}
