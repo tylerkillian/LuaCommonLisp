@@ -198,8 +198,8 @@ local function getNewState(currentState, terminalCharacter)
 
   end
 
-print(currentState)
-print(terminalCharacter)
+print(self.name .. " " .. currentState)
+print(self.name .. " " .. terminalCharacter)
   assert(false)
 end
 
@@ -208,6 +208,7 @@ local function isOperator()
 end
 
 function ExpressionReader:changeState(currentStateTerminalCharacter)
+print(self.name .. " old state = " .. self.state)
     self.state = getNewState(self.state, currentStateTerminalCharacter)
 
     if self.state == "scan" then
@@ -220,7 +221,7 @@ function ExpressionReader:changeState(currentStateTerminalCharacter)
     elseif self.state == "expression" then
       self.nextLink = ExpressionReader:new()
     end
-print("new state = " .. self.state)
+print(self.name .. " new state = " .. self.state)
 end
 
 function ExpressionReader:callNextLink(character)
