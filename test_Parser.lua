@@ -50,6 +50,24 @@ function test_StringReader.addCharacter()
   assert("a" == stringReader:toString())
 end
 
+function test_StringReader.addTwoCharacters()
+  local stringReader = StringReader:new()
+  feedCharactersOneAtATime(stringReader, "ab")
+  assert("ab" == stringReader:toString())
+end
+
+function test_StringReader.terminateWithSpace()
+  local stringReader = StringReader:new()
+  feedCharactersOneAtATime(stringReader, "ab")
+  assert("ab" == stringReader:readCharacter(" "))
+end
+
+function test_StringReader.resetAfterTerminate()
+  local stringReader = StringReader:new()
+  feedCharactersOneAtATime(stringReader, "ab ")
+  assert("" == stringReader:toString())
+end
+
 local test_Parser = {}
 
 function test_Parser.construct()
