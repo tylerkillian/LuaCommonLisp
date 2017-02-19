@@ -198,6 +198,8 @@ local function getNewState(currentState, terminalCharacter)
 
   end
 
+print(currentState)
+print(terminalCharacter)
   assert(false)
 end
 
