@@ -153,7 +153,7 @@ function test_Parser.construct()
 end
 
 function test_Parser.switchFromScanToSymbol()
-  local parser = Parser:new()
+  local parser = ExpressionReader:new("element")
   parser:readCharacter("a")
   assert("symbol" == parser:toString())
 end
