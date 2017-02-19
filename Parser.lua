@@ -251,6 +251,7 @@ if false then
   local linkTerminated = self:sendCharacterToNextLink(character)
 
   if linkTerminated then
+    
   end
 
   local result2
