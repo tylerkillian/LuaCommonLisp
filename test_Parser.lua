@@ -16,7 +16,7 @@ function convertExpressionToString(expression)
   for _, current in ipairs(expression) do
     result = result .. " " .. current
   end
-  return "(" .. string.sub(result, 2) .. "):" .. self.state
+  return "(" .. string.sub(result, 2) .. ")"
 end
 
 -- Begin unit tests
