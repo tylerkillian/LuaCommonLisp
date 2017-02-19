@@ -81,22 +81,16 @@ function test_ExpressionReader.switchFromScanToSymbol()
   assert("():symbol" == expressionReader:toString())
 end
 
-function test_ExpressionReader.switchFromSymbolToScan()
-  local expressionReader = ExpressionReader:new()
-  feedCharactersOneAtATime(expressionReader, "ab ")
-  assert("scan" == expressionReader:toString())
-end
-
 function test_ExpressionReader.addSymbolToExpressionWhenReachSpace()
   local expressionReader = ExpressionReader:new()
   feedCharactersOneAtATime(expressionReader, "ab ")
   assert("(ab):scan" == expressionReader:toString())
 end
 
-function test_ExpressionReader.returnSymbolWhenReachString()
+function test_ExpressionReader.addSymbolToExpressionWhenReachString()
   local expressionReader = ExpressionReader:new()
-  feedCharactersOneAtATime(expressionReader, 'ab')
-  assert("ab" == expressionReader:readCharacter('"'))
+  feedCharactersOneAtATime(expressionReader, 'ab"')
+  assert("(ab):string" == expressionReader:toString())
 end
 
 function test_ExpressionReader.startStringWhenReachInitialQuotationMark()
