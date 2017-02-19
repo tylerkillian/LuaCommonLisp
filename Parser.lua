@@ -99,7 +99,7 @@ function SymbolReader:new()
 end
 
 function SymbolReader:readCharacter(character)
-  if character == " " then
+  if character == " " or character == '"' then
     local result = self.queue
     self.queue = ""
     return result

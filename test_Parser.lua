@@ -93,6 +93,12 @@ function test_Parser.returnSymbolWhenReachSpace()
   assert("ab" == parser:readCharacter(" "))
 end
 
+function test_Parser.returnSymbolWhenReachString()
+  local parser = Parser:new()
+  feedCharactersOneAtATime(parser, 'ab')
+  assert("ab" == parser:readCharacter('"'))
+end
+
 function test_Parser.startStringWhenReachInitialQuotationMark()
   local parser = Parser:new()
   feedCharactersOneAtATime(parser, '"')
