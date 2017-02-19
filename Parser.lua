@@ -78,6 +78,41 @@ function Scanner:new()
   return scanner
 end
 
+function Scanner:readCharacter(character)
+  if character == " " then
+    return
+  else
+    return "DONE"
+  end
+end
+
+SymbolReader = {}
+
+function SymbolReader:new()
+  local symbolReader = {
+    queue = "",
+  }
+  setmetatable(symbolReader, self)
+  self.__index = self
+
+  return symbolReader
+end
+
+function SymbolReader:readCharacter(character)
+  if character == " " then
+    local result = self.queue
+    self.queue = ""
+    return result
+  else
+    self.queue = self.queue .. character
+    return
+  end
+end
+
+function SymbolReader:toString()
+  return self.queue
+end
+
 Parser = {
 }
 
@@ -85,6 +120,7 @@ function Parser:new()
   local parser = {
     nextLink = Scanner:new(),
     operatorQueue = {},
+    state = "scan",
   }
   setmetatable(parser, self)
   self.__index = self
@@ -122,8 +158,8 @@ local function getNewState(currentState, terminalCharacter)
   end
 end
 
-function Parser:nextCharacter(character)
-  local result = self.nextLink(character)
+function Parser:readCharacter(character)
+  local result = self.nextLink:readCharacter(character)
 
   if not result then
     return
