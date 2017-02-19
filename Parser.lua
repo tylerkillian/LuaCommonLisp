@@ -238,6 +238,8 @@ function ExpressionReader:getReturnValue(linkResult, character)
   if self.returnBy == "collection" and self.state ~= "expression" and character == ")" then
     return self.expression
   end
+
+  return linkResult
 end
 
 function ExpressionReader:readCharacter(character)
