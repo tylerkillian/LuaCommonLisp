@@ -16,36 +16,36 @@ function Parser_tests.Scanner_readSpace()
   assert(not scanner:readCharacter(" "))
 end
 
-local function SymbolReader_addSingleCharacter()
+function Parser_tests.SymbolReader_addSingleCharacter()
   local symbolReader = SymbolReader:new()
   symbolReader:readCharacter("a")
   assert("a" == symbolReader:toString())
 end
 
-local function SymbolReader_addTwoCharacters()
+function Parser_tests.SymbolReader_addTwoCharacters()
   local symbolReader = SymbolReader:new()
   feedCharactersOneAtATime(symbolReader, "ab")
   assert("ab" == symbolReader:toString())
 end
 
-local function SymbolReader_terminateWithSpace()
+function Parser_tests.SymbolReader_terminateWithSpace()
   local symbolReader = SymbolReader:new()
   feedCharactersOneAtATime(symbolReader, "ab")
   assert("ab" == symbolReader:readCharacter(" "))
 end
 
-local function SymbolReader_resetAfterTerminate()
+function Parser_tests.SymbolReader_resetAfterTerminate()
   local symbolReader = SymbolReader:new()
   feedCharactersOneAtATime(symbolReader, "ab ")
   assert("" == symbolReader:toString())
 end
 
-local function Parser_construct()
+function Parser_tests.Parser_construct()
   local defaultParser = Parser:new()
   assert("scan" == defaultParser:toString())
 end
 
-local function Parser_switchFromScanToSymbol()
+function Parser_tests.Parser_switchFromScanToSymbol()
   local parser = Parser:new()
   parser:readCharacter("a")
   assert("symbol" == parser:toString())
