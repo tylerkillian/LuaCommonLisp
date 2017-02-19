@@ -148,7 +148,7 @@ end
 local test_Parser = {}
 
 function test_ExpressionReader.construct()
-  local defaultExpressionReader = ExpressionReader:new()
+  local defaultExpressionReader = ExpressionReader:new("element")
   assert("scan" == defaultExpressionReader:toString())
 end
 
@@ -159,37 +159,37 @@ function test_ExpressionReader.switchFromScanToSymbol()
 end
 
 function test_ExpressionReader.switchFromSymbolToScan()
-  local expressionReader = ExpressionReader:new()
+  local expressionReader = ExpressionReader:new("element")
   feedCharactersOneAtATime(expressionReader, "ab ")
   assert("scan" == expressionReader:toString())
 end
 
 function test_ExpressionReader.returnSymbolWhenReachSpace()
-  local expressionReader = ExpressionReader:new()
+  local expressionReader = ExpressionReader:new("element")
   feedCharactersOneAtATime(expressionReader, "ab")
   assert("ab" == expressionReader:readCharacter(" "))
 end
 
 function test_ExpressionReader.returnSymbolWhenReachString()
-  local expressionReader = ExpressionReader:new()
+  local expressionReader = ExpressionReader:new("element")
   feedCharactersOneAtATime(expressionReader, 'ab')
   assert("ab" == expressionReader:readCharacter('"'))
 end
 
 function test_ExpressionReader.startStringWhenReachInitialQuotationMark()
-  local expressionReader = ExpressionReader:new()
+  local expressionReader = ExpressionReader:new("element")
   feedCharactersOneAtATime(expressionReader, '"')
   assert("string" == expressionReader:toString())
 end
 
 function test_ExpressionReader.returnStringWhenReachEndQuotationMark()
-  local expressionReader = ExpressionReader:new()
+  local expressionReader = ExpressionReader:new("element")
   feedCharactersOneAtATime(expressionReader, '"ab')
   assert("ab" == expressionReader:readCharacter('"'))
 end
 
 function test_ExpressionReader.switchFromStringToScan()
-  local expressionReader = ExpressionReader:new()
+  local expressionReader = ExpressionReader:new("element")
   feedCharactersOneAtATime(expressionReader, '"ab"')
   assert("scan" == expressionReader:toString())
 end
