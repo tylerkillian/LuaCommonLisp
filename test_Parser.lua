@@ -117,6 +117,11 @@ function test_ExpressionReader.switchFromSymbolToString()
   assert("(ab):string" == expressionReader:toString())
 end
 
+function test_StringReader.terminate()
+  local expressionReader = ExpressionReader:new()
+  feedCharactersOneAtATime(expressionReader, 'ab cd)')
+  assert("(ab cd)" == convertExpressionToString(expressionReader:toString())
+end
 
 local test_Parser = {}
 
