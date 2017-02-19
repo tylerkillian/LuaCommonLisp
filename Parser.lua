@@ -276,34 +276,6 @@ function ExpressionReader:prepareForNextCharacter(linkResult, character)
 end
 
 function ExpressionReader:readCharacter(character)
-print("reading " .. character)
-if false then
-  local result = self.nextLink:readCharacter(character)
-
-  if not result then
-    return
-  end
-
-  if self.state ~= "scan" and self.returnBy == "collection" then
-    table.insert(self.expression, result)
-  end
-
-  if self.state ~= "expression" and character == ")" then
-    assert(self.returnBy == "collection")
-    local expressionToReturn = self.expression
-    self:reset()
-    return expressionToReturn
-  end
-
-  if isOperator(character) then
-  else
-    self:changeState(character)
-  end
-
-  if self.returnBy == "element" then
-    return result
-  end
-else
   local linkResult = self:callNextLink(character)
 
   local result = self:getReturnValue(linkResult, character)
@@ -311,7 +283,6 @@ else
   self:prepareForNextCharacter(linkResult, character)
 
   return result
-end
 end
 
 function ExpressionReader:toString()
