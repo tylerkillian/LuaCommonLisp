@@ -196,6 +196,8 @@ local function getNewState(currentState, terminalCharacter)
      end
 
   end
+
+  assert(false)
 end
 
 local function isOperator()
