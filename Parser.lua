@@ -213,7 +213,7 @@ function ExpressionReader:readCharacter(character)
     return
   end
 
-  if self.state ~= "scan" then
+  if self.state ~= "scan" and self.returnBy == "collection" then
     table.insert(self.expression, result)
   end
 
