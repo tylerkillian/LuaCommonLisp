@@ -222,7 +222,7 @@ print(self.name .. " old state = " .. self.state)
       self.nextLink = StringReader:new()
     elseif self.state == "expression" then
 print("new expression")
-      self.nextLink = ExpressionReader:new("child")
+      self.nextLink = ExpressionReader:new(_, "child")
     end
 print(self.name .. " new state = " .. self.state)
 end
