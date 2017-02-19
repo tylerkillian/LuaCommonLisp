@@ -96,7 +96,7 @@ end
 function test_ExpressionReader.startStringWhenReachInitialQuotationMark()
   local expressionReader = ExpressionReader:new()
   feedCharactersOneAtATime(expressionReader, '"')
-  assert("string" == expressionReader:toString())
+  assert("():string" == expressionReader:toString())
 end
 
 function test_ExpressionReader.returnStringWhenReachEndQuotationMark()
