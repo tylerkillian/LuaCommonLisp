@@ -263,6 +263,7 @@ function ExpressionReader:prepareForNextCharacter(linkResult, character)
 end
 
 function ExpressionReader:readCharacter(character)
+if true then
   local result = self.nextLink:readCharacter(character)
 
   if not result then
@@ -288,7 +289,7 @@ function ExpressionReader:readCharacter(character)
   if self.returnBy == "element" then
     return result
   end
-if false then
+else
   local linkResult = self:callNextLink(character)
 
   local result = self:getReturnValue(linkResult, character)
