@@ -93,6 +93,12 @@ function test_Parser.returnSymbolWhenReachSpace()
   assert("ab" == parser:readCharacter(" "))
 end
 
+function test_Parser.startStringWhenReachInitialQuotationMark()
+  local parser = Parser:new()
+  feedCharactersOneAtATime(parser, '"')
+  assert("string" == parser:toString())
+end
+
 -- End unit tests
 
 local function runTests(testCategory, tests)
