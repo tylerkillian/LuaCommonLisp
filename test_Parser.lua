@@ -87,6 +87,7 @@ end
 function testParser()
   runTests("Scanner", test_Scanner)
   runTests("SymbolReader", test_SymbolReader)
+  runTests("StringReader", test_StringReader)
   runTests("Parser", test_Parser)
 end
 

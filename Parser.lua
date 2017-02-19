@@ -113,6 +113,33 @@ function SymbolReader:toString()
   return self.queue
 end
 
+StringReader = {}
+
+function StringReader:new()
+  local stringReader = {
+    queue = "",
+  }
+  setmetatable(stringReader, self)
+  self.__index = self
+
+  return stringReader
+end
+
+function StringReader:readCharacter(character)
+  if character == " " then
+    local result = self.queue
+    self.queue = ""
+    return result
+  else
+    self.queue = self.queue .. character
+    return
+  end
+end
+
+function StringReader:toString()
+  return self.queue
+end
+
 Parser = {
 }
 
