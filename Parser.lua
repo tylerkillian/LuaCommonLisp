@@ -142,14 +142,13 @@ end
 
 ExpressionReader = {}
 
-function ExpressionReader:new(returnBy,name)
+function ExpressionReader:new(returnBy)
   local expressionReader = {
     nextLink = Scanner:new(),
     operatorQueue = {},
     state = "scan",
     expression = {},
     returnBy = returnBy or "collection",
-name = name or "base",
   }
   setmetatable(expressionReader, self)
   self.__index = self
