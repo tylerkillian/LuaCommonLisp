@@ -132,3 +132,6 @@ function Parser:nextCharacter(character)
   return result
 end
 
+function Parser:toString()
+  return self.state
+end
