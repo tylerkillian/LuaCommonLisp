@@ -206,6 +206,23 @@ local function isOperator()
 end
 
 function ExpressionReader:changeState(currentStateTerminalCharacter)
+    local newState = getNewState(self.state, character)
+
+    if newState == "scan" then
+      self.nextLink = Scanner:new()
+      self.state = "scan"
+    elseif newState == "symbol" then
+      self.nextLink = SymbolReader:new()
+      self.state = "symbol"
+      self.nextLink:readCharacter(character)
+    elseif newState == "string" then
+      self.nextLink = StringReader:new()
+      self.state = "string"
+    elseif newState == "expression" then
+      self.nextLink = ExpressionReader:new()
+      self.state = "expression"
+    end
+
 end
 
 function ExpressionReader:readCharacter(character)
