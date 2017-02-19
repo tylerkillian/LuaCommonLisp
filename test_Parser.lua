@@ -57,16 +57,16 @@ end
 
 -- End unit tests
 
-local function runTests(tests)
+local function runTests(testCategory, tests)
   for testName, theTest in pairs(tests) do
-    print("Running " .. testName)
+    print("Running " .. testCategory .. " " .. testName)
     theTest()
   end
 end
 
 function testParser()
-  runTests(test_Scanner)
-  runTests(test_SymbolReader)
-  runTests(test_Parser)
+  runTests("Scanner", test_Scanner)
+  runTests("SymbolReader", test_SymbolReader)
+  runTests("Parser", test_Parser)
 end
 
