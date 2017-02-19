@@ -119,8 +119,8 @@ end
 
 function test_StringReader.terminate()
   local expressionReader = ExpressionReader:new()
-  feedCharactersOneAtATime(expressionReader, 'ab cd)')
-  assert("(ab cd)" == convertExpressionToString(expressionReader:toString())
+  feedCharactersOneAtATime(expressionReader, 'ab cd')
+  assert("(ab cd)" == convertExpressionToString(expressionReader:readCharacter(")")))
 end
 
 local test_Parser = {}
