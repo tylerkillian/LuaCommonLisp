@@ -11,11 +11,10 @@ end
 
 local Parser_tests = {}
 
-local function Scanner_readSpace()
+function Parser_tests.Scanner_readSpace()
   local scanner = Scanner:new()
   assert(not scanner:readCharacter(" "))
 end
-Parser_tests.Scanner_readSpace = Scanner_readSpace
 
 local function SymbolReader_addSingleCharacter()
   local symbolReader = SymbolReader:new()
