@@ -108,7 +108,7 @@ end
 function test_ExpressionReader.switchFromStringToScan()
   local expressionReader = ExpressionReader:new()
   feedCharactersOneAtATime(expressionReader, '"ab"')
-  assert("scan" == expressionReader:toString())
+  assert("(ab):scan" == expressionReader:toString())
 end
 
 function test_ExpressionReader.switchFromSymbolToString()
