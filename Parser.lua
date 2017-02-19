@@ -208,7 +208,7 @@ function ExpressionReader:readCharacter(character)
     table.insert(self.expression, result)
   end
 
-  if character == ")" then
+  if self.state ~=character == ")" then
     local expressionToReturn = self.expression
     self:reset()
     return expressionToReturn
