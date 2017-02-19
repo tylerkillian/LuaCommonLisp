@@ -228,6 +228,9 @@ function ExpressionReader:readCharacter(character)
     elseif newState == "string" then
       self.nextLink = StringReader:new()
       self.state = "string"
+    elseif newState == "expression" then
+      self.nextLink = ExpressionReader:new()
+      self.state = "expression"
     end
 
   end
