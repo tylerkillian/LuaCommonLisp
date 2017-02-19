@@ -42,6 +42,14 @@ function test_SymbolReader.resetAfterTerminate()
   assert("" == symbolReader:toString())
 end
 
+test_StringReader = {}
+
+function test_StringReader.addCharacter()
+  local stringReader = StringReader:new()
+  stringReader:readCharacter("a")
+  assert("a" == stringReader:toString())
+end
+
 local test_Parser = {}
 
 function test_Parser.construct()
