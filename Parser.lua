@@ -183,6 +183,8 @@ function Parser:readCharacter(character)
 
   end
 
+  self.nextLink:readCharacter(character)
+
   return result
 end
 
