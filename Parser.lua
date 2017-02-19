@@ -239,7 +239,7 @@ function ExpressionReader:callNextLink(character)
 end
 
 function ExpressionReader:returningExpression(character)
-  if self.returnBy == "collection" and self.state ~= "expression" and character == ")" then
+  if self.state ~= "expression" and character == ")" then
     return true
   else
     return false
