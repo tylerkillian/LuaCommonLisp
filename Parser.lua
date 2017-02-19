@@ -140,6 +140,17 @@ function StringReader:toString()
   return self.queue
 end
 
+ExpressionReader = {}
+
+function ExpressionReader:new()
+  local expressionReader = {
+    nextLink = Scanner:new(),
+    operatorQueue = {},
+    state = "scan",
+    expression = {},
+  }
+end
+
 Parser = {
 }
 
