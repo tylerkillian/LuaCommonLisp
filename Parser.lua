@@ -218,6 +218,7 @@ function ExpressionReader:readCharacter(character)
   end
 
   if self.state ~= "expression" and character == ")" then
+    assert(self.returnBy == "collection")
     local expressionToReturn = self.expression
     self:reset()
     return expressionToReturn
