@@ -248,6 +248,7 @@ function ExpressionReader:prepareForNextCharacter(linkResult, character)
   end
 
   if returningExpression(character) then
+    self:reset()
   end
 end
 
