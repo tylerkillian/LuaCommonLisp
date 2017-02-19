@@ -176,6 +176,7 @@ function Parser:readCharacter(character)
     if newState == "symbol" then
       self.nextLink = SymbolReader:new()
       self.state = "symbol"
+      self.nextLink:readCharacter(character)
     elseif newState == "scan" then
       self.nextLink = Scanner:new()
       self.state = "scan"
@@ -183,7 +184,6 @@ function Parser:readCharacter(character)
 
   end
 
-  self.nextLink:readCharacter(character)
 
   return result
 end
