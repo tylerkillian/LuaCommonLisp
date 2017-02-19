@@ -246,6 +246,9 @@ function ExpressionReader:prepareForNextCharacter(linkResult, character)
   if not linkResult then
     return
   end
+
+  if returningExpression(character) then
+  end
 end
 
 function ExpressionReader:readCharacter(character)
