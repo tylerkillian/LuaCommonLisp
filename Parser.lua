@@ -253,6 +253,7 @@ function ExpressionReader:getReturnValue(linkResult, character)
     return self.expression
     else
     return
+end
   end
 
   if not linkResult or self.state == "scan" then
