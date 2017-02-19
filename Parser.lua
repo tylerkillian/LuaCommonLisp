@@ -252,14 +252,14 @@ function ExpressionReader:getReturnValue(linkResult, character)
   end
 
   if self.returnBy == "collection" then
-print("a1")
-print(self.state)
-print(character)
+print(self.name .. " a1")
+print(self.name .. " " .. self.state)
+print(self.name .. " " .. character)
   if self:returningExpression(character) then
-print("a2")
+print(self.name .. " a2")
     return self.expression
 else 
-print("a3")
+print(self.name .. " a3")
 return
   end
 end
