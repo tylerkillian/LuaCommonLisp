@@ -14,7 +14,11 @@ function convertExpressionToString(expression)
 
   local result = ""
   for _, current in ipairs(expression) do
-    result = result .. " " .. current
+    if type(current) == "table" then
+      result = seult .. " " .. convertExpressionToString(current)
+    else
+      result = result .. " " .. current
+    end
   end
   return "(" .. string.sub(result, 2) .. ")"
 end
