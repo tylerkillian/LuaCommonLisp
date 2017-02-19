@@ -155,33 +155,6 @@ function ExpressionReader:new()
   return expressionReader
 end
 
-function ExpressionReader:toString()
-  if #self.expression == 0 then
-    return "()"
-  end
-
-  local result = ""
-  for _, current in ipairs(self.expression) do
-    result = result .. " " .. current
-  end
-  return "(" .. string.sub(result, 2) .. ")"
-end
-
-Parser = {
-}
-
-function Parser:new()
-  local parser = {
-    nextLink = Scanner:new(),
-    operatorQueue = {},
-    state = "scan",
-  }
-  setmetatable(parser, self)
-  self.__index = self
-
-  return parser
-end
-
 local function getNewState(currentState, terminalCharacter)
   if currentState == "scan" then
 
@@ -216,7 +189,8 @@ local function isOperator()
   return false
 end
 
-function Parser:readCharacter(character)
+
+function ExpressionReader:readCharacter(character)
   local result = self.nextLink:readCharacter(character)
 
   if not result then
@@ -241,6 +215,60 @@ function Parser:readCharacter(character)
 
   end
 
+  return result
+end
+
+function ExpressionReader:toString()
+  if #self.expression == 0 then
+    return "()"
+  end
+
+  local result = ""
+  for _, current in ipairs(self.expression) do
+    result = result .. " " .. current
+  end
+  return self.state .. ":(" .. string.sub(result, 2) .. ")"
+end
+
+Parser = {
+}
+
+function Parser:new()
+  local parser = {
+    nextLink = Scanner:new(),
+    operatorQueue = {},
+    state = "scan",
+  }
+  setmetatable(parser, self)
+  self.__index = self
+
+  return parser
+end
+
+function Parser:readCharacter(character)
+  local result = self.nextLink:readCharacter(character)
+
+  if not result then
+    return
+  end
+
+  if isOperator(character) then
+  else
+    local newState = getNewState(self.state, character)
+
+    if newState == "scan" then
+      self.nextLink = Scanner:new()
+      self.state = "scan"
+    elseif newState == "symbol" then
+      self.nextLink = SymbolReader:new()
+      self.state = "symbol"
+      self.nextLink:readCharacter(character)
+    elseif newState == "string" then
+      self.nextLink = StringReader:new()
+      self.state = "string"
+    end
+
+  end
 
   return result
 end

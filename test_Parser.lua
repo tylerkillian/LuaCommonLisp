@@ -75,6 +75,55 @@ function test_ExpressionReader.construct()
   assert("()", expressionReader:toString())
 end
 
+function test_ExpressionReader.switchFromScanToSymbol()
+  local expressionReader = ExpressionReader:new()
+  expressionReader:readCharacter("a")
+  assert("():symbol" == expressionReader:toString())
+end
+
+function test_ExpressionReader.switchFromSymbolToScan()
+  local expressionReader = ExpressionReader:new()
+  feedCharactersOneAtATime(expressionReader, "ab ")
+  assert("scan" == expressionReader:toString())
+end
+
+function test_ExpressionReader.returnSymbolWhenReachSpace()
+  local expressionReader = ExpressionReader:new()
+  feedCharactersOneAtATime(expressionReader, "ab")
+  assert("ab" == expressionReader:readCharacter(" "))
+end
+
+function test_ExpressionReader.returnSymbolWhenReachString()
+  local expressionReader = ExpressionReader:new()
+  feedCharactersOneAtATime(expressionReader, 'ab')
+  assert("ab" == expressionReader:readCharacter('"'))
+end
+
+function test_ExpressionReader.startStringWhenReachInitialQuotationMark()
+  local expressionReader = ExpressionReader:new()
+  feedCharactersOneAtATime(expressionReader, '"')
+  assert("string" == expressionReader:toString())
+end
+
+function test_ExpressionReader.returnStringWhenReachEndQuotationMark()
+  local expressionReader = ExpressionReader:new()
+  feedCharactersOneAtATime(expressionReader, '"ab')
+  assert("ab" == expressionReader:readCharacter('"'))
+end
+
+function test_ExpressionReader.switchFromStringToScan()
+  local expressionReader = ExpressionReader:new()
+  feedCharactersOneAtATime(expressionReader, '"ab"')
+  assert("scan" == expressionReader:toString())
+end
+
+function test_ExpressionReader.switchFromSymbolToString()
+  local expressionReader = ExpressionReader:new()
+  feedCharactersOneAtATime(expressionReader, 'ab"')
+  assert("string" == expressionReader:toString())
+end
+
+
 local test_Parser = {}
 
 function test_Parser.construct()
@@ -143,6 +192,7 @@ function testParser()
   runTests("Scanner", test_Scanner)
   runTests("SymbolReader", test_SymbolReader)
   runTests("StringReader", test_StringReader)
+  runTests("ExpressionReader", test_ExpressionReader)
   runTests("Parser", test_Parser)
 end
 
