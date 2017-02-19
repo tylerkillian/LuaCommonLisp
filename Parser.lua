@@ -204,10 +204,14 @@ function ExpressionReader:readCharacter(character)
     return
   end
 
-  if character == ")" then
+  if self.state ~= "scan" then
     table.insert(self.expression, result)
+  end
+
+  if character == ")" then
     local expressionToReturn = self.expression
-    self.expression = {}
+    self:reset()
+    return expressionToReturn
   end
 
   if isOperator(character) then
