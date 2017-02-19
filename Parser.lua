@@ -230,12 +230,20 @@ function ExpressionReader:callNextLink(character)
   return linkResult
 end
 
+function ExpressionReader:returnExpression(character)
+  if self.returnBy == "collection" and self.state ~= "expression" and character == ")" then
+    return true
+  else
+    return false
+  end
+end
+
 function ExpressionReader:getReturnValue(linkResult, character)
   if not linkResult or self.state == "scan" then
     return
   end
 
-  if self.returnBy == "collection" and self.state ~= "expression" and character == ")" then
+  if self:returningExpression(character) then
     return self.expression
   end
 
@@ -247,7 +255,7 @@ function ExpressionReader:prepareForNextCharacter(linkResult, character)
     return
   end
 
-  if returningExpression(character) then
+  if self:returningExpression(character) then
     self:reset()
   else
     self:changeState()
