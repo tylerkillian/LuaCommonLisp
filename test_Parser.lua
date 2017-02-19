@@ -55,6 +55,12 @@ function test_Parser.switchFromScanToSymbol()
   assert("symbol" == parser:toString())
 end
 
+function test_Parser.switchFromSymbolToScan()
+  local parser = Parser:new()
+  feedCharactersOneAtATime(parser, "ab ")
+  assert("scan" == parser:toString())
+end
+
 -- End unit tests
 
 local function runTests(testCategory, tests)
