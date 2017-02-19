@@ -250,6 +250,7 @@ if false then
   local linkResult = self:callNextLink(character)
   local result = self:getReturnValue()
   self:getReadyForNextCharacter()
+  return result
 end
 end
 
