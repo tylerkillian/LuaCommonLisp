@@ -232,7 +232,7 @@ function ExpressionReader:callNextLink(character)
 
   if linkResult and self.state ~= "scan" and self.returnBy == "collection" then
 --print(self.name .. " storing " .. linkResult)
-print(self.name . . "storing " .. type(linkResult))
+print(self.name .. "storing " .. type(linkResult))
     table.insert(self.expression, linkResult)
   end
 
