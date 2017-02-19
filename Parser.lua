@@ -164,7 +164,6 @@ end
 
 function Parser:readCharacter(character)
   local result = self.nextLink:readCharacter(character)
-print(result)
 
   if not result then
     return
