@@ -290,7 +290,6 @@ if false then
     return result
   end
 else
-print(character)
   local linkResult = self:callNextLink(character)
 
   local result = self:getReturnValue(linkResult, character)
