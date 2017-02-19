@@ -222,7 +222,6 @@ function ExpressionReader:changeState(currentStateTerminalCharacter)
       self.nextLink = ExpressionReader:new()
       self.state = "expression"
     end
-
 end
 
 function ExpressionReader:readCharacter(character)
