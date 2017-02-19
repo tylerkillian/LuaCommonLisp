@@ -129,7 +129,7 @@ function test_ExpressionReader.switchFromSymbolToString()
   assert("(ab):string" == expressionReader:toString())
 end
 
-function test_StringReader.terminate()
+function test_ExpressionReader.terminate()
   local expressionReader = ExpressionReader:new()
   feedCharactersOneAtATime(expressionReader, 'ab cd')
   assert("(ab cd)" == convertExpressionToString(expressionReader:readCharacter(")")))
