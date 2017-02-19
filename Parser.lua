@@ -163,7 +163,7 @@ function ExpressionReader:reset()
   self.expression = {}
 end
 
-local function getNewState(currentState, terminalCharacter, self)
+local function getNewState(currentState, terminalCharacter)
   if currentState == "scan" then
 
     if terminalCharacter == "\"" then
