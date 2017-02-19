@@ -111,6 +111,12 @@ function test_Parser.switchFromStringToScan()
   assert("scan" == parser:toString())
 end
 
+function test_Parser.switchFromSymbolToString()
+  local parser = Parser:new()
+  feedCharactersOneAtATime(parser, 'ab"')
+  assert("string" == parser:toString())
+end
+
 -- End unit tests
 
 local function runTests(testCategory, tests)
