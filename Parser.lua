@@ -247,10 +247,14 @@ function ExpressionReader:readCharacter(character)
     return result
   end
 
+if false then
+  self:sendCharacterToNextLink(character)
+
   local result2
   if not result then
     result2 = nil
   end
+end
 end
 
 function ExpressionReader:toString()
