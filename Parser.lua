@@ -164,7 +164,7 @@ function ExpressionReader:reset()
   self.expression = {}
 end
 
-local function getNewState(currentState, terminalCharacter)
+local function getNewState(currentState, terminalCharacter, self)
   if currentState == "scan" then
 
     if terminalCharacter == "\"" then
@@ -210,7 +210,7 @@ end
 
 function ExpressionReader:changeState(currentStateTerminalCharacter)
 print(self.name .. " old state = " .. self.state)
-    self.state = getNewState(self.state, currentStateTerminalCharacter)
+    self.state = getNewState(self.state, currentStateTerminalCharacter, self)
 
     if self.state == "scan" then
       self.nextLink = Scanner:new()
