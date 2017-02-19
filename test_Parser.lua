@@ -78,7 +78,7 @@ end
 function test_ExpressionReader.switchFromScanToSymbol()
   local expressionReader = ExpressionReader:new()
   expressionReader:readCharacter("a")
-  assert("():symbol" == expressionReader:toString())
+  assert("symbol:()" == expressionReader:toString())
 end
 
 function test_ExpressionReader.switchFromSymbolToScan()
