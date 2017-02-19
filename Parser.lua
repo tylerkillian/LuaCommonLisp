@@ -220,6 +220,8 @@ function ExpressionReader:changeState(currentStateTerminalCharacter)
     end
 end
 
+function ExpressionReader:
+
 function ExpressionReader:readCharacter(character)
   local result = self.nextLink:readCharacter(character)
 
