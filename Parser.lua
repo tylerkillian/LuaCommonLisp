@@ -248,7 +248,10 @@ function ExpressionReader:readCharacter(character)
   end
 
 if false then
-  self:sendCharacterToNextLink(character)
+  local linkTerminated = self:sendCharacterToNextLink(character)
+
+  if linkTerminated then
+  end
 
   local result2
   if not result then
