@@ -158,11 +158,19 @@ local function getNewState(currentState, terminalCharacter)
   end
 end
 
+local function isOperator()
+  return false
+end
+
 function Parser:readCharacter(character)
   local result = self.nextLink:readCharacter(character)
 
   if not result then
     return
+  end
+
+  if isOperator(character) then
+  else
   end
 
   return result
