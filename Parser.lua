@@ -114,7 +114,10 @@ local function getNewState(currentState, terminalCharacter)
     end
 
   elseif currentState == "string" then
-    if terminal
+
+    if terminalCharacter == "\"" then
+      return "scan"
+    end
 
   end
 end
