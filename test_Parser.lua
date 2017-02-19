@@ -15,7 +15,7 @@ function convertExpressionToString(expression)
   local result = ""
   for _, current in ipairs(expression) do
     if type(current) == "table" then
-      result = seult .. " " .. convertExpressionToString(current)
+      result = result .. " " .. convertExpressionToString(current)
     else
       result = result .. " " .. current
     end
