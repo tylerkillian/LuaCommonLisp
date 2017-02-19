@@ -281,6 +281,7 @@ function ExpressionReader:prepareForNextCharacter(linkResult, character)
 end
 
 function ExpressionReader:readCharacter(character)
+print("reading " .. character)
 if false then
   local result = self.nextLink:readCharacter(character)
 
