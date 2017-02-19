@@ -189,6 +189,12 @@ local function getNewState(currentState, terminalCharacter)
       return "scan"
     end
 
+  elseif currentState == "expression" then
+
+     if terminalCharacter == ")" then
+       return "scan"
+     end
+
   end
 end
 
