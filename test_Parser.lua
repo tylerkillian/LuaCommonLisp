@@ -9,10 +9,13 @@ end
 
 -- Begin unit tests
 
+local Parser_tests = {}
+
 local function Scanner_readSpace()
   local scanner = Scanner:new()
   assert(not scanner:readCharacter(" "))
 end
+Parser_tests.Scanner_readSpace = Scanner_readSpace
 
 local function SymbolReader_addSingleCharacter()
   local symbolReader = SymbolReader:new()
@@ -50,16 +53,6 @@ local function Parser_switchFromScanToSymbol()
 end
 
 function testParser()
-  local Parser_tests = {
-    Scanner_readSpace = Scanner_readSpace,
-    SymbolReader_addSingleCharacter = SymbolReader_addSingleCharacter,
-    SymbolReader_addTwoCharacters = SymbolReader_addTwoCharacters,
-    SymbolReader_terminateWithSpace = SymbolReader_terminateWithSpace,
-    SymbolReader_resetAfterTerminate = SymbolReader_resetAfterTerminate,
-    Parser_construct = Parser_construct,
-    Parser_switchFromScanToSymbol = Parser_switchFromScanToSymbol,
-  }
-
   for testName, theTest in pairs(Parser_tests) do
     print("Running " .. testName)
     theTest()
