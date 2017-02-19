@@ -55,7 +55,7 @@ function testParser()
     SymbolReader_addSingleCharacter = SymbolReader_addSingleCharacter,
     SymbolReader_addTwoCharacters = SymbolReader_addTwoCharacters,
     SymbolReader_terminateWithSpace = SymbolReader_terminateWithSpace,
-    SymbolReader_resetAfterTerminate = SymbolReader_resetAfterTerminate
+    SymbolReader_resetAfterTerminate = SymbolReader_resetAfterTerminate,
     Parser_construct = Parser_construct,
     Parser_switchFromScanToSymbol = Parser_switchFromScanToSymbol,
   }
