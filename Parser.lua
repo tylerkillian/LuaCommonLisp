@@ -221,10 +221,15 @@ function ExpressionReader:changeState(currentStateTerminalCharacter)
 end
 
 function ExpressionReader:callNextLink(character)
-  return self.nextLink:readCharacter(character)
+  local linkResult = self.nextLink:readCharacter(character)
+  return linkResult
 end
 
 function ExpressionReader:getReturnValue(linkResult, character)
+  if not linkResult or self.state == "scan" then
+    return
+  end
+end
 
 function ExpressionReader:readCharacter(character)
   local result = self.nextLink:readCharacter(character)
