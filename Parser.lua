@@ -244,6 +244,10 @@ function ExpressionReader:readCharacter(character)
     end
 
   end
+
+  if self.returnBy == "element" then
+    return result
+  end
 end
 
 function ExpressionReader:toString()
