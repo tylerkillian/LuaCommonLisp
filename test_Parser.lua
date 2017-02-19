@@ -68,6 +68,13 @@ function test_StringReader.resetAfterTerminate()
   assert("" == stringReader:toString())
 end
 
+local test_ExpressionReader = {}
+
+function test_ExpressionReader.construct()
+  local expressionReader = ExpressionReader:new()
+  assert("()", expressionReader:toString())
+end
+
 local test_Parser = {}
 
 function test_Parser.construct()
