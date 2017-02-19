@@ -145,8 +145,6 @@ function test_ExpressionReader.nested()
   assert("(a (b c))" == convertExpressionToString(expressionReader:readCharacter(")")))
 end
 
-local test_Parser = {}
-
 function test_ExpressionReader.construct()
   local defaultExpressionReader = ExpressionReader:new("element")
   assert("scan" == defaultExpressionReader:toString())
