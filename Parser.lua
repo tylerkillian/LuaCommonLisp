@@ -240,6 +240,7 @@ function ExpressionReader:readCharacter(character)
 
   if isOperator(character) then
   else
+    self:changeState(character)
   end
 
   if self.returnBy == "element" then
