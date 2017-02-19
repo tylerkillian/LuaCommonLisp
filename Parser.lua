@@ -221,9 +221,7 @@ function ExpressionReader:changeState(currentStateTerminalCharacter)
 end
 
 function ExpressionReader:callNextLink(character)
-print(character)
   local linkResult = self.nextLink:readCharacter(character)
-print("done")
 
   if self.state ~= "scan" and self.returnBy == "collection" then
     table.insert(self.expression, result)
@@ -260,7 +258,7 @@ function ExpressionReader:prepareForNextCharacter(linkResult, character)
   if self:returningExpression(character) then
     self:reset()
   else
-    self:changeState()
+    self:changeState(character)
   end
 end
 
