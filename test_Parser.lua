@@ -3,6 +3,7 @@ require "Parser"
 local function feedCharactersOneAtATime(reader, characters)
   for index = 1, string.len(characters) do
     local nextCharacter = string.sub(characters, index, index)
+print("feeding " .. nextCharacter)
     reader:readCharacter(nextCharacter)
   end
 end
