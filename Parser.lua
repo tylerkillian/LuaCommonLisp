@@ -249,6 +249,7 @@ end
 
 function ExpressionReader:getReturnValue(linkResult, character)
   if self.returnBy == "collection" and self.state ~= "expression" and character == ")" then
+    return self.expression
   end
 
   if not linkResult or self.state == "scan" then
