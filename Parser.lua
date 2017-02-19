@@ -242,6 +242,9 @@ function ExpressionReader:getReturnValue(linkResult, character)
   return linkResult
 end
 
+function ExpressionReader:prepareForNextCharacter(character)
+end
+
 function ExpressionReader:readCharacter(character)
   local result = self.nextLink:readCharacter(character)
 
