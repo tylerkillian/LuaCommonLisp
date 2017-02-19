@@ -230,7 +230,7 @@ end
 function ExpressionReader:callNextLink(character)
   local linkResult = self.nextLink:readCharacter(character)
 
-  if self.state ~= "scan" and self.returnBy == "collection" then
+  if linkResult and self.state ~= "scan" and self.returnBy == "collection" then
 print(self.name .. " storing " .. linkResult)
     table.insert(self.expression, linkResult)
   end
