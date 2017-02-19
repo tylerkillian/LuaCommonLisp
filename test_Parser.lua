@@ -87,7 +87,7 @@ function test_ExpressionReader.switchFromSymbolToScan()
   assert("scan" == expressionReader:toString())
 end
 
-function test_ExpressionReader.returnSymbolWhenReachSpace()
+function test_ExpressionReader.addSymbolToExpressionWhenReachSpace()
   local expressionReader = ExpressionReader:new()
   feedCharactersOneAtATime(expressionReader, "ab")
   assert("ab" == expressionReader:readCharacter(" "))
