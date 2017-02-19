@@ -200,13 +200,16 @@ function Parser:readCharacter(character)
   else
     local newState = getNewState(self.state, character)
 
-    if newState == "symbol" then
+    if newState == "scan" then
+      self.nextLink = Scanner:new()
+      self.state = "scan"
+    elseif newState == "symbol" then
       self.nextLink = SymbolReader:new()
       self.state = "symbol"
       self.nextLink:readCharacter(character)
-    elseif newState == "scan" then
-      self.nextLink = Scanner:new()
-      self.state = "scan"
+    elseif newState == "string" then
+      self.nextLink = StringReader:new()
+      self.state = "string"
     end
 
   end
