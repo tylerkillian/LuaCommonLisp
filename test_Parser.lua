@@ -7,7 +7,7 @@ local function feedCharactersOneAtATime(reader, characters)
   end
 end
 
-function ExpressionReader:toString()
+function convertExpressionToString()
   if #self.expression == 0 then
     return "():" .. self.state
   end
