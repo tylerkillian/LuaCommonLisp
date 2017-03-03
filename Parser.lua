@@ -306,7 +306,7 @@ end
 
 function update_Scanner:readCharacter(character)
   assert(not self.hasTerminated)
-  if character ~= " " then
+  if character ~= " " and character ~= "\n" then
     self.hasTerminated = true
   end
 end
@@ -318,4 +318,9 @@ end
 function update_Scanner:getResult()
   return
 end
+
+function update_Scanner:usedTerminalCharacter()
+  return false
+end
+
 
