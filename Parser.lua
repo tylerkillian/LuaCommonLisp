@@ -296,7 +296,7 @@ update_Scanner = {}
 
 function update_Scanner:new()
   local scanner = {
-    hasTerminated = false,
+    terminated = false,
   }
   setmetatable(scanner, self)
   self.__index = self
@@ -305,23 +305,23 @@ function update_Scanner:new()
 end
 
 function update_Scanner:readCharacter(character)
-  assert(not self.hasTerminated)
+  assert(not self.terminated)
   if character ~= " " and character ~= "\n" then
-    self.hasTerminated = true
+    self.terminated = true
   end
 end
 
 function update_Scanner:hasTerminated()
-  return self.hasTerminated
+  return self.terminated
 end
 
 function update_Scanner:getResult()
-  assert(self.hasTerminated)
+  assert(self.terminated)
   return
 end
 
 function update_Scanner:usedTerminalCharacter()
-  assert(self.hasTerminated)
+  assert(self.terminated)
   return false
 end
 

@@ -203,13 +203,13 @@ local test_update_Scanner = {}
 function test_update_Scanner.readSpace()
   local scanner = update_Scanner:new()
   scanner:readCharacter(" ")
-  assert(not scanner:isTerminated())
+  assert(not scanner:hasTerminated())
 end
 
 function test_update_Scanner.readNonWhitespace()
   local scanner = update_Scanner:new()
   scanner:readCharacter("a")
-  assert(scanner:isTerminated())
+  assert(scanner:hasTerminated())
 end
 
 function test_update_Scanner.doesNotUseTerminalCharacter()
