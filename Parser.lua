@@ -292,3 +292,21 @@ function ExpressionReader:toString()
   return "(" .. string.sub(result, 2) .. "):" .. self.state
 end
 
+update_Scanner = {}
+
+function update_Scanner:new()
+  local scanner = {
+  }
+  setmetatable(scanner, self)
+  self.__index = self
+
+  return scanner
+end
+
+function update_Scanner:readCharacter(character)
+  if character == " " then
+    return
+  else
+    return "DONE"
+  end
+end
