@@ -306,9 +306,16 @@ end
 
 function update_Scanner:readCharacter(character)
   assert(not self.hasTerminated)
-  if character == " " then
-    return
-  else
-    return "DONE"
+  if character ~= " " then
+    self.hasTerminated = true
   end
 end
+
+function update_Scanner:hasTerminated()
+  return self.hasTerminated
+end
+
+function update_Scanner:getResult()
+  return
+end
+
