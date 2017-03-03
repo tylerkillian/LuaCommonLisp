@@ -304,6 +304,7 @@ function update_Scanner:new()
 end
 
 function update_Scanner:readCharacter(character)
+  assert(not self.hasTerminated)
   if character == " " then
     return
   else
