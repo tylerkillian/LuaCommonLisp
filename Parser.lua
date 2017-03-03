@@ -316,6 +316,7 @@ function update_Scanner:hasTerminated()
 end
 
 function update_Scanner:getResult()
+  assert(self.hasTerminated)
   return
 end
 

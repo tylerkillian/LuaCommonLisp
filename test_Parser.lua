@@ -202,7 +202,8 @@ local test_update_Scanner = {}
 
 function test_update_Scanner.readSpace()
   local scanner = update_Scanner:new()
-  assert(not scanner:readCharacter(" "))
+  scanner:readCharacter(" ")
+  assert(not scanner:isTerminated(" "))
 end
 
 -- End unit tests
