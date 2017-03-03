@@ -198,6 +198,13 @@ function test_ExpressionReader.switchFromSymbolToString()
   assert("string" == expressionReader:toString())
 end
 
+local test_update_Scanner = {}
+
+function test_update_Scanner.readSpace()
+  local scanner = update_Scanner:new()
+  assert(not scanner:readCharacter(" "))
+end
+
 -- End unit tests
 
 local function runTests(testCategory, tests)
