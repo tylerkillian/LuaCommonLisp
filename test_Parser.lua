@@ -220,8 +220,7 @@ end
 
 function test_update_Scanner.resultIsNil()
   local scanner = update_Scanner:new()
-  scanner:readCharacter("    a")
-  feedCharactersOneatATime(scanner, "   a")
+  feedCharactersOneatATime(scanner, "   b")
   assert(not scanner:getResult())
 end
 
