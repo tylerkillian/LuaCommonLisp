@@ -321,6 +321,7 @@ function update_Scanner:getResult()
 end
 
 function update_Scanner:usedTerminalCharacter()
+  assert(self.hasTerminated)
   return false
 end
 

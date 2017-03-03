@@ -212,6 +212,12 @@ function test_update_Scanner.readNonWhitespace()
   assert(scanner:isTerminated())
 end
 
+function test_update_Scanner.doesNotUseTerminalCharacter()
+  local scanner = update_Scanner:new()
+  scanner:readCharacter("a")
+  assert(not scanner:usedTerminalCharacter())
+end
+
 -- End unit tests
 
 local function runTests(testCategory, tests)
