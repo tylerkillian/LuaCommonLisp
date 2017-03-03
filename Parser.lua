@@ -296,6 +296,7 @@ update_Scanner = {}
 
 function update_Scanner:new()
   local scanner = {
+    hasTerminated = false,
   }
   setmetatable(scanner, self)
   self.__index = self
