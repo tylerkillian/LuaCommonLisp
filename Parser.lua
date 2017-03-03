@@ -216,7 +216,7 @@ function ExpressionReader:changeState(currentStateTerminalCharacter)
     elseif self.state == "string" then
       self.nextLink = StringReader:new()
     elseif self.state == "expression" then
-      self.nextLink = ExpressionReader:new(_, "child")
+      self.nextLink = ExpressionReader:new()
     end
 end
 
