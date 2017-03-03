@@ -218,6 +218,12 @@ function test_update_Scanner.doesNotUseTerminalCharacter()
   assert(not scanner:usedTerminalCharacter())
 end
 
+function test_update_Scanner.resultIsNil()
+  local scanner = update_Scanner:new()
+  scanner:readCharacter("a")
+  assert(not scanner:getResult())
+end
+
 -- End unit tests
 
 local function runTests(testCategory, tests)
