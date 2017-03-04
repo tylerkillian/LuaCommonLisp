@@ -373,9 +373,9 @@ function update_SymbolReader:toString()
   return self.queue
 end
 
-ExpressionReader = {}
+update_ExpressionReader = {}
 
-function ExpressionReader:new(returnBy)
+function update_ExpressionReader:new(returnBy)
   local expressionReader = {
     nextLink = Scanner:new(),
     operatorQueue = {},
@@ -389,7 +389,7 @@ function ExpressionReader:new(returnBy)
   return expressionReader
 end
 
-function ExpressionReader:reset()
+function update_ExpressionReader:reset()
   self.nextLink = Scanner:new()
   self.operatorQueue = {}
   self.state = "scan"
@@ -438,7 +438,7 @@ local function isOperator()
   return false
 end
 
-function ExpressionReader:changeState(currentStateTerminalCharacter)
+function update_ExpressionReader:changeState(currentStateTerminalCharacter)
     self.state = getNewState(self.state, currentStateTerminalCharacter, self)
 
     if self.state == "scan" then
@@ -449,11 +449,11 @@ function ExpressionReader:changeState(currentStateTerminalCharacter)
     elseif self.state == "string" then
       self.nextLink = StringReader:new()
     elseif self.state == "expression" then
-      self.nextLink = ExpressionReader:new()
+      self.nextLink = update_ExpressionReader:new()
     end
 end
 
-function ExpressionReader:callNextLink(character)
+function update_ExpressionReader:callNextLink(character)
   local linkResult = self.nextLink:readCharacter(character)
 
   if linkResult and self.state ~= "scan" and self.returnBy == "collection" then
@@ -463,7 +463,7 @@ function ExpressionReader:callNextLink(character)
   return linkResult
 end
 
-function ExpressionReader:returningExpression(character)
+function update_ExpressionReader:returningExpression(character)
   if self.returnBy == "collection" and self.state ~= "expression" and character == ")" then
     return true
   else
@@ -471,7 +471,7 @@ function ExpressionReader:returningExpression(character)
   end
 end
 
-function ExpressionReader:getReturnValue(linkResult, character)
+function update_ExpressionReader:getReturnValue(linkResult, character)
   if self.returnBy == "collection" then
     if self:returningExpression(character) then
       return self.expression
@@ -487,7 +487,7 @@ function ExpressionReader:getReturnValue(linkResult, character)
   return linkResult
 end
 
-function ExpressionReader:prepareForNextCharacter(linkResult, character)
+function update_ExpressionReader:prepareForNextCharacter(linkResult, character)
   if not linkResult then
     return
   end
@@ -499,7 +499,7 @@ function ExpressionReader:prepareForNextCharacter(linkResult, character)
   end
 end
 
-function ExpressionReader:readCharacter(character)
+function update_ExpressionReader:readCharacter(character)
   local linkResult = self:callNextLink(character)
 
   local result = self:getReturnValue(linkResult, character)
@@ -509,7 +509,7 @@ function ExpressionReader:readCharacter(character)
   return result
 end
 
-function ExpressionReader:toString()
+function update_ExpressionReader:toString()
   if self.returnBy == "element" then
     return self.state
   end
