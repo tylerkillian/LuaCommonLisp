@@ -298,6 +298,12 @@ Code = {
 
 update_Scanner = {}
 
+function update_Scanner.startsWith(character)
+  if character == " " or character == "\n" then
+    return update_Scanner:new()
+  end
+end
+
 function update_Scanner:new()
   local scanner = {}
   setmetatable(scanner, self)
@@ -402,9 +408,9 @@ function update_ExpressionReader:readCharacter(character)
     return
   end
 
-  self.nextLink = Scanner.startsWith(character) or
-    String.startsWith(character) or
-    Symbol.startsWith(character) or
+  self.nextLink = update_Scanner.startsWith(character) or
+    update_String.startsWith(character) or
+    update_Symbol.startsWith(character) or
     update_ExpressionReader.startsWith(character)
 end
 
