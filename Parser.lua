@@ -69,7 +69,11 @@ end
 SymbolReader = {}
 
 function SymbolReader.startsWith(character)
-  if character == '"' or character == "(" or character == " " or character == "\n" then
+  if character == '"' or
+    character == "(" or
+    character == " " or
+    character == "\n" or
+    character == "'" then
     return
   end
 
