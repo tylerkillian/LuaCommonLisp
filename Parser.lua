@@ -2,7 +2,18 @@ Code = {
   NULL = {},
 }
 
+local AllReaders = {}
+function getNewReaderUsingInitialCharacter(character)
+  for _, reader in ipairs(AllReaders) do
+    local result = reader.startsWithCharacter
+    if result then
+      return result
+    end
+  end
+end
+
 Scanner = {}
+table.insert(AllReaders, Scanner)
 
 function Scanner.startsWith(character)
   if character == " " or character == "\n" then
@@ -27,6 +38,7 @@ function Scanner:readCharacter(character)
 end
 
 StringReader = {}
+table.insert(AllReaders, StringReader)
 
 function StringReader.startsWith(character)
   if character == '"' then
@@ -67,6 +79,7 @@ function StringReader:toString()
 end
 
 SymbolReader = {}
+table.insert(AllReaders, SymbolReader)
 
 function SymbolReader.startsWith(character)
   if character == '"' or
@@ -106,6 +119,7 @@ function SymbolReader:toString()
 end
 
 ExpressionReader = {}
+table.insert(AllReaders, ExpressionReader)
 
 function ExpressionReader.startsWith(character)
   if character ~= "(" then
@@ -146,10 +160,7 @@ function ExpressionReader:readCharacter(character)
     return
   end
 
-  self.nextLink = Scanner.startsWith(character) or
-    StringReader.startsWith(character) or
-    SymbolReader.startsWith(character) or
-    ExpressionReader.startsWith(character)
+  self.nextLink = getNewReaderUsingInitialCharacter(character)
 end
 
 function ExpressionReader:toString()
@@ -170,6 +181,7 @@ function ExpressionReader:toString()
 end
 
 SingleQuoteReader = {}
+table.insert(AllReaders, SingleQuoteReader)
 
 function SingleQuoteReader.startsWith(character)
   if character == "'" then
@@ -186,3 +198,17 @@ function SingleQuoteReader:new()
 
   return reader
 end
+
+function SingleQuoteReader:readCharacter(character)
+  local linkResult = self.nextLink:readCharacter(character)
+  if not linkResult then
+    return
+  end
+
+  if linkResult ~= Code.NULL then
+    return linkResult
+  end
+
+  self.nextLink = getNewReaderUsingInitialCharacter(character)
+end
+
