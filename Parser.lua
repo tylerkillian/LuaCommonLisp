@@ -428,13 +428,10 @@ function update_ExpressionReader:readCharacter(character)
   end
 
   if linkResult ~= Code.NULL then
-print("inserting")
-print(linkResult)
     table.insert(self.expression, linkResult)
   end
 
   if character == ")" then
-print("got closing parentheses")
     self.isDone = true
     return
   end
