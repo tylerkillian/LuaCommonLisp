@@ -202,7 +202,7 @@ end
 test_Parser = {}
 
 function test_Parser.validCharacterOnlyRecognizedByOneReader()
-  local validCharacters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"('
+  local validCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\"('"
 
   for characterIndex = 1, string.len(validCharacters) do
     local nextCharacter = string.sub(validCharacters, characterIndex, characterIndex)
@@ -222,6 +222,10 @@ function test_Parser.validCharacterOnlyRecognizedByOneReader()
     end
 
     if ExpressionReader.startsWith(nextCharacter) then
+      numberOfRecognitions = numberOfRecognitions + 1
+    end
+
+    if SingleQuoteReader.startsWith(nextCharacter) then
       numberOfRecognitions = numberOfRecognitions + 1
     end
 

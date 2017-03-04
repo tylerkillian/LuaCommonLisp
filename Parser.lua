@@ -164,3 +164,21 @@ function ExpressionReader:toString()
   end
   return "(" .. string.sub(result, 2) .. "):" .. isDoneString
 end
+
+SingleQuoteReader = {}
+
+function SingleQuoteReader.startsWith(character)
+  if character == "'" then
+    return SingleQuoteReader:new()
+  end
+end
+
+function SingleQuoteReader:new()
+  local reader = {
+    nextLink = Scanner:new(),
+  }
+  setmetatable(reader, self)
+  self.__index = self
+
+  return reader
+end
