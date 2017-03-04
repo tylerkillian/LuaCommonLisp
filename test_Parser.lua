@@ -219,6 +219,32 @@ function test_update_Scanner.multipleWhitespaceCharacters()
   assert(result == Code.NULL)
 end
 
+test_update_StringReader = {}
+
+function test_update_StringReader.addCharacter()
+  local stringReader = update_StringReader:new()
+  stringReader:readCharacter("a")
+  assert("a" == stringReader:toString())
+end
+
+function test_update_StringReader.addTwoCharacters()
+  local stringReader = update_StringReader:new()
+  feedCharactersOneAtATime(stringReader, "ab")
+  assert("ab" == stringReader:toString())
+end
+
+function test_update_StringReader.terminate()
+  local stringReader = update_StringReader:new()
+  feedCharactersOneAtATime(stringReader, "ab")
+  assert("ab" == stringReader:readCharacter("\""))
+end
+
+function test_update_StringReader.resetAfterTerminate()
+  local stringReader = update_StringReader:new()
+  feedCharactersOneAtATime(stringReader, "ab\"")
+  assert("" == stringReader:toString())
+end
+
 -- End unit tests
 
 local function runTests(testCategory, tests)
@@ -235,5 +261,6 @@ function testParser()
   runTests("ExpressionReader", test_ExpressionReader)
 
   runTests("update_Scanner", test_update_Scanner)
+  runTests("update_StringReader", test_update_StringReader)
 end
 
