@@ -341,7 +341,7 @@ end
 function test_update_ExpressionReader.addSymbolToExpressionWhenReachString()
   local expressionReader = update_ExpressionReader:new()
   feedCharactersOneAtATime(expressionReader, 'ab"')
-  assert("(ab):string" == expressionReader:toString())
+  assert("(ab)" == expressionReader:toString())
 end
 
 function test_update_ExpressionReader.startStringWhenReachInitialQuotationMark()
