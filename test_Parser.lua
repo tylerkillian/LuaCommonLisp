@@ -216,7 +216,7 @@ function test_update_Scanner.multipleWhitespaceCharacters()
   local scanner = update_Scanner:new()
   feedCharactersOneAtATime(scanner, "   ")
   local result = scanner:readCharacter("a")
-  assert(result == CODE.NULL)
+  assert(result == Code.NULL)
 end
 
 -- End unit tests

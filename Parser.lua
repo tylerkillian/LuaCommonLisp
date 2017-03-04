@@ -292,12 +292,14 @@ function ExpressionReader:toString()
   return "(" .. string.sub(result, 2) .. "):" .. self.state
 end
 
+Code = {
+  NULL = {},
+}
+
 update_Scanner = {}
 
 function update_Scanner:new()
-  local scanner = {
-    terminated = false,
-  }
+  local scanner = {}
   setmetatable(scanner, self)
   self.__index = self
 
@@ -305,24 +307,10 @@ function update_Scanner:new()
 end
 
 function update_Scanner:readCharacter(character)
-  assert(not self.terminated)
   if character ~= " " and character ~= "\n" then
-    self.terminated = true
+    return Code.NULL
+  else
+    return
   end
 end
-
-function update_Scanner:hasTerminated()
-  return self.terminated
-end
-
-function update_Scanner:getResult()
-  assert(self.terminated)
-  return
-end
-
-function update_Scanner:usedTerminalCharacter()
-  assert(self.terminated)
-  return false
-end
-
 
