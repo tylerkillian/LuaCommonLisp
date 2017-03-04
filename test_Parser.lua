@@ -202,26 +202,21 @@ local test_update_Scanner = {}
 
 function test_update_Scanner.readSpace()
   local scanner = update_Scanner:new()
-  scanner:readCharacter(" ")
-  assert(not scanner:hasTerminated())
+  local result = scanner:readCharacter(" ")
+  assert(not result)
 end
 
 function test_update_Scanner.readNonWhitespace()
   local scanner = update_Scanner:new()
-  scanner:readCharacter("a")
-  assert(scanner:hasTerminated())
+  local result = scanner:readCharacter("a")
+  assert(result == Code.NULL)
 end
 
-function test_update_Scanner.doesNotUseTerminalCharacter()
+function test_update_Scanner.multipleWhitespaceCharacters()
   local scanner = update_Scanner:new()
-  scanner:readCharacter("a")
-  assert(not scanner:usedTerminalCharacter())
-end
-
-function test_update_Scanner.resultIsNil()
-  local scanner = update_Scanner:new()
-  feedCharactersOneAtATime(scanner, "   b")
-  assert(not scanner:getResult())
+  feedCharactersOneAtATime(scanner, "   ")
+  local result = scanner:readCharacter("a")
+  assert(result == CODE.NULL)
 end
 
 -- End unit tests
