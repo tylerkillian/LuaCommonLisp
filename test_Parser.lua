@@ -306,7 +306,19 @@ end
 local test_update_ExpressionReader = {}
 
 function test_update_SymbolReader.startsWithParentheses()
-  assert(update_SymbolReader.startsWith('('))
+  assert(update_ExpressionReader.startsWith('('))
+end
+
+function test_update_SymbolReader.doesNotStartWithAlphabeticCharacter()
+  assert(not update_ExpressionReader.startsWith('a'))
+end
+
+function test_update_SymbolReader.doesNotStartWithNumber()
+  assert(not update_ExpressionReader.startsWith('1'))
+end
+
+function test_update_SymbolReader.doesNotStartWithDoubleQuote()
+  assert(not update_ExpressionReader.startsWith('"'))
 end
 
 function test_update_ExpressionReader.construct()

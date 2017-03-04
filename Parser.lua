@@ -447,5 +447,5 @@ function update_ExpressionReader:toString()
   for _, current in ipairs(self.expression) do
     result = result .. " " .. current
   end
-  return "(" .. string.sub(result, 2) .. "):" .. self.state
+  return "(" .. string.sub(result, 2) .. ")"
 end
