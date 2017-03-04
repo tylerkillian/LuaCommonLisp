@@ -434,10 +434,6 @@ local function getNewState(currentState, terminalCharacter)
   assert(false)
 end
 
-local function isOperator()
-  return false
-end
-
 function update_ExpressionReader:changeState(currentStateTerminalCharacter)
     self.state = getNewState(self.state, currentStateTerminalCharacter, self)
 
