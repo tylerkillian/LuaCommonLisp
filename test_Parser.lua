@@ -200,6 +200,14 @@ end
 
 local test_update_Scanner = {}
 
+function test_update_Scanner.startsWithSpace()
+  assert(update_Scanner.startWiths(" "))
+end
+
+function test_update_Scanner.doesNotStartWithNonWhitespace()
+  assert(not update_Scanner.startWiths("a"))
+end
+
 function test_update_Scanner.readSpace()
   local scanner = update_Scanner:new()
   local result = scanner:readCharacter(" ")
