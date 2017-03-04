@@ -375,63 +375,15 @@ end
 
 update_ExpressionReader = {}
 
-function update_ExpressionReader:new(returnBy)
+function update_ExpressionReader:new()
   local expressionReader = {
     nextLink = Scanner:new(),
-    operatorQueue = {},
-    state = "scan",
     expression = {},
-    returnBy = returnBy or "collection",
   }
   setmetatable(expressionReader, self)
   self.__index = self
 
   return expressionReader
-end
-
-function update_ExpressionReader:reset()
-  self.nextLink = Scanner:new()
-  self.operatorQueue = {}
-  self.state = "scan"
-  self.expression = {}
-end
-
-local function getNewState(currentState, terminalCharacter)
-  if currentState == "scan" then
-
-    if terminalCharacter == "\"" then
-      return "string"
-    elseif terminalCharacter == "(" then
-      return "expression"
-    else
-      return "symbol"
-    end
-
-  elseif currentState == "symbol" then
-
-    if terminalCharacter == "\"" then
-      return "string"
-    elseif terminalCharacter == "(" then
-      return "expression"
-    else
-      return "scan"
-    end
-
-  elseif currentState == "string" then
-
-    if terminalCharacter == "\"" then
-      return "scan"
-    end
-
-  elseif currentState == "expression" then
-
-     if terminalCharacter == ")" then
-       return "scan"
-     end
-
-  end
-
-  assert(false)
 end
 
 function update_ExpressionReader:changeState(currentStateTerminalCharacter)
@@ -508,6 +460,7 @@ function update_ExpressionReader:readCharacter(character)
   if not linkResult then
     return
   end
+
 end
 
 function update_ExpressionReader:toString()
