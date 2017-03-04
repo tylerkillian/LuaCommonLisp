@@ -359,6 +359,7 @@ end
 function test_update_ExpressionReader.terminate()
   local expressionReader = update_ExpressionReader:new()
   feedCharactersOneAtATime(expressionReader, 'ab cd)')
+print(expressionReader:toString())
   assert("(ab cd):true" == convertExpressionToString(expressionReader:readCharacter(" ")))
 end
 
