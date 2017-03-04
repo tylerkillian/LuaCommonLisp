@@ -379,6 +379,7 @@ function update_ExpressionReader:new()
   local expressionReader = {
     nextLink = Scanner:new(),
     expression = {},
+    isDone = false,
   }
   setmetatable(expressionReader, self)
   self.__index = self
@@ -448,26 +449,27 @@ function update_ExpressionReader:prepareForNextCharacter(linkResult, character)
 end
 
 function update_ExpressionReader:readCharacter(character)
-  local linkResult = self:callNextLink(character)
-
-  local result = self:getReturnValue(linkResult, character)
-
-  self:prepareForNextCharacter(linkResult, character)
-
-  return result
-
   local linkResult = self.nextLink:readCharacter(character)
   if not linkResult then
     return
   end
 
+  if linkResult ~= Code.NULL then
+    table.insert(self.expression, linkResult)
+  end
+
+  if character == ")" then
+    self.isDone == true
+    return
+  end
+
+  self.nextLink = Scanner.startsWith(character) or
+    String.startsWith(character) or
+    Symbol.startsWith(character) or
+    update_ExpressionReader.startsWith(character)
 end
 
 function update_ExpressionReader:toString()
-  if self.returnBy == "element" then
-    return self.state
-  end
-
   if #self.expression == 0 then
     return "():" .. self.state
   end
