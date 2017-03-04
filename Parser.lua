@@ -440,7 +440,7 @@ end
 
 function update_ExpressionReader:toString()
   if #self.expression == 0 then
-    return "():" .. self.state
+    return "()"
   end
 
   local result = ""
