@@ -305,6 +305,10 @@ end
 
 local test_update_ExpressionReader = {}
 
+function test_update_SymbolReader.startsWithParentheses()
+  assert(update_SymbolReader.startsWith('('))
+end
+
 function test_update_ExpressionReader.construct()
   local expressionReader = update_ExpressionReader:new()
   assert("()", expressionReader:toString())
