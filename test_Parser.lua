@@ -359,15 +359,13 @@ end
 function test_update_ExpressionReader.terminate()
   local expressionReader = update_ExpressionReader:new()
   feedCharactersOneAtATime(expressionReader, 'ab cd)')
-print(expressionReader:toString())
-print(expressionReader:readCharacter(" "))
-  assert("(ab cd):true" == convertExpressionToString(expressionReader:readCharacter(" ")))
+  assert("(ab cd)" == convertExpressionToString(expressionReader:readCharacter(" ")))
 end
 
 function test_update_ExpressionReader.nested()
   local expressionReader = update_ExpressionReader:new()
   feedCharactersOneAtATime(expressionReader, 'a (b c))')
-  assert("(a (b c)):true" == convertExpressionToString(expressionReader:readCharacter(" ")))
+  assert("(a (b c))" == convertExpressionToString(expressionReader:readCharacter(" ")))
 end
 
 -- End unit tests

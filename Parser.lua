@@ -418,16 +418,23 @@ function update_ExpressionReader:new()
 end
 
 function update_ExpressionReader:readCharacter(character)
+  if self.isDone then
+    return self.expression
+  end
+
   local linkResult = self.nextLink:readCharacter(character)
   if not linkResult then
     return
   end
 
   if linkResult ~= Code.NULL then
+print("inserting")
+print(linkResult)
     table.insert(self.expression, linkResult)
   end
 
   if character == ")" then
+print("got closing parentheses")
     self.isDone = true
     return
   end
@@ -440,7 +447,7 @@ end
 
 function update_ExpressionReader:toString()
   local isDoneString = "false"
-  if isDone then
+  if self.isDone then
     isDoneString = "true"
   end
 
