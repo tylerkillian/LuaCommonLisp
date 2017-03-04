@@ -10,6 +10,8 @@ function getNewReaderUsingInitialCharacter(character)
       return result
     end
   end
+
+  assert(false)
 end
 
 Scanner = {}
