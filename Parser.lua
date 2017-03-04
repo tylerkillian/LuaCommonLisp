@@ -340,5 +340,10 @@ function update_StringReader:readCharacter(character)
 end
 
 function update_StringReader:toString()
-  return self.queue
+  local isDoneString = "false"
+  if self.isDone then
+    isDoneString = "true"
+  end
+
+  return isDoneString .. ":" .. self.queue
 end

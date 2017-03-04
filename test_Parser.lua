@@ -224,25 +224,31 @@ test_update_StringReader = {}
 function test_update_StringReader.addCharacter()
   local stringReader = update_StringReader:new()
   stringReader:readCharacter("a")
-  assert("a" == stringReader:toString())
+  assert("false:a" == stringReader:toString())
 end
 
 function test_update_StringReader.addTwoCharacters()
   local stringReader = update_StringReader:new()
   feedCharactersOneAtATime(stringReader, "ab")
-  assert("ab" == stringReader:toString())
+  assert("false:ab" == stringReader:toString())
 end
 
-function test_update_StringReader.terminate()
+function test_update_StringReader.returnOnNextCharacterAfterEndOfString()
   local stringReader = update_StringReader:new()
-  feedCharactersOneAtATime(stringReader, "ab")
-  assert("ab" == stringReader:readCharacter("\""))
+  feedCharactersOneAtATime(stringReader, 'ab"')
+  assert("ab" == stringReader:readCharacter('a'))
 end
 
-function test_update_StringReader.resetAfterTerminate()
+function test_update_StringReader.isDoneAfterEndOfString()
   local stringReader = update_StringReader:new()
-  feedCharactersOneAtATime(stringReader, "ab\"")
-  assert("" == stringReader:toString())
+  feedCharactersOneAtATime(stringReader, 'ab"')
+  assert("true:ab" == stringReader:toString())
+end
+
+function test_update_StringReader.doesNotReturnAtEndOfString()
+  local stringReader = update_StringReader:new()
+  feedCharactersOneAtATime(stringReader, 'ab')
+  assert(not stringReader:readCharacter('"'))
 end
 
 -- End unit tests
