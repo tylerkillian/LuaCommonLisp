@@ -439,9 +439,9 @@ function update_ExpressionReader:readCharacter(character)
 end
 
 function update_ExpressionReader:toString()
-  local isDoneString = false
+  local isDoneString = "false"
   if isDone then
-    isDoneString = true
+    isDoneString = "true"
   end
 
   if #self.expression == 0 then
