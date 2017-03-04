@@ -407,7 +407,7 @@ end
 
 function update_ExpressionReader:new()
   local expressionReader = {
-    nextLink = Scanner:new(),
+    nextLink = update_Scanner:new(),
     expression = {},
     isDone = false,
   }
