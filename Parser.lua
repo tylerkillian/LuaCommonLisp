@@ -503,6 +503,11 @@ function update_ExpressionReader:readCharacter(character)
   self:prepareForNextCharacter(linkResult, character)
 
   return result
+
+  local linkResult = self.nextLink:readCharacter(character)
+  if not linkResult then
+    return
+  end
 end
 
 function update_ExpressionReader:toString()
