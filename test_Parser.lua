@@ -251,6 +251,32 @@ function test_update_StringReader.doesNotReturnAtEndOfString()
   assert(not stringReader:readCharacter('"'))
 end
 
+local test_update_SymbolReader = {}
+
+function test_update_SymbolReader.addSingleCharacter()
+  local symbolReader = update_SymbolReader:new()
+  symbolReader:readCharacter("a")
+  assert("a" == symbolReader:toString())
+end
+
+function test_update_SymbolReader.addTwoCharacters()
+  local symbolReader = update_SymbolReader:new()
+  feedCharactersOneAtATime(symbolReader, "ab")
+  assert("ab" == symbolReader:toString())
+end
+
+function test_update_SymbolReader.terminateWithSpace()
+  local symbolReader = update_SymbolReader:new()
+  feedCharactersOneAtATime(symbolReader, "ab")
+  assert("ab" == symbolReader:readCharacter(" "))
+end
+
+function test_update_SymbolReader.resetAfterTerminate()
+  local symbolReader = update_SymbolReader:new()
+  feedCharactersOneAtATime(symbolReader, "ab ")
+  assert("" == symbolReader:toString())
+end
+
 -- End unit tests
 
 local function runTests(testCategory, tests)

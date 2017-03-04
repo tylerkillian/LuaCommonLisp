@@ -347,3 +347,28 @@ function update_StringReader:toString()
 
   return isDoneString .. ":" .. self.queue
 end
+
+update_SymbolReader = {}
+
+function update_SymbolReader:new()
+  local symbolReader = {
+    queue = "",
+  }
+  setmetatable(symbolReader, self)
+  self.__index = self
+
+  return symbolReader
+end
+
+function update_SymbolReader:readCharacter(character)
+  if character == " " or character == '"' or character == ")" then
+    return self.queue
+  else
+    self.queue = self.queue .. character
+    return
+  end
+end
+
+function update_SymbolReader:toString()
+  return self.queue
+end
