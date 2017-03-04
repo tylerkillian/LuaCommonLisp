@@ -281,6 +281,10 @@ function test_update_SymbolReader.doesNotStartWithDoubleQuote()
   assert(not update_SymbolReader.startsWith('"'))
 end
 
+function test_update_SymbolReader.doesNotStartWithParentheses()
+  assert(not update_SymbolReader.startsWith('('))
+end
+
 function test_update_SymbolReader.addSingleCharacter()
   local symbolReader = update_SymbolReader:new()
   symbolReader:readCharacter("a")
