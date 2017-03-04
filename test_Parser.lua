@@ -7,6 +7,7 @@ local function feedCharactersOneAtATime(reader, characters)
   end
 end
 
+--[[
 function convertExpressionToString(expression)
   if #expression == 0 then
     return "()"
@@ -22,6 +23,7 @@ function convertExpressionToString(expression)
   end
   return "(" .. string.sub(result, 2) .. ")"
 end
+--]]
 
 -- Begin unit tests
 
@@ -186,13 +188,13 @@ end
 function test_ExpressionReader.terminate()
   local expressionReader = ExpressionReader:new()
   feedCharactersOneAtATime(expressionReader, 'ab cd)')
-  assert("(ab cd)" == convertExpressionToString(expressionReader:readCharacter(" ")))
+  assert("(ab cd)" == expressionReader:readCharacter(" "))
 end
 
 function test_ExpressionReader.nested()
   local expressionReader = ExpressionReader:new()
   feedCharactersOneAtATime(expressionReader, 'a (b c))')
-  assert("(a (b c))" == convertExpressionToString(expressionReader:readCharacter(" ")))
+  assert("(a (b c))" == expressionReader:readCharacter(" "))
 end
 
 test_SingleQuoteReader = {}
