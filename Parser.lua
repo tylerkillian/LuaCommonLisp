@@ -397,6 +397,14 @@ end
 
 update_ExpressionReader = {}
 
+function update_ExpressionReader.startsWith(character)
+  if character ~= "(" then
+    return
+  end
+
+  return update_ExpressionReader:new()
+end
+
 function update_ExpressionReader:new()
   local expressionReader = {
     nextLink = Scanner:new(),
