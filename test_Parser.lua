@@ -332,59 +332,6 @@ function test_update_ExpressionReader.nested()
   assert("(a (b c))" == convertExpressionToString(expressionReader:readCharacter(")")))
 end
 
-function test_update_ExpressionReader.construct()
-  local defaultupdate_ExpressionReader = update_ExpressionReader:new("element")
-  assert("scan" == defaultupdate_ExpressionReader:toString())
-end
-
-function test_update_ExpressionReader.switchFromScanToSymbol()
-  local expressionReader = update_ExpressionReader:new("element")
-  expressionReader:readCharacter("a")
-  assert("symbol" == expressionReader:toString())
-end
-
-function test_update_ExpressionReader.switchFromSymbolToScan()
-  local expressionReader = update_ExpressionReader:new("element")
-  feedCharactersOneAtATime(expressionReader, "ab ")
-  assert("scan" == expressionReader:toString())
-end
-
-function test_update_ExpressionReader.returnSymbolWhenReachSpace()
-  local expressionReader = update_ExpressionReader:new("element")
-  feedCharactersOneAtATime(expressionReader, "ab")
-  assert("ab" == expressionReader:readCharacter(" "))
-end
-
-function test_update_ExpressionReader.returnSymbolWhenReachString()
-  local expressionReader = update_ExpressionReader:new("element")
-  feedCharactersOneAtATime(expressionReader, 'ab')
-  assert("ab" == expressionReader:readCharacter('"'))
-end
-
-function test_update_ExpressionReader.startStringWhenReachInitialQuotationMark()
-  local expressionReader = update_ExpressionReader:new("element")
-  feedCharactersOneAtATime(expressionReader, '"')
-  assert("string" == expressionReader:toString())
-end
-
-function test_update_ExpressionReader.returnStringWhenReachEndQuotationMark()
-  local expressionReader = update_ExpressionReader:new("element")
-  feedCharactersOneAtATime(expressionReader, '"ab')
-  assert("ab" == expressionReader:readCharacter('"'))
-end
-
-function test_update_ExpressionReader.switchFromStringToScan()
-  local expressionReader = update_ExpressionReader:new("element")
-  feedCharactersOneAtATime(expressionReader, '"ab"')
-  assert("scan" == expressionReader:toString())
-end
-
-function test_update_ExpressionReader.switchFromSymbolToString()
-  local expressionReader = update_ExpressionReader:new("element")
-  feedCharactersOneAtATime(expressionReader, 'ab"')
-  assert("string" == expressionReader:toString())
-end
-
 -- End unit tests
 
 local function runTests(testCategory, tests)

@@ -387,67 +387,6 @@ function update_ExpressionReader:new()
   return expressionReader
 end
 
-function update_ExpressionReader:changeState(currentStateTerminalCharacter)
-    self.state = getNewState(self.state, currentStateTerminalCharacter, self)
-
-    if self.state == "scan" then
-      self.nextLink = Scanner:new()
-    elseif self.state == "symbol" then
-      self.nextLink = SymbolReader:new()
-      self.nextLink:readCharacter(currentStateTerminalCharacter)
-    elseif self.state == "string" then
-      self.nextLink = StringReader:new()
-    elseif self.state == "expression" then
-      self.nextLink = update_ExpressionReader:new()
-    end
-end
-
-function update_ExpressionReader:callNextLink(character)
-  local linkResult = self.nextLink:readCharacter(character)
-
-  if linkResult and self.state ~= "scan" and self.returnBy == "collection" then
-    table.insert(self.expression, linkResult)
-  end
-
-  return linkResult
-end
-
-function update_ExpressionReader:returningExpression(character)
-  if self.returnBy == "collection" and self.state ~= "expression" and character == ")" then
-    return true
-  else
-    return false
-  end
-end
-
-function update_ExpressionReader:getReturnValue(linkResult, character)
-  if self.returnBy == "collection" then
-    if self:returningExpression(character) then
-      return self.expression
-    else
-      return
-    end
-  end
-
-  if not linkResult or self.state == "scan" then
-    return
-  end
-
-  return linkResult
-end
-
-function update_ExpressionReader:prepareForNextCharacter(linkResult, character)
-  if not linkResult then
-    return
-  end
-
-  if self:returningExpression(character) then
-    self:reset()
-  else
-    self:changeState(character)
-  end
-end
-
 function update_ExpressionReader:readCharacter(character)
   local linkResult = self.nextLink:readCharacter(character)
   if not linkResult then
@@ -459,7 +398,7 @@ function update_ExpressionReader:readCharacter(character)
   end
 
   if character == ")" then
-    self.isDone == true
+    self.isDone = true
     return
   end
 
