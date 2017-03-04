@@ -269,6 +269,18 @@ end
 
 local test_update_SymbolReader = {}
 
+function test_update_SymbolReader.startsWithAlphabeticCharacter()
+  assert(update_SymbolReader.startsWith("a"))
+end
+
+function test_update_SymbolReader.startsWithNumber()
+  assert(update_SymbolReader.startsWith("1"))
+end
+
+function test_update_SymbolReader.doesNotStartWithDoubleQuote()
+  assert(not update_SymbolReader.startsWith('"'))
+end
+
 function test_update_SymbolReader.addSingleCharacter()
   local symbolReader = update_SymbolReader:new()
   symbolReader:readCharacter("a")
@@ -365,7 +377,7 @@ function testParser()
 
   runTests("update_Scanner", test_update_Scanner)
   runTests("update_StringReader", test_update_StringReader)
-  runTests("update_SymbolReader", test_SymbolReader)
+  runTests("update_SymbolReader", test_update_SymbolReader)
   runTests("update_ExpressionReader", test_update_ExpressionReader)
 end
 

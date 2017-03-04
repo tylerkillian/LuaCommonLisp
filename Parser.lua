@@ -362,6 +362,16 @@ end
 
 update_SymbolReader = {}
 
+function update_SymbolReader.startsWith(character)
+  if character == '"' or character == "(" or character == " " or character == "\n" then
+    return
+  end
+
+  local result = update_SymbolReader:new()
+  result:readCharacter(character)
+  return result
+end
+
 function update_SymbolReader:new()
   local symbolReader = {
     queue = "",
