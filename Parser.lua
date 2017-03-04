@@ -322,6 +322,12 @@ end
 
 update_StringReader = {}
 
+function update_StringReader.startsWith(character)
+  if character == '"' then
+    return update_StringReader:new()
+  end
+end
+
 function update_StringReader:new()
   local stringReader = {
     isDone = false,
@@ -409,8 +415,8 @@ function update_ExpressionReader:readCharacter(character)
   end
 
   self.nextLink = update_Scanner.startsWith(character) or
-    update_String.startsWith(character) or
-    update_Symbol.startsWith(character) or
+    update_StringReader.startsWith(character) or
+    update_SymbolReader.startsWith(character) or
     update_ExpressionReader.startsWith(character)
 end
 

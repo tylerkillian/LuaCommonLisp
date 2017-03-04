@@ -201,11 +201,11 @@ end
 local test_update_Scanner = {}
 
 function test_update_Scanner.startsWithSpace()
-  assert(update_Scanner.startWiths(" "))
+  assert(update_Scanner.startsWith(" "))
 end
 
 function test_update_Scanner.doesNotStartWithNonWhitespace()
-  assert(not update_Scanner.startWiths("a"))
+  assert(not update_Scanner.startsWith("a"))
 end
 
 function test_update_Scanner.readSpace()
