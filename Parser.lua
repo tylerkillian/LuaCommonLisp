@@ -5,7 +5,7 @@ Code = {
 local AllReaders = {}
 function getNewReaderUsingInitialCharacter(character)
   for _, reader in ipairs(AllReaders) do
-    local result = reader.startsWithCharacter
+    local result = reader.startsWithCharacter(character)
     if result then
       return result
     end
