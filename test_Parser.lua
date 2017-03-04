@@ -197,6 +197,40 @@ end
 
 -- End unit tests
 
+-- Begin integration tests
+
+test_Parser = {}
+
+function test_Parser.validCharacterOnlyRecognizedByOneReader()
+  local validCharacters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"('
+
+  for characterIndex = 1, string.len(validCharacters) do
+    local nextCharacter = string.sub(validCharacters, characterIndex, characterIndex)
+
+    local numberOfRecognitions = 0;
+
+    if Scanner.startsWith(nextCharacter) then
+      numberOfRecognitions = numberOfRecognitions + 1
+    end
+
+    if SymbolReader.startsWith(nextCharacter) then
+      numberOfRecognitions = numberOfRecognitions + 1
+    end
+
+    if StringReader.startsWith(nextCharacter) then
+      numberOfRecognitions = numberOfRecognitions + 1
+    end
+
+    if ExpressionReader.startsWith(nextCharacter) then
+      numberOfRecognitions = numberOfRecognitions + 1
+    end
+
+    assert(numberOfRecognitions == 1)
+  end
+end
+
+-- End integration tests
+
 local function runTests(testCategory, tests)
   for testName, theTest in pairs(tests) do
     print("Running " .. testCategory .. " " .. testName)
@@ -209,5 +243,7 @@ function testParser()
   runTests("StringReader", test_StringReader)
   runTests("SymbolReader", test_SymbolReader)
   runTests("ExpressionReader", test_ExpressionReader)
+
+  runTests("Parser", test_Parser)
 end
 
