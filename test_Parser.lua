@@ -347,37 +347,25 @@ end
 function test_update_ExpressionReader.startStringWhenReachInitialQuotationMark()
   local expressionReader = update_ExpressionReader:new()
   feedCharactersOneAtATime(expressionReader, '"')
-  assert("()" == expressionReader:toString())
+  assert("():false" == expressionReader:toString())
 end
 
 function test_update_ExpressionReader.returnStringWhenReachEndQuotationMark()
   local expressionReader = update_ExpressionReader:new()
-  feedCharactersOneAtATime(expressionReader, '"ab"')
-  assert("(ab)" == expressionReader:toString())
-end
-
-function test_update_ExpressionReader.switchFromStringToScan()
-  local expressionReader = update_ExpressionReader:new()
-  feedCharactersOneAtATime(expressionReader, '"ab"')
-  assert("(ab)" == expressionReader:toString())
-end
-
-function test_update_ExpressionReader.switchFromSymbolToString()
-  local expressionReader = update_ExpressionReader:new()
-  feedCharactersOneAtATime(expressionReader, 'ab"')
-  assert("(ab)" == expressionReader:toString())
+  feedCharactersOneAtATime(expressionReader, '"ab" ')
+  assert("(ab):false" == expressionReader:toString())
 end
 
 function test_update_ExpressionReader.terminate()
   local expressionReader = update_ExpressionReader:new()
   feedCharactersOneAtATime(expressionReader, 'ab cd)')
-  assert("(ab cd)" == convertExpressionToString(expressionReader:readCharacter(" ")))
+  assert("(ab cd):true" == convertExpressionToString(expressionReader:readCharacter(" ")))
 end
 
 function test_update_ExpressionReader.nested()
   local expressionReader = update_ExpressionReader:new()
-  feedCharactersOneAtATime(expressionReader, 'a (b c)')
-  assert("(a (b c))" == convertExpressionToString(expressionReader:readCharacter(")")))
+  feedCharactersOneAtATime(expressionReader, 'a (b c))')
+  assert("(a (b c)):true" == convertExpressionToString(expressionReader:readCharacter(" ")))
 end
 
 -- End unit tests
