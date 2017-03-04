@@ -439,13 +439,18 @@ function update_ExpressionReader:readCharacter(character)
 end
 
 function update_ExpressionReader:toString()
+  local isDoneString = false
+  if isDone then
+    isDoneString = true
+  end
+
   if #self.expression == 0 then
-    return "()"
+    return "():" .. isDoneString
   end
 
   local result = ""
   for _, current in ipairs(self.expression) do
     result = result .. " " .. current
   end
-  return "(" .. string.sub(result, 2) .. ")"
+  return "(" .. string.sub(result, 2) .. "):" .. isDoneString
 end
