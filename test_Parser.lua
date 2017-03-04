@@ -370,8 +370,8 @@ end
 
 function test_update_ExpressionReader.terminate()
   local expressionReader = update_ExpressionReader:new()
-  feedCharactersOneAtATime(expressionReader, 'ab cd')
-  assert("(ab cd)" == convertExpressionToString(expressionReader:readCharacter(")")))
+  feedCharactersOneAtATime(expressionReader, 'ab cd)')
+  assert("(ab cd)" == convertExpressionToString(expressionReader:readCharacter(" ")))
 end
 
 function test_update_ExpressionReader.nested()
