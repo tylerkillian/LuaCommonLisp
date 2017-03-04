@@ -195,6 +195,12 @@ function test_ExpressionReader.nested()
   assert("(a (b c))" == convertExpressionToString(expressionReader:readCharacter(" ")))
 end
 
+test_SingleQuoteReader = {}
+
+function test_SingleQuoteReader.startsWithSingleQuote()
+  assert(SingleQuoteReader.startsWith("'"))
+end
+
 -- End unit tests
 
 -- Begin integration tests
@@ -247,6 +253,7 @@ function testParser()
   runTests("StringReader", test_StringReader)
   runTests("SymbolReader", test_SymbolReader)
   runTests("ExpressionReader", test_ExpressionReader)
+  runTests("SingleQuoteReader", test_SingleQuoteReader)
 
   runTests("Parser", test_Parser)
 end

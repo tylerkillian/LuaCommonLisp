@@ -143,9 +143,21 @@ function ExpressionReader:new()
   return expressionReader
 end
 
+local function convertExpressionToString(expression)
+  if #self.expression == 0 then
+    return "()"
+  end
+
+  local result = ""
+  for _, current in ipairs(self.expression) do
+    result = result .. " " .. current
+  end
+  return "(" .. string.sub(result, 2) .. ")"
+end
+
 function ExpressionReader:readCharacter(character)
   if self.isDone then
-    return self.expression
+    return convertExpressionToString(self.expression)
   end
 
   local linkResult = self.nextLink:readCharacter(character)
@@ -208,7 +220,7 @@ function SingleQuoteReader:readCharacter(character)
   end
 
   if linkResult ~= Code.NULL then
-    return linkResult
+    return "'" .. linkResult
   end
 
   self.nextLink = getNewReaderUsingInitialCharacter(character)
