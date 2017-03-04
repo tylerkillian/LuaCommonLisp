@@ -144,12 +144,12 @@ function ExpressionReader:new()
 end
 
 local function convertExpressionToString(expression)
-  if #self.expression == 0 then
+  if #expression == 0 then
     return "()"
   end
 
   local result = ""
-  for _, current in ipairs(self.expression) do
+  for _, current in ipairs(expression) do
     result = result .. " " .. current
   end
   return "(" .. string.sub(result, 2) .. ")"
