@@ -314,3 +314,31 @@ function update_Scanner:readCharacter(character)
   end
 end
 
+update_StringReader = {}
+
+function update_StringReader:new()
+  local stringReader = {
+    isDone = false,
+    queue = "",
+  }
+  setmetatable(stringReader, self)
+  self.__index = self
+
+  return stringReader
+end
+
+function update_StringReader:readCharacter(character)
+  if self.isDone then
+    return self.queue
+  end
+
+  if character == "\"" then
+    self.isDone = true
+  else
+    self.queue = self.queue .. character
+  end
+end
+
+function update_StringReader:toString()
+  return self.queue
+end
