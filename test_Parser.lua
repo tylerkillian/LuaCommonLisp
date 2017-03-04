@@ -335,7 +335,7 @@ end
 function test_update_ExpressionReader.addSymbolToExpressionWhenReachSpace()
   local expressionReader = update_ExpressionReader:new()
   feedCharactersOneAtATime(expressionReader, "ab ")
-  assert("(ab):scan" == expressionReader:toString())
+  assert("(ab)" == expressionReader:toString())
 end
 
 function test_update_ExpressionReader.addSymbolToExpressionWhenReachString()
