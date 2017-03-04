@@ -329,7 +329,7 @@ end
 function test_update_ExpressionReader.switchFromScanToSymbol()
   local expressionReader = update_ExpressionReader:new()
   expressionReader:readCharacter("a")
-  assert("():symbol" == expressionReader:toString())
+  assert("()" == expressionReader:toString())
 end
 
 function test_update_ExpressionReader.addSymbolToExpressionWhenReachSpace()
@@ -347,25 +347,25 @@ end
 function test_update_ExpressionReader.startStringWhenReachInitialQuotationMark()
   local expressionReader = update_ExpressionReader:new()
   feedCharactersOneAtATime(expressionReader, '"')
-  assert("():string" == expressionReader:toString())
+  assert("()" == expressionReader:toString())
 end
 
 function test_update_ExpressionReader.returnStringWhenReachEndQuotationMark()
   local expressionReader = update_ExpressionReader:new()
   feedCharactersOneAtATime(expressionReader, '"ab"')
-  assert("(ab):scan" == expressionReader:toString())
+  assert("(ab)" == expressionReader:toString())
 end
 
 function test_update_ExpressionReader.switchFromStringToScan()
   local expressionReader = update_ExpressionReader:new()
   feedCharactersOneAtATime(expressionReader, '"ab"')
-  assert("(ab):scan" == expressionReader:toString())
+  assert("(ab)" == expressionReader:toString())
 end
 
 function test_update_ExpressionReader.switchFromSymbolToString()
   local expressionReader = update_ExpressionReader:new()
   feedCharactersOneAtATime(expressionReader, 'ab"')
-  assert("(ab):string" == expressionReader:toString())
+  assert("(ab)" == expressionReader:toString())
 end
 
 function test_update_ExpressionReader.terminate()
