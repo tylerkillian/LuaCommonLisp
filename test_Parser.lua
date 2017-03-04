@@ -229,6 +229,14 @@ end
 
 test_update_StringReader = {}
 
+function test_update_StringReader.startsWithDoubleQuote()
+  assert(update_StringReader.startsWith('"'))
+end
+
+function test_update_StringReader.doesNotStartWithNonDoubleQuote()
+  assert(not update_StringReader.startsWith("a"))
+end
+
 function test_update_StringReader.addCharacter()
   local stringReader = update_StringReader:new()
   stringReader:readCharacter("a")
