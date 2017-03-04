@@ -403,6 +403,6 @@ function testParser()
   runTests("update_Scanner", test_update_Scanner)
   runTests("update_StringReader", test_update_StringReader)
   runTests("update_SymbolReader", test_SymbolReader)
-  runTests("update_ExpressionReader", test_ExpressionReader)
+  runTests("update_ExpressionReader", test_update_ExpressionReader)
 end
 
