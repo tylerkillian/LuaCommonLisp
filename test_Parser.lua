@@ -25,172 +25,172 @@ end
 
 -- Begin unit tests
 
-local test_update_Scanner = {}
+local test_Scanner = {}
 
-function test_update_Scanner.startsWithSpace()
-  assert(update_Scanner.startsWith(" "))
+function test_Scanner.startsWithSpace()
+  assert(Scanner.startsWith(" "))
 end
 
-function test_update_Scanner.doesNotStartWithNonWhitespace()
-  assert(not update_Scanner.startsWith("a"))
+function test_Scanner.doesNotStartWithNonWhitespace()
+  assert(not Scanner.startsWith("a"))
 end
 
-function test_update_Scanner.readSpace()
-  local scanner = update_Scanner:new()
+function test_Scanner.readSpace()
+  local scanner = Scanner:new()
   local result = scanner:readCharacter(" ")
   assert(not result)
 end
 
-function test_update_Scanner.readNonWhitespace()
-  local scanner = update_Scanner:new()
+function test_Scanner.readNonWhitespace()
+  local scanner = Scanner:new()
   local result = scanner:readCharacter("a")
   assert(result == Code.NULL)
 end
 
-function test_update_Scanner.multipleWhitespaceCharacters()
-  local scanner = update_Scanner:new()
+function test_Scanner.multipleWhitespaceCharacters()
+  local scanner = Scanner:new()
   feedCharactersOneAtATime(scanner, "   ")
   local result = scanner:readCharacter("a")
   assert(result == Code.NULL)
 end
 
-test_update_StringReader = {}
+test_StringReader = {}
 
-function test_update_StringReader.startsWithDoubleQuote()
-  assert(update_StringReader.startsWith('"'))
+function test_StringReader.startsWithDoubleQuote()
+  assert(StringReader.startsWith('"'))
 end
 
-function test_update_StringReader.doesNotStartWithNonDoubleQuote()
-  assert(not update_StringReader.startsWith("a"))
+function test_StringReader.doesNotStartWithNonDoubleQuote()
+  assert(not StringReader.startsWith("a"))
 end
 
-function test_update_StringReader.addCharacter()
-  local stringReader = update_StringReader:new()
+function test_StringReader.addCharacter()
+  local stringReader = StringReader:new()
   stringReader:readCharacter("a")
   assert("false:a" == stringReader:toString())
 end
 
-function test_update_StringReader.addTwoCharacters()
-  local stringReader = update_StringReader:new()
+function test_StringReader.addTwoCharacters()
+  local stringReader = StringReader:new()
   feedCharactersOneAtATime(stringReader, "ab")
   assert("false:ab" == stringReader:toString())
 end
 
-function test_update_StringReader.returnOnNextCharacterAfterEndOfString()
-  local stringReader = update_StringReader:new()
+function test_StringReader.returnOnNextCharacterAfterEndOfString()
+  local stringReader = StringReader:new()
   feedCharactersOneAtATime(stringReader, 'ab"')
   assert("ab" == stringReader:readCharacter('a'))
 end
 
-function test_update_StringReader.isDoneAfterEndOfString()
-  local stringReader = update_StringReader:new()
+function test_StringReader.isDoneAfterEndOfString()
+  local stringReader = StringReader:new()
   feedCharactersOneAtATime(stringReader, 'ab"')
   assert("true:ab" == stringReader:toString())
 end
 
-function test_update_StringReader.doesNotReturnAtEndOfString()
-  local stringReader = update_StringReader:new()
+function test_StringReader.doesNotReturnAtEndOfString()
+  local stringReader = StringReader:new()
   feedCharactersOneAtATime(stringReader, 'ab')
   assert(not stringReader:readCharacter('"'))
 end
 
-local test_update_SymbolReader = {}
+local test_SymbolReader = {}
 
-function test_update_SymbolReader.startsWithAlphabeticCharacter()
-  assert(update_SymbolReader.startsWith("a"))
+function test_SymbolReader.startsWithAlphabeticCharacter()
+  assert(SymbolReader.startsWith("a"))
 end
 
-function test_update_SymbolReader.startsWithNumber()
-  assert(update_SymbolReader.startsWith("1"))
+function test_SymbolReader.startsWithNumber()
+  assert(SymbolReader.startsWith("1"))
 end
 
-function test_update_SymbolReader.doesNotStartWithDoubleQuote()
-  assert(not update_SymbolReader.startsWith('"'))
+function test_SymbolReader.doesNotStartWithDoubleQuote()
+  assert(not SymbolReader.startsWith('"'))
 end
 
-function test_update_SymbolReader.doesNotStartWithParentheses()
-  assert(not update_SymbolReader.startsWith('('))
+function test_SymbolReader.doesNotStartWithParentheses()
+  assert(not SymbolReader.startsWith('('))
 end
 
-function test_update_SymbolReader.addSingleCharacter()
-  local symbolReader = update_SymbolReader:new()
+function test_SymbolReader.addSingleCharacter()
+  local symbolReader = SymbolReader:new()
   symbolReader:readCharacter("a")
   assert("a" == symbolReader:toString())
 end
 
-function test_update_SymbolReader.addTwoCharacters()
-  local symbolReader = update_SymbolReader:new()
+function test_SymbolReader.addTwoCharacters()
+  local symbolReader = SymbolReader:new()
   feedCharactersOneAtATime(symbolReader, "ab")
   assert("ab" == symbolReader:toString())
 end
 
-function test_update_SymbolReader.terminateWithSpace()
-  local symbolReader = update_SymbolReader:new()
+function test_SymbolReader.terminateWithSpace()
+  local symbolReader = SymbolReader:new()
   feedCharactersOneAtATime(symbolReader, "ab")
   assert("ab" == symbolReader:readCharacter(" "))
 end
 
-local test_update_ExpressionReader = {}
+local test_ExpressionReader = {}
 
-function test_update_SymbolReader.startsWithParentheses()
-  assert(update_ExpressionReader.startsWith('('))
+function test_SymbolReader.startsWithParentheses()
+  assert(ExpressionReader.startsWith('('))
 end
 
-function test_update_SymbolReader.doesNotStartWithAlphabeticCharacter()
-  assert(not update_ExpressionReader.startsWith('a'))
+function test_SymbolReader.doesNotStartWithAlphabeticCharacter()
+  assert(not ExpressionReader.startsWith('a'))
 end
 
-function test_update_SymbolReader.doesNotStartWithNumber()
-  assert(not update_ExpressionReader.startsWith('1'))
+function test_SymbolReader.doesNotStartWithNumber()
+  assert(not ExpressionReader.startsWith('1'))
 end
 
-function test_update_SymbolReader.doesNotStartWithDoubleQuote()
-  assert(not update_ExpressionReader.startsWith('"'))
+function test_SymbolReader.doesNotStartWithDoubleQuote()
+  assert(not ExpressionReader.startsWith('"'))
 end
 
-function test_update_ExpressionReader.construct()
-  local expressionReader = update_ExpressionReader:new()
+function test_ExpressionReader.construct()
+  local expressionReader = ExpressionReader:new()
   assert("():false", expressionReader:toString())
 end
 
-function test_update_ExpressionReader.switchFromScanToSymbol()
-  local expressionReader = update_ExpressionReader:new()
+function test_ExpressionReader.switchFromScanToSymbol()
+  local expressionReader = ExpressionReader:new()
   expressionReader:readCharacter("a")
   assert("():false" == expressionReader:toString())
 end
 
-function test_update_ExpressionReader.addSymbolToExpressionWhenReachSpace()
-  local expressionReader = update_ExpressionReader:new()
+function test_ExpressionReader.addSymbolToExpressionWhenReachSpace()
+  local expressionReader = ExpressionReader:new()
   feedCharactersOneAtATime(expressionReader, "ab ")
   assert("(ab):false" == expressionReader:toString())
 end
 
-function test_update_ExpressionReader.addSymbolToExpressionWhenReachString()
-  local expressionReader = update_ExpressionReader:new()
+function test_ExpressionReader.addSymbolToExpressionWhenReachString()
+  local expressionReader = ExpressionReader:new()
   feedCharactersOneAtATime(expressionReader, 'ab"')
   assert("(ab):false" == expressionReader:toString())
 end
 
-function test_update_ExpressionReader.startStringWhenReachInitialQuotationMark()
-  local expressionReader = update_ExpressionReader:new()
+function test_ExpressionReader.startStringWhenReachInitialQuotationMark()
+  local expressionReader = ExpressionReader:new()
   feedCharactersOneAtATime(expressionReader, '"')
   assert("():false" == expressionReader:toString())
 end
 
-function test_update_ExpressionReader.returnStringWhenReachEndQuotationMark()
-  local expressionReader = update_ExpressionReader:new()
+function test_ExpressionReader.returnStringWhenReachEndQuotationMark()
+  local expressionReader = ExpressionReader:new()
   feedCharactersOneAtATime(expressionReader, '"ab" ')
   assert("(ab):false" == expressionReader:toString())
 end
 
-function test_update_ExpressionReader.terminate()
-  local expressionReader = update_ExpressionReader:new()
+function test_ExpressionReader.terminate()
+  local expressionReader = ExpressionReader:new()
   feedCharactersOneAtATime(expressionReader, 'ab cd)')
   assert("(ab cd)" == convertExpressionToString(expressionReader:readCharacter(" ")))
 end
 
-function test_update_ExpressionReader.nested()
-  local expressionReader = update_ExpressionReader:new()
+function test_ExpressionReader.nested()
+  local expressionReader = ExpressionReader:new()
   feedCharactersOneAtATime(expressionReader, 'a (b c))')
   assert("(a (b c))" == convertExpressionToString(expressionReader:readCharacter(" ")))
 end
@@ -205,9 +205,9 @@ local function runTests(testCategory, tests)
 end
 
 function testParser()
-  runTests("update_Scanner", test_update_Scanner)
-  runTests("update_StringReader", test_update_StringReader)
-  runTests("update_SymbolReader", test_update_SymbolReader)
-  runTests("update_ExpressionReader", test_update_ExpressionReader)
+  runTests("Scanner", test_Scanner)
+  runTests("StringReader", test_StringReader)
+  runTests("SymbolReader", test_SymbolReader)
+  runTests("ExpressionReader", test_ExpressionReader)
 end
 

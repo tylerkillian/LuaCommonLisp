@@ -2,15 +2,15 @@ Code = {
   NULL = {},
 }
 
-update_Scanner = {}
+Scanner = {}
 
-function update_Scanner.startsWith(character)
+function Scanner.startsWith(character)
   if character == " " or character == "\n" then
-    return update_Scanner:new()
+    return Scanner:new()
   end
 end
 
-function update_Scanner:new()
+function Scanner:new()
   local scanner = {}
   setmetatable(scanner, self)
   self.__index = self
@@ -18,7 +18,7 @@ function update_Scanner:new()
   return scanner
 end
 
-function update_Scanner:readCharacter(character)
+function Scanner:readCharacter(character)
   if character ~= " " and character ~= "\n" then
     return Code.NULL
   else
@@ -26,15 +26,15 @@ function update_Scanner:readCharacter(character)
   end
 end
 
-update_StringReader = {}
+StringReader = {}
 
-function update_StringReader.startsWith(character)
+function StringReader.startsWith(character)
   if character == '"' then
-    return update_StringReader:new()
+    return StringReader:new()
   end
 end
 
-function update_StringReader:new()
+function StringReader:new()
   local stringReader = {
     isDone = false,
     queue = "",
@@ -45,7 +45,7 @@ function update_StringReader:new()
   return stringReader
 end
 
-function update_StringReader:readCharacter(character)
+function StringReader:readCharacter(character)
   if self.isDone then
     return self.queue
   end
@@ -57,7 +57,7 @@ function update_StringReader:readCharacter(character)
   end
 end
 
-function update_StringReader:toString()
+function StringReader:toString()
   local isDoneString = "false"
   if self.isDone then
     isDoneString = "true"
@@ -66,19 +66,19 @@ function update_StringReader:toString()
   return isDoneString .. ":" .. self.queue
 end
 
-update_SymbolReader = {}
+SymbolReader = {}
 
-function update_SymbolReader.startsWith(character)
+function SymbolReader.startsWith(character)
   if character == '"' or character == "(" or character == " " or character == "\n" then
     return
   end
 
-  local result = update_SymbolReader:new()
+  local result = SymbolReader:new()
   result:readCharacter(character)
   return result
 end
 
-function update_SymbolReader:new()
+function SymbolReader:new()
   local symbolReader = {
     queue = "",
   }
@@ -88,7 +88,7 @@ function update_SymbolReader:new()
   return symbolReader
 end
 
-function update_SymbolReader:readCharacter(character)
+function SymbolReader:readCharacter(character)
   if character == " " or character == '"' or character == ")" then
     return self.queue
   else
@@ -97,23 +97,23 @@ function update_SymbolReader:readCharacter(character)
   end
 end
 
-function update_SymbolReader:toString()
+function SymbolReader:toString()
   return self.queue
 end
 
-update_ExpressionReader = {}
+ExpressionReader = {}
 
-function update_ExpressionReader.startsWith(character)
+function ExpressionReader.startsWith(character)
   if character ~= "(" then
     return
   end
 
-  return update_ExpressionReader:new()
+  return ExpressionReader:new()
 end
 
-function update_ExpressionReader:new()
+function ExpressionReader:new()
   local expressionReader = {
-    nextLink = update_Scanner:new(),
+    nextLink = Scanner:new(),
     expression = {},
     isDone = false,
   }
@@ -123,7 +123,7 @@ function update_ExpressionReader:new()
   return expressionReader
 end
 
-function update_ExpressionReader:readCharacter(character)
+function ExpressionReader:readCharacter(character)
   if self.isDone then
     return self.expression
   end
@@ -142,13 +142,13 @@ function update_ExpressionReader:readCharacter(character)
     return
   end
 
-  self.nextLink = update_Scanner.startsWith(character) or
-    update_StringReader.startsWith(character) or
-    update_SymbolReader.startsWith(character) or
-    update_ExpressionReader.startsWith(character)
+  self.nextLink = Scanner.startsWith(character) or
+    StringReader.startsWith(character) or
+    SymbolReader.startsWith(character) or
+    ExpressionReader.startsWith(character)
 end
 
-function update_ExpressionReader:toString()
+function ExpressionReader:toString()
   local isDoneString = "false"
   if self.isDone then
     isDoneString = "true"
