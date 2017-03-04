@@ -271,12 +271,6 @@ function test_update_SymbolReader.terminateWithSpace()
   assert("ab" == symbolReader:readCharacter(" "))
 end
 
-function test_update_SymbolReader.resetAfterTerminate()
-  local symbolReader = update_SymbolReader:new()
-  feedCharactersOneAtATime(symbolReader, "ab ")
-  assert("" == symbolReader:toString())
-end
-
 -- End unit tests
 
 local function runTests(testCategory, tests)
@@ -294,5 +288,6 @@ function testParser()
 
   runTests("update_Scanner", test_update_Scanner)
   runTests("update_StringReader", test_update_StringReader)
+  runTests("update_SymbolReader", test_SymbolReader)
 end
 
