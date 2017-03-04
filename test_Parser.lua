@@ -205,11 +205,6 @@ local function runTests(testCategory, tests)
 end
 
 function testParser()
-  runTests("Scanner", test_Scanner)
-  runTests("SymbolReader", test_SymbolReader)
-  runTests("StringReader", test_StringReader)
-  runTests("ExpressionReader", test_ExpressionReader)
-
   runTests("update_Scanner", test_update_Scanner)
   runTests("update_StringReader", test_update_StringReader)
   runTests("update_SymbolReader", test_update_SymbolReader)
