@@ -204,8 +204,11 @@ function test_ExpressionReader.returnStringWhenReachEndQuotationMark()
 end
 
 function test_ExpressionReader.terminate()
-  local expressionReader = ExpressionReader:new()
-  feedCharactersOneAtATime(expressionReader, 'ab cd)')
+  local expressionReader = ExpressionReader:new(createFakeReaderFunctor{
+    createFakeReader("ab"),
+    createFakeReader("cd"),
+  })
+  feedCharactersOneAtATime(expressionReader, 'xx)')
   assert("(ab cd)" == expressionReader:readCharacter(" "))
 end
 
