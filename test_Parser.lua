@@ -37,6 +37,10 @@ function FakeReader:new(returnValue)
   return reader
 end
 
+function FakeReader:readCharacter(character)
+  return self.returnValue
+end
+
 function createFakeReaderFunctor(readers)
   local index = 0
   return function(firstCharacter)
