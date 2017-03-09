@@ -31,6 +31,14 @@ function createFakeReader(returnValue)
   end
 end
 
+function createFakeReaderFunctor(readers)
+  local index = 0
+  return function(firstCharacter)
+    if firstCharacter == "x" then
+      index = index + 1
+      return readers[index]
+    end
+
 -- Begin unit tests
 
 local test_Scanner = {}
