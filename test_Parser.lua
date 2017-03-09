@@ -211,8 +211,8 @@ end
 
 function test_ExpressionReader.terminate()
   local expressionReader = ExpressionReader:new(createFakeReaderFunctor{
-    createFakeReader("ab"),
-    createFakeReader("cd"),
+    FakeReader:new("ab"),
+    FakeReader:new("cd"),
   })
   feedCharactersOneAtATime(expressionReader, 'xx)')
   assert("(ab cd)" == expressionReader:readCharacter(" "))
