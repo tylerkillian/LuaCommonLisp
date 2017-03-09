@@ -25,6 +25,9 @@ function convertExpressionToString(expression)
 end
 --]]
 
+function createFakeReader(returnValue)
+end
+
 -- Begin unit tests
 
 local test_Scanner = {}
