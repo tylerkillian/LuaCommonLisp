@@ -136,7 +136,7 @@ function ExpressionReader:new()
     nextLink = Scanner:new(),
     expression = {},
     isDone = false,
-    readerFunctor = readerFunctor or 
+    readerFunctor = readerFunctor or getNewReaderUsingInitialCharacter
   }
   setmetatable(expressionReader, self)
   self.__index = self
