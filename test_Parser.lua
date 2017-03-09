@@ -234,12 +234,6 @@ function test_ExpressionReader.nested()
   assert("(a (b c))" == expressionReader:readCharacter(" "))
 end
 
-function test_ExpressionReader.nestedWithQuotes()
-  local expressionReader = ExpressionReader:new()
-  feedCharactersOneAtATime(expressionReader, "a '('b 'c))")
-  assert("(a '('b 'c))" == expressionReader:readCharacter(" "))
-end
-
 test_SingleQuoteReader = {}
 
 function test_SingleQuoteReader.startsWithSingleQuote()
