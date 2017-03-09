@@ -33,8 +33,12 @@ end
 
 function FakeReader:new(returnValue)
   local reader = {
-    
+    returnValue = returnValue
   }
+  setmetatable(reader, self)
+  self.__index = self
+
+  return reader
 end
 
 function createFakeReaderFunctor(readers)
