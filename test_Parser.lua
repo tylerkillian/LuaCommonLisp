@@ -31,6 +31,12 @@ function createFakeReader(returnValue)
   end
 end
 
+function FakeReader:new(returnValue)
+  local reader = {
+    
+  }
+end
+
 function createFakeReaderFunctor(readers)
   local index = 0
   return function(firstCharacter)
