@@ -37,7 +37,11 @@ function createFakeReaderFunctor(readers)
     if firstCharacter == "x" then
       index = index + 1
       return readers[index]
+    else
+      return
     end
+  end
+end
 
 -- Begin unit tests
 
