@@ -131,7 +131,7 @@ function ExpressionReader.startsWith(character)
   return ExpressionReader:new()
 end
 
-function ExpressionReader:new()
+function ExpressionReader:new(readerFunctor)
   local expressionReader = {
     nextLink = Scanner:new(),
     expression = {},
