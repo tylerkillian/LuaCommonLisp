@@ -223,8 +223,14 @@ function test_ExpressionReader.terminate()
 end
 
 function test_ExpressionReader.nested()
-  local expressionReader = ExpressionReader:new()
-  feedCharactersOneAtATime(expressionReader, 'a (b c))')
+  local expressionReader = ExpressionReader:new({
+    FakeReader:new("a"),
+    ExpressionReader:new({
+      FakeReader:new("b"),
+      FakeReader:new("c"),
+    }),
+  })
+  feedCharactersOneAtATime(expressionReader, 'x(xx))')
   assert("(a (b c))" == expressionReader:readCharacter(" "))
 end
 
