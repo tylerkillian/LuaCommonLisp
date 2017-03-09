@@ -25,11 +25,7 @@ function convertExpressionToString(expression)
 end
 --]]
 
-function createFakeReader(returnValue)
-  return function(character)
-    return returnValue
-  end
-end
+FakeReader = {}
 
 function FakeReader:new(returnValue)
   local reader = {
