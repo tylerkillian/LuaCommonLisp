@@ -175,7 +175,7 @@ function ExpressionReader:readCharacter(character)
     return
   end
 
-  self.nextLink = readerFunctor(character)
+  self.nextLink = self.readerFunctor(character)
 end
 
 function ExpressionReader:toString()
