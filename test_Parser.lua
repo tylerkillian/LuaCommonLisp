@@ -26,6 +26,9 @@ end
 --]]
 
 function createFakeReader(returnValue)
+  return function(character)
+    return returnValue
+  end
 end
 
 -- Begin unit tests
