@@ -133,7 +133,7 @@ end
 
 function ExpressionReader:new(readerFunctor)
   local expressionReader = {
-    nextLink = Scanner:new(),
+    nextLink = nil,
     expression = {},
     isDone = false,
     readerFunctor = readerFunctor or getNewReaderUsingInitialCharacter
@@ -157,6 +157,15 @@ local function convertExpressionToString(expression)
 end
 
 function ExpressionReader:readCharacter(character)
+  if not self.nextLink then
+    if character == ")" then
+      self.isDone = true
+    else
+      self.nextLink = self.readerFunctor(character)
+      return
+    end
+  end
+
   if self.isDone then
     return convertExpressionToString(self.expression)
   end
