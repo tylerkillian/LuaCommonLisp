@@ -162,8 +162,9 @@ function ExpressionReader:readCharacter(character)
       self.isDone = true
     else
       self.nextLink = self.readerFunctor(character)
-      return
     end
+
+    return
   end
 
   if self.isDone then
