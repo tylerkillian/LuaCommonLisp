@@ -230,7 +230,7 @@ function test_ExpressionReader.nested()
       FakeReader:new("c"),
     }),
   })
-  feedCharactersOneAtATime(expressionReader, 'x(xx))')
+  feedCharactersOneAtATime(expressionReader, 'x')--(xx))')
   assert("(a (b c))" == expressionReader:readCharacter(" "))
 end
 
