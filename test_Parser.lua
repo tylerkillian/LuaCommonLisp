@@ -223,9 +223,9 @@ function test_ExpressionReader.terminate()
 end
 
 function test_ExpressionReader.nested()
-  local expressionReader = ExpressionReader:new({
+  local expressionReader = ExpressionReader:new(createFakeReaderFunctor{
     FakeReader:new("a"),
-    ExpressionReader:new({
+    ExpressionReader:new(createFakeReaderFunctor{
       FakeReader:new("b"),
       FakeReader:new("c"),
     }),
