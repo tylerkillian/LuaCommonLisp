@@ -162,19 +162,19 @@ end
 
 local test_ExpressionReader = {}
 
-function test_SymbolReader.startsWithParentheses()
+function test_ExpressionReader.startsWithParentheses()
   assert(ExpressionReader.startsWith('('))
 end
 
-function test_SymbolReader.doesNotStartWithAlphabeticCharacter()
+function test_ExpressionReader.doesNotStartWithAlphabeticCharacter()
   assert(not ExpressionReader.startsWith('a'))
 end
 
-function test_SymbolReader.doesNotStartWithNumber()
+function test_ExpressionReader.doesNotStartWithNumber()
   assert(not ExpressionReader.startsWith('1'))
 end
 
-function test_SymbolReader.doesNotStartWithDoubleQuote()
+function test_ExpressionReader.doesNotStartWithDoubleQuote()
   assert(not ExpressionReader.startsWith('"'))
 end
 
