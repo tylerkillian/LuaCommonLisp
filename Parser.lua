@@ -163,6 +163,7 @@ function ExpressionReader:readCharacter(character)
 
   if not self.nextLink then
     self.nextLink = self.readerFunctor(character)
+    return
   end
 
   local linkResult = self.nextLink:readCharacter(character)
