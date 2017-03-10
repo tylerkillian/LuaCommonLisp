@@ -264,7 +264,7 @@ function test_SingleQuoteReader.quoteQuoteSymbol()
   assert("''a" == quoteReader:readCharacter(" "))
 end
 
-function test_ExpressionReader.nested()
+function test_SingleQuoteReader.nested()
   local quoteReader = SingleQuoteReader.startsWith("'")
   feedCharactersOneAtATime(quoteReader, "(a '(b 'c))")
   assert("'(a '(b 'c))" == quoteReader:readCharacter(" "))
