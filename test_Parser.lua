@@ -44,12 +44,8 @@ end
 function createFakeReaderFunctor(readers)
   local index = 0
   return function(firstCharacter)
-    if firstCharacter == "x" then
       index = index + 1
       return readers[index]
-    else
-      return
-    end
   end
 end
 
@@ -230,7 +226,7 @@ function test_ExpressionReader.nested()
       FakeReader:new("c"),
     }),
   })
-  feedCharactersOneAtATime(expressionReader, 'x')--(xx))')
+  feedCharactersOneAtATime(expressionReader, 'x(xx))')
   assert("(a (b c))" == expressionReader:readCharacter(" "))
 end
 

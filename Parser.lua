@@ -157,6 +157,7 @@ local function convertExpressionToString(expression)
 end
 
 function ExpressionReader:readCharacter(character)
+  if not self.nextLin
   if self.isDone then
     return convertExpressionToString(self.expression)
   end
