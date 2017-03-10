@@ -157,13 +157,13 @@ local function convertExpressionToString(expression)
 end
 
 function ExpressionReader:readCharacter(character)
-  if self.isDone then
-    return convertExpressionToString(self.expression)
-  end
-
   if not self.nextLink then
     self.nextLink = self.readerFunctor(character)
     return
+  end
+
+  if self.isDone then
+    return convertExpressionToString(self.expression)
   end
 
   local linkResult = self.nextLink:readCharacter(character)
