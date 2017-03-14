@@ -1,4 +1,4 @@
-require "Parser"
+require "ExpressionReader"
 
 local function feedCharactersOneAtATime(reader, characters)
   for index = 1, string.len(characters) do
@@ -116,7 +116,7 @@ local function runTests(testCategory, tests)
   end
 end
 
-function testParser()
+function testExpressionReader()
   runTests("ExpressionReader", test_ExpressionReader)
 end
 
