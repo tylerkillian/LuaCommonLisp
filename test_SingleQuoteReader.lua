@@ -7,24 +7,6 @@ local function feedCharactersOneAtATime(reader, characters)
   end
 end
 
---[[
-function convertExpressionToString(expression)
-  if #expression == 0 then
-    return "()"
-  end
-
-  local result = ""
-  for _, current in ipairs(expression) do
-    if type(current) == "table" then
-      result = result .. " " .. convertExpressionToString(current)
-    else
-      result = result .. " " .. current
-    end
-  end
-  return "(" .. string.sub(result, 2) .. ")"
-end
---]]
-
 FakeReader = {}
 
 function FakeReader:new(returnValue)
