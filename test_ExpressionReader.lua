@@ -56,36 +56,6 @@ function test_ExpressionReader.construct()
   assert("():false", expressionReader:toString())
 end
 
-function test_ExpressionReader.switchFromScanToSymbol()
-  local expressionReader = ExpressionReader:new()
-  expressionReader:readCharacter("a")
-  assert("():false" == expressionReader:toString())
-end
-
-function test_ExpressionReader.addSymbolToExpressionWhenReachSpace()
-  local expressionReader = ExpressionReader:new()
-  feedCharactersOneAtATime(expressionReader, "ab ")
-  assert("(ab):false" == expressionReader:toString())
-end
-
-function test_ExpressionReader.addSymbolToExpressionWhenReachString()
-  local expressionReader = ExpressionReader:new()
-  feedCharactersOneAtATime(expressionReader, 'ab"')
-  assert("(ab):false" == expressionReader:toString())
-end
-
-function test_ExpressionReader.startStringWhenReachInitialQuotationMark()
-  local expressionReader = ExpressionReader:new()
-  feedCharactersOneAtATime(expressionReader, '"')
-  assert("():false" == expressionReader:toString())
-end
-
-function test_ExpressionReader.returnStringWhenReachEndQuotationMark()
-  local expressionReader = ExpressionReader:new()
-  feedCharactersOneAtATime(expressionReader, '"ab" ')
-  assert("(ab):false" == expressionReader:toString())
-end
-
 function test_ExpressionReader.terminate()
   local expressionReader = ExpressionReader:new(createFakeReaderFunctor{
     FakeReader:new("ab"),
