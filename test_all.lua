@@ -1,3 +1,6 @@
+require "test_ScannerReader"
+testScannerReader()
+
 require "test_SymbolReader"
 testSymbolReader()
 
