@@ -8,9 +8,10 @@ function SingleQuoteReader.startsWith(character)
   end
 end
 
-function SingleQuoteReader:new()
+function SingleQuoteReader:new(readerFunctor)
   local reader = {
-    nextLink = Scanner:new(),
+    nextLink = nil,
+    readerFunctor = readerFunctor,
   }
   setmetatable(reader, self)
   self.__index = self
@@ -19,6 +20,11 @@ function SingleQuoteReader:new()
 end
 
 function SingleQuoteReader:readCharacter(character)
+  if not self.nextLink then
+    self.nextLink = self.readerFunctor(character)
+    return
+  end
+
   local linkResult = self.nextLink:readCharacter(character)
   if not linkResult then
     return
@@ -28,6 +34,6 @@ function SingleQuoteReader:readCharacter(character)
     return "'" .. linkResult
   end
 
-  self.nextLink = getNewReaderUsingInitialCharacter(character)
+  self.nextLink = self.readerFunctor(character)
 end
 

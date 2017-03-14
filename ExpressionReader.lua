@@ -15,7 +15,7 @@ function ExpressionReader:new(readerFunctor)
     nextLink = nil,
     expression = {},
     isDone = false,
-    readerFunctor = readerFunctor
+    readerFunctor = readerFunctor,
   }
   setmetatable(expressionReader, self)
   self.__index = self
