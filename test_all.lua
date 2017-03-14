@@ -7,6 +7,9 @@ testSymbolReader()
 require "test_ExpressionReader"
 testExpressionReader()
 
+require "test_SingleQuoteReader"
+testSingleQuoteReader()
+
 require "test_CodeTypes"
 testCodeTypes()
 
