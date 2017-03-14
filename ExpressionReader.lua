@@ -1,6 +1,4 @@
-Code = {
-  NULL = {},
-}
+require "Code"
 
 ExpressionReader = {}
 

@@ -1,3 +1,5 @@
+require "Code"
+
 SingleQuoteReader = {}
 
 function SingleQuoteReader.startsWith(character)
