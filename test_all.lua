@@ -1,5 +1,5 @@
-require "test_ScannerReader"
-testScannerReader()
+require "test_Scanner"
+testScanner()
 
 require "test_SymbolReader"
 testSymbolReader()
