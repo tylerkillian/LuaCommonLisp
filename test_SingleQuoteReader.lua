@@ -44,7 +44,7 @@ function test_SingleQuoteReader.nested()
     FakeReader:new("a"),
   })
   feedCharactersOneAtATime(quoteReader, "x")
-  assert("'(a '(b 'c))" == quoteReader:readCharacter(" "))
+  assert("'a" == quoteReader:readCharacter(" "))
 end
 
 -- End unit tests
