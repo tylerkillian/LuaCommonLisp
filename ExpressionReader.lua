@@ -36,7 +36,7 @@ function ExpressionReader:readCharacter(character)
     if character == ")" then
       self.isDone = true
     else
-      self.nextLink = self.readerFunctor(character)
+      self.nextLink = self.readerFunctor(character, self.readerFunctor)
     end
 
     return
@@ -60,7 +60,7 @@ function ExpressionReader:readCharacter(character)
     return
   end
 
-  self.nextLink = self.readerFunctor(character)
+  self.nextLink = self.readerFunctor(character, self.readerFunctor)
 end
 
 function ExpressionReader:toString()
