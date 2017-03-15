@@ -36,11 +36,11 @@ end
 test_SingleQuoteReader = {}
 
 function test_SingleQuoteReader.startsWithSingleQuote()
-  assert(SingleQuoteReader.startsWith("'"))
+  assert(SingleQuoteReader:new("'"))
 end
 
 function test_SingleQuoteReader.readCodeAfterQuote()
-  local quoteReader = SingleQuoteReader:new(createFakeReaderFunctor{
+  local quoteReader = SingleQuoteReader:new("'", createFakeReaderFunctor{
     FakeReader:new("a"),
   })
   feedCharactersOneAtATime(quoteReader, "x")
@@ -48,7 +48,7 @@ function test_SingleQuoteReader.readCodeAfterQuote()
 end
 
 function test_SingleQuoteReader.skipWhitespace()
-  local quoteReader = SingleQuoteReader:new(createFakeReaderFunctor{
+  local quoteReader = SingleQuoteReader:new("'", createFakeReaderFunctor{
     FakeReader:new(Code.NULL),
     FakeReader:new("a"),
   })

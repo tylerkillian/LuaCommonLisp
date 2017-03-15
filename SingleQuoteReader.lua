@@ -2,13 +2,11 @@ require "Code"
 
 SingleQuoteReader = {}
 
-function SingleQuoteReader.startsWith(character)
-  if character == "'" then
-    return SingleQuoteReader:new()
+function SingleQuoteReader:new(initialCharacter, readerFunctor)
+  if initialCharacter ~= "'" then
+    return
   end
-end
 
-function SingleQuoteReader:new(readerFunctor)
   local reader = {
     nextLink = nil,
     readerFunctor = readerFunctor,
