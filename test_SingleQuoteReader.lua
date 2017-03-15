@@ -39,33 +39,11 @@ function test_SingleQuoteReader.startsWithSingleQuote()
   assert(SingleQuoteReader.startsWith("'"))
 end
 
-function test_SingleQuoteReader.quoteSymbol()
-  local quoteReader = SingleQuoteReader.startsWith("'")
-  quoteReader:readCharacter("a")
-  assert("'a" == quoteReader:readCharacter(" "))
-end
-
-function test_SingleQuoteReader.quoteString()
-  local quoteReader = SingleQuoteReader.startsWith("'")
-  feedCharactersOneAtATime(quoteReader, '"a"')
-  assert("'a" == quoteReader:readCharacter(" "))
-end
-
-function test_SingleQuoteReader.quoteExpression()
-  local quoteReader = SingleQuoteReader.startsWith("'")
-  feedCharactersOneAtATime(quoteReader, '("a" b)')
-  assert("'(a b)" == quoteReader:readCharacter(" "))
-end
-
-function test_SingleQuoteReader.quoteQuoteSymbol()
-  local quoteReader = SingleQuoteReader.startsWith("'")
-  feedCharactersOneAtATime(quoteReader, "'a")
-  assert("''a" == quoteReader:readCharacter(" "))
-end
-
 function test_SingleQuoteReader.nested()
-  local quoteReader = SingleQuoteReader.startsWith("'")
-  feedCharactersOneAtATime(quoteReader, "(a '(b 'c))")
+  local quoteReader = SingleQuoteReader:new(createFakeReaderFunctor{
+    FakeReader:new("a"),
+  })
+  feedCharactersOneAtATime(quoteReader, "x")
   assert("'(a '(b 'c))" == quoteReader:readCharacter(" "))
 end
 
