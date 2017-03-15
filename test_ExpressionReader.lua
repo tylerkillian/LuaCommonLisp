@@ -74,7 +74,6 @@ function test_ExpressionReader.nested()
     }),
   })
   feedCharactersOneAtATime(expressionReader, 'x(xx))')
-print(expressionReader:readCharacter(" "))
   assert("(a (b c))" == expressionReader:readCharacter(" "))
 end
 
