@@ -36,28 +36,28 @@ end
 local test_ExpressionReader = {}
 
 function test_ExpressionReader.startsWithParentheses()
-  assert(ExpressionReader.startsWith('('))
+  assert(ExpressionReader:new('('))
 end
 
 function test_ExpressionReader.doesNotStartWithAlphabeticCharacter()
-  assert(not ExpressionReader.startsWith('a'))
+  assert(not ExpressionReader:new('a'))
 end
 
 function test_ExpressionReader.doesNotStartWithNumber()
-  assert(not ExpressionReader.startsWith('1'))
+  assert(not ExpressionReader:new('1'))
 end
 
 function test_ExpressionReader.doesNotStartWithDoubleQuote()
-  assert(not ExpressionReader.startsWith('"'))
+  assert(not ExpressionReader:new('"'))
 end
 
 function test_ExpressionReader.construct()
-  local expressionReader = ExpressionReader:new()
+  local expressionReader = ExpressionReader:new("(")
   assert("():false", expressionReader:toString())
 end
 
 function test_ExpressionReader.terminate()
-  local expressionReader = ExpressionReader:new(createFakeReaderFunctor{
+  local expressionReader = ExpressionReader:new("(", createFakeReaderFunctor{
     FakeReader:new("ab"),
     FakeReader:new("cd"),
   })
@@ -66,7 +66,7 @@ function test_ExpressionReader.terminate()
 end
 
 function test_ExpressionReader.nested()
-  local expressionReader = ExpressionReader:new(createFakeReaderFunctor{
+  local expressionReader = ExpressionReader:new("(", createFakeReaderFunctor{
     FakeReader:new("a"),
     ExpressionReader:new(createFakeReaderFunctor{
       FakeReader:new("b"),

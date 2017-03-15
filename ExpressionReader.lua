@@ -2,15 +2,11 @@ require "Code"
 
 ExpressionReader = {}
 
-function ExpressionReader.startsWith(character)
-  if character ~= "(" then
+function ExpressionReader:new(initialCharacter, readerFunctor)
+  if initialCharacter ~= "(" then
     return
   end
 
-  return ExpressionReader:new()
-end
-
-function ExpressionReader:new(readerFunctor)
   local expressionReader = {
     nextLink = nil,
     expression = {},
