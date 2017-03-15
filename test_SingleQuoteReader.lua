@@ -39,7 +39,7 @@ function test_SingleQuoteReader.startsWithSingleQuote()
   assert(SingleQuoteReader.startsWith("'"))
 end
 
-function test_SingleQuoteReader.nested()
+function test_SingleQuoteReader.readCodeAfterQuote()
   local quoteReader = SingleQuoteReader:new(createFakeReaderFunctor{
     FakeReader:new("a"),
   })
