@@ -47,6 +47,15 @@ function test_SingleQuoteReader.readCodeAfterQuote()
   assert("'a" == quoteReader:readCharacter(" "))
 end
 
+function test_SingleQuoteReader.skipWhitespace()
+  local quoteReader = SingleQuoteReader:new(createFakeReaderFunctor{
+    FakeReader:new(Code.NULL),
+    FakeReader:new("a"),
+  })
+  feedCharactersOneAtATime(quoteReader, " x")
+  assert("'a" == quoteReader:readCharacter(" "))
+end
+
 -- End unit tests
 
 local function runTests(testCategory, tests)
