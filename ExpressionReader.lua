@@ -61,6 +61,20 @@ function ExpressionReader:readCharacter(character)
   end
 
   self.nextLink = self.readerFunctor(character, self.readerFunctor)
+
+return
+
+  -- Case 1: We're reading the first character after the right parenthesis
+  if self:pastRightParenthesis() then
+    return self:getFullExpression()
+  -- Case 2: A subexpression has already started reading
+  elseif self:linkIsReading() then
+    self:passToLink(character)
+
+  -- Case 3: We're reading the first character after the first parenthesis
+  else
+    self:createNewLink(character)
+  end
 end
 
 function ExpressionReader:toString()
