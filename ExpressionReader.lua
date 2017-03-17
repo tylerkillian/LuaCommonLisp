@@ -73,9 +73,11 @@ return
     self:passToLink(character)
   end
 
-  -- Case 3: We're reading the first character after the first parenthesis
-  else
-    self:createNewLink(character)
+  if self:linkTerminatedOrReadingFirstCharacter() then
+    if character == ")" then
+      self:terminate()
+    else
+      self:createNewLink(character)
   end
 end
 
