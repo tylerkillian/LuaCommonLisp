@@ -68,6 +68,10 @@ function ExpressionReader:readyForNewLink()
   end
 end
 
+function ExpressionReader:terminate()
+  self.isDone = true
+end
+
 function ExpressionReader:createNewLink(character)
   self.nextLink = self.readerFunctor(character, self.readerFunctor)
 end
