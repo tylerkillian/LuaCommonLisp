@@ -64,7 +64,7 @@ function ExpressionReader:readCharacter(character)
 
 return
 
-  if self:pastRightParenthesis() then
+  if self:doneReading() then
     return self:getFullExpression()
   end
 
