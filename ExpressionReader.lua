@@ -64,10 +64,9 @@ function ExpressionReader:readCharacter(character)
 
 return
 
-  -- Case 1: We're reading the first character after the right parenthesis
   if self:pastRightParenthesis() then
     return self:getFullExpression()
-  -- Case 2: A subexpression has already started reading
+  end
 
   if self:linkIsReading() then
     self:passToLink(character)
@@ -78,6 +77,7 @@ return
       self:terminate()
     else
       self:createNewLink(character)
+    end
   end
 end
 
