@@ -31,6 +31,35 @@ local function convertExpressionToString(expression)
   return "(" .. string.sub(result, 2) .. ")"
 end
 
+function ExpressionReader:doneReading()
+  return self.isDone
+end
+
+function ExpressionReader:getFullExpression()
+    return convertExpressionToString(self.expression)
+end
+
+function ExpressionReader:linkIsReading()
+  if self.nextLink then
+    return true
+  else
+    return false
+  end
+end
+
+function ExpressionReader:passToLink(character)
+  local linkResult = self.nextLink:readCharacter(character)
+  if not linkResult then
+    return
+  end
+
+  if linkResult ~= Code.NULL then
+    table.insert(self.expression, linkResult)
+  end
+
+  self.nextLink = nil
+end
+
 function ExpressionReader:readCharacter(character)
   if not self.nextLink then
     if character == ")" then
@@ -72,7 +101,7 @@ return
     self:passToLink(character)
   end
 
-  if self:readingFirstCharacter() or self:linkTerminated() then
+  if self:readyForNewLink() then
     if character == ")" then
       self:terminate()
     else
