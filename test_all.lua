@@ -1,5 +1,5 @@
-require "test_Scanner"
-testScanner()
+require "test_WhitespaceReader"
+testWhitespaceReader()
 
 require "test_SymbolReader"
 testSymbolReader()
@@ -12,6 +12,3 @@ testSingleQuoteReader()
 
 require "test_CodeTypes"
 testCodeTypes()
-
-require "test_Parser"
-testParser()

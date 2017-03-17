@@ -1,4 +1,4 @@
-require "Scanner"
+require "WhitespaceReader"
 
 local function feedCharactersOneAtATime(reader, characters)
   for index = 1, string.len(characters) do
@@ -9,30 +9,30 @@ end
 
 -- Begin unit tests
 
-local test_Scanner = {}
+local test_WhitespaceReader = {}
 
-function test_Scanner.startsWithSpace()
-  assert(Scanner.startsWith(" "))
+function test_WhitespaceReader.startsWithSpace()
+  assert(WhitespaceReader.startsWith(" "))
 end
 
-function test_Scanner.doesNotStartWithNonWhitespace()
-  assert(not Scanner.startsWith("a"))
+function test_WhitespaceReader.doesNotStartWithNonWhitespace()
+  assert(not WhitespaceReader.startsWith("a"))
 end
 
-function test_Scanner.readSpace()
-  local scanner = Scanner:new()
+function test_WhitespaceReader.readSpace()
+  local scanner = WhitespaceReader:new()
   local result = scanner:readCharacter(" ")
   assert(not result)
 end
 
-function test_Scanner.readNonWhitespace()
-  local scanner = Scanner:new()
+function test_WhitespaceReader.readNonWhitespace()
+  local scanner = WhitespaceReader:new()
   local result = scanner:readCharacter("a")
   assert(result == Code.NULL)
 end
 
-function test_Scanner.multipleWhitespaceCharacters()
-  local scanner = Scanner:new()
+function test_WhitespaceReader.multipleWhitespaceCharacters()
+  local scanner = WhitespaceReader:new()
   feedCharactersOneAtATime(scanner, "   ")
   local result = scanner:readCharacter("a")
   assert(result == Code.NULL)
@@ -46,7 +46,7 @@ local function runTests(testCategory, tests)
   end
 end
 
-function testScanner()
-  runTests("Scanner", test_Scanner)
+function testWhitespaceReader()
+  runTests("WhitespaceReader", test_WhitespaceReader)
 end
 
