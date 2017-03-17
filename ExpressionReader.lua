@@ -68,8 +68,10 @@ return
   if self:pastRightParenthesis() then
     return self:getFullExpression()
   -- Case 2: A subexpression has already started reading
-  elseif self:linkIsReading() then
+
+  if self:linkIsReading() then
     self:passToLink(character)
+  end
 
   -- Case 3: We're reading the first character after the first parenthesis
   else
