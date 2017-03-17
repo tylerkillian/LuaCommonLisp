@@ -60,6 +60,18 @@ function ExpressionReader:passToLink(character)
   self.nextLink = nil
 end
 
+function ExpressionReader:readyForNewLink()
+  if self.nextLink then
+    return false
+  else
+    return true
+  end
+end
+
+function ExpressionReader:createNewLink()
+  self.nextLink = self.readerFunctor(character, self.readerFunctor)
+end
+
 function ExpressionReader:readCharacter(character)
   if not self.nextLink then
     if character == ")" then
