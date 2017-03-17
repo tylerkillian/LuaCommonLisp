@@ -77,38 +77,6 @@ function ExpressionReader:createNewLink(character)
 end
 
 function ExpressionReader:readCharacter(character)
---[[  if not self.nextLink then
-    if character == ")" then
-      self.isDone = true
-    else
-      self.nextLink = self.readerFunctor(character, self.readerFunctor)
-    end
-
-    return
-  end
-
-  if self.isDone then
-    return convertExpressionToString(self.expression)
-  end
-
-  local linkResult = self.nextLink:readCharacter(character)
-  if not linkResult then
-    return
-  end
-
-  if linkResult ~= Code.NULL then
-    table.insert(self.expression, linkResult)
-  end
-
-  if character == ")" then
-    self.isDone = true
-    return
-  end
-
-  self.nextLink = self.readerFunctor(character, self.readerFunctor)
-
-return
---]]
   if self:doneReading() then
     return self:getFullExpression()
   end
