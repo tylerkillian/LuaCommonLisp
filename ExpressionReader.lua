@@ -73,7 +73,7 @@ function ExpressionReader:createNewLink(character)
 end
 
 function ExpressionReader:readCharacter(character)
-  if not self.nextLink then
+--[[  if not self.nextLink then
     if character == ")" then
       self.isDone = true
     else
@@ -104,7 +104,7 @@ function ExpressionReader:readCharacter(character)
   self.nextLink = self.readerFunctor(character, self.readerFunctor)
 
 return
-
+--]]
   if self:doneReading() then
     return self:getFullExpression()
   end
