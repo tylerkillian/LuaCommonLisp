@@ -72,7 +72,7 @@ return
     self:passToLink(character)
   end
 
-  if self:linkTerminatedOrReadingFirstCharacter() then
+  if self:readingFirstCharacter() or self:linkTerminated() then
     if character == ")" then
       self:terminate()
     else
