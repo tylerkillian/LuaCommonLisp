@@ -12,3 +12,6 @@ testSingleQuoteReader()
 
 require "test_LString"
 testLString()
+
+require "test_Symbol"
+testSymbol()
