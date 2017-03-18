@@ -2,18 +2,16 @@ require "Code"
 
 WhitespaceReader = {}
 
-function WhitespaceReader.startsWith(character)
-  if character == " " or character == "\n" then
-    return WhitespaceReader:new()
+function WhitespaceReader:new(initialCharacter)
+  if initialCharacter ~= " " and initialCharacter ~= "\n" then
+    return
   end
-end
 
-function WhitespaceReader:new()
-  local scanner = {}
-  setmetatable(scanner, self)
+  local reader = {}
+  setmetatable(reader, self)
   self.__index = self
 
-  return scanner
+  return reader
 end
 
 function WhitespaceReader:readCharacter(character)
