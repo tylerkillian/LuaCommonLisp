@@ -43,7 +43,7 @@ function ExpressionReader:passToLink(character)
   end
 
   if linkResult ~= Code.NULL then
-    table.insert(self.expression, linkResult)
+    self.expression:push(linkResult)
   end
 
   self.nextLink = nil

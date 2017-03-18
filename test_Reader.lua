@@ -18,7 +18,7 @@ function FakeReader:new(returnValue)
 end
 
 function FakeReader:readCharacter(character)
-  return self.returnValue
+  return returnValue
 end
 
 function createFakeReaderFunctor(readers)
@@ -29,3 +29,11 @@ function createFakeReaderFunctor(readers)
   end
 end
 
+function createFakeValue(toStringValue)
+  return {
+    toString = function()
+      return toStringValue
+    end,
+  }
+end
+  

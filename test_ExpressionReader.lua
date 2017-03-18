@@ -29,8 +29,8 @@ end
 
 function test_ExpressionReader.terminate()
   local expressionReader = ExpressionReader:new("(", createFakeReaderFunctor{
-    FakeReader:new("ab"),
-    FakeReader:new("cd"),
+    FakeReader:new(createFakeValue("ab")),
+    FakeReader:new(createFakeValue("cd")),
   })
   feedCharactersOneAtATime(expressionReader, 'xx)')
   assert("(ab cd)" == expressionReader:readCharacter(" "):toString())
@@ -38,10 +38,10 @@ end
 
 function test_ExpressionReader.nested()
   local expressionReader = ExpressionReader:new("(", createFakeReaderFunctor{
-    FakeReader:new("a"),
+    FakeReader:new(createFakeValue("a")),
     ExpressionReader:new("(", createFakeReaderFunctor{
-      FakeReader:new("b"),
-      FakeReader:new("c"),
+      FakeReader:new(createFakeValue("b")),
+      FakeReader:new(createFakeValue("c")),
     }),
   })
   feedCharactersOneAtATime(expressionReader, 'x(xx))')

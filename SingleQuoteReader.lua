@@ -29,7 +29,7 @@ function SingleQuoteReader:readCharacter(character)
   end
 
   if linkResult ~= Code.NULL then
-    return "'" .. linkResult
+    return "'" .. linkResult:toString()
   end
 
   self.nextLink = self.readerFunctor(character)
