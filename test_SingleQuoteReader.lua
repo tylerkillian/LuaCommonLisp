@@ -12,7 +12,7 @@ end
 
 function test_SingleQuoteReader.readCodeAfterQuote()
   local quoteReader = SingleQuoteReader:new("'", createFakeReaderFunctor{
-    FakeReader:new("a"),
+    FakeReader:new(createFakeCode("a")),
   })
   feedCharactersOneAtATime(quoteReader, "x")
   assert("'a" == quoteReader:readCharacter(" "))
@@ -21,7 +21,7 @@ end
 function test_SingleQuoteReader.skipWhitespace()
   local quoteReader = SingleQuoteReader:new("'", createFakeReaderFunctor{
     FakeReader:new(Code.NULL),
-    FakeReader:new("a"),
+    FakeReader:new(createFakeCode("a")),
   })
   feedCharactersOneAtATime(quoteReader, " x")
   assert("'a" == quoteReader:readCharacter(" "))
