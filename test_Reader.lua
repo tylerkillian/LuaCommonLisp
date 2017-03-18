@@ -29,11 +29,3 @@ function createFakeReaderFunctor(readers)
   end
 end
 
-function createFakeValue(toStringValue)
-  return {
-    toString = function()
-      return toStringValue
-    end,
-  }
-end
-assert(createFakeValue("a"):toString() == "a")
