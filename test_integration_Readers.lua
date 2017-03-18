@@ -16,7 +16,7 @@ function test_integrateReaders.validCharacterOnlyRecognizedByOneReader()
 
     local numberOfRecognitions = 0;
 
-    if Scanner:new(nextCharacter) then
+    if WhitespaceReader:new(nextCharacter) then
       numberOfRecognitions = numberOfRecognitions + 1
     end
 
