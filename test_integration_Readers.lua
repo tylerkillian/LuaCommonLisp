@@ -16,23 +16,23 @@ function test_integrateReaders.validCharacterOnlyRecognizedByOneReader()
 
     local numberOfRecognitions = 0;
 
-    if Scanner.startsWith(nextCharacter) then
+    if Scanner:new(nextCharacter) then
       numberOfRecognitions = numberOfRecognitions + 1
     end
 
-    if SymbolReader.startsWith(nextCharacter) then
+    if SymbolReader:new(nextCharacter) then
       numberOfRecognitions = numberOfRecognitions + 1
     end
 
-    if StringReader.startsWith(nextCharacter) then
+    if StringReader:new(nextCharacter) then
       numberOfRecognitions = numberOfRecognitions + 1
     end
 
-    if ExpressionReader.startsWith(nextCharacter) then
+    if ExpressionReader:new(nextCharacter) then
       numberOfRecognitions = numberOfRecognitions + 1
     end
 
-    if SingleQuoteReader.startsWith(nextCharacter) then
+    if SingleQuoteReader:new(nextCharacter) then
       numberOfRecognitions = numberOfRecognitions + 1
     end
 
