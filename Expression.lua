@@ -17,7 +17,7 @@ function Expression:push(value)
 end
 
 function Expression:get(index)
-  assert(index >= 1 && index <= #self.data)
+  assert(index >= 1 and index <= #self.data)
 
   return self.data[index]
 end
@@ -28,7 +28,7 @@ function Expression:toString()
   end
 
   local result = ""
-  for _, current in ipairs(expression) do
+  for _, current in ipairs(self.data) do
     result = result .. " " .. current:toString()
   end
   return "(" .. string.sub(result, 2) .. ")"

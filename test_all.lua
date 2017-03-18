@@ -15,3 +15,7 @@ testLString()
 
 require "test_Symbol"
 testSymbol()
+
+require "test_Expression"
+testExpression()
+
