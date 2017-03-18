@@ -95,7 +95,7 @@ function ExpressionReader:toString()
 
   local result = ""
   for _, current in ipairs(self.expression) do
-    result = result .. " " .. current
+    result = result .. " " .. current:toString()
   end
   return "(" .. string.sub(result, 2) .. "):" .. isDoneString
 end
