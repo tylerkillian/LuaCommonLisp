@@ -15,7 +15,7 @@ function SymbolReader:new(initialCharacter)
   setmetatable(symbolReader, self)
   self.__index = self
 
-  self:readCharacter(character)
+  symbolReader:readCharacter(character)
 
   return symbolReader
 end
