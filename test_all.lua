@@ -10,5 +10,5 @@ testExpressionReader()
 require "test_SingleQuoteReader"
 testSingleQuoteReader()
 
-require "test_CodeTypes"
-testCodeTypes()
+require "test_LString"
+testLString()
