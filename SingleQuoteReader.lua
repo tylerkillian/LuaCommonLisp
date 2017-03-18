@@ -1,4 +1,5 @@
 require "Code"
+require "SingleQuoteOperator"
 
 SingleQuoteReader = {}
 

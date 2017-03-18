@@ -17,6 +17,6 @@ function SingleQuoteOperator:getArgument()
 end
 
 function SingleQuoteOperator:toString()
-  return "'" .. self.data:toString
+  return "'" .. self.data:toString()
 end
 

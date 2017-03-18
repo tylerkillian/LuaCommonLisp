@@ -16,7 +16,7 @@ function test_SingleQuoteReader.readCodeAfterQuote()
     FakeReader:new(FakeCode:new("a")),
   })
   feedCharactersOneAtATime(quoteReader, "x")
-  assert("'a" == quoteReader:readCharacter(" "))
+  assert("'a" == quoteReader:readCharacter(" "):toString())
 end
 
 function test_SingleQuoteReader.skipWhitespace()
@@ -25,7 +25,7 @@ function test_SingleQuoteReader.skipWhitespace()
     FakeReader:new(FakeCode:new("a")),
   })
   feedCharactersOneAtATime(quoteReader, " x")
-  assert("'a" == quoteReader:readCharacter(" "))
+  assert("'a" == quoteReader:readCharacter(" "):toString())
 end
 
 -- End unit tests
