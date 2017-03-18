@@ -16,6 +16,9 @@ testLString()
 require "test_Symbol"
 testSymbol()
 
+require "test_String"
+testString()
+
 require "test_Expression"
 testExpression()
 
