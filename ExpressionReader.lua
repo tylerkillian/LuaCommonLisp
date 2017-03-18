@@ -1,4 +1,5 @@
 require "Code"
+require "Expression"
 
 ExpressionReader = {}
 
@@ -9,7 +10,7 @@ function ExpressionReader:new(initialCharacter, readerFunctor)
 
   local expressionReader = {
     nextLink = nil,
-    expression = {},
+    expression = Expression:new(),
     isDone = false,
     readerFunctor = readerFunctor,
   }
@@ -19,24 +20,12 @@ function ExpressionReader:new(initialCharacter, readerFunctor)
   return expressionReader
 end
 
-local function convertExpressionToString(expression)
-  if #expression == 0 then
-    return "()"
-  end
-
-  local result = ""
-  for _, current in ipairs(expression) do
-    result = result .. " " .. current
-  end
-  return "(" .. string.sub(result, 2) .. ")"
-end
-
 function ExpressionReader:doneReading()
   return self.isDone
 end
 
 function ExpressionReader:getFullExpression()
-    return convertExpressionToString(self.expression)
+    return self.expression
 end
 
 function ExpressionReader:linkIsReading()

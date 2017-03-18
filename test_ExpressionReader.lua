@@ -33,7 +33,7 @@ function test_ExpressionReader.terminate()
     FakeReader:new("cd"),
   })
   feedCharactersOneAtATime(expressionReader, 'xx)')
-  assert("(ab cd)" == expressionReader:readCharacter(" "))
+  assert("(ab cd)" == expressionReader:readCharacter(" "):toString())
 end
 
 function test_ExpressionReader.nested()
@@ -45,7 +45,7 @@ function test_ExpressionReader.nested()
     }),
   })
   feedCharactersOneAtATime(expressionReader, 'x(xx))')
-  assert("(a (b c))" == expressionReader:readCharacter(" "))
+  assert("(a (b c))" == expressionReader:readCharacter(" "):toString())
 end
 
 -- End unit tests
