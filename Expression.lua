@@ -1,45 +1,7 @@
-LString = {}
-
-function LString:new(value)
-  local lString = {
-    data = value
-  }
-  setmetatable(lString, self)
-  self.__index = self
-
-  return lString
-end
-
-function LString:toString()
-  return self.data
-end
-
-Symbol = {}
-
-function Symbol:new(value)
-  local symbol = {
-    evaluate = true,
-    data = value or ""
-  }
-  setmetatable(symbol, self)
-  self.__index = self
-
-  return symbol
-end
-
-function Symbol:toString()
-  if self.evaluate then
-    return "true:" .. self.data
-  else
-    return "false:" .. self.data
-  end
-end
-
 Expression = {}
 
-function Expression:new()
+function Expression:new(value)
   local expression = {
-    evaluate = true,
     data = {}
   }
   setmetatable(expression, self)
@@ -48,9 +10,27 @@ function Expression:new()
   return expression
 end
 
-function Expression:toString()
-  return "()"
+function Expression:push(value)
+  assert(value)
+
+  table.insert(self.data, value)
 end
 
-TickOperator = {}
+function Expression:get(index)
+  assert(index >= 1 && index <= #self.data)
+
+  return self.data[index]
+end
+
+function Expression:toString()
+  if #self.data == 0 then
+    return "()"
+  end
+
+  local result = ""
+  for _, current in ipairs(expression) do
+    result = result .. " " .. current:toString()
+  end
+  return "(" .. string.sub(result, 2) .. ")"
+end
 
