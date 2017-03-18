@@ -11,6 +11,11 @@ function test_SingleQuoteOperator.construct()
   assert("'a" == operator:toString())
 end
 
+function test_SingleQuoteOperator.getValue()
+  local operator = SingleQuoteOperator:new(FakeCode:new("a"))
+  assert("a" == operator:getValue():toString())
+end
+
 -- End unit tests
 
 function testSingleQuoteOperator()
