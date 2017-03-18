@@ -1,3 +1,5 @@
+require "Symbol"
+
 SymbolReader = {}
 
 function SymbolReader:new(initialCharacter)
@@ -22,7 +24,7 @@ end
 
 function SymbolReader:readCharacter(character)
   if character == " " or character == '"' or character == ")" then
-    return self.queue
+    return Symbol:new(self.queue)
   else
     self.queue = self.queue .. character
     return
