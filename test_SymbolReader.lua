@@ -1,11 +1,6 @@
 require "SymbolReader"
-
-local function feedCharactersOneAtATime(reader, characters)
-  for index = 1, string.len(characters) do
-    local nextCharacter = string.sub(characters, index, index)
-    reader:readCharacter(nextCharacter)
-  end
-end
+require "test_Reader"
+require "test_utilities"
 
 -- Begin unit tests
 
@@ -46,13 +41,6 @@ function test_SymbolReader.terminateWithSpace()
 end
 
 -- End unit tests
-
-local function runTests(testCategory, tests)
-  for testName, theTest in pairs(tests) do
-    print("Running " .. testCategory .. " " .. testName)
-    theTest()
-  end
-end
 
 function testSymbolReader()
   runTests("SymbolReader", test_SymbolReader)
