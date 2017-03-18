@@ -1,4 +1,4 @@
-require "WhitespaceReader"
+require "LString"
 require "test_utilities"
 
 -- Begin unit tests
@@ -7,7 +7,7 @@ local test_LString = {}
 
 function test_LString.construct()
   local hello = LString:new("hello")
-  assert("hello" == LString:getValue())
+  assert("hello" == hello:getValue())
 end
 
 -- End unit tests

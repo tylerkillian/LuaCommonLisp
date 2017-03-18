@@ -10,6 +10,10 @@ function LString:new(value)
   return lString
 end
 
+function LString:getValue()
+  return self.data
+end
+
 function LString:toString()
   return self.data
 end
