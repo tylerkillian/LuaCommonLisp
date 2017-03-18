@@ -19,7 +19,7 @@ end
 
 function StringReader:readCharacter(character)
   if self.isDone then
-    return LString(self.queue)
+    return LString:new(self.queue)
   end
 
   if character == '"' then
