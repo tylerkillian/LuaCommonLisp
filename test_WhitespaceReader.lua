@@ -1,11 +1,6 @@
 require "WhitespaceReader"
-
-local function feedCharactersOneAtATime(reader, characters)
-  for index = 1, string.len(characters) do
-    local nextCharacter = string.sub(characters, index, index)
-    reader:readCharacter(nextCharacter)
-  end
-end
+require "test_Reader"
+require "test_utilities"
 
 -- Begin unit tests
 
@@ -38,13 +33,7 @@ function test_WhitespaceReader.multipleWhitespaceCharacters()
   assert(result == Code.NULL)
 end
 
-
-local function runTests(testCategory, tests)
-  for testName, theTest in pairs(tests) do
-    print("Running " .. testCategory .. " " .. testName)
-    theTest()
-  end
-end
+-- End unit tests
 
 function testWhitespaceReader()
   runTests("WhitespaceReader", test_WhitespaceReader)
