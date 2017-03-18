@@ -1,6 +1,8 @@
 SingleQuoteOperator = {}
 
 function SingleQuoteOperator:new(value)
+  assert(value)
+
   local operator = {
     data = value
   }

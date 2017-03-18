@@ -4,24 +4,16 @@ require "test_utilities"
 
 -- Begin unit tests
 
-local test_Expression = {}
+local test_SingleQuoteOperator = {}
 
-function test_Expression.construct()
-  local emptyExpression = Expression:new()
-  assert("()" == emptyExpression:toString())
-end
-
-function test_Expression.multipleEntries()
-  local threeEntries = Expression:new()
-  threeEntries:push(FakeCode:new("a"))
-  threeEntries:push(FakeCode:new("b"))
-  threeEntries:push(FakeCode:new("c"))
-  assert("(a b c)" == threeEntries:toString())
+function test_SingleQuoteOperator.construct()
+  local operator = SingleQuoteOperator:new(FakeCode:new("a"))
+  assert("'a" == operator:toString())
 end
 
 -- End unit tests
 
-function testExpression()
-  runTests("Expression", test_Expression)
+function testSingleQuoteOperator()
+  runTests("SingleQuoteOperator", test_SingleQuoteOperator)
 end
 
