@@ -1,25 +1,21 @@
 SymbolReader = {}
 
-function SymbolReader.startsWith(character)
-  if character == '"' or
-    character == "(" or
-    character == " " or
-    character == "\n" or
-    character == "'" then
+function SymbolReader:new(initialCharacter)
+  if initialCharacter == '"' or
+    initialCharacter == "(" or
+    initialCharacter == " " or
+    initialCharacter == "\n" or
+    initialCharacter == "'" then
     return
   end
 
-  local result = SymbolReader:new()
-  result:readCharacter(character)
-  return result
-end
-
-function SymbolReader:new()
   local symbolReader = {
     queue = "",
   }
   setmetatable(symbolReader, self)
   self.__index = self
+
+  self:readCharacter(character)
 
   return symbolReader
 end

@@ -7,19 +7,19 @@ require "test_utilities"
 local test_SymbolReader = {}
 
 function test_SymbolReader.startsWithAlphabeticCharacter()
-  assert(SymbolReader.startsWith("a"))
+  assert(SymbolReader:new("a"))
 end
 
 function test_SymbolReader.startsWithNumber()
-  assert(SymbolReader.startsWith("1"))
+  assert(SymbolReader:new("1"))
 end
 
 function test_SymbolReader.doesNotStartWithDoubleQuote()
-  assert(not SymbolReader.startsWith('"'))
+  assert(not SymbolReader:new('"'))
 end
 
 function test_SymbolReader.doesNotStartWithParentheses()
-  assert(not SymbolReader.startsWith('('))
+  assert(not SymbolReader:new('('))
 end
 
 function test_SymbolReader.addSingleCharacter()
