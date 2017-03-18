@@ -1,3 +1,5 @@
+require "LString"
+
 StringReader = {}
 
 function StringReader:new(initialCharacter)
@@ -17,7 +19,7 @@ end
 
 function StringReader:readCharacter(character)
   if self.isDone then
-    return self.queue
+    return LString(self.queue)
   end
 
   if character == '"' then

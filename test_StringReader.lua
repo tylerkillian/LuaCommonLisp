@@ -40,7 +40,7 @@ function test_StringReader.terminateWithSpace()
   stringReader:readCharacter("a")
   stringReader:readCharacter("b")
   stringReader:readCharacter('"')
-  assert("ab" == stringReader:readCharacter(" "))
+  assert("ab" == stringReader:readCharacter(" "):getValue())
 end
 
 -- End unit tests

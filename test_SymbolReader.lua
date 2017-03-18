@@ -36,7 +36,7 @@ end
 function test_SymbolReader.terminateWithSpace()
   local symbolReader = SymbolReader:new("a")
   symbolReader:readCharacter("b")
-  assert("ab" == symbolReader:readCharacter(" "):toString())
+  assert("ab" == symbolReader:readCharacter(" "):getValue())
 end
 
 -- End unit tests
