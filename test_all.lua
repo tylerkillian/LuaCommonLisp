@@ -4,6 +4,9 @@ testWhitespaceReader()
 require "test_SymbolReader"
 testSymbolReader()
 
+require "test_StringReader"
+testStringReader()
+
 require "test_ExpressionReader"
 testExpressionReader()
 

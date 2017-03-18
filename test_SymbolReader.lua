@@ -23,20 +23,19 @@ function test_SymbolReader.doesNotStartWithParentheses()
 end
 
 function test_SymbolReader.addSingleCharacter()
-  local symbolReader = SymbolReader:new()
-  symbolReader:readCharacter("a")
+  local symbolReader = SymbolReader:new("a")
   assert("a" == symbolReader:toString())
 end
 
 function test_SymbolReader.addTwoCharacters()
-  local symbolReader = SymbolReader:new()
-  feedCharactersOneAtATime(symbolReader, "ab")
+  local symbolReader = SymbolReader:new("a")
+  symbolReader:readCharacter("b")
   assert("ab" == symbolReader:toString())
 end
 
 function test_SymbolReader.terminateWithSpace()
-  local symbolReader = SymbolReader:new()
-  feedCharactersOneAtATime(symbolReader, "ab")
+  local symbolReader = SymbolReader:new("a")
+  symbolReader:readCharacter("b")
   assert("ab" == symbolReader:readCharacter(" "))
 end
 
