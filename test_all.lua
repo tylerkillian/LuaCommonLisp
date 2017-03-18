@@ -19,3 +19,6 @@ testSymbol()
 require "test_Expression"
 testExpression()
 
+require "test_integration_Readers"
+testReaders()
+
