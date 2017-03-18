@@ -36,5 +36,4 @@ function createFakeValue(toStringValue)
     end,
   }
 end
-  
-assert(createFakeValue("yo"):toString == "yo")
+assert(createFakeValue("a"):toString() == "a")
