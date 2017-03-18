@@ -1,18 +1,18 @@
-require "LString"
+require "Symbol"
 require "test_utilities"
 
 -- Begin unit tests
 
-local test_LString = {}
+local test_Symbol = {}
 
-function test_LString.construct()
-  local hello = LString:new("hello")
+function test_Symbol.construct()
+  local hello = Symbol:new("hello")
   assert("hello" == hello:getValue())
 end
 
 -- End unit tests
 
-function testLString()
-  runTests("LString", test_LString)
+function testSymbol()
+  runTests("Symbol", test_Symbol)
 end
 
