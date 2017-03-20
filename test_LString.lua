@@ -10,6 +10,11 @@ function test_LString.construct()
   assert("hello" == hello:getValue())
 end
 
+function test_LString.represents()
+  local hello = LString:new("hello")
+  assert("string" == hello:represents())
+end
+
 -- End unit tests
 
 function testLString()
