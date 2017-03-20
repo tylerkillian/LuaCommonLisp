@@ -14,6 +14,10 @@ function Symbol:getValue()
   return self.data
 end
 
+function Symbol:represents()
+  return "symbol"
+end
+
 function Symbol:toString()
   return self.data
 end
