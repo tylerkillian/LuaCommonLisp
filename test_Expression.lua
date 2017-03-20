@@ -21,7 +21,7 @@ end
 
 function test_Expression.represents()
   local emptyExpression = Expression:new()
-  assert("represents" == emptyExpression:toString())
+  assert("expression" == emptyExpression:toString())
 end
   
 -- End unit tests

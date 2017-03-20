@@ -22,6 +22,10 @@ function Expression:get(index)
   return self.data[index]
 end
 
+function Expression:represents()
+  return "expression"
+end
+
 function Expression:toString()
   if #self.data == 0 then
     return "()"
