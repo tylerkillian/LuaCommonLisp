@@ -14,6 +14,10 @@ function LString:getValue()
   return self.data
 end
 
+function LString:represents()
+  return "string"
+end
+
 function LString:toString()
   return self.data
 end
