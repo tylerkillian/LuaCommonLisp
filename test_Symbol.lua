@@ -10,6 +10,11 @@ function test_Symbol.construct()
   assert("hello" == hello:getValue())
 end
 
+function test_Symbol.represents()
+  local hello = Symbol:new("hello")
+  assert("symbol" == hello:represents())
+end
+
 -- End unit tests
 
 function testSymbol()
