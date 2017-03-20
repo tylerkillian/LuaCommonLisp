@@ -19,6 +19,11 @@ function test_Expression.multipleEntries()
   assert("(a b c)" == threeEntries:toString())
 end
 
+function test_Expression.represents()
+  local emptyExpression = Expression:new()
+  assert("represents" == emptyExpression:toString())
+end
+  
 -- End unit tests
 
 function testExpression()
