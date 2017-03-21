@@ -12,6 +12,10 @@ function FakeCode:new(valueFromToString)
   return fakeCode
 end
 
+function FakeCode:sendFakeCode(context)
+  context:receiveFakeCode(self)
+end
+
 function FakeCode:toString()
   return self.valueFromToString
 end
