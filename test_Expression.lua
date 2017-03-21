@@ -2,6 +2,18 @@ require "Expression"
 require "test_Code"
 require "test_utilities"
 
+FakeContext = {}
+
+function FakeContext:new()
+  local context = {
+    numArgumentsPassedIn = 0,
+  }
+  setmetatable(context, self)
+  self.__index = self
+
+  return context
+end
+
 -- Begin unit tests
 
 local test_Expression = {}
