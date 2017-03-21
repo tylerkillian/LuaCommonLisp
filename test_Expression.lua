@@ -6,7 +6,7 @@ FakeContext = {}
 
 function FakeContext:new()
   local context = {
-    hisory = "",
+    history = "",
     mode = "readyToBegin",
   }
   setmetatable(context, self)

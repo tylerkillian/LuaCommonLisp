@@ -32,7 +32,7 @@ end
 
 function Expression:evaluate(context)
   assert(self:getLength() > 0)
-  context:startEvalutateExpression()
+  context:beginEvaluateExpression()
   for _, argument in ipairs(self.data) do
     argument:send(context)
   end
