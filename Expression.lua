@@ -36,7 +36,7 @@ function Expression:evaluate(context)
   for _, argument in ipairs(self.data) do
     argument:send(context)
   end
-  context:endEvalutateExpression()
+  context:endEvaluateExpression()
 end
 
 function Expression:toString()
