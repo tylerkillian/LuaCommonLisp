@@ -6,12 +6,37 @@ FakeContext = {}
 
 function FakeContext:new()
   local context = {
-    numArgumentsPassedIn = 0,
+    hisory = "",
+    mode = "readyToBegin",
   }
   setmetatable(context, self)
   self.__index = self
 
   return context
+end
+
+function FakeContext:beginEvaluateExpression()
+  assert(self.mode == "readyToBegin")
+  self.history = self.history .. "("
+end
+
+function FakeContext:receiveSymbol(symbol)
+  assert(self.mode == "readyForSymbol")
+  self.history = self.history .. symbol:toString()
+end
+
+function FakeContext:receiveArgument(argument)
+  assert(self.mode == "readyForArgument")
+  self.history = self.history .. " " .. argument:toString()
+end
+
+function FakeContext:endEvaluateExpression()
+  assert(self.mode == "readyForArgument")
+  self.history = self.history .. ")"
+end
+
+function FakeContext:toString()
+  return self.history
 end
 
 -- Begin unit tests
