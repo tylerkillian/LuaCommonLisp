@@ -12,7 +12,7 @@ function FakeCode:new(valueFromToString)
   return fakeCode
 end
 
-function FakeCode:sendFakeCode(context)
+function FakeCode:send(context)
   context:receiveFakeCode(self)
 end
 
