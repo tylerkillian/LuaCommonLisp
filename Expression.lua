@@ -22,11 +22,18 @@ function Expression:get(index)
   return self.data[index]
 end
 
+function Expression:getLength()
+  return #self.data
+end
+
 function Expression:represents()
   return "expression"
 end
 
 function Expression:evaluate(context)
+  assert(self:getLength() > 0)
+  context:evaluateExpression()
+  
 end
 
 function Expression:toString()
