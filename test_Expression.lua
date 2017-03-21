@@ -18,20 +18,21 @@ end
 function FakeContext:beginEvaluateExpression()
   assert(self.mode == "readyToBegin")
   self.history = self.history .. "("
+  self.mode = "readyForContent"
 end
 
-function FakeContext:receiveSymbol(symbol)
-  assert(self.mode == "readyForSymbol")
-  self.history = self.history .. symbol:toString()
-end
+function FakeContext:receiveFakeCode(code)
+  assert(self.mode == "readyForContent")
 
-function FakeContext:receiveArgument(argument)
-  assert(self.mode == "readyForArgument")
-  self.history = self.history .. " " .. argument:toString()
+  if string.len(self.history) == 1 then
+    self.history = self.history .. code:toString()
+  else
+    self.history = self.history .. " " .. code:toString()
+  end
 end
 
 function FakeContext:endEvaluateExpression()
-  assert(self.mode == "readyForArgument")
+  assert(self.mode == "readyForContent")
   self.history = self.history .. ")"
 end
 
