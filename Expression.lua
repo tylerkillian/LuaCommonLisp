@@ -26,6 +26,9 @@ function Expression:represents()
   return "expression"
 end
 
+function Expression:evaluate(context)
+end
+
 function Expression:toString()
   if #self.data == 0 then
     return "()"
