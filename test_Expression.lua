@@ -73,6 +73,16 @@ function test_Expression.represents()
   local emptyExpression = Expression:new()
   assert("expression" == emptyExpression:represents())
 end
+
+function test_Expression.evaluate()
+  local threeEntries = Expression:new()
+  threeEntries:push(FakeCode:new("a"))
+  threeEntries:push(FakeCode:new("b"))
+  threeEntries:push(FakeCode:new("c"))
+  local context = FakeContext:new()
+  threeEntries:evaluate(context)
+  assert("(a b c)" == context:toString())
+end
   
 -- End unit tests
 
