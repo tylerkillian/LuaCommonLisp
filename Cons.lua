@@ -26,3 +26,22 @@ end
 function Cons:setCdr(cdr)
   self.cdr = cdr
 end
+
+function Cons:toString()
+  local result = ""
+
+  if type(self.car) == "table" then
+    result = result .. self.car:toString
+  else
+    result = result .. self.car
+  end
+
+  if type(self.cdr) == "table" then
+    result = result .. self.cdr:toString
+  else
+    result = result .. self.cdr
+  end
+
+  return result
+end
+

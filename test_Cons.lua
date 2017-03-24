@@ -5,6 +5,11 @@ require "test_utilities"
 
 local test_Cons = {}
 
+function test_Cons.construct()
+  local cons1And2 = Cons:new(1, 2)
+  assert("1 2" == cons1And2:toString())
+end
+
 function test_Cons.getCar()
   local carIs1 = Cons:new(1, 2)
   assert(1 == carIs1:getCar())
