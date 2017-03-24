@@ -23,7 +23,7 @@ end
 
 function test_Cons.setCdr()
   local cdrIs4 = Cons:new(1, 2)
-  carIs4:setCdr(4)
+  cdrIs4:setCdr(4)
   assert(4 == cdrIs4:getCdr())
 end
 
