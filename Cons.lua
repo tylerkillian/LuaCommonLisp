@@ -20,3 +20,9 @@ function Cons:setCar(car)
 end
 
 function
+  return self.car
+end
+
+function Cons:setCar(car)
+  self.car = car
+end
