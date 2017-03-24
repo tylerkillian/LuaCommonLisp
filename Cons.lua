@@ -5,7 +5,9 @@ function Cons:new(car, cdr)
     car = car,
     cdr = cdr,
   }
+  setmetatable(cons, self)
+  self.__index = self
 
-return cons
+  return cons
 end
 
