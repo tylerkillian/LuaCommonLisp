@@ -11,3 +11,12 @@ function Cons:new(car, cdr)
   return cons
 end
 
+function Cons:getCar()
+  return self.car
+end
+
+function Cons:setCar(car)
+  self.car = car
+end
+
+function
