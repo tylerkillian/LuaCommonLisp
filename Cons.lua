@@ -23,6 +23,6 @@ function Cons:getCdr()
   return self.cdr
 end
 
-function Cons:setCar(car)
-  self.car = car
+function Cons:setCdr(cdr)
+  self.car = cdr
 end
