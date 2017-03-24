@@ -19,8 +19,8 @@ function Cons:setCar(car)
   self.car = car
 end
 
-function
-  return self.car
+function Cons:getCdr()
+  return self.cdr
 end
 
 function Cons:setCar(car)
