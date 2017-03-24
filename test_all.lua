@@ -25,3 +25,6 @@ testExpression()
 require "test_integration_Readers"
 testReaders()
 
+require "test_Cons"
+testCons()
+
