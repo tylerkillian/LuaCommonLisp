@@ -24,5 +24,5 @@ function Cons:getCdr()
 end
 
 function Cons:setCdr(cdr)
-  self.car = cdr
+  self.cdr = cdr
 end
