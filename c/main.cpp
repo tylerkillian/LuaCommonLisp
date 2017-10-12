@@ -1,6 +1,7 @@
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
+#include <vector>
 using namespace std;
 
 void error(string errorMessage) {
@@ -18,6 +19,44 @@ class LispExpression {
     }
 
   private:
+};
+
+class LispCode {
+  virtual string toString() = 0;
+};
+
+class LispSymbol : public LispCode {
+  public:
+    LispSymbol(string value) {
+      this->value = value;
+    }
+
+    virtual string toString() {
+      return this->value;
+    }
+
+  private:
+    string value;
+};
+
+class LispList : public LispCode {
+  public:
+    LispList() {
+    }
+
+    void push(LispCode *code) {
+      elements.push_back(code);
+    }
+
+    virtual string toString() {
+      string result = "";
+      for (vector<LispCode*>::iterator current = elements.begin(); current != elements.end(); current++) {
+        result += (*current)->toString() + " ";
+      }
+      return "(" + result + ")";
+    }
+  private:
+    vector<LispCode*> elements;
 };
 
 class LispExpressionReader {
@@ -52,7 +91,7 @@ int removeThisVariable;
 
 int main(int argc, char **argv)
 {
-  if (argc == 0) {
+  if (argc == 1) {
     error("Usage: " + string(argv[0]) + " <filename>");
   }
   string inputFilename(argv[1]);
@@ -67,6 +106,12 @@ cout << "inside loop" << endl;
 
     expression = expressionReader.getNextExpression();
   }
+
+  LispList *testList = new LispList();
+  testList->push(new LispSymbol("setf"));
+  testList->push(new LispSymbol("a"));
+  testList->push(new LispSymbol("2"));
+  cout << "Expression == " << testList->toString() << endl;
 
   return 0;
 }
