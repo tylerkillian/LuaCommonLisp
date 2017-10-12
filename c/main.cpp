@@ -22,7 +22,8 @@ class LispExpression {
 };
 
 class LispCode {
-  virtual string toString() = 0;
+  public:
+    virtual string toString() = 0;
 };
 
 class LispSymbol : public LispCode {
@@ -49,11 +50,15 @@ class LispList : public LispCode {
     }
 
     virtual string toString() {
+      if (elements.size() == 0) {
+        return "()";
+      }
+
       string result = "";
       for (vector<LispCode*>::iterator current = elements.begin(); current != elements.end(); current++) {
-        result += (*current)->toString() + " ";
+        result += " " + (*current)->toString();
       }
-      return "(" + result + ")";
+      return "(" + result.substr(1) + ")";
     }
   private:
     vector<LispCode*> elements;
