@@ -45,7 +45,10 @@ runTests(test_Node)
 
 
 def newReader(initialCharacter):
-	return SymbolReader(initialCharacter)
+	if initialCharacter == "(":
+		return ConsReader2(initialCharacter)
+	else:
+		return SymbolReader(initialCharacter)
 
 class SymbolReader():
 	def __init__(self, initialCharacter):
@@ -175,7 +178,7 @@ class ConsReader2():
 		else:
 			print("rl: " + nextCharacter)
 			self.isReadingList = True
-			return self.read(". " + nextCharacter)
+			return self.read(". (" + nextCharacter)
 	def processStage_readingDot(self, nextCharacter):
 		assert(self.stage == "readingDot")
 		if isWhitespace(nextCharacter):
