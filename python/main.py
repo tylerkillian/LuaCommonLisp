@@ -185,6 +185,7 @@ class ConsReader2():
 			self.isReadingList = True
 			return self.read(" ." + nextCharacter)
 	def processStage_waitingForCdr(self, nextCharacter):
+		print("wfcdr: " + nextCharacter)
 		assert(self.stage == "waitingForCdr")
 		if isWhitespace(nextCharacter):
 			return
