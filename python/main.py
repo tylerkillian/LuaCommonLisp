@@ -173,6 +173,7 @@ class ConsReader2():
 		elif nextCharacter == ")":
 			return self.read(". nil)")
 		else:
+			self.readingList = True
 			return self.read(". " + nextCharacter)
 	def processStage_readingDot(self, nextCharacter):
 		assert(self.stage == "readingDot")
