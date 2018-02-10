@@ -125,6 +125,8 @@ def ConsReader():
 			return
 		else:
 			return self.checkForCarOrCdr(nextCharacter)
+
+runTests(test_ConsReader)
 		
 
 
