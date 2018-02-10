@@ -64,6 +64,7 @@ class Parser():
 	def nextCharacter(self, character):
 		if isWhitespace(character):
 			return
+		elif charace
 
 def parse(string):
 	parser = Parser()
