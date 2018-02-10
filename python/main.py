@@ -180,6 +180,7 @@ class ConsReader2():
 			self.stage = "waitingForCdr"
 			return
 		else:
+			self.readingList = True
 			return self.read(" ." + nextCharacter)
 	def processStage_waitingForCdr(self, nextCharacter):
 		assert(self.stage == "waitingForCdr")
