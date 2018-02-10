@@ -56,7 +56,7 @@ def SymbolReader():
 		if nextCharacter == " " or nextCharacter == ")":
 			self.done = True
 			return Node("symbol_" + self.value)
-		else
+		else:
 			self.value += nextCharacter
 			return
 
