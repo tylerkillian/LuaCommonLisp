@@ -84,6 +84,7 @@ class ConsReader():
 		child = self.reader.readNextCharacter(nextCharacter)
 		if child:
 			self.reader = None
+			print("got " + child.getName() + " reading " + nextCharacter)
 			self.value.addChild(child)
 			return self.readNextCharacter(nextCharacter)
 	def closeCons(self):
