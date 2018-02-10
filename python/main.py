@@ -132,7 +132,7 @@ class ConsReader2():
 		self.reader = None
 		self.value = Node("cons")
 		self.done = False
-		self.readingList = False
+		self.isReadingList = False
 		if initialCharacter != "(":
 			self.reader = newReader(initialCharacter)
 	def read(self, string):
@@ -173,7 +173,7 @@ class ConsReader2():
 		elif nextCharacter == ")":
 			return self.read(". nil)")
 		else:
-			self.readingList = True
+			self.isReadingList = True
 			return self.read(". " + nextCharacter)
 	def processStage_readingDot(self, nextCharacter):
 		assert(self.stage == "readingDot")
@@ -181,7 +181,7 @@ class ConsReader2():
 			self.stage = "waitingForCdr"
 			return
 		else:
-			self.readingList = True
+			self.isReadingList = True
 			return self.read(" ." + nextCharacter)
 	def processStage_waitingForCdr(self, nextCharacter):
 		assert(self.stage == "waitingForCdr")
@@ -203,7 +203,10 @@ class ConsReader2():
 			assert(self.value.getNumChildren() == 1)
 			self.value.addChild(child)
 			self.stage = "waitingForParentheses"
-			return self.readNextCharacter(nextCharacter)
+			if self.isReadingList:
+				return self.read(" )" + nextCharacter)
+			else
+				return self.readNextCharacter(nextCharacter)
 	def processStage_waitingForParentheses(self, nextCharacter):
 		assert(self.stage == "waitingForParentheses")
 		if nextCharacter == ")":
