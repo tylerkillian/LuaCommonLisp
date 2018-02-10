@@ -73,62 +73,6 @@ def isWhitespace(character):
 	else:
 		return False
 
-class ConsReader():
-	def __init__(self, initialCharacter):
-		self.reader = None
-		self.previousCharacterWasDot = False
-		self.gotDot = False
-		self.value = Node("cons")
-		self.terminateOnNextCharacter = False
-		self.done = False
-		if initialCharacter != "(":
-			self.reader = newReader(initialCharacter)
-	def sendToReader(self, nextCharacter):
-		child = self.reader.readNextCharacter(nextCharacter)
-		if child:
-			self.reader = None
-			self.value.addChild(child)
-			return self.readNextCharacter(nextCharacter)
-	def closeCons(self):
-		assert(self.value.getNumChildren() <= 2)
-		while self.value.getNumChildren() < 2:
-			self.value.addChild(Node("nil"))
-		self.terminateOnNextCharacter = True
-	def readCharacterAfterDot(self, nextCharacter):
-		assert(self.previousCharacterWasDot)
-		self.previousCharacterWasDot = False
-		if isWhitespace(nextCharacter):
-			self.gotDot = True
-		else:
-			self.reader = newReader(".")
-			shouldBeNull = self.reader.readNextCharacter(nextCharacter)
-			assert(not shouldBeNull)
-	def checkForCarOrCdr(self, nextCharacter):
-		if not isWhitespace(nextCharacter):
-			if self.value.getNumChildren() == 0:
-				self.reader = newReader(nextCharacter)
-			else:
-				self.reader = ConsReader(nextCharacter)
-	def readNextCharacter(self, nextCharacter):
-		assert(not self.done)
-
-		if self.terminateOnNextCharacter:
-			self.done = True
-			return self.value
-		elif self.reader:
-			return self.sendToReader(nextCharacter)
-		elif nextCharacter == ")":
-			assert(not self.previousCharacterWasDot)
-			self.closeCons()
-			return
-		elif self.previousCharacterWasDot:
-			return self.readCharacterAfterDot(nextCharacter)
-		elif nextCharacter == ".":
-			self.previousCharacterWasDot = True
-			return
-		else:
-			return self.checkForCarOrCdr(nextCharacter)
-
 class ConsReader2():
 	def __init__(self, initialCharacter):
 		self.stage = "waitingForCar"
