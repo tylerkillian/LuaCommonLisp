@@ -44,6 +44,44 @@ def runTests(tests):
 runTests(test_Node)
 
 
+def newReader(character):
+	return SymbolReader(initialCharacter)
+
+def SymbolReader():
+	def __init__(self, initialCharacter):
+		self.value = initialCharacter
+		self.done = False
+	def readNextCharacter(self, nextCharacter):
+		assert(not self.done)
+		if nextCharacter == " " or nextCharacter == ")":
+			self.done = True
+			return Node("symbol_" + self.value)
+		else
+			self.value += nextCharacter
+			return
+
+def ConsReader():
+	def __init__(self, initialCharacter):
+		self.reader = None
+		self.previousCharacterWasDot = False
+		self.value = Node("cons")
+		self.done = False
+		if initialCharacter != "(":
+			self.reader = newReader(initialCharacter)
+	def sendToReader(self, nextCharacter):
+		child = self.reader.readNextCharacter(nextCharacter)
+		if child:
+			self.value.addChild(child)
+		self.reader = None
+	def checkForCarOrDotOrCdr(self, nextCharacter):
+	def readNextCharacter(self, nextCharacter):
+		assert(not self.done)
+		if self.reader:
+			return self.sendToReader(nextCharacter)
+		else:
+			return self.checkForCarOrDotOrCdr(nextCharacter)
+		
+
 
 
 
