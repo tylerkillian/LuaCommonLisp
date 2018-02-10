@@ -58,7 +58,8 @@ def isWhitespace(character):
 		return False
 
 class Parser():
-	stateFunction = {
+	operationLookup = {
+		"root" : { "WHITESPACE" :
 	}
 	def __init__(self):
 		self.currentNode = Node("root")
