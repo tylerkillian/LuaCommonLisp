@@ -300,7 +300,7 @@ def test_ConsReader_readTwoElementList():
 	assert(result.getChild(0).getName() == "symbol_a")
 	assert(result.getChild(1).getName() == "cons")
 	assert(result.getChild(1).getChild(0).getName() == "symbol_b")
-	assert(result.getChild(1).getChild(1).getName() == "nil")
+	assert(result.getChild(1).getChild(1).getName() == "symbol_nil")
 test_ConsReader = {
 	"test_ConsReader_readEmptyList": test_ConsReader_readEmptyList,
 	"test_ConsReader_readSingleElementList": test_ConsReader_readSingleElementList,
