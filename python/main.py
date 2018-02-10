@@ -58,15 +58,12 @@ def isWhitespace(character):
 		return False
 
 class Parser():
-	operationLookup = {
-		"root" : { "WHITESPACE" :
-	}
 	def __init__(self):
 		self.currentNode = Node("root")
 		self.mode = "whitespace"
 		self.previousCharacter = None
 	def _addCons(self):
-		self.currentNode.addChild(Node("cons")
+		self.currentNode.addChild(Node("cons"))
 	def _whitespace(self, character):
 		print(character)
 		if isWhitespace(character):
