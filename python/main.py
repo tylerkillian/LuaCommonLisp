@@ -118,8 +118,7 @@ def ConsReader():
 			self.done = True
 			return self.value
 		elif self.reader:
-			self.sendToReader(nextCharacter)
-			return
+			return self.sendToReader(nextCharacter)
 		elif nextCharacter == ")":
 			self.closeCons()
 			return
