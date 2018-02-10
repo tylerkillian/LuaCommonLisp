@@ -260,7 +260,7 @@ def test_ConsReader_readSingleElementList():
 	assert(result.getName() == "cons")
 	assert(result.getNumChildren() == 2)
 	assert(result.getChild(0).getName() == "symbol_a")
-	assert(result.getChild(1).getName() == "nil")
+	assert(result.getChild(1).getName() == "symbol_nil")
 def test_ConsReader_readConsWithDot():
 	reader = ConsReader2("(")
 	result = reader.readNextCharacter("a")
