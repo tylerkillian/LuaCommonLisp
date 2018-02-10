@@ -132,7 +132,6 @@ class ConsReader():
 			self.isReadingList = True
 			return self.read(" ." + nextCharacter)
 	def processStage_waitingForCdr(self, nextCharacter):
-		print("wfcdr: " + nextCharacter)
 		assert(self.stage == "waitingForCdr")
 		if isWhitespace(nextCharacter):
 			return
@@ -167,7 +166,6 @@ class ConsReader():
 		self.done = True
 		return self.value
 	def readNextCharacter(self, nextCharacter):
-		print("nc: " + nextCharacter)
 		assert(not self.done)
 
 		if self.stage == "waitingForCar":
@@ -258,36 +256,3 @@ test_ConsReader = {
 	"test_ConsReader_readTwoElementList": test_ConsReader_readTwoElementList,
 }
 runTests(test_ConsReader)
-		
-
-
-
-
-class Parser():
-	def __init__(self):
-		self.currentNode = Node("root")
-		self.mode = "whitespace"
-		self.previousCharacter = None
-	def _addCons(self):
-		self.currentNode.addChild(Node("cons"))
-	def _whitespace(self, character):
-		print(character)
-		if isWhitespace(character):
-			return
-		elif character == "(":
-			self._addCons()
-	def nextCharacter(self, character):
-		if self.mode == "whitespace":
-			self._whitespace(character)
-
-def parse(string):
-	parser = Parser()
-	for character in "(setf a 2)":
-		result = parser.nextCharacter(character)
-		if result:
-			return result
-	return
-
-result = parse("(setf a 2)")
-#assert(result.toString() == "(setf a 2)")
-
