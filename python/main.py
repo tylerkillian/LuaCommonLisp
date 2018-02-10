@@ -173,6 +173,7 @@ class ConsReader2():
 		elif nextCharacter == ")":
 			return self.read(". nil)")
 		else:
+			print("rl: " + nextCharacter)
 			self.isReadingList = True
 			return self.read(". " + nextCharacter)
 	def processStage_readingDot(self, nextCharacter):
@@ -218,6 +219,7 @@ class ConsReader2():
 		self.done = True
 		return self.value
 	def readNextCharacter(self, nextCharacter):
+		print("nc: " + nextCharacter)
 		assert(not self.done)
 
 		if self.stage == "waitingForCar":
