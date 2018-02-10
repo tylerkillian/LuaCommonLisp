@@ -85,8 +85,7 @@ def ConsReader():
 		if child:
 			self.reader = None
 			self.value.addChild(child)
-			if nextCharacter == ")":
-				self.closeCons()
+			return self.readNextCharacter(nextCharacter)
 	def checkForCarOrDotOrCdr(self, nextCharacter):
 		if self.previousCharacterWasDot:
 			self.previousCharacterWasDot = False
