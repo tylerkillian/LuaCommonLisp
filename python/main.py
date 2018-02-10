@@ -1,19 +1,41 @@
 class Node():
-	def __init__(self, name):
+	def __init__(self, name, parent = None):
 		self.name = name
-		self.parent = None
+		self.parent = parent
 		self.children = []
 	def getName(self):
 		return self.name
-	def addChild(child):
+	def getParent(self):
+		return self.parent
+	def getNumChildren(self):
+		return len(self.children)
+	def addChild(self, child):
 		self.children.append(child)
+	def getChild(self, childIdx):
+		assert(childIdx < len(self.children))
+		return self.children[childIdx]
 
-#@addTest(test_Node)
+def test_Node_constructNoParent():
+	node = Node("root")
+	assert(node.getName() == "root")
+	assert(node.getParent() == None)
+	assert(node.getNumChildren() == 0)
+def test_Node_constructWithParent():
+	node = Node("theChild", Node("theParent"))
+	assert(node.getParent().getName() == "theParent")
 def test_Node_getName():
 	node = Node("root")
 	assert(node.getName() == "root")
+def test_Node_addChild():
+	node = Node("root")
+	node.addChild(Node("child0"))
+	assert(node.getNumChildren() == 1)
+	assert(node.getChild(0).getName() == "child0")
 test_Node = {
-	"getName": test_Node_getName,
+	"test_Node_constructNoParent": test_Node_constructNoParent,
+	"test_Node_constructWithParent": test_Node_constructWithParent,
+	"test_Node_getName": test_Node_getName,
+	"test_Node_addChild": test_Node_addChild,
 }
 def runTests(tests):
 	for testName, testFunction in tests.items():
@@ -27,15 +49,10 @@ runTests(test_Node)
 
 
 
-class ParseTree():
-	def toString(self):
-		return "(setf a 2)"
-
 class Parser():
 	def __init__(self):
-		self.parseTree = ParseTree()
+		self.currentNode = Node("root")
 	def nextCharacter(self, character):
-		print("Parsing " + character)
 		if character == ")":
 			return self.parseTree
 
