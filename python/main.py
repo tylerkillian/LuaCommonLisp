@@ -128,6 +128,8 @@ class ConsReader():
 
 def test_ConsReader_readCons():
 	reader = ConsReader("(")
+	result = reader.readNextCharacter(")")
+	assert(result)
 test_ConsReader = {
 	"test_ConsReader_readCons": test_ConsReader_readCons,
 }
