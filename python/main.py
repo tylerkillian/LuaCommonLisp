@@ -39,7 +39,7 @@ test_Node = {
 }
 def runTests(tests):
 	for testName, testFunction in tests.items():
-		print("Testing " + testName)
+		print(testName)
 		testFunction() 
 runTests(test_Node)
 
@@ -129,7 +129,12 @@ class ConsReader():
 def test_ConsReader_readCons():
 	reader = ConsReader("(")
 	result = reader.readNextCharacter(")")
-	assert(result)
+	assert(not result)
+	result = reader.readNextCharacter(" ")
+	assert(result.getName() == "cons")
+	assert(result.getNumChildren() == 2)
+	assert(result.getChild(0).getName() == "nil")
+	assert(result.getChild(1).getName() == "nil")
 test_ConsReader = {
 	"test_ConsReader_readCons": test_ConsReader_readCons,
 }
