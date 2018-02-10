@@ -70,7 +70,7 @@ def isWhitespace(character):
 	else:
 		return False
 
-def ConsReader():
+class ConsReader():
 	def __init__(self, initialCharacter):
 		self.reader = None
 		self.previousCharacterWasDot = False
@@ -126,6 +126,11 @@ def ConsReader():
 		else:
 			return self.checkForCarOrCdr(nextCharacter)
 
+def test_ConsReader_readCons():
+	reader = ConsReader("(")
+test_ConsReader = {
+	"test_ConsReader_readCons": test_ConsReader_readCons,
+}
 runTests(test_ConsReader)
 		
 
