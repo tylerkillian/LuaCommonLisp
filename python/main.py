@@ -126,7 +126,7 @@ class ConsReader():
 		else:
 			return self.checkForCarOrCdr(nextCharacter)
 
-def test_ConsReader_readCons():
+def test_ConsReader_readEmptyList():
 	reader = ConsReader("(")
 	result = reader.readNextCharacter(")")
 	assert(not result)
@@ -135,8 +135,20 @@ def test_ConsReader_readCons():
 	assert(result.getNumChildren() == 2)
 	assert(result.getChild(0).getName() == "nil")
 	assert(result.getChild(1).getName() == "nil")
+def test_ConsReader_readSingleElementList():
+	reader = ConsReader("(")
+	result = reader.readNextCharacter("a")
+	assert(not result)
+	result = reader.readNextCharacter(")")
+	assert(not result)
+	result = reader.readNextCharacter(" ")
+	assert(result.getName() == "cons")
+	assert(result.getNumChildren() == 2)
+	assert(result.getChild(0).getName() == "symbol_a")
+	assert(result.getChild(1).getName() == "nil")
 test_ConsReader = {
-	"test_ConsReader_readCons": test_ConsReader_readCons,
+	"test_ConsReader_readEmptyList": test_ConsReader_readEmptyList,
+	"test_ConsReader_readSingleElementList": test_ConsReader_readSingleElementList,
 }
 runTests(test_ConsReader)
 		
