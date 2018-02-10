@@ -241,8 +241,8 @@ def test_ConsReader_readEmptyList():
 	assert(result)
 	assert(result.getName() == "cons")
 	assert(result.getNumChildren() == 2)
-	assert(result.getChild(0).getName() == "nil")
-	assert(result.getChild(1).getName() == "nil")
+	assert(result.getChild(0).getName() == "symbol_nil")
+	assert(result.getChild(1).getName() == "symbol_nil")
 def test_ConsReader_readSingleElementList():
 	reader = ConsReader("(")
 	result = reader.readNextCharacter("a")
