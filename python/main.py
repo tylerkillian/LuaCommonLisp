@@ -52,6 +52,7 @@ runTests(test_Node)
 class Parser():
 	def __init__(self):
 		self.currentNode = Node("root")
+		self.mode = "whitespace"
 	def nextCharacter(self, character):
 		if character == ")":
 			return self.parseTree
