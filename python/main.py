@@ -234,7 +234,7 @@ class ConsReader2():
 
 
 def test_ConsReader_readEmptyList():
-	reader = ConsReader("(")
+	reader = ConsReader2("(")
 	result = reader.readNextCharacter(")")
 	assert(not result)
 	result = reader.readNextCharacter(" ")
