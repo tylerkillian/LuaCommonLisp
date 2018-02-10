@@ -54,17 +54,27 @@ def isWhitespace(character):
 		return True
 	elif character == "\n":
 		return True
-	else
+	else:
 		return False
 
 class Parser():
+	stateFunction = {
+	}
 	def __init__(self):
 		self.currentNode = Node("root")
 		self.mode = "whitespace"
-	def nextCharacter(self, character):
+		self.previousCharacter = None
+	def _addCons(self):
+		self.currentNode.addChild(Node("cons")
+	def _whitespace(self, character):
+		print(character)
 		if isWhitespace(character):
 			return
-		elif charace
+		elif character == "(":
+			self._addCons()
+	def nextCharacter(self, character):
+		if self.mode == "whitespace":
+			self._whitespace(character)
 
 def parse(string):
 	parser = Parser()
@@ -75,5 +85,5 @@ def parse(string):
 	return
 
 result = parse("(setf a 2)")
-assert(result.toString() == "(setf a 2)")
+#assert(result.toString() == "(setf a 2)")
 
