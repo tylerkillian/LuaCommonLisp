@@ -73,7 +73,7 @@ def isWhitespace(character):
 	else:
 		return False
 
-class ConsReader2():
+class ConsReader():
 	def __init__(self, initialCharacter):
 		self.stage = "waitingForCar"
 		self.reader = None
@@ -190,7 +190,7 @@ class ConsReader2():
 
 
 def test_ConsReader_readEmptyList():
-	reader = ConsReader2("(")
+	reader = ConsReader("(")
 	result = reader.readNextCharacter(")")
 	assert(not result)
 	result = reader.readNextCharacter(" ")
@@ -200,7 +200,7 @@ def test_ConsReader_readEmptyList():
 	assert(result.getChild(0).getName() == "symbol_nil")
 	assert(result.getChild(1).getName() == "symbol_nil")
 def test_ConsReader_readSingleElementList():
-	reader = ConsReader2("(")
+	reader = ConsReader("(")
 	result = reader.readNextCharacter("a")
 	assert(not result)
 	result = reader.readNextCharacter(")")
@@ -212,7 +212,7 @@ def test_ConsReader_readSingleElementList():
 	assert(result.getChild(0).getName() == "symbol_a")
 	assert(result.getChild(1).getName() == "symbol_nil")
 def test_ConsReader_readConsWithDot():
-	reader = ConsReader2("(")
+	reader = ConsReader("(")
 	result = reader.readNextCharacter("a")
 	assert(not result)
 	result = reader.readNextCharacter(" ")
@@ -234,7 +234,7 @@ def test_ConsReader_readConsWithDot():
 	assert(result.getChild(0).getName() == "symbol_a")
 	assert(result.getChild(1).getName() == "symbol_b")
 def test_ConsReader_readTwoElementList():
-	reader = ConsReader2("(")
+	reader = ConsReader("(")
 	result = reader.readNextCharacter("a")
 	assert(not result)
 	result = reader.readNextCharacter(" ")
