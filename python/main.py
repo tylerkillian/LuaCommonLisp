@@ -284,7 +284,7 @@ def test_ConsReader_readConsWithDot():
 	assert(result.getChild(0).getName() == "symbol_a")
 	assert(result.getChild(1).getName() == "symbol_b")
 def test_ConsReader_readTwoElementList():
-	reader = ConsReader("(")
+	reader = ConsReader2("(")
 	result = reader.readNextCharacter("a")
 	assert(not result)
 	result = reader.readNextCharacter(" ")
@@ -305,7 +305,7 @@ test_ConsReader = {
 	"test_ConsReader_readEmptyList": test_ConsReader_readEmptyList,
 	"test_ConsReader_readSingleElementList": test_ConsReader_readSingleElementList,
 	"test_ConsReader_readConsWithDot": test_ConsReader_readConsWithDot,
-	#"test_ConsReader_readTwoElementList": test_ConsReader_readTwoElementList,
+	"test_ConsReader_readTwoElementList": test_ConsReader_readTwoElementList,
 }
 runTests(test_ConsReader)
 		
