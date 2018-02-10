@@ -120,8 +120,10 @@ def ConsReader():
 		elif self.reader:
 			return self.sendToReader(nextCharacter)
 		elif nextCharacter == ")":
+			assert(not self.previousCharacterWasDot)
 			self.closeCons()
 			return
+		elif self.previousCharacterWasDot:
 		else:
 			return self.checkForCarOrDotOrCdr(nextCharacter)
 		
