@@ -1,3 +1,32 @@
+class Node():
+	def __init__(self, name):
+		self.name = name
+		self.parent = None
+		self.children = []
+	def getName(self):
+		return self.name
+	def addChild(child):
+		self.children.append(child)
+
+#@addTest(test_Node)
+def test_Node_getName():
+	node = Node("root")
+	assert(node.getName() == "root")
+test_Node = {
+	"getName": test_Node_getName,
+}
+def runTests(tests):
+	for testName, testFunction in tests.items():
+		print("Testing " + testName)
+		testFunction() 
+runTests(test_Node)
+
+
+
+
+
+
+
 class ParseTree():
 	def toString(self):
 		return "(setf a 2)"
