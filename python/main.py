@@ -126,6 +126,85 @@ class ConsReader():
 		else:
 			return self.checkForCarOrCdr(nextCharacter)
 
+class ConsReader2():
+	def __init__(self, initialCharacter):
+		self.stage = "waitingForCar"
+		self.reader = None
+		self.value = Node("cons")
+		self.terminateOnNextCharacter = False
+		self.done = False
+		if initialCharacter != "(":
+			self.reader = newReader(initialCharacter)
+	def sendToCar(self, nextCharacter):
+		child = self.reader.readNextCharacter(nextCharacter)
+		if child:
+			self.reader = None
+			self.value.addChild(child)
+			assert(self.value.getNumChildren() == 0)
+			self.stage = "waitingForDot"
+			return self.readNextCharacter(nextCharacter)
+	def closeCons(self):
+		assert(self.value.getNumChildren() <= 2)
+		while self.value.getNumChildren() < 2:
+			self.value.addChild(Node("nil"))
+		self.terminateOnNextCharacter = True
+	def readCharacterAfterDot(self, nextCharacter):
+		self.previousCharacterWasDot = False
+		if isWhitespace(nextCharacter):
+			self.gotDot = True
+		else:
+			self.reader = newReader(".")
+			shouldBeNull = self.reader.readNextCharacter(nextCharacter)
+			assert(not shouldBeNull)
+	def checkForCarOrCdr(self, nextCharacter):
+		if not isWhitespace(nextCharacter):
+			if self.value.getNumChildren() == 0:
+				self.reader = newReader(nextCharacter)
+			else:
+				self.reader = ConsReader(nextCharacter)
+	def read(self, string):
+		for characterIdx in range(0, len(string)):
+			character = string[characterIdx]
+			result = self.readNextCharacter(character)
+			if characterIdx < len(string) - 1:
+				assert(not result)
+		return result
+	def readNextCharacter(self, nextCharacter):
+		assert(not self.done)
+
+		if self.terminateOnNextCharacter:
+			self.done = True
+			return self.value
+		elif self.stage = "readingCar":
+			return self.sendToCar(nextCharacter)
+		elif self.stage = "readingDot":
+			return self.readCharacterAfterDot(nextCharacter)
+		elif nextCharacter == ")":
+			if self.stage == "waitingForCar":
+				return self.read("nil . nil )")
+			elif self.stage == "waitingForDot":
+				return self.read(". nil )")
+			elif self.stage == "waitingForCdr":
+				return self.read("nil )")
+			else:
+				assert(self.stage == "waitingForParentheses")
+				self.terminateOnNextCharacter = True
+		elif
+
+		elif self.reader:
+			return self.sendToReader(nextCharacter)
+		elif nextCharacter == ")":
+			assert(not self.previousCharacterWasDot)
+			self.closeCons()
+			return
+		elif self.previousCharacterWasDot:
+			return self.readCharacterAfterDot(nextCharacter)
+		elif nextCharacter == ".":
+			self.previousCharacterWasDot = True
+			return
+		else:
+			return self.checkForCarOrCdr(nextCharacter)
+
 def test_ConsReader_readEmptyList():
 	reader = ConsReader("(")
 	result = reader.readNextCharacter(")")
