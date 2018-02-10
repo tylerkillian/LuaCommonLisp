@@ -148,6 +148,28 @@ def test_ConsReader_readSingleElementList():
 	assert(result.getNumChildren() == 2)
 	assert(result.getChild(0).getName() == "symbol_a")
 	assert(result.getChild(1).getName() == "nil")
+def test_ConsReader_readConsWithDot():
+	reader = ConsReader("(")
+	result = reader.readNextCharacter("a")
+	assert(not result)
+	result = reader.readNextCharacter(" ")
+	assert(not result)
+	result = reader.readNextCharacter(".")
+	assert(not result)
+	result = reader.readNextCharacter(" ")
+	assert(not result)
+	result = reader.readNextCharacter("b")
+	assert(not result)
+	result = reader.readNextCharacter(" ")
+	assert(not result)
+	result = reader.readNextCharacter(")")
+	assert(not result)
+	result = reader.readNextCharacter(" ")
+	assert(result)
+	assert(result.getName() == "cons")
+	assert(result.getNumChildren() == 2)
+	assert(result.getChild(0).getName() == "symbol_a")
+	assert(result.getChild(1).getName() == "symbol_b")
 def test_ConsReader_readTwoElementList():
 	reader = ConsReader("(")
 	result = reader.readNextCharacter("a")
@@ -169,7 +191,8 @@ def test_ConsReader_readTwoElementList():
 test_ConsReader = {
 	"test_ConsReader_readEmptyList": test_ConsReader_readEmptyList,
 	"test_ConsReader_readSingleElementList": test_ConsReader_readSingleElementList,
-	"test_ConsReader_readTwoElementList": test_ConsReader_readTwoElementList,
+	"test_ConsReader_readConsWithDot": test_ConsReader_readConsWithDot,
+	#"test_ConsReader_readTwoElementList": test_ConsReader_readTwoElementList,
 }
 runTests(test_ConsReader)
 		
