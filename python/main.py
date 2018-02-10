@@ -203,6 +203,12 @@ class ConsReader2():
 		assert(self.stage == "waitingForParentheses")
 		if nextCharacter == ")":
 			self.stage = "waitingForTerminalCharacter"
+		else
+			assert(isWhitespace(nextCharacter)
+	def processStage_waitingForTerminalCharacter(self, nextCharacter):
+		assert(self.stage == "waitingForTerminalCharacter")
+		self.done = True
+		return self.value
 	def readNextCharacter(self, nextCharacter):
 		assert(not self.done)
 
