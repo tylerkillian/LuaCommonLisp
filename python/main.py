@@ -86,6 +86,18 @@ def ConsReader():
 			self.reader = None
 			self.value.addChild(child)
 			return self.readNextCharacter(nextCharacter)
+	def readCharacterAfterDot(self, nextCharacter):
+		if self.previousCharacterWasDot:
+			self.previousCharacterWasDot = False
+			if isWhitespace(nextCharacter):
+				self.gotDot = True
+				return
+			else:
+				self.reader = newReader(".")
+				shouldBeNull = self.reader.readNextCharacter(nextCharacter)
+				assert(not shouldBeNull)
+				return
+		else:
 	def checkForCarOrDotOrCdr(self, nextCharacter):
 		if self.previousCharacterWasDot:
 			self.previousCharacterWasDot = False
@@ -124,6 +136,10 @@ def ConsReader():
 			self.closeCons()
 			return
 		elif self.previousCharacterWasDot:
+			return self.readCharacterAfterDot(nextCharacter)
+		elif nextCharacter == ".":
+			self.previousCharacterWasDot = True
+			return
 		else:
 			return self.checkForCarOrDotOrCdr(nextCharacter)
 		
