@@ -84,8 +84,10 @@ class ConsReader():
 		child = self.reader.readNextCharacter(nextCharacter)
 		if child:
 			self.reader = None
-			print("got " + child.getName() + " reading " + nextCharacter)
 			self.value.addChild(child)
+			if child.getName() == "cons" and self.value.getNumChildren() == 2:
+				shouldBeNull = self.readNextCharacter(")")
+				assert(not shouldBeNull)
 			return self.readNextCharacter(nextCharacter)
 	def closeCons(self):
 		assert(self.value.getNumChildren() <= 2)
