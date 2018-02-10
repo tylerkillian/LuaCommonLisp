@@ -60,31 +60,6 @@ def SymbolReader():
 			self.value += nextCharacter
 			return
 
-def ConsReader():
-	def __init__(self, initialCharacter):
-		self.reader = None
-		self.previousCharacterWasDot = False
-		self.value = Node("cons")
-		self.done = False
-		if initialCharacter != "(":
-			self.reader = newReader(initialCharacter)
-	def sendToReader(self, nextCharacter):
-		child = self.reader.readNextCharacter(nextCharacter)
-		if child:
-			self.value.addChild(child)
-		self.reader = None
-	def checkForCarOrDotOrCdr(self, nextCharacter):
-	def readNextCharacter(self, nextCharacter):
-		assert(not self.done)
-		if self.reader:
-			return self.sendToReader(nextCharacter)
-		else:
-			return self.checkForCarOrDotOrCdr(nextCharacter)
-		
-
-
-
-
 def isWhitespace(character):
 	if character == " ":
 		return True
@@ -94,6 +69,65 @@ def isWhitespace(character):
 		return True
 	else:
 		return False
+
+def ConsReader():
+	def __init__(self, initialCharacter):
+		self.reader = None
+		self.previousCharacterWasDot = False
+		self.gotDot = False
+		self.value = Node("cons")
+		self.terminateOnNextCharacter = False
+		self.done = False
+		if initialCharacter != "(":
+			self.reader = newReader(initialCharacter)
+	def sendToReader(self, nextCharacter):
+		child = self.reader.readNextCharacter(nextCharacter)
+		if child:
+			self.value.addChild(child)
+		self.reader = None
+	def checkForCarOrDotOrCdr(self, nextCharacter):
+		if self.previousCharacterWasDot:
+			self.previousCharacterWasDot = False
+			if isWhitespace(nextCharacter):
+				self.gotDot = True
+				return
+			else:
+				self.reader = newReader(".")
+				shouldBeNull = self.reader.readNextCharacter(nextCharacter)
+				assert(not shouldBeNull)
+				return
+		else:
+			if nextCharacter == ".":
+				self.previousCharacterWasDot = True
+				return
+			elif isWhitespace(nextCharacter):
+				return
+			else:
+				self.reader = newReader(nextCharacter)
+				return
+	def closeCons(self):
+		assert(self.value.getNumChildren() <= 2)
+		while self.value.getNumChildren() < 2:
+			self.value.addChild(Node("nil"))
+		self.terminateOnNextCharacter = True
+	def readNextCharacter(self, nextCharacter):
+		assert(not self.done)
+
+		if self.terminateOnNextCharacter:
+			self.done = True
+			return self.value
+		elif self.reader:
+			self.sendToReader(nextCharacter)
+			return
+		elif nextCharacter == ")":
+			self.closeCons()
+			return
+		else:
+			return self.checkForCarOrDotOrCdr(nextCharacter)
+		
+
+
+
 
 class Parser():
 	def __init__(self):
