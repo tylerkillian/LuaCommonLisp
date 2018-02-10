@@ -10,7 +10,6 @@ class Parser():
 		if character == ")":
 			return self.parseTree
 
-
 def parse(string):
 	parser = Parser()
 	for character in "(setf a 2)":
