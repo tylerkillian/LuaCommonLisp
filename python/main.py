@@ -86,6 +86,11 @@ def ConsReader():
 			self.reader = None
 			self.value.addChild(child)
 			return self.readNextCharacter(nextCharacter)
+	def closeCons(self):
+		assert(self.value.getNumChildren() <= 2)
+		while self.value.getNumChildren() < 2:
+			self.value.addChild(Node("nil"))
+		self.terminateOnNextCharacter = True
 	def readCharacterAfterDot(self, nextCharacter):
 		if self.previousCharacterWasDot:
 			self.previousCharacterWasDot = False
@@ -118,11 +123,6 @@ def ConsReader():
 			else:
 				self.reader = newReader(nextCharacter)
 				return
-	def closeCons(self):
-		assert(self.value.getNumChildren() <= 2)
-		while self.value.getNumChildren() < 2:
-			self.value.addChild(Node("nil"))
-		self.terminateOnNextCharacter = True
 	def readNextCharacter(self, nextCharacter):
 		assert(not self.done)
 
