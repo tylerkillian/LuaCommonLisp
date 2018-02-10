@@ -132,6 +132,7 @@ class ConsReader2():
 		self.reader = None
 		self.value = Node("cons")
 		self.done = False
+		self.readingList = False
 		if initialCharacter != "(":
 			self.reader = newReader(initialCharacter)
 	def read(self, string):
