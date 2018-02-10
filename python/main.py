@@ -47,7 +47,7 @@ runTests(test_Node)
 def newReader(initialCharacter):
 	return SymbolReader(initialCharacter)
 
-def SymbolReader():
+class SymbolReader():
 	def __init__(self, initialCharacter):
 		self.value = initialCharacter
 		self.done = False
