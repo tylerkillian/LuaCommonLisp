@@ -47,15 +47,23 @@ runTests(test_Node)
 
 
 
-
+def isWhitespace(character):
+	if character == " ":
+		return True
+	elif character == "\t":
+		return True
+	elif character == "\n":
+		return True
+	else
+		return False
 
 class Parser():
 	def __init__(self):
 		self.currentNode = Node("root")
 		self.mode = "whitespace"
 	def nextCharacter(self, character):
-		if character == ")":
-			return self.parseTree
+		if isWhitespace(character):
+			return
 
 def parse(string):
 	parser = Parser()
