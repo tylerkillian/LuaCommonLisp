@@ -149,10 +149,12 @@ class ConsReader2():
 			self.value.addChild(Node("nil"))
 		self.terminateOnNextCharacter = True
 	def readCharacterAfterDot(self, nextCharacter):
-		self.previousCharacterWasDot = False
 		if isWhitespace(nextCharacter):
-			self.gotDot = True
+			self.stage = "waitingForCdr"
 		else:
+			self.read(". ")
+			assert(self.stage == "waitingForCdr")
+			self.stage = "readingCdr"
 			self.reader = newReader(".")
 			shouldBeNull = self.reader.readNextCharacter(nextCharacter)
 			assert(not shouldBeNull)
