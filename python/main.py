@@ -100,9 +100,12 @@ def ConsReader():
 			self.reader = newReader(".")
 			shouldBeNull = self.reader.readNextCharacter(nextCharacter)
 			assert(not shouldBeNull)
-	def checkForCarOrDotOrCdr(self, nextCharacter):
+	def checkForCarOrCdr(self, nextCharacter):
 		if not isWhitespace(nextCharacter):
-			self.reader = newReader(nextCharacter)
+			if self.value.getNumChildren() == 0:
+				self.reader = newReader(nextCharacter)
+			else:
+				self.reader = ConsReader(nextCharacter)
 	def readNextCharacter(self, nextCharacter):
 		assert(not self.done)
 
