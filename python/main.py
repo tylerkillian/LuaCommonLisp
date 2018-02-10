@@ -46,7 +46,7 @@ runTests(test_Node)
 
 def newReader(initialCharacter):
 	if initialCharacter == "(":
-		return ConsReader2(initialCharacter)
+		return ConsReader(initialCharacter)
 	else:
 		return SymbolReader(initialCharacter)
 
