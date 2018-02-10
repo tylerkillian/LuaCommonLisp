@@ -44,7 +44,7 @@ def runTests(tests):
 runTests(test_Node)
 
 
-def newReader(character):
+def newReader(initialCharacter):
 	return SymbolReader(initialCharacter)
 
 def SymbolReader():
