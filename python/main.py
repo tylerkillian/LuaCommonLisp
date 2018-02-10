@@ -167,8 +167,10 @@ class ConsReader2():
 		if nextCharacter == ".":
 			self.stage = "readingDot"
 			return
-		elif isWhitespace(nextCharacter)
+		elif isWhitespace(nextCharacter):
 			return
+		elif nextCharacter == ")":
+			return self.read(". nil)")
 		else
 			return self.read(". " + nextCharacter)
 	def processStage_readingDot(self, nextCharacter):
@@ -230,41 +232,6 @@ class ConsReader2():
 			assert(self.stage == "waitingForTerminalCharacter")
 			return self.processStage_waitingForTerminalCharacter(nextCharacter)
 
-
-
-		elif self.stage = "readingCar":
-			return self.sendToCar(nextCharacter)
-		elif self.stage = "readingDot":
-			return self.readCharacterAfterDot(nextCharacter)
-		elif nextCharacter == ")":
-			if self.stage == "waitingForCar":
-			elif self.stage == "waitingForDot":
-			elif self.stage == "waitingForCdr":
-				return self.read("nil )")
-			else:
-				assert(self.stage == "waitingForParentheses")
-				self.terminateOnNextCharacter = True
-		else:
-			assert(self.stage == "waitingForTerminalCharacter")
-			self.done = True
-			return self.value
-
-
-		elif
-
-		elif self.reader:
-			return self.sendToReader(nextCharacter)
-		elif nextCharacter == ")":
-			assert(not self.previousCharacterWasDot)
-			self.closeCons()
-			return
-		elif self.previousCharacterWasDot:
-			return self.readCharacterAfterDot(nextCharacter)
-		elif nextCharacter == ".":
-			self.previousCharacterWasDot = True
-			return
-		else:
-			return self.checkForCarOrCdr(nextCharacter)
 
 def test_ConsReader_readEmptyList():
 	reader = ConsReader("(")
