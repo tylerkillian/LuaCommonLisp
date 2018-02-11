@@ -73,6 +73,116 @@ def isWhitespace(character):
 	else:
 		return False
 
+class ConsReader2(parentNode=None):
+	def __init__(self, initialCharacter):
+		assert(initialCharacter == "(")
+		self.stage = "waitingForCar"
+		self.value = Node("cons", parentNode)
+		self.done = False
+		self.isReadingList = False
+	def isDone(self):
+		return self.done
+	def read(self, string):
+		for characterIdx in range(0, len(string)):
+			character = string[characterIdx]
+			result = self.readNextCharacter(character)
+			if characterIdx < len(string) - 1:
+				assert(result == "characterRead")
+				assert(not self.isDone)
+		return result
+	def processStage_waitingForCar(self, nextCharacter):
+		assert(self.stage == "waitingForCar")
+		if isWhitespace(nextCharacter):
+			return "characterRead"
+		elif nextCharacter == ")":
+			self.value.addChild(Node("symbol_nil"), self.value)
+			self.value.addChild(Node("symbol_nil"), self.value)
+			self.stage = "waitingForTerminalCharacter"
+			return
+		else:
+			self.stage = "readingCar"
+			return "characterNotRead"
+	def processStage_readingCar(self, nextCharacter):
+		assert(self.stage == "readingCar")
+		assert(isWhitespace(nextCharacter))
+		self.stage = "waitingForDot"
+		return "characterRead"
+	def processStage_waitingForDot(self, nextCharacter):
+		assert(self.stage == "waitingForDot")
+		if nextCharacter == ".":
+			self.stage = "readingDot"
+			return
+		elif isWhitespace(nextCharacter):
+			return
+		elif nextCharacter == ")":
+			return self.read(". nil)")
+		else:
+			self.isReadingList = True
+			return self.read(". (" + nextCharacter)
+	def processStage_readingDot(self, nextCharacter):
+		assert(self.stage == "readingDot")
+		if isWhitespace(nextCharacter):
+			self.stage = "waitingForCdr"
+			return
+		else:
+			self.isReadingList = True
+			return self.read(" ." + nextCharacter)
+	def processStage_waitingForCdr(self, nextCharacter):
+		assert(self.stage == "waitingForCdr")
+		if isWhitespace(nextCharacter):
+			return
+		elif nextCharacter == ")":
+			return self.read("nil )")
+		else:
+			assert(self.reader == None)
+			self.reader = newReader(nextCharacter)
+			self.stage = "readingCdr"
+			return
+	def processStage_readingCdr(self, nextCharacter):
+		assert(self.stage == "readingCdr")
+		assert(self.reader)
+		child = self.reader.readNextCharacter(nextCharacter)
+		if child:
+			self.reader = None
+			assert(self.value.getNumChildren() == 1)
+			self.value.addChild(child)
+			self.stage = "waitingForParentheses"
+			if self.isReadingList:
+				return self.read(" )" + nextCharacter)
+			else:
+				return self.readNextCharacter(nextCharacter)
+	def processStage_waitingForParentheses(self, nextCharacter):
+		assert(self.stage == "waitingForParentheses")
+		if nextCharacter == ")":
+			self.stage = "waitingForTerminalCharacter"
+		else:
+			assert(isWhitespace(nextCharacter))
+	def processStage_waitingForTerminalCharacter(self, nextCharacter):
+		assert(self.stage == "waitingForTerminalCharacter")
+		self.done = True
+		return self.value
+	def readNextCharacter(self, nextCharacter):
+		assert(not self.done)
+
+		if self.stage == "waitingForCar":
+			return self.processStage_waitingForCar(nextCharacter)
+		elif self.stage == "readingCar":
+			return self.processStage_readingCar(nextCharacter)
+		elif self.stage == "waitingForDot":
+			return self.processStage_waitingForDot(nextCharacter)
+		elif self.stage == "readingDot":
+			return self.processStage_readingDot(nextCharacter)
+		elif self.stage == "waitingForCdr":
+			return self.processStage_waitingForCdr(nextCharacter)
+		elif self.stage == "readingCdr":
+			return self.processStage_readingCdr(nextCharacter)
+		elif self.stage == "waitingForParentheses":
+			return self.processStage_waitingForParentheses(nextCharacter)
+		else:
+			assert(self.stage == "waitingForTerminalCharacter")
+			return self.processStage_waitingForTerminalCharacter(nextCharacter)
+
+
 class ConsReader():
 	def __init__(self, initialCharacter):
 		self.stage = "waitingForCar"
