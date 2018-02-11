@@ -216,13 +216,16 @@ def test_ConsReader2_emptyList():
 
 	reader = readerStack[-1]
 	root.addChild(reader.getValue())
+
 	shouldBeNull = readerStack[-1].readNextCharacter(readerStack, ")")
 	assert(not shouldBeNull)
 	assert(not reader.isDone())
+
 	shouldBeSpace = readerStack[-1].readNextCharacter(readerStack, " ")
 	assert(reader.isDone())
 	assert(len(readerStack) == 0)
 	assert(shouldBeSpace == " ")
+
 	assert(root.getNumChildren() == 1)
 	assert(root.getChild(0).getNumChildren() == 2)
 	assert(root.getChild(0).getChild(0).getName() == "symbol_nil")
