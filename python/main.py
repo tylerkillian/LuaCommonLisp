@@ -177,7 +177,6 @@ class ConsReader2():
 	def processStage_waitingForTerminalCharacter(self, nextCharacter):
 		assert(self.stage == "waitingForTerminalCharacter")
 		self.done = True
-		return nextCharacter
 	def readNextCharacter(self, nextCharacter):
 		assert(not self.done)
 
@@ -228,8 +227,8 @@ def test_ConsReader2_singleElementList():
 	assert(not shouldBeNull)
 	assert(not consReader.isDone())
 	shouldBeNull = consReader.readNextCharacter(" ")
-	assert(not shouldBeNull)
 	assert(consReader.isDone())
+	assert(not shouldBeNull)
 	assert(root.getNumChildren() == 1)
 	cons = root.getChild(0)
 	assert(cons.getNumChildren() == 2)
