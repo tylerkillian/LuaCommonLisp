@@ -5,6 +5,8 @@ class Node():
 		self.children = []
 	def getName(self):
 		return self.name
+	def setName(self, name):
+		self.name = name
 	def getParent(self):
 		return self.parent
 	def getNumChildren(self):
@@ -58,19 +60,19 @@ def newReader2(initialCharacter, parentNode):
 
 class SymbolReader2():
 	def __init__(self, initialCharacter, parentNode = None):
-		self.value = initialCharacter
+		self.value = Node("symbol_" + initialCharacter, parentNode)
 		self.done = False
-		self.parentNode = parentNode
+	def getValue(self):
+		return self.value
+	def isDone(self):
+		return self.done
 	def readNextCharacter(self, nextCharacter):
 		assert(not self.done)
 		if nextCharacter == " " or nextCharacter == ")":
 			self.done = True
-			newSymbolNode = Node("symbol_" + self.value, self.parentNode)
-			if self.parentNode:
-				self.parentNode.addChild(newSymbolNode)
 			return newSymbolNode
 		else:
-			self.value += nextCharacter
+			self.value.setName(self.value.getName() + nextCharacter)
 			return
 
 class SymbolReader():
@@ -215,8 +217,26 @@ def test_ConsReader2_emptyList():
 	assert(cons.getNumChildren() == 2)
 	assert(cons.getChild(0).getName() == "symbol_nil")
 	assert(cons.getChild(1).getName() == "symbol_nil")
+def test_ConsReader2_singleElementList():
+	root = Node("root")
+	consReader = ConsReader2("(", root)
+	symbolReader = consReader.readNextCharacter("a")
+	assert(symbolReader)
+	assert(not consReader.isDone())
+	assert(False)
+	result = reader.readNextCharacter(")")
+	assert(not result)
+	assert(not reader.isDone())
+	result = reader.readNextCharacter(" ")
+	assert(reader.isDone())
+	assert(root.getNumChildren() == 1)
+	cons = root.getChild(0)
+	assert(cons.getNumChildren() == 2)
+	assert(cons.getChild(0).getName() == "symbol_nil")
+	assert(cons.getChild(1).getName() == "symbol_nil")
 test_ConsReader2 = {
 	"test_ConsReader2_emptyList": test_ConsReader2_emptyList,
+	"test_ConsReader2_singleElementList": test_ConsReader2_singleElementList,
 }
 runTests(test_ConsReader2)
 
