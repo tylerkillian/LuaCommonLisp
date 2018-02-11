@@ -150,7 +150,7 @@ class ConsReader2():
 			self.stage = "waitingForTerminalCharacter"
 			return
 		else:
-			return self.beginReadingNextListElement()
+			return self.beginReadingNextListElement(nextCharacter)
 	def processStage_readingDot(self, nextCharacter):
 		assert(self.stage == "readingDot")
 		if isWhitespace(nextCharacter):
