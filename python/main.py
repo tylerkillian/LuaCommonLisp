@@ -274,7 +274,7 @@ def test_ConsReader2_singleElementList():
 	assert(cons.getChild(0).getName() == "symbol_a")
 	assert(cons.getChild(1).getName() == "symbol_nil")
 def feedCharactersToStack(readerStack, characters):
-	for character in characters:
+	for characterIdx in range(0, len(characters)):
 		readerStack[-1].readNextCharacter(readerStack, character)
 def test_ConsReader2_twoElementList():
 	root = Node("root")
