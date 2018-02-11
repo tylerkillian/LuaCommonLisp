@@ -60,7 +60,7 @@ def newReader2(readerStack, initialCharacter, parentNode):
 
 class SymbolReader2():
 	def __init__(self, readerStack, initialCharacter, parentNode = None):
-		self.readerStack.append(self)
+		readerStack.append(self)
 		self.value = Node("symbol_" + initialCharacter, parentNode)
 		self.done = False
 	def getValue(self):
@@ -105,7 +105,7 @@ def isWhitespace(character):
 class ConsReader2():
 	def __init__(self, readerStack, initialCharacter, parentNode = None):
 		assert(initialCharacter == "(")
-		self.readerStack.append(self)
+		readerStack.append(self)
 		self.stage = "waitingForCar"
 		self.value = Node("cons", parentNode)
 		self.done = False
@@ -208,11 +208,13 @@ def treeToString(node):
 		return node.getName()[7:]
 def test_ConsReader2_emptyList():
 	root = Node("root")
-	reader = ConsReader2("(", root)
-	result = reader.readNextCharacter(")")
+	readerStack = []
+	reader = ConsReader2(readerStack, "(", root)
+	root.addChild(reader.getValue())
+	result = reader.readNextCharacter(readerStack, ")")
 	assert(not result)
 	assert(not reader.isDone())
-	result = reader.readNextCharacter(" ")
+	result = reader.readNextCharacter(readerStack, " ")
 	assert(reader.isDone())
 	assert(root.getNumChildren() == 1)
 	cons = root.getChild(0)
@@ -221,7 +223,9 @@ def test_ConsReader2_emptyList():
 	assert(cons.getChild(1).getName() == "symbol_nil")
 def test_ConsReader2_singleElementList():
 	root = Node("root")
+	readerStack = []
 	consReader = ConsReader2("(", root)
+	root.addChild(reader.getValue())
 	symbolReader = consReader.readNextCharacter("a")
 	assert(symbolReader)
 	assert(not consReader.isDone())
