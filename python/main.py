@@ -276,7 +276,7 @@ def test_ConsReader2_singleElementList():
 def feedCharactersToStack(readerStack, characters):
 	for characterIdx in range(0, len(characters)):
 		character = characters[characterIdx]
-		readerStack[-1].readNextCharacter(readerStack, character)
+		result = readerStack[-1].readNextCharacter(readerStack, character)
 def test_ConsReader2_twoElementList():
 	root = Node("root")
 	readerStack = []
