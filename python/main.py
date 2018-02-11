@@ -246,16 +246,22 @@ def test_ConsReader2_singleElementList():
 	assert(not shouldBeNull)
 	assert(len(readerStack) == 2)
 	assert(readerStack[0] == consReader)
-	symbolReader = readerStack[1]
-
+	assert(not consReader.isDone())
 	symbolReader = readerStack[-1]
-	assert(not symbolReader.isDone())
+
 	shouldBeParenthesis = readerStack[-1].readNextCharacter(readerStack, ")")
-	assert(symbolReader.isDone())
 	assert(shouldBeParenthesis == ")")
+	assert(len(readerStack) == 1)
+	assert(readerStack[0] == consReader)
+	assert(not consReader.isDone())
+	assert(symbolReader.isDone())
+
 	shouldBeNull = readerStack[-1].readNextCharacter(readerStack, ")")
 	assert(not shouldBeNull)
+	assert(len(readerStack) == 1)
+	assert(readerStack[0] == consReader)
 	assert(not consReader.isDone())
+
 	shouldBeSpace = readerStack[-1].readNextCharacter(readerStack, " ")
 	assert(shouldBeSpace == " ")
 	assert(consReader.isDone())
