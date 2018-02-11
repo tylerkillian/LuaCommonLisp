@@ -280,18 +280,17 @@ def parseString(string):
 	assert(len(readerStack) == 1)
 	root.addChild(readerStack[-1].getValue())
 
-	for character in string:
+	for character in string[1:]:
 		characterUsed = False
 		while not characterUsed:
 			lastResult = readerStack[-1].readNextCharacter(readerStack, character)
+			if lastResult != character:
+				characterUsed = True
 			if len(readerStack) == 0:
 				assert(character == string[-1])
 				assert(character == lastResult)
 				return root
-			if lastResult != character:
-				characterUsed = True
-	assert(not lastResult)
-	return
+	assert(False)
 def test_ConsReader2_twoElementList():
 	root = parseString("(a b) ")
 
