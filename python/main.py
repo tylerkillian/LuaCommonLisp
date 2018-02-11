@@ -65,7 +65,7 @@ class SymbolReader2():
 		assert(not self.done)
 		if nextCharacter == " " or nextCharacter == ")":
 			self.done = True
-			return Node("symbol_" + self.value, self.parentnode)
+			return Node("symbol_" + self.value, self.parentNode)
 		else:
 			self.value += nextCharacter
 			return
