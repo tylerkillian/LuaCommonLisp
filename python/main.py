@@ -50,6 +50,26 @@ def newReader(initialCharacter):
 	else:
 		return SymbolReader(initialCharacter)
 
+def newReader2(initialCharacter, parentNode):
+	if initialCharacter == "(":
+		return ConsReader2(initialCharacter, nodeParent)
+	else:
+		return SymbolReader2(initialCharacter, nodeParent)
+
+class SymbolReader2():
+	def __init__(self, initialCharacter, parentNode = None):
+		self.value = initialCharacter
+		self.done = False
+		self.parentNode = parentNode
+	def readNextCharacter(self, nextCharacter):
+		assert(not self.done)
+		if nextCharacter == " " or nextCharacter == ")":
+			self.done = True
+			return Node("symbol_" + self.value, self.parentnode)
+		else:
+			self.value += nextCharacter
+			return
+
 class SymbolReader():
 	def __init__(self, initialCharacter):
 		self.value = initialCharacter
@@ -73,13 +93,12 @@ def isWhitespace(character):
 	else:
 		return False
 
-class ConsReader2(parentNode=None):
+class ConsReader2(parentNode = None):
 	def __init__(self, initialCharacter):
 		assert(initialCharacter == "(")
 		self.stage = "waitingForCar"
 		self.value = Node("cons", parentNode)
 		self.done = False
-		self.isReadingList = False
 	def isDone(self):
 		return self.done
 	def read(self, string):
@@ -87,26 +106,33 @@ class ConsReader2(parentNode=None):
 			character = string[characterIdx]
 			result = self.readNextCharacter(character)
 			if characterIdx < len(string) - 1:
-				assert(result == "characterRead")
+				assert(result == "")
 				assert(not self.isDone)
 		return result
 	def processStage_waitingForCar(self, nextCharacter):
 		assert(self.stage == "waitingForCar")
 		if isWhitespace(nextCharacter):
-			return "characterRead"
+			return
 		elif nextCharacter == ")":
-			self.value.addChild(Node("symbol_nil"), self.value)
-			self.value.addChild(Node("symbol_nil"), self.value)
+			self.value.addChild(Node("symbol_nil", self.value))
+			self.value.addChild(Node("symbol_nil", self.value))
+			assert(self.value.getNumChildren() == 2)
 			self.stage = "waitingForTerminalCharacter"
 			return
 		else:
-			self.stage = "readingCar"
-			return "characterNotRead"
-	def processStage_readingCar(self, nextCharacter):
-		assert(self.stage == "readingCar")
-		assert(isWhitespace(nextCharacter))
-		self.stage = "waitingForDot"
-		return "characterRead"
+			self.stage = "waitingForDot"
+			readCar = newReader2(nextCharacter, self.value)
+			self.value.addChild(readCar.getValue())
+			assert(self.value.getNumChildren() == 1)
+			return readCar
+	def beginReadingNextListElement(characters):
+		self.done = True
+		readNextListElement = ConsReader2("(", self.value)
+		self.value.addChild(readNextListElement.getValue())
+		assert(self.value.getNumChildren() == 2)
+		for nextCharacter in characters:
+			readNextListElement.readNextCharacter(nextCharacter)
+		return readNextListElement
 	def processStage_waitingForDot(self, nextCharacter):
 		assert(self.stage == "waitingForDot")
 		if nextCharacter == ".":
@@ -115,44 +141,30 @@ class ConsReader2(parentNode=None):
 		elif isWhitespace(nextCharacter):
 			return
 		elif nextCharacter == ")":
-			return self.read(". nil)")
+			self.value.addChild(Node("symbol_nil"), self.value)
+			self.stage = "waitingForTerminalCharacter"
+			return
 		else:
-			self.isReadingList = True
-			return self.read(". (" + nextCharacter)
+			return self.beginReadingNextListElement()
 	def processStage_readingDot(self, nextCharacter):
 		assert(self.stage == "readingDot")
 		if isWhitespace(nextCharacter):
 			self.stage = "waitingForCdr"
 			return
 		else:
-			self.isReadingList = True
-			return self.read(" ." + nextCharacter)
+			return self.beginReadingNextListElement("." + nextCharacter)
 	def processStage_waitingForCdr(self, nextCharacter):
 		assert(self.stage == "waitingForCdr")
 		if isWhitespace(nextCharacter):
 			return
 		elif nextCharacter == ")":
-			return self.read("nil )")
-		else:
-			assert(self.reader == None)
-			self.reader = newReader(nextCharacter)
-			self.stage = "readingCdr"
 			return
-	def processStage_readingCdr(self, nextCharacter):
-		assert(self.stage == "readingCdr")
-		assert(self.reader)
-		child = self.reader.readNextCharacter(nextCharacter)
-		if child:
-			self.reader = None
-			assert(self.value.getNumChildren() == 1)
-			self.value.addChild(child)
-			self.stage = "waitingForParentheses"
-			if self.isReadingList:
-				return self.read(" )" + nextCharacter)
-			else:
-				return self.readNextCharacter(nextCharacter)
-	def processStage_waitingForParentheses(self, nextCharacter):
-		assert(self.stage == "waitingForParentheses")
+		else:
+			self.stage = "waitingForParenthesis"
+			cdrReader = newReader2(nextCharacter, self.value)
+			return cdrReader
+	def processStage_waitingForParenthesis(self, nextCharacter):
+		assert(self.stage == "waitingForParenthesis")
 		if nextCharacter == ")":
 			self.stage = "waitingForTerminalCharacter"
 		else:
@@ -160,24 +172,20 @@ class ConsReader2(parentNode=None):
 	def processStage_waitingForTerminalCharacter(self, nextCharacter):
 		assert(self.stage == "waitingForTerminalCharacter")
 		self.done = True
-		return self.value
+		return nextCharacter
 	def readNextCharacter(self, nextCharacter):
 		assert(not self.done)
 
 		if self.stage == "waitingForCar":
 			return self.processStage_waitingForCar(nextCharacter)
-		elif self.stage == "readingCar":
-			return self.processStage_readingCar(nextCharacter)
 		elif self.stage == "waitingForDot":
 			return self.processStage_waitingForDot(nextCharacter)
 		elif self.stage == "readingDot":
 			return self.processStage_readingDot(nextCharacter)
 		elif self.stage == "waitingForCdr":
 			return self.processStage_waitingForCdr(nextCharacter)
-		elif self.stage == "readingCdr":
-			return self.processStage_readingCdr(nextCharacter)
-		elif self.stage == "waitingForParentheses":
-			return self.processStage_waitingForParentheses(nextCharacter)
+		elif self.stage == "waitingForParenthesis":
+			return self.processStage_waitingForParenthesis(nextCharacter)
 		else:
 			assert(self.stage == "waitingForTerminalCharacter")
 			return self.processStage_waitingForTerminalCharacter(nextCharacter)
