@@ -224,8 +224,9 @@ def test_ConsReader2_emptyList():
 
 	shouldBeSpace = readerStack[-1].readNextCharacter(readerStack, " ")
 	assert(shouldBeSpace == " ")
-	assert(len(readerStack) == 0)
 	assert(reader.isDone())
+
+	assert(len(readerStack) == 0)
 
 	assert(root.getNumChildren() == 1)
 	assert(root.getChild(0).getNumChildren() == 2)
