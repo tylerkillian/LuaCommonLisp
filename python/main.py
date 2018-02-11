@@ -130,7 +130,7 @@ class ConsReader2():
 			self.value.addChild(readCar.getValue())
 			assert(self.value.getNumChildren() == 1)
 			return readCar
-	def beginReadingNextListElement(characters):
+	def beginReadingNextListElement(self, characters):
 		self.done = True
 		readNextListElement = ConsReader2("(", self.value)
 		self.value.addChild(readNextListElement.getValue())
