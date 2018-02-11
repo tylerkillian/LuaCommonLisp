@@ -132,10 +132,9 @@ class ConsReader2():
 			self.stage = "waitingForTerminalCharacter"
 		else:
 			self.stage = "waitingForDot"
-			readCar = newReader2(nextCharacter, self.value)
+			readCar = newReader2(readerStack, nextCharacter, self.value)
 			self.value.addChild(readCar.getValue())
 			assert(self.value.getNumChildren() == 1)
-			readerStack.append(readCar)
 	def beginReadingNextListElement(self, readerStack, characters):
 		self.done = True
 		readerStack.pop()
@@ -168,14 +167,10 @@ class ConsReader2():
 			return self.beginReadingNextListElement("." + nextCharacter)
 	def processStage_waitingForCdr(self, readerStack, nextCharacter):
 		assert(self.stage == "waitingForCdr")
-		if isWhitespace(nextCharacter):
-			return
-		elif nextCharacter == ")":
-			return
-		else:
+		if not isWhitespace(nextCharacter):
+			assert(nextcharacter != ")")
 			self.stage = "waitingForParenthesis"
-			cdrReader = newReader2(nextCharacter, self.value)
-			return cdrReader
+			cdrReader = newReader2(readerStack, nextCharacter, self.value)
 	def processStage_waitingForParenthesis(self, readerStack, nextCharacter):
 		assert(self.stage == "waitingForParenthesis")
 		if nextCharacter == ")":
