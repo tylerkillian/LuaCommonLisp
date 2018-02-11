@@ -68,11 +68,13 @@ class SymbolReader2():
 		return self.done
 	def readNextCharacter(self, readerStack, nextCharacter):
 		assert(not self.done)
+		assert(readerStack[-1] == self)
+
 		if nextCharacter == " " or nextCharacter == ")":
 			self.done = True
+			readerStack.pop()
 			return nextCharacter
 		else:
-			readerStack.append(self)
 			self.value.setName(self.value.getName() + nextCharacter)
 			return
 
@@ -117,7 +119,7 @@ class ConsReader2():
 				assert(result == "")
 				assert(not self.isDone)
 		return result
-	def processStage_waitingForCar(self, nextCharacter):
+	def processStage_waitingForCar(self, readerStack, nextCharacter):
 		assert(self.stage == "waitingForCar")
 		if isWhitespace(nextCharacter):
 			return
@@ -126,22 +128,23 @@ class ConsReader2():
 			self.value.addChild(Node("symbol_nil", self.value))
 			assert(self.value.getNumChildren() == 2)
 			self.stage = "waitingForTerminalCharacter"
-			return
 		else:
 			self.stage = "waitingForDot"
 			readCar = newReader2(nextCharacter, self.value)
 			self.value.addChild(readCar.getValue())
 			assert(self.value.getNumChildren() == 1)
-			return readCar
-	def beginReadingNextListElement(self, characters):
+			readerStack.append(readCar)
+	def beginReadingNextListElement(self, readerStack, characters):
 		self.done = True
 		readNextListElement = ConsReader2("(", self.value)
+		readerStack.pop()
+		readerStack.append(readNextListElement)
 		self.value.addChild(readNextListElement.getValue())
 		assert(self.value.getNumChildren() == 2)
 		for nextCharacter in characters:
-			readNextListElement.readNextCharacter(nextCharacter)
-		return readNextListElement
-	def processStage_waitingForDot(self, nextCharacter):
+			readNextListElement.readNextCharacter(readerStack, nextCharacter)
+		return
+	def processStage_waitingForDot(self, readerStack, nextCharacter):
 		assert(self.stage == "waitingForDot")
 		if nextCharacter == ".":
 			self.stage = "readingDot"
@@ -155,14 +158,14 @@ class ConsReader2():
 			return
 		else:
 			return self.beginReadingNextListElement(nextCharacter)
-	def processStage_readingDot(self, nextCharacter):
+	def processStage_readingDot(self, readerStack, nextCharacter):
 		assert(self.stage == "readingDot")
 		if isWhitespace(nextCharacter):
 			self.stage = "waitingForCdr"
 			return
 		else:
 			return self.beginReadingNextListElement("." + nextCharacter)
-	def processStage_waitingForCdr(self, nextCharacter):
+	def processStage_waitingForCdr(self, readerStack, nextCharacter):
 		assert(self.stage == "waitingForCdr")
 		if isWhitespace(nextCharacter):
 			return
@@ -172,31 +175,33 @@ class ConsReader2():
 			self.stage = "waitingForParenthesis"
 			cdrReader = newReader2(nextCharacter, self.value)
 			return cdrReader
-	def processStage_waitingForParenthesis(self, nextCharacter):
+	def processStage_waitingForParenthesis(self, readerStack, nextCharacter):
 		assert(self.stage == "waitingForParenthesis")
 		if nextCharacter == ")":
 			self.stage = "waitingForTerminalCharacter"
 		else:
 			assert(isWhitespace(nextCharacter))
-	def processStage_waitingForTerminalCharacter(self, nextCharacter):
+	def processStage_waitingForTerminalCharacter(self, readerStack, nextCharacter):
 		assert(self.stage == "waitingForTerminalCharacter")
 		self.done = True
-	def readNextCharacter(self, nextCharacter):
+		readerStack.pop()
+	def readNextCharacter(self, readerStack, nextCharacter):
 		assert(not self.done)
+		assert(readerStack[-1] == self)
 
 		if self.stage == "waitingForCar":
-			return self.processStage_waitingForCar(nextCharacter)
+			return self.processStage_waitingForCar(readerStack, nextCharacter)
 		elif self.stage == "waitingForDot":
-			return self.processStage_waitingForDot(nextCharacter)
+			return self.processStage_waitingForDot(readerStack, nextCharacter)
 		elif self.stage == "readingDot":
-			return self.processStage_readingDot(nextCharacter)
+			return self.processStage_readingDot(readerStack, nextCharacter)
 		elif self.stage == "waitingForCdr":
-			return self.processStage_waitingForCdr(nextCharacter)
+			return self.processStage_waitingForCdr(readerStack, nextCharacter)
 		elif self.stage == "waitingForParenthesis":
-			return self.processStage_waitingForParenthesis(nextCharacter)
+			return self.processStage_waitingForParenthesis(readerStack, nextCharacter)
 		else:
 			assert(self.stage == "waitingForTerminalCharacter")
-			return self.processStage_waitingForTerminalCharacter(nextCharacter)
+			return self.processStage_waitingForTerminalCharacter(readerStack, nextCharacter)
 
 def treeToString(node):
 	if node.getName() == "root":
