@@ -223,7 +223,6 @@ def test_ConsReader2_singleElementList():
 	symbolReader = consReader.readNextCharacter("a")
 	assert(symbolReader)
 	assert(not consReader.isDone())
-	assert(False)
 	result = reader.readNextCharacter(")")
 	assert(not result)
 	assert(not reader.isDone())
