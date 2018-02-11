@@ -195,6 +195,13 @@ class ConsReader2():
 			assert(self.stage == "waitingForTerminalCharacter")
 			return self.processStage_waitingForTerminalCharacter(nextCharacter)
 
+def treeToString(node):
+	if node.getName() == "root":
+		return treeToString(node.getChild(0))
+	elif node.getName() == "cons":
+		return "(" + treeToString(node.getChild(0)) + " . " + treeToString(node.getChild(1)) + ")"
+	elif node.getName()[0:7] == "symbol_":
+		return node.getName()[7:]
 def test_ConsReader2_emptyList():
 	root = Node("root")
 	reader = ConsReader2("(", root)
