@@ -203,7 +203,11 @@ def test_ConsReader2_emptyList():
 	assert(not reader.isDone())
 	result = reader.readNextCharacter(" ")
 	assert(reader.isDone())
-
+	assert(root.getNumChildren() == 1)
+	cons = root.getChild(0)
+	assert(cons.getNumChildren() == 2)
+	assert(cons.getChild(0).getName() == "symbol_nil")
+	assert(cons.getChild(1).getName() == "symbol_nil")
 test_ConsReader2 = {
 	"test_ConsReader2_emptyList": test_ConsReader2_emptyList,
 }
