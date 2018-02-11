@@ -289,13 +289,8 @@ def test_ConsReader2_twoElementList():
 	readerStack = []
 	consReader = ConsReader2(readerStack, "(", root)
 	root.addChild(consReader.getValue())
-	feedCharactersToStack(readerStack, "a b) ")
-	readerStack[-1].readNextCharacter(readerStack, "a")
-	readerStack[-1].readNextCharacter(readerStack, " ")
-	readerStack[-1].readNextCharacter(readerStack, "b")
-	readerStack[-1].readNextCharacter(readerStack, ")")
-	readerStack[-1].readNextCharacter(readerStack, ")")
-	readerStack[-1].readNextCharacter(readerStack, " ")
+	lastCharacter = feedCharactersToStack(readerStack, "a b) ")
+	assert(lastCharacter == " ")
 
 	assert(root.getNumChildren() == 1)
 	assert(root.getChild(0).getName() == "cons")
