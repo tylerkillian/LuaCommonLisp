@@ -247,13 +247,15 @@ def test_ConsReader2_singleElementList():
 	assert(cons.getChild(1).getName() == "symbol_nil")
 def test_ConsReader2_twoElementList():
 	root = Node("root")
-	consReader1 = ConsReader2("(", root)
-	symbolReader = consReader.readNextCharacter("a")
-	shouldBeNull = symbolReader.readNextCharacter(" ")
-	symbolReader = consReader.readNextCharacter("b")
-	shouldBeNull = symbolReader.readNextCharacter(")")
-	shouldBeNull = consReader.readNextCharacter(")")
-	shouldBeNull = consReader.readNextCharacter(" ")
+	readerStack = []
+	consReader = ConsReader2(readerStack, "(", root)
+	root.addChild(consReader.getValue())
+	readerStack[-1].readNextCharacter(readerStack, "a")
+	readerStack[-1].readNextCharacter(readerStack, " ")
+	readerStack[-1].readNextCharacter(readerStack, "b")
+	readerStack[-1].readNextCharacter(readerStack, ")")
+	readerStack[-1].readNextCharacter(readerStack, ")")
+	readerStack[-1].readNextCharacter(readerStack, " ")
 
 	assert(root.getNumChildren() == 1)
 	assert(root.getChild(0).getName() == "cons")
