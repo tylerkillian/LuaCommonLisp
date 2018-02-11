@@ -52,9 +52,9 @@ def newReader(initialCharacter):
 
 def newReader2(initialCharacter, parentNode):
 	if initialCharacter == "(":
-		return ConsReader2(initialCharacter, nodeParent)
+		return ConsReader2(initialCharacter, parentNode)
 	else:
-		return SymbolReader2(initialCharacter, nodeParent)
+		return SymbolReader2(initialCharacter, parentNode)
 
 class SymbolReader2():
 	def __init__(self, initialCharacter, parentNode = None):
@@ -65,7 +65,10 @@ class SymbolReader2():
 		assert(not self.done)
 		if nextCharacter == " " or nextCharacter == ")":
 			self.done = True
-			return Node("symbol_" + self.value, self.parentNode)
+			newSymbolNode = Node("symbol_" + self.value, self.parentNode)
+			if self.parentNode:
+				self.parentNode.addChild(newSymbolNode)
+			return newSymbolNode
 		else:
 			self.value += nextCharacter
 			return
@@ -98,6 +101,8 @@ class ConsReader2():
 		assert(initialCharacter == "(")
 		self.stage = "waitingForCar"
 		self.value = Node("cons", parentNode)
+		if parentNode:
+			parentNode.addChild(self.value)
 		self.done = False
 	def isDone(self):
 		return self.done
@@ -189,6 +194,21 @@ class ConsReader2():
 		else:
 			assert(self.stage == "waitingForTerminalCharacter")
 			return self.processStage_waitingForTerminalCharacter(nextCharacter)
+
+def test_ConsReader2_emptyList():
+	root = Node("root")
+	reader = ConsReader2("(", root)
+	result = reader.readNextCharacter(")")
+	assert(not result)
+	assert(not reader.isDone())
+	result = reader.readNextCharacter(" ")
+	assert(reader.isDone())
+
+test_ConsReader2 = {
+	"test_ConsReader2_emptyList": test_ConsReader2_emptyList,
+}
+runTests(test_ConsReader2)
+
 
 
 class ConsReader():
