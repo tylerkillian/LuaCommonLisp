@@ -274,14 +274,19 @@ def test_ConsReader2_singleElementList():
 	assert(cons.getChild(0).getName() == "symbol_a")
 	assert(cons.getChild(1).getName() == "symbol_nil")
 def feedCharactersToStack(readerStack, characters):
-	for characterIdx in range(0, len(characters)):
-		character = characters[characterIdx]
-		readerStack[-1].readNextCharacter(readerStack, character)
+	for character in characters:
+		characterUsed = False
+		while not characterUsed:
+			if len(readerStack) == 0:
+				return character
+			lastResult = readerStack[-1].readNextCharacter(readerStack, character)
+	return lastResult
 def test_ConsReader2_twoElementList():
 	root = Node("root")
 	readerStack = []
 	consReader = ConsReader2(readerStack, "(", root)
 	root.addChild(consReader.getValue())
+	feedCharactersToStack(readerStack, "a b) ")
 	readerStack[-1].readNextCharacter(readerStack, "a")
 	readerStack[-1].readNextCharacter(readerStack, " ")
 	readerStack[-1].readNextCharacter(readerStack, "b")
