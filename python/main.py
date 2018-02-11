@@ -234,9 +234,28 @@ def test_ConsReader2_singleElementList():
 	assert(cons.getNumChildren() == 2)
 	assert(cons.getChild(0).getName() == "symbol_a")
 	assert(cons.getChild(1).getName() == "symbol_nil")
+def test_ConsReader2_twoElementList():
+	root = Node("root")
+	consReader = ConsReader2("(", root)
+	symbolReader = consReader.readNextCharacter("a")
+	shouldBeNull = symbolReader.readNextCharacter(" ")
+	symbolReader = consReader.readNextCharacter("b")
+	shouldBeNull = symbolReader.readNextCharacter(")")
+	shouldBeNull = consReader.readNextCharacter(")")
+	shouldBeNull = consReader.readNextCharacter(" ")
+
+	assert(root.getNumChildren() == 1)
+	assert(root.getChild(0).getName() == "cons")
+	assert(root.getChild(0).getNumChildren() == 2)
+	assert(root.getChild(0).getChild(0).getName() == "symbol_a")
+	assert(root.getChild(0).getChild(1).getName() == "cons")
+	assert(root.getChild(0).getChild(1).getNumChildren() == 2)
+	assert(root.getChild(0).getChild(1).getChild(0).getName() == "symbol_b")
+	assert(root.getChild(0).getChild(1).getChild(1).getName() == "symbol_nil")
 test_ConsReader2 = {
 	"test_ConsReader2_emptyList": test_ConsReader2_emptyList,
 	"test_ConsReader2_singleElementList": test_ConsReader2_singleElementList,
+	"test_ConsReader2_twoElementList": test_ConsReader2_twoElementList,
 }
 runTests(test_ConsReader2)
 
