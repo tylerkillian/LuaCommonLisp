@@ -265,7 +265,9 @@ def test_ConsReader2_singleElementList():
 	shouldBeSpace = readerStack[-1].readNextCharacter(readerStack, " ")
 	assert(shouldBeSpace == " ")
 	assert(consReader.isDone())
-	assert(not shouldBeNull)
+
+	assert(len(readerStack) == 1)
+
 	assert(root.getNumChildren() == 1)
 	cons = root.getChild(0)
 	assert(cons.getNumChildren() == 2)
