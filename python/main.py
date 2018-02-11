@@ -52,14 +52,15 @@ def newReader(initialCharacter):
 	else:
 		return SymbolReader(initialCharacter)
 
-def newReader2(initialCharacter, parentNode):
+def newReader2(readerStack, initialCharacter, parentNode):
 	if initialCharacter == "(":
-		return ConsReader2(initialCharacter, parentNode)
+		return ConsReader2(readerStack, initialCharacter, parentNode)
 	else:
-		return SymbolReader2(initialCharacter, parentNode)
+		return SymbolReader2(readerStack, initialCharacter, parentNode)
 
 class SymbolReader2():
-	def __init__(self, initialCharacter, parentNode = None):
+	def __init__(self, readerStack, initialCharacter, parentNode = None):
+		self.readerStack.append(self)
 		self.value = Node("symbol_" + initialCharacter, parentNode)
 		self.done = False
 	def getValue(self):
@@ -102,8 +103,9 @@ def isWhitespace(character):
 		return False
 
 class ConsReader2():
-	def __init__(self, initialCharacter, parentNode = None):
+	def __init__(self, readerStack, initialCharacter, parentNode = None):
 		assert(initialCharacter == "(")
+		self.readerStack.append(self)
 		self.stage = "waitingForCar"
 		self.value = Node("cons", parentNode)
 		self.done = False
@@ -136,9 +138,8 @@ class ConsReader2():
 			readerStack.append(readCar)
 	def beginReadingNextListElement(self, readerStack, characters):
 		self.done = True
-		readNextListElement = ConsReader2("(", self.value)
 		readerStack.pop()
-		readerStack.append(readNextListElement)
+		readNextListElement = ConsReader2(readerStack, "(", self.value)
 		self.value.addChild(readNextListElement.getValue())
 		assert(self.value.getNumChildren() == 2)
 		for nextCharacter in characters:
