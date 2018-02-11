@@ -46,19 +46,13 @@ def runTests(tests):
 runTests(test_Node)
 
 
-def newReader(initialCharacter):
+def newReader(readerStack, initialCharacter, parentNode):
 	if initialCharacter == "(":
-		return ConsReader(initialCharacter)
+		return ConsReader(readerStack, initialCharacter, parentNode)
 	else:
-		return SymbolReader(initialCharacter)
+		return SymbolReader(readerStack, initialCharacter, parentNode)
 
-def newReader2(readerStack, initialCharacter, parentNode):
-	if initialCharacter == "(":
-		return ConsReader2(readerStack, initialCharacter, parentNode)
-	else:
-		return SymbolReader2(readerStack, initialCharacter, parentNode)
-
-class SymbolReader2():
+class SymbolReader():
 	def __init__(self, readerStack, initialCharacter, parentNode = None):
 		readerStack.append(self)
 		self.value = Node("symbol_" + initialCharacter, parentNode)
@@ -79,19 +73,6 @@ class SymbolReader2():
 			self.value.setName(self.value.getName() + nextCharacter)
 			return
 
-class SymbolReader():
-	def __init__(self, initialCharacter):
-		self.value = initialCharacter
-		self.done = False
-	def readNextCharacter(self, nextCharacter):
-		assert(not self.done)
-		if nextCharacter == " " or nextCharacter == ")":
-			self.done = True
-			return Node("symbol_" + self.value)
-		else:
-			self.value += nextCharacter
-			return
-
 def isWhitespace(character):
 	if character == " ":
 		return True
@@ -102,7 +83,7 @@ def isWhitespace(character):
 	else:
 		return False
 
-class ConsReader2():
+class ConsReader():
 	def __init__(self, readerStack, initialCharacter, parentNode = None):
 		assert(initialCharacter == "(")
 		readerStack.append(self)
@@ -132,13 +113,13 @@ class ConsReader2():
 			self.stage = "waitingForTerminalCharacter"
 		else:
 			self.stage = "waitingForDot"
-			readCar = newReader2(readerStack, nextCharacter, self.value)
+			readCar = newReader(readerStack, nextCharacter, self.value)
 			self.value.addChild(readCar.getValue())
 			assert(self.value.getNumChildren() == 1)
 	def beginReadingNextListElement(self, readerStack, characters):
 		self.done = True
 		readerStack.pop()
-		readNextListElement = ConsReader2(readerStack, "(", self.value)
+		readNextListElement = ConsReader(readerStack, "(", self.value)
 		self.value.addChild(readNextListElement.getValue())
 		assert(self.value.getNumChildren() == 2)
 		for nextCharacter in characters:
@@ -170,7 +151,7 @@ class ConsReader2():
 		if not isWhitespace(nextCharacter):
 			assert(nextcharacter != ")")
 			self.stage = "waitingForParenthesis"
-			cdrReader = newReader2(readerStack, nextCharacter, self.value)
+			cdrReader = newReader(readerStack, nextCharacter, self.value)
 	def processStage_waitingForParenthesis(self, readerStack, nextCharacter):
 		assert(self.stage == "waitingForParenthesis")
 		if nextCharacter == ")":
@@ -207,11 +188,11 @@ def treeToString(node):
 		return "(" + treeToString(node.getChild(0)) + " . " + treeToString(node.getChild(1)) + ")"
 	elif node.getName()[0:7] == "symbol_":
 		return node.getName()[7:]
-def test_ConsReader2_emptyList():
+def test_ConsReader_emptyList():
 	root = Node("root")
 	readerStack = []
 
-	ConsReader2(readerStack, "(", root)
+	ConsReader(readerStack, "(", root)
 	assert(len(readerStack) == 1)
 
 	reader = readerStack[-1]
@@ -232,11 +213,11 @@ def test_ConsReader2_emptyList():
 	assert(root.getChild(0).getNumChildren() == 2)
 	assert(root.getChild(0).getChild(0).getName() == "symbol_nil")
 	assert(root.getChild(0).getChild(1).getName() == "symbol_nil")
-def test_ConsReader2_singleElementList():
+def test_ConsReader_singleElementList():
 	root = Node("root")
 	readerStack = []
 
-	ConsReader2(readerStack, "(", root)
+	ConsReader(readerStack, "(", root)
 	assert(len(readerStack) == 1)
 
 	consReader = readerStack[-1]
@@ -276,7 +257,7 @@ def test_ConsReader2_singleElementList():
 def parseString(string):
 	root = Node("root")
 	readerStack = []
-	newReader2(readerStack, string[0], root)
+	newReader(readerStack, string[0], root)
 	assert(len(readerStack) == 1)
 	root.addChild(readerStack[-1].getValue())
 
@@ -291,7 +272,7 @@ def parseString(string):
 				assert(character == lastResult)
 				return root
 	assert(False)
-def test_ConsReader2_twoElementList():
+def test_ConsReader_twoElementList():
 	root = parseString("(a b) ")
 
 	assert(root.getNumChildren() == 1)
@@ -302,194 +283,10 @@ def test_ConsReader2_twoElementList():
 	assert(root.getChild(0).getChild(1).getNumChildren() == 2)
 	assert(root.getChild(0).getChild(1).getChild(0).getName() == "symbol_b")
 	assert(root.getChild(0).getChild(1).getChild(1).getName() == "symbol_nil")
-test_ConsReader2 = {
-	"test_ConsReader2_emptyList": test_ConsReader2_emptyList,
-	"test_ConsReader2_singleElementList": test_ConsReader2_singleElementList,
-	"test_ConsReader2_twoElementList": test_ConsReader2_twoElementList,
-}
-runTests(test_ConsReader2)
-
-
-
-class ConsReader():
-	def __init__(self, initialCharacter):
-		self.stage = "waitingForCar"
-		self.reader = None
-		self.value = Node("cons")
-		self.done = False
-		self.isReadingList = False
-		if initialCharacter != "(":
-			self.reader = newReader(initialCharacter)
-	def read(self, string):
-		for characterIdx in range(0, len(string)):
-			character = string[characterIdx]
-			result = self.readNextCharacter(character)
-			if characterIdx < len(string) - 1:
-				assert(not result)
-		return result
-	def processStage_waitingForCar(self, nextCharacter):
-		assert(self.stage == "waitingForCar")
-		if isWhitespace(nextCharacter):
-			return
-		elif nextCharacter == ")":
-			return self.read("nil . nil )")
-		else:
-			assert(self.reader == None)
-			self.reader = newReader(nextCharacter)
-			self.stage = "readingCar"
-			return
-	def processStage_readingCar(self, nextCharacter):
-		assert(self.stage == "readingCar")
-		assert(self.reader)
-		child = self.reader.readNextCharacter(nextCharacter)
-		if child:
-			self.reader = None
-			assert(self.value.getNumChildren() == 0)
-			self.value.addChild(child)
-			self.stage = "waitingForDot"
-			return self.readNextCharacter(nextCharacter)
-	def processStage_waitingForDot(self, nextCharacter):
-		assert(self.stage == "waitingForDot")
-		if nextCharacter == ".":
-			self.stage = "readingDot"
-			return
-		elif isWhitespace(nextCharacter):
-			return
-		elif nextCharacter == ")":
-			return self.read(". nil)")
-		else:
-			self.isReadingList = True
-			return self.read(". (" + nextCharacter)
-	def processStage_readingDot(self, nextCharacter):
-		assert(self.stage == "readingDot")
-		if isWhitespace(nextCharacter):
-			self.stage = "waitingForCdr"
-			return
-		else:
-			self.isReadingList = True
-			return self.read(" ." + nextCharacter)
-	def processStage_waitingForCdr(self, nextCharacter):
-		assert(self.stage == "waitingForCdr")
-		if isWhitespace(nextCharacter):
-			return
-		elif nextCharacter == ")":
-			return self.read("nil )")
-		else:
-			assert(self.reader == None)
-			self.reader = newReader(nextCharacter)
-			self.stage = "readingCdr"
-			return
-	def processStage_readingCdr(self, nextCharacter):
-		assert(self.stage == "readingCdr")
-		assert(self.reader)
-		child = self.reader.readNextCharacter(nextCharacter)
-		if child:
-			self.reader = None
-			assert(self.value.getNumChildren() == 1)
-			self.value.addChild(child)
-			self.stage = "waitingForParentheses"
-			if self.isReadingList:
-				return self.read(" )" + nextCharacter)
-			else:
-				return self.readNextCharacter(nextCharacter)
-	def processStage_waitingForParentheses(self, nextCharacter):
-		assert(self.stage == "waitingForParentheses")
-		if nextCharacter == ")":
-			self.stage = "waitingForTerminalCharacter"
-		else:
-			assert(isWhitespace(nextCharacter))
-	def processStage_waitingForTerminalCharacter(self, nextCharacter):
-		assert(self.stage == "waitingForTerminalCharacter")
-		self.done = True
-		return self.value
-	def readNextCharacter(self, nextCharacter):
-		assert(not self.done)
-
-		if self.stage == "waitingForCar":
-			return self.processStage_waitingForCar(nextCharacter)
-		elif self.stage == "readingCar":
-			return self.processStage_readingCar(nextCharacter)
-		elif self.stage == "waitingForDot":
-			return self.processStage_waitingForDot(nextCharacter)
-		elif self.stage == "readingDot":
-			return self.processStage_readingDot(nextCharacter)
-		elif self.stage == "waitingForCdr":
-			return self.processStage_waitingForCdr(nextCharacter)
-		elif self.stage == "readingCdr":
-			return self.processStage_readingCdr(nextCharacter)
-		elif self.stage == "waitingForParentheses":
-			return self.processStage_waitingForParentheses(nextCharacter)
-		else:
-			assert(self.stage == "waitingForTerminalCharacter")
-			return self.processStage_waitingForTerminalCharacter(nextCharacter)
-
-
-def test_ConsReader_readEmptyList():
-	reader = ConsReader("(")
-	result = reader.readNextCharacter(")")
-	assert(not result)
-	result = reader.readNextCharacter(" ")
-	assert(result)
-	assert(result.getName() == "cons")
-	assert(result.getNumChildren() == 2)
-	assert(result.getChild(0).getName() == "symbol_nil")
-	assert(result.getChild(1).getName() == "symbol_nil")
-def test_ConsReader_readSingleElementList():
-	reader = ConsReader("(")
-	result = reader.readNextCharacter("a")
-	assert(not result)
-	result = reader.readNextCharacter(")")
-	assert(not result)
-	result = reader.readNextCharacter(" ")
-	assert(result)
-	assert(result.getName() == "cons")
-	assert(result.getNumChildren() == 2)
-	assert(result.getChild(0).getName() == "symbol_a")
-	assert(result.getChild(1).getName() == "symbol_nil")
-def test_ConsReader_readConsWithDot():
-	reader = ConsReader("(")
-	result = reader.readNextCharacter("a")
-	assert(not result)
-	result = reader.readNextCharacter(" ")
-	assert(not result)
-	result = reader.readNextCharacter(".")
-	assert(not result)
-	result = reader.readNextCharacter(" ")
-	assert(not result)
-	result = reader.readNextCharacter("b")
-	assert(not result)
-	result = reader.readNextCharacter(" ")
-	assert(not result)
-	result = reader.readNextCharacter(")")
-	assert(not result)
-	result = reader.readNextCharacter(" ")
-	assert(result)
-	assert(result.getName() == "cons")
-	assert(result.getNumChildren() == 2)
-	assert(result.getChild(0).getName() == "symbol_a")
-	assert(result.getChild(1).getName() == "symbol_b")
-def test_ConsReader_readTwoElementList():
-	reader = ConsReader("(")
-	result = reader.readNextCharacter("a")
-	assert(not result)
-	result = reader.readNextCharacter(" ")
-	assert(not result)
-	result = reader.readNextCharacter("b")
-	assert(not result)
-	result = reader.readNextCharacter(")")
-	assert(not result)
-	result = reader.readNextCharacter(" ")
-	assert(result)
-	assert(result.getName() == "cons")
-	assert(result.getNumChildren() == 2)
-	assert(result.getChild(0).getName() == "symbol_a")
-	assert(result.getChild(1).getName() == "cons")
-	assert(result.getChild(1).getChild(0).getName() == "symbol_b")
-	assert(result.getChild(1).getChild(1).getName() == "symbol_nil")
 test_ConsReader = {
-	"test_ConsReader_readEmptyList": test_ConsReader_readEmptyList,
-	"test_ConsReader_readSingleElementList": test_ConsReader_readSingleElementList,
-	"test_ConsReader_readConsWithDot": test_ConsReader_readConsWithDot,
-	"test_ConsReader_readTwoElementList": test_ConsReader_readTwoElementList,
+	"test_ConsReader_emptyList": test_ConsReader_emptyList,
+	"test_ConsReader_singleElementList": test_ConsReader_singleElementList,
+	"test_ConsReader_twoElementList": test_ConsReader_twoElementList,
 }
 runTests(test_ConsReader)
+
