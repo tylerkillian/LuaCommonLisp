@@ -279,7 +279,7 @@ def feedCharactersToStack(readerStack, characters):
 		while not characterUsed:
 			if len(readerStack) == 0:
 				return character
-			lastResult = readerStack[-1].readNextCharacter(readerStack, character)
+			readerStack[-1].readNextCharacter(readerStack, character)
 	return lastResult
 def test_ConsReader2_twoElementList():
 	root = Node("root")
