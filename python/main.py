@@ -93,8 +93,8 @@ def isWhitespace(character):
 	else:
 		return False
 
-class ConsReader2(parentNode = None):
-	def __init__(self, initialCharacter):
+class ConsReader2():
+	def __init__(self, initialCharacter, parentNode = None):
 		assert(initialCharacter == "(")
 		self.stage = "waitingForCar"
 		self.value = Node("cons", parentNode)
