@@ -218,6 +218,7 @@ def test_ConsReader2_emptyList():
 	root.addChild(reader.getValue())
 
 	shouldBeNull = readerStack[-1].readNextCharacter(readerStack, ")")
+	assert(readerStack[-1] == reader)
 	assert(not shouldBeNull)
 	assert(not reader.isDone())
 
