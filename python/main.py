@@ -70,10 +70,8 @@ class SymbolReader2():
 		assert(not self.done)
 		if nextCharacter == " " or nextCharacter == ")":
 			self.done = True
-			return newSymbolNode
 		else:
 			self.value.setName(self.value.getName() + nextCharacter)
-			return
 
 class SymbolReader():
 	def __init__(self, initialCharacter):
@@ -148,7 +146,7 @@ class ConsReader2():
 		elif isWhitespace(nextCharacter):
 			return
 		elif nextCharacter == ")":
-			self.value.addChild(Node("symbol_nil"), self.value)
+			self.value.addChild(Node("symbol_nil", self.value))
 			self.stage = "waitingForTerminalCharacter"
 			return
 		else:
@@ -223,15 +221,19 @@ def test_ConsReader2_singleElementList():
 	symbolReader = consReader.readNextCharacter("a")
 	assert(symbolReader)
 	assert(not consReader.isDone())
-	result = reader.readNextCharacter(")")
-	assert(not result)
-	assert(not reader.isDone())
-	result = reader.readNextCharacter(" ")
-	assert(reader.isDone())
+	shouldBeNull = symbolReader.readNextCharacter(")")
+	assert(not shouldBeNull)
+	assert(symbolReader.isDone())
+	shouldBeNull = consReader.readNextCharacter(")")
+	assert(not shouldBeNull)
+	assert(not consReader.isDone())
+	shouldBeNull = consReader.readNextCharacter(" ")
+	assert(not shouldBeNull)
+	assert(consReader.isDone())
 	assert(root.getNumChildren() == 1)
 	cons = root.getChild(0)
 	assert(cons.getNumChildren() == 2)
-	assert(cons.getChild(0).getName() == "symbol_nil")
+	assert(cons.getChild(0).getName() == "symbol_a")
 	assert(cons.getChild(1).getName() == "symbol_nil")
 test_ConsReader2 = {
 	"test_ConsReader2_emptyList": test_ConsReader2_emptyList,
