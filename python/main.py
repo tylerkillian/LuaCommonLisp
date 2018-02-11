@@ -104,6 +104,8 @@ class ConsReader2():
 		if parentNode:
 			parentNode.addChild(self.value)
 		self.done = False
+	def getValue(self):
+		return self.value
 	def isDone(self):
 		return self.done
 	def read(self, string):
