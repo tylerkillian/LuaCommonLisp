@@ -235,13 +235,19 @@ def test_ConsReader2_emptyList():
 def test_ConsReader2_singleElementList():
 	root = Node("root")
 	readerStack = []
+
 	ConsReader2(readerStack, "(", root)
 	assert(len(readerStack) == 1)
+
 	consReader = readerStack[-1]
 	root.addChild(consReader.getValue())
+
 	shouldBeNull = readerStack[-1].readNextCharacter(readerStack, "a")
-	assert(len(readerStack) == 2)
 	assert(not shouldBeNull)
+	assert(len(readerStack) == 2)
+	assert(readerStack[0] == consReader)
+	symbolReader = readerStack[1]
+
 	symbolReader = readerStack[-1]
 	assert(not symbolReader.isDone())
 	shouldBeParenthesis = readerStack[-1].readNextCharacter(readerStack, ")")
