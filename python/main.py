@@ -135,7 +135,6 @@ class ConsReader2():
 	def beginReadingNextListElement(self, characters):
 		self.done = True
 		readNextListElement = ConsReader2("(", self.value)
-		self.value.addChild(readNextListElement.getValue())
 		assert(self.value.getNumChildren() == 2)
 		for nextCharacter in characters:
 			readNextListElement.readNextCharacter(nextCharacter)
@@ -238,7 +237,7 @@ def test_ConsReader2_singleElementList():
 	assert(cons.getChild(1).getName() == "symbol_nil")
 def test_ConsReader2_twoElementList():
 	root = Node("root")
-	consReader = ConsReader2("(", root)
+	consReader1 = ConsReader2("(", root)
 	symbolReader = consReader.readNextCharacter("a")
 	shouldBeNull = symbolReader.readNextCharacter(" ")
 	symbolReader = consReader.readNextCharacter("b")
