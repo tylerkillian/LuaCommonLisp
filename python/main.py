@@ -340,6 +340,8 @@ test_readExpressions = {
 }
 runTests(test_readExpressions)
 
+def sendToReaderStack(readerStack, nextCharacter):
+	pass
 def lisp():
 	input = open("test1.cl", "r")
 	readerStack = []
