@@ -341,5 +341,14 @@ test_readExpressions = {
 runTests(test_readExpressions)
 
 def lisp():
+	input = open("test1.cl", "r")
+	readerStack = []
+	nextCharacter = input.read(1)
+	while nextCharacter:
+		expression = sendToReaderStack(readerStack, nextCharacter)
+		if expression:
+			print(treeToString(expression))
+		else:
+			nextCharacter = input.read(1)
 
 lisp()
