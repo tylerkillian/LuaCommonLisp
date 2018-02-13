@@ -73,6 +73,32 @@ class SymbolReader():
 			self.value.setName(self.value.getName() + nextCharacter)
 			return
 
+class StringReader():
+	def __init__(self, readerStack, initialCharacter, parentNode = None):
+		assert(initialCharacter == "\"")
+		readerStack.append(self)
+		self.value = Node("string_" + initialCharacter, parentNode)
+		self.mode = "readingString"
+		self.done = False
+	def getValue(self):
+		return self.value
+	def isDone(self):
+		return self.done
+	def readNextCharacter(self, readerStack, nextCharacter):
+		assert(not self.done)
+		assert(readerStack[-1] == self)
+
+		if self.mode == "waitingForTerminalCharacter":
+			self.done = True
+			readerStack.pop()
+			return nextCharacter
+		elif nextCharacter == "\"":
+			self.mode = "waitingForTerminalCharacter"
+			return
+		else:
+			self.value.setName(self.value.getName() + nextCharacter)
+			return
+
 def isWhitespace(character):
 	if character == " ":
 		return True
