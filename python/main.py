@@ -339,3 +339,7 @@ test_readExpressions = {
 	"test_readExpressions_format": test_readExpressions_format,
 }
 runTests(test_readExpressions)
+
+def lisp():
+
+lisp()
