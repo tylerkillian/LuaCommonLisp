@@ -207,11 +207,23 @@ class ConsReader():
 			assert(self.stage == "waitingForTerminalCharacter")
 			return self.processStage_waitingForTerminalCharacter(readerStack, nextCharacter)
 
-def treeToString(node):
+def treeToString(node, addLeftParenthesis = True):
 	if node.getName() == "root":
 		return treeToString(node.getChild(0))
 	elif node.getName() == "cons":
-		return "(" + treeToString(node.getChild(0)) + " . " + treeToString(node.getChild(1)) + ")"
+		result = ""
+		if addLeftParenthesis:
+			result += "("
+		if node.getChild(1).getName() == "cons":
+			result += treeToString(node.getChild(0)) + " " + treeToString(node.getChild(1), False) + ")"
+			return result
+		else:
+			if node.getChild(1).getName() == "symbol_nil":
+				result += treeToString(node.getChild(0)) + ")"
+				return result
+			else:
+				result += treeToString(node.getChild(0)) + " " + treeToString(node.getChild(1)) + ")"
+				return result
 	elif node.getName()[0:7] == "symbol_":
 		return node.getName()[7:]
 def test_ConsReader_emptyList():
@@ -316,3 +328,13 @@ test_ConsReader = {
 }
 runTests(test_ConsReader)
 
+
+def test_readExpressions_setf():
+	root = parseString("(sef a 3) ")
+
+	print(treeToString(root))
+	assert(treeToString(root) == "(setf . (symbol_a . (symbol_3 . symbol_nil)))")
+test_readExpressions = {
+	"test_readExpressions_setf": test_readExpressions_setf,
+}
+runTests(test_readExpressions)
