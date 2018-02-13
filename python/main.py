@@ -211,14 +211,13 @@ def treeToString(node, addParenthesis = True):
 	if node.getName() == "root":
 		return treeToString(node.getChild(0))
 	elif node.getName() == "cons":
-		result = ""
 		if node.getChild(1).getName() == "cons":
-			result += treeToString(node.getChild(0)) + " " + treeToString(node.getChild(1), False)
+			result = treeToString(node.getChild(0)) + " " + treeToString(node.getChild(1), False)
 		else:
 			if node.getChild(1).getName() == "symbol_nil":
-				result += treeToString(node.getChild(0))
+				result = treeToString(node.getChild(0))
 			else:
-				result += treeToString(node.getChild(0)) + " " + treeToString(node.getChild(1))
+				result = treeToString(node.getChild(0)) + " " + treeToString(node.getChild(1))
 		if addParenthesis:
 			result = "(" + result + ")" 
 		return result
@@ -329,9 +328,7 @@ runTests(test_ConsReader)
 
 def test_readExpressions_setf():
 	root = parseString("(setf a 3) ")
-
-	print(treeToString(root))
-	assert(treeToString(root) == "(setf . (symbol_a . (symbol_3 . symbol_nil)))")
+	assert(treeToString(root) == "(setf a 3)")
 test_readExpressions = {
 	"test_readExpressions_setf": test_readExpressions_setf,
 }
