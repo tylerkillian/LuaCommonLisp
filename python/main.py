@@ -373,7 +373,10 @@ def sendToReaderStack(readerStack, nextCharacter):
 	while characterToProcess:
 		print("before nc = " + characterToProcess + " stack size = " + str(len(readerStack)))
 		characterToProcess = readerStack[-1].readNextCharacter(readerStack, nextCharacter)
-		print("before nc = " + characterToProcess + " stack size = " + str(len(readerStack)))
+		if characterToProcess:
+			print("after nc = " + characterToProcess + " stack size = " + str(len(readerStack)))
+		else:
+			print("after nc = <none> stack size = " + str(len(readerStack)))
 		if len(readerStack) == 0:
 			assert(characterToProcess == nextCharacter)
 			return root
