@@ -169,6 +169,7 @@ class ConsReader():
 	def beginReadingNextListElement(self, readerStack, characters):
 		self.done = True
 		readerStack.pop()
+		print("--->creating cons")
 		readNextListElement = ConsReader(readerStack, "(", self.value)
 		self.value.addChild(readNextListElement.getValue())
 		assert(self.value.getNumChildren() == 2)
