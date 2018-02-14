@@ -65,13 +65,13 @@ class RootReader():
 		assert(not self.done)
 		assert(readerStack[-1] == self)
 
-		if nextCharacter == " " or nextCharacter == ")":
+		if nextCharacter == "(":
 			self.done = True
 			readerStack.pop()
-			return nextCharacter
-		else:
-			self.value.setName(self.value.getName() + nextCharacter)
+			newReader(readerStack, nextCharacter)
 			return
+		else:
+			return nextCharacter
 
 
 class SymbolReader():
