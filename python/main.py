@@ -52,6 +52,28 @@ def newReader(readerStack, initialCharacter, parentNode):
 	else:
 		return SymbolReader(readerStack, initialCharacter, parentNode)
 
+class RootReader():
+	def __init__(self, readerStack):
+		readerStack.append(self)
+		self.value = Node("root")
+		self.done = False
+	def getValue(self):
+		return self.value
+	def isDone(self):
+		return self.done
+	def readNextCharacter(self, readerStack, nextCharacter):
+		assert(not self.done)
+		assert(readerStack[-1] == self)
+
+		if nextCharacter == " " or nextCharacter == ")":
+			self.done = True
+			readerStack.pop()
+			return nextCharacter
+		else:
+			self.value.setName(self.value.getName() + nextCharacter)
+			return
+
+
 class SymbolReader():
 	def __init__(self, readerStack, initialCharacter, parentNode = None):
 		readerStack.append(self)
@@ -342,7 +364,7 @@ runTests(test_readExpressions)
 
 def sendToReaderStack(readerStack, nextCharacter):
 	if len(readerStack) == 0:
-		readerStack.append(RootReader())
+		RootReader(readerStack)
 	root = readerStack[0].getValue()
 
 	characterToProcess = nextCharacter
