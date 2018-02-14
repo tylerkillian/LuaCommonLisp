@@ -48,8 +48,10 @@ runTests(test_Node)
 
 def newReader(readerStack, initialCharacter, parentNode):
 	if initialCharacter == "(":
+		print("--->creating cons")
 		return ConsReader(readerStack, initialCharacter, parentNode)
 	else:
+		print("--->creating symbol")
 		return SymbolReader(readerStack, initialCharacter, parentNode)
 
 class RootReader():
@@ -384,5 +386,5 @@ def lisp():
 			print(treeToString(expression))
 		else:
 			nextCharacter = input.read(1)
-
+print("##############")
 lisp()
