@@ -70,7 +70,8 @@ class RootReader():
 		if nextCharacter == "(":
 			self.done = True
 			readerStack.pop()
-			self.value.addChild(consReader.getValue())newReader(readerStack, nextCharacter, self.value)
+			consReader = newReader(readerStack, nextCharacter, self.value)
+			self.value.addChild(consReader.getValue())
 			return
 
 
