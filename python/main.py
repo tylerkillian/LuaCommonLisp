@@ -383,10 +383,11 @@ def sendToReaderStack(readerStack, nextCharacter):
 def lisp():
 	input = open("test1.cl", "r")
 	readerStack = []
-	RootReader(readerStack)
-	root = readerStack[0].getValue()
 	nextCharacter = input.read(1)
 	while nextCharacter:
+		if len(readerStack) == 0:
+			RootReader(readerStack)
+			root = readerStack[0].getValue()
 		characterToProcess = sendToReaderStack(readerStack, nextCharacter)
 		if characterToProcess:
 			assert(characterToProcess == nextCharacter)
