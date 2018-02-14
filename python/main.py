@@ -48,10 +48,8 @@ runTests(test_Node)
 
 def newReader(readerStack, initialCharacter, parentNode):
 	if initialCharacter == "(":
-		print("--->creating cons")
 		return ConsReader(readerStack, initialCharacter, parentNode)
 	else:
-		print("--->creating symbol")
 		return SymbolReader(readerStack, initialCharacter, parentNode)
 
 class RootReader():
@@ -79,7 +77,6 @@ class SymbolReader():
 	def __init__(self, readerStack, initialCharacter, parentNode = None):
 		readerStack.append(self)
 		self.value = Node("symbol_" + initialCharacter, parentNode)
-		print("symbol parent = " + parentNode.getName())
 		self.done = False
 	def getValue(self):
 		return self.value
@@ -139,7 +136,6 @@ class ConsReader():
 		readerStack.append(self)
 		self.stage = "waitingForCar"
 		self.value = Node("cons", parentNode)
-		print("consparent = " + parentNode.getName())
 		self.done = False
 	def getValue(self):
 		return self.value
@@ -170,7 +166,6 @@ class ConsReader():
 	def beginReadingNextListElement(self, readerStack, characters):
 		self.done = True
 		readerStack.pop()
-		print("--->creating cons")
 		readNextListElement = ConsReader(readerStack, "(", self.value)
 		self.value.addChild(readNextListElement.getValue())
 		assert(self.value.getNumChildren() == 2)
@@ -367,18 +362,11 @@ test_readExpressions = {
 runTests(test_readExpressions)
 
 def sendToReaderStack(readerStack, nextCharacter):
-
 	characterToProcess = nextCharacter
 	while characterToProcess:
-		print("before " + readerStack[-1].getValue().getName() + " nc = " + characterToProcess + " stack size = " + str(len(readerStack)))
 		characterToProcess = readerStack[-1].readNextCharacter(readerStack, nextCharacter)
-		if characterToProcess:
-			print("after nc = " + characterToProcess + " stack size = " + str(len(readerStack)))
-		else:
-			print("after nc = <none> stack size = " + str(len(readerStack)))
 		if len(readerStack) == 0:
 			assert(characterToProcess == nextCharacter)
-			print("result")
 			return characterToProcess
 def lisp():
 	input = open("test1.cl", "r")
@@ -391,9 +379,7 @@ def lisp():
 		characterToProcess = sendToReaderStack(readerStack, nextCharacter)
 		if characterToProcess:
 			assert(characterToProcess == nextCharacter)
-			print(root.getNumChildren())
 			print(treeToString(root))
 		else:
 			nextCharacter = input.read(1)
-print("##############")
 lisp()
