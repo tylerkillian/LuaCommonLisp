@@ -343,6 +343,14 @@ runTests(test_readExpressions)
 def sendToReaderStack(readerStack, nextCharacter):
 	if len(readerStack) == 0:
 		readerStack.append(RootReader())
+	root = readerStack[0].getValue()
+
+	characterToProcess = nextCharacter
+	while characterToProcess:
+		characterToProcess = readerStack[-1].readNextCharacter(readerStack, nextCharacter)
+		if len(readerStack) == 0:
+			assert(characterToProcess == nextCharacter)
+			return root
 def lisp():
 	input = open("test1.cl", "r")
 	readerStack = []
