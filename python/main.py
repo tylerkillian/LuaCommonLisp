@@ -363,15 +363,13 @@ test_readExpressions = {
 runTests(test_readExpressions)
 
 def sendToReaderStack(readerStack, nextCharacter):
-	print(nextCharacter)
 	if len(readerStack) == 0:
-		print("yo")
 		RootReader(readerStack)
+	print("nc = " + nextCharacter + " stack size = " + str(len(readerStack)))
 	root = readerStack[0].getValue()
 
 	characterToProcess = nextCharacter
 	while characterToProcess:
-		print(characterToProcess)
 		characterToProcess = readerStack[-1].readNextCharacter(readerStack, nextCharacter)
 		if len(readerStack) == 0:
 			assert(characterToProcess == nextCharacter)
