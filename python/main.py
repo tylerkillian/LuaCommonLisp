@@ -373,7 +373,7 @@ def sendToReaderStack(readerStack, nextCharacter):
 	characterToProcess = nextCharacter
 	while characterToProcess:
 		characterToProcess = readerStack[-1].readNextCharacter(readerStack, nextCharacter)
-		if len(readerStack) == 0:
+		if len(readerStack) == 1:
 			assert(characterToProcess == nextCharacter)
 			return root
 def lisp():
