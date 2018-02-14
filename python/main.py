@@ -78,6 +78,7 @@ class SymbolReader():
 	def __init__(self, readerStack, initialCharacter, parentNode = None):
 		readerStack.append(self)
 		self.value = Node("symbol_" + initialCharacter, parentNode)
+		print("symbol parent = " + parentNode.getName())
 		self.done = False
 	def getValue(self):
 		return self.value
@@ -137,6 +138,7 @@ class ConsReader():
 		readerStack.append(self)
 		self.stage = "waitingForCar"
 		self.value = Node("cons", parentNode)
+		print("consparent = " + parentNode.getName())
 		self.done = False
 	def getValue(self):
 		return self.value
