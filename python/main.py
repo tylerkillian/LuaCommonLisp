@@ -366,9 +366,6 @@ test_readExpressions = {
 runTests(test_readExpressions)
 
 def sendToReaderStack(readerStack, nextCharacter):
-	if len(readerStack) == 0:
-		RootReader(readerStack)
-	root = readerStack[0].getValue()
 
 	characterToProcess = nextCharacter
 	while characterToProcess:
@@ -380,15 +377,20 @@ def sendToReaderStack(readerStack, nextCharacter):
 			print("after nc = <none> stack size = " + str(len(readerStack)))
 		if len(readerStack) == 0:
 			assert(characterToProcess == nextCharacter)
-			return root
+			print("result")
+			return characterToProcess
 def lisp():
 	input = open("test1.cl", "r")
 	readerStack = []
+	RootReader(readerStack)
+	root = readerStack[0].getValue()
 	nextCharacter = input.read(1)
 	while nextCharacter:
-		expression = sendToReaderStack(readerStack, nextCharacter)
-		if expression:
-			print(treeToString(expression))
+		characterToProcess = sendToReaderStack(readerStack, nextCharacter)
+		if characterToProcess:
+			assert(characterToProcess == nextCharacter)
+			print(root.getNumChildren())
+			print(treeToString(root))
 		else:
 			nextCharacter = input.read(1)
 print("##############")
