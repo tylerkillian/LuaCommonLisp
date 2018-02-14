@@ -367,13 +367,13 @@ runTests(test_readExpressions)
 def sendToReaderStack(readerStack, nextCharacter):
 	if len(readerStack) == 0:
 		RootReader(readerStack)
-	print("nc = " + nextCharacter + " stack size = " + str(len(readerStack)))
 	root = readerStack[0].getValue()
 
 	characterToProcess = nextCharacter
 	while characterToProcess:
+	print("nc = " + nextCharacter + " stack size = " + str(len(readerStack)))
 		characterToProcess = readerStack[-1].readNextCharacter(readerStack, nextCharacter)
-		if len(readerStack) == 1:
+		if len(readerStack) == 0:
 			assert(characterToProcess == nextCharacter)
 			return root
 def lisp():
