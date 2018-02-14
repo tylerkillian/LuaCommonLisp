@@ -72,8 +72,6 @@ class RootReader():
 			readerStack.pop()
 			newReader(readerStack, nextCharacter, self.value)
 			return
-		else:
-			return nextCharacter
 
 
 class SymbolReader():
