@@ -68,7 +68,7 @@ class RootReader():
 		if nextCharacter == "(":
 			self.done = True
 			readerStack.pop()
-			newReader(readerStack, nextCharacter)
+			newReader(readerStack, nextCharacter, self.value)
 			return
 		else:
 			return nextCharacter
