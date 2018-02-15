@@ -116,6 +116,7 @@ class StringReader():
 			readerStack.pop()
 			return nextCharacter
 		elif nextCharacter == "\"":
+			self.value.setName(self.value.getName() + nextCharacter)
 			self.mode = "waitingForTerminalCharacter"
 			return
 		else:
