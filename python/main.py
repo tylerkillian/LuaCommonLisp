@@ -49,6 +49,8 @@ runTests(test_Node)
 def newReader(readerStack, initialCharacter, parentNode):
 	if initialCharacter == "(":
 		return ConsReader(readerStack, initialCharacter, parentNode)
+	elif initialCharacter == "\"":
+		return StringReader(readerStack, initialCharacter, parentNode)
 	else:
 		return SymbolReader(readerStack, initialCharacter, parentNode)
 
