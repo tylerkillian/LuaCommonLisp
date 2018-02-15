@@ -247,7 +247,7 @@ def treeToString(node, addParenthesis = True):
 	elif node.getName()[0:7] == "symbol_":
 		return node.getName()[0:]
 	elif node.getName()[0:7] == "string_":
-		return "\"" + node.getName()[0:] + "\""
+		return node.getName()[0:]
 def test_ConsReader_emptyList():
 	root = Node("root")
 	readerStack = []
