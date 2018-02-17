@@ -88,7 +88,7 @@ class SymbolReader():
 		assert(not self.done)
 		assert(readerStack[-1] == self)
 
-		if nextCharacter == " " or nextCharacter == ")":
+		if nextCharacter == " " or nextCharacter == ")" or nextCharacter == "\n":
 			self.done = True
 			readerStack.pop()
 			return nextCharacter
