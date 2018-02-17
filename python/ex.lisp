@@ -4,6 +4,6 @@
     do
       (format t ": ")
       (setf input (read-line))
-      (if input (format t "You entered: ~a~%" input))
+      (if (not (string= input "")) (format t "You entered: ~a~%" input))
   )
 )
