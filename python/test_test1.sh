@@ -1,15 +1,15 @@
 echo "test_test1"
 
+assertEquals() {
+	if [ "$1" != "$2" ]
+	then
+		callerInfo=`caller`
+		echo "ASSERT FAILED! [Line $callerInfo]"
+		exit 1
+	fi
+}
+
 referenceOutput=`clisp test1.lisp`
 testOutput=`python3 main.py test1.lisp`
-if [ "$testOutput" != "$referenceOutput" ]
-then
-	echo "referenceOutput:"
-	echo "$referenceOutput"
-
-	echo "testOutput:"
-	echo "$testOutput"
-
-	exit 1
-fi
+assertEquals "$testOutput" "$referenceOutput"
 
