@@ -9,10 +9,10 @@ assertEquals() {
 		echo "ASSERT FAILED! [Line $callerInfo]"
 		echo ""
 		echo "EXPECTED:"
-		echo "$referenceValue"
+		echo "[$referenceValue]"
 		echo ""
 		echo "GOT:"
-		echo "$testValue"
+		echo "[$testValue]"
 		exit 1
 	fi
 }
