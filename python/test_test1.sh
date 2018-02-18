@@ -1,21 +1,6 @@
-echo "test_test1"
+source test_utilities.sh
 
-assertEquals() {
-	testValue="$1"
-	referenceValue="$2"
-	if [ "$testValue" != "$referenceValue" ]
-	then
-		callerInfo=`caller`
-		echo "ASSERT FAILED! [Line $callerInfo]"
-		echo ""
-		echo "EXPECTED:"
-		echo "[$referenceValue]"
-		echo ""
-		echo "GOT:"
-		echo "[$testValue]"
-		exit 1
-	fi
-}
+echo "test_test1"
 
 referenceOutput=`clisp test_test1.lisp`
 testOutput=`python3 main.py test_test1.lisp`
