@@ -1,3 +1,5 @@
+import sys
+
 class Node():
 	def __init__(self, name, parent = None):
 		self.name = name
@@ -371,8 +373,8 @@ def sendToReaderStack(readerStack, nextCharacter):
 		if len(readerStack) == 0:
 			assert(characterToProcess == nextCharacter)
 			return characterToProcess
-def lisp():
-	input = open("test1.cl", "r")
+def lisp(inputFile):
+	input = open(inputFile, "r")
 	readerStack = []
 	nextCharacter = input.read(1)
 	while nextCharacter:
@@ -385,4 +387,4 @@ def lisp():
 			print(treeToString(root))
 		else:
 			nextCharacter = input.read(1)
-lisp()
+lisp(sys.argv[1])
