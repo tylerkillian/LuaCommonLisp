@@ -8,6 +8,13 @@ def sendToReaderStack(readerStack, nextCharacter):
 		if len(readerStack) == 0:
 			assert(characterToProcess == nextCharacter)
 			return characterToProcess
+
+def eval(expression):
+	if expression.getChild(0).getChild(0).getName()[7:] == "format":
+		message = expression.getChild(0).getChild(1).getChild(1).getChild(0).getName()[8:-1]
+	else:
+		assert(False)
+
 def lisp(inputFile):
 	input = open(inputFile, "r")
 	readerStack = []
@@ -19,7 +26,7 @@ def lisp(inputFile):
 		characterToProcess = sendToReaderStack(readerStack, nextCharacter)
 		if characterToProcess:
 			assert(characterToProcess == nextCharacter)
-			print(treeToString(root))
+			eval(root)
 		else:
 			nextCharacter = input.read(1)
 lisp(sys.argv[1])
