@@ -12,6 +12,7 @@ def sendToReaderStack(readerStack, nextCharacter):
 def eval(expression):
 	if expression.getChild(0).getChild(0).getName()[7:] == "format":
 		message = expression.getChild(0).getChild(1).getChild(1).getChild(0).getName()[8:-1]
+		print(message.replace("~%", "\n"))
 	else:
 		assert(False)
 
