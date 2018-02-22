@@ -18,6 +18,7 @@ def eval(expression, environment):
 			print(variableToLookup)
 			value = environment[variableToLookup]
 			print(value)
+			message = message.replace("~a", value)
 		#message = message.replace(
 		print(message)
 	elif expression.getChild(0).getChild(0).getName()[7:] == "setf":
