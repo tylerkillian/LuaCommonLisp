@@ -22,7 +22,7 @@ def eval(expression, environment):
 		variable = expression.getChild(0).getChild(1).getChild(0).getName()[7:]
 		value = expression.getChild(0).getChild(1).getChild(1).getChild(0).getName()[7:]
 		environment[variable] = value
-	if expression.getChild(0).getChild(0).getName()[7:] == "let":
+	elif expression.getChild(0).getChild(0).getName()[7:] == "let":
 	else:
 		assert(False)
 
