@@ -15,11 +15,8 @@ def eval(expression, environment):
 		message = message.replace("~%", "\n")
 		if expression.getChild(0).getChild(1).getChild(1).getChild(1).getName() == "cons":
 			variableToLookup = expression.getChild(0).getChild(1).getChild(1).getChild(1).getChild(0).getName()[7:]
-			print(variableToLookup)
 			value = environment[variableToLookup]
-			print(value)
 			message = message.replace("~a", value)
-		#message = message.replace(
 		print(message)
 	elif expression.getChild(0).getChild(0).getName()[7:] == "setf":
 		variable = expression.getChild(0).getChild(1).getChild(0).getName()[7:]
