@@ -12,7 +12,12 @@ def sendToReaderStack(readerStack, nextCharacter):
 def eval(expression, environment):
 	if expression.getChild(0).getChild(0).getName()[7:] == "format":
 		message = expression.getChild(0).getChild(1).getChild(1).getChild(0).getName()[8:-1]
-		print(message.replace("~%", "\n"))
+		message = message.replace("~%", "\n")
+		if expression.getChild(0).getChild(1).getChild(1).getChild(1).getName() == "cons":
+			variableToLookup = expression.getChild(0).getChild(1).getChild(1).getChild(1).getChild(0).getName()
+			print(variableToLookup)
+		#message = message.replace(
+		print(message)
 	elif expression.getChild(0).getChild(0).getName()[7:] == "setf":
 		variable = expression.getChild(0).getChild(1).getChild(0).getName()[7:]
 		value = expression.getChild(0).getChild(1).getChild(1).getChild(0).getName()[7:]
