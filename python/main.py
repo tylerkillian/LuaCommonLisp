@@ -23,7 +23,7 @@ def eval(expression, environment):
 			variableToLookup = expression.getChild(0).getChild(1).getChild(1).getChild(1).getChild(0).getName()[7:]
 			value = environment[variableToLookup]
 			message = message.replace("~a", value)
-		print(message)
+		sys.stdout.write(message)
 	elif expression.getChild(0).getChild(0).getName()[7:] == "setf":
 		variable = expression.getChild(0).getChild(1).getChild(0).getName()[7:]
 		value = expression.getChild(0).getChild(1).getChild(1).getChild(0).getName()[7:]
