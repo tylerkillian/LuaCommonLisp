@@ -32,6 +32,7 @@ def eval(expression, environment):
 		variableToSet = expression.getChild(0).getChild(1).getChild(0).getChild(0).getChild(0).getName()[7:]
 		value = expression.getChild(0).getChild(1).getChild(0).getChild(0).getChild(1).getChild(0).getName()[7:]
 		root = Node("root")
+		root.addChild(expression.getChild(0).getChild(1).getChild(1).getChild(0))
 		pass
 	else:
 		assert(False)
