@@ -1,8 +1,8 @@
 source test_utilities.sh
 
-echo "test_test1"
+echo "test_let"
 
-referenceOutput=`clisp test_test1.lisp`
-testOutput=`python3 main.py test_test1.lisp`
+referenceOutput=`clisp test_let.lisp`
+testOutput=`python3 main.py test_let.lisp`
 assertEquals "$testOutput" "$referenceOutput"
 
