@@ -21,19 +21,21 @@ def eval(expression, environment):
 		message = message.replace("~%", "\n")
 		if expression.getChild(0).getChild(1).getChild(1).getChild(1).getName() == "cons":
 			variableToLookup = expression.getChild(0).getChild(1).getChild(1).getChild(1).getChild(0).getName()[7:]
-			value = environment[0][variableToLookup]
+			value = environment[variableToLookup]
 			message = message.replace("~a", value)
 		print(message)
 	elif expression.getChild(0).getChild(0).getName()[7:] == "setf":
 		variable = expression.getChild(0).getChild(1).getChild(0).getName()[7:]
 		value = expression.getChild(0).getChild(1).getChild(1).getChild(0).getName()[7:]
-		environment[0][variable] = value
+		environment[variable] = value
 	elif expression.getChild(0).getChild(0).getName()[7:] == "let":
 		variableToSet = expression.getChild(0).getChild(1).getChild(0).getChild(0).getChild(0).getName()[7:]
 		value = expression.getChild(0).getChild(1).getChild(0).getChild(0).getChild(1).getChild(0).getName()[7:]
+		environment = {}
+		environment[variableToSet] = value
 		root = Node("root")
 		root.addChild(expression.getChild(0).getChild(1).getChild(1).getChild(0))
-		pass
+		eval(root, environment)
 	else:
 		assert(False)
 
