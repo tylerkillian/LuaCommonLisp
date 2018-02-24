@@ -1,4 +1,4 @@
-from reader import *
+from Node import *
 from test_utilities import *
 
 def test_Node_constructNoParent():
