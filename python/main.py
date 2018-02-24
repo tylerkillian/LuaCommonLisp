@@ -43,7 +43,7 @@ def lisp(inputFile):
 	input = open(inputFile, "r")
 	readerStack = []
 	nextCharacter = input.read(1)
-	environment = [{}]
+	environment = {}
 	while nextCharacter:
 		if len(readerStack) == 0:
 			RootReader(readerStack)
