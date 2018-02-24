@@ -29,6 +29,9 @@ def eval(expression, environment):
 		value = expression.getChild(0).getChild(1).getChild(1).getChild(0).getName()[7:]
 		environment[0][variable] = value
 	elif expression.getChild(0).getChild(0).getName()[7:] == "let":
+		variableToSet = expression.getChild(0).getChild(1).getChild(0).getChild(0).getChild(0).getName()[7:]
+		value = expression.getChild(0).getChild(1).getChild(0).getChild(0).getChild(1).getChild(0).getName()[7:]
+		root = Node("root")
 		pass
 	else:
 		assert(False)
