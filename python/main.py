@@ -36,7 +36,9 @@ def createParseTree(expression, parent = None):
 			return topCons
 
 def eval(expression, environment):
-	if expression.getChild(0).getName() == "symbol_5":
+	if expression.getChild(0).getName() == "symbol_1":
+		return expression
+	elif expression.getChild(0).getName() == "symbol_5":
 		return expression
 	elif expression.getChild(0).getName()[0:6] == "symbol":
 		return environment[expression.getChild(0).getName()[7:]]
@@ -58,6 +60,10 @@ def eval(expression, environment):
 		variable = expression.getChild(0).getChild(1).getChild(0).getName()[7:]
 		value = expression.getChild(0).getChild(1).getChild(1).getChild(0).getName()[7:]
 		environment[variable] = value
+	elif expression.getChild(0).getChild(0).getName()[7:] == "+":
+		left = eval(expression.getChild(0).getChild(1).getChild(0))
+		right = eval(expression.getChild(0).getChild(1).getChild(1).getChild(0))
+		return left + right
 	elif expression.getChild(0).getChild(0).getName()[7:] == "let":
 		variableToSet = expression.getChild(0).getChild(1).getChild(0).getChild(0).getChild(0).getName()[7:]
 		value = expression.getChild(0).getChild(1).getChild(0).getChild(0).getChild(1).getChild(0).getName()[7:]
