@@ -18,7 +18,7 @@ def getValue(environment, value):
 def createParseTree(expression, parent = None):
 	if not parent:
 		root = Node("root")	
-		root.addChild(createParseTree(expression, root)
+		root.addChild(createParseTree(expression, root))
 		return root
 	else:
 		if type(expression) is str:
