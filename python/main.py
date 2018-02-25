@@ -69,8 +69,8 @@ def eval(expression, environment):
 		argument = expression.getChild(0).getChild(1).getChild(1).getChild(0).getChild(0)
 		body = expression.getChild(0).getChild(1).getChild(1).getChild(1)
 		environment[functionName] = {
-			argument : argument,
-			body : body,
+			"argument" : argument,
+			"body" : body,
 		}
 	else:
 		functionName = Node("root")
