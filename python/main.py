@@ -104,8 +104,7 @@ def eval(expression, environment):
 		print(functionName.getChild(0).getName())
 		functionCallArgument.addChild(expression.getChild(0).getChild(1).getChild(0))
 		print("evaluating " + expression.getChild(0).getChild(1).getChild(0).getName())
-		functionCallArgumentEvaluated = Node("root")
-		functionCallArgumentEvaluated.addChild(Node("symbol_" + eval(functionCallArgument, environment)))
+		functionCallArgumentEvaluated = Node("symbol_" + eval(functionCallArgument, environment))
 		print("after evaluating")
 
 		cons3 = functionCode['body']
