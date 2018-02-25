@@ -37,26 +37,19 @@ def createParseTree(expression, parent = None):
 
 def eval(expression, environment):
 	if expression.getChild(0).getName() == "symbol_1":
-		print("got 1")
 		return "1"
 	elif expression.getChild(0).getName() == "symbol_5":
-		print("got 5")
 		return "5"
 	elif expression.getChild(0).getName()[0:6] == "symbol":
-		print("trying to find value for " + expression.getChild(0).getName())
 		return environment[expression.getChild(0).getName()[7:]]
 	elif expression.getChild(0).getChild(0).getName()[7:] == "format":
 		message = expression.getChild(0).getChild(1).getChild(1).getChild(0).getName()[8:-1]
 		message = message.replace("~%", "\n")
-		print("a1")
 		if expression.getChild(0).getChild(1).getChild(1).getChild(1).getName() == "cons":
-			print("a2")
 			variableToLookup = Node("root")
 			variableToLookup.addChild(expression.getChild(0).getChild(1).getChild(1).getChild(1).getChild(0))
 			value = eval(variableToLookup, environment)
-			print(value)
 			message = message.replace("~a", value)
-			print("a3")
 		sys.stdout.write(message)
 		return "nil"
 	elif expression.getChild(0).getChild(0).getName()[7:] == "setf":
@@ -64,23 +57,17 @@ def eval(expression, environment):
 		value = expression.getChild(0).getChild(1).getChild(1).getChild(0).getName()[7:]
 		environment[variable] = value
 	elif expression.getChild(0).getChild(0).getName()[7:] == "+":
-		print(expression.getChild(0).getChild(1).getChild(0).getName())
-		print(expression.getChild(0).getChild(1).getChild(1).getChild(0).getName())
 		left = Node("root")
 		left.addChild(expression.getChild(0).getChild(1).getChild(0))
-		print("looking up " + expression.getChild(0).getChild(1).getChild(0).getName())
 		leftValue = eval(left, environment)
-		print("leftValue = " + leftValue)
 
 		right = Node("root")
 		right.addChild(expression.getChild(0).getChild(1).getChild(1).getChild(0))
 		rightValue = eval(right, environment)
-		print("rightValue = " + rightValue)
 		return str(int(leftValue) + int(rightValue))
 	elif expression.getChild(0).getChild(0).getName()[7:] == "let":
 		variableToSet = expression.getChild(0).getChild(1).getChild(0).getChild(0).getChild(0).getName()[7:]
 		value = expression.getChild(0).getChild(1).getChild(0).getChild(0).getChild(1).getChild(0).getName()[7:]
-		print("going to set " + variableToSet + " to " + value)
 		environment = {}
 		environment[variableToSet] = value
 		root = Node("root")
@@ -95,17 +82,13 @@ def eval(expression, environment):
 			"body" : body,
 		}
 	else:
-		print("else statement")
 		functionName = Node("root")
 		functionName.addChild(expression.getChild(0).getChild(0))
 		functionCode = eval(functionName, environment)
 
 		functionCallArgument = Node("root")
-		print(functionName.getChild(0).getName())
 		functionCallArgument.addChild(expression.getChild(0).getChild(1).getChild(0))
-		print("evaluating " + expression.getChild(0).getChild(1).getChild(0).getName())
 		functionCallArgumentEvaluated = Node("symbol_" + eval(functionCallArgument, environment))
-		print("after evaluating")
 
 		cons3 = functionCode['body']
 
@@ -132,7 +115,6 @@ def eval(expression, environment):
 		letExpression = Node("root")
 		letExpression.addChild(cons1)
 
-		print(treeToString(letExpression))
 		return eval(letExpression, environment)
 
 def lisp(inputFile):
