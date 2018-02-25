@@ -61,8 +61,8 @@ def eval(expression, environment):
 		value = expression.getChild(0).getChild(1).getChild(1).getChild(0).getName()[7:]
 		environment[variable] = value
 	elif expression.getChild(0).getChild(0).getName()[7:] == "+":
-		left = eval(expression.getChild(0).getChild(1).getChild(0))
-		right = eval(expression.getChild(0).getChild(1).getChild(1).getChild(0))
+		left = eval(expression.getChild(0).getChild(1).getChild(0), environment)
+		right = eval(expression.getChild(0).getChild(1).getChild(1).getChild(0), environment), 
 		return left + right
 	elif expression.getChild(0).getChild(0).getName()[7:] == "let":
 		variableToSet = expression.getChild(0).getChild(1).getChild(0).getChild(0).getChild(0).getName()[7:]
