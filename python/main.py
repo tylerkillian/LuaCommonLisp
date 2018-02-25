@@ -52,6 +52,7 @@ def eval(expression, environment):
 			message = message.replace("~a", value)
 			print("a3")
 		sys.stdout.write(message)
+		return Node("symbol_nil")
 	elif expression.getChild(0).getChild(0).getName()[7:] == "setf":
 		variable = expression.getChild(0).getChild(1).getChild(0).getName()[7:]
 		value = expression.getChild(0).getChild(1).getChild(1).getChild(0).getName()[7:]
@@ -111,7 +112,7 @@ def eval(expression, environment):
 		letExpression.addChild(cons1)
 
 		print(treeToString(letExpression))
-		eval(letExpression, environment)
+		return eval(letExpression, environment)
 
 def lisp(inputFile):
 	input = open(inputFile, "r")
