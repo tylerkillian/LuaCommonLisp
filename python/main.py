@@ -17,7 +17,10 @@ def getValue(environment, value):
 
 def eval(expression, environment, getValue = False):
 	if getValue:
-		return environment[expression]
+		if environment[expression]:
+			return environment[expression]
+		else:
+			return
 	elif expression.getChild(0).getChild(0).getName()[7:] == "format":
 		message = expression.getChild(0).getChild(1).getChild(1).getChild(0).getName()[8:-1]
 		message = message.replace("~%", "\n")
