@@ -17,7 +17,7 @@ def getValue(environment, value):
 
 def eval(expression, environment):
 	if expression.getChild(0).getName()[0:6] == "symbol":
-		return environment[expression.getChild(0)[7:0]]
+		return environment[expression.getChild(0).getName()[7:]]
 	elif expression.getChild(0).getChild(0).getName()[7:] == "format":
 		message = expression.getChild(0).getChild(1).getChild(1).getChild(0).getName()[8:-1]
 		message = message.replace("~%", "\n")
@@ -53,7 +53,8 @@ def eval(expression, environment):
 			body : body,
 		}
 	else:
-		functionName = expression.getChild(0).getChild(0).getName()[7:]
+		functionName = Node("root")
+		functionName.addChild(expression.getChild(0).getChild(0))
 		functionCode = eval(functionName, environment)
 		assert(False)
 
