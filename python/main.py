@@ -80,6 +80,7 @@ def eval(expression, environment):
 	elif expression.getChild(0).getChild(0).getName()[7:] == "let":
 		variableToSet = expression.getChild(0).getChild(1).getChild(0).getChild(0).getChild(0).getName()[7:]
 		value = expression.getChild(0).getChild(1).getChild(0).getChild(0).getChild(1).getChild(0).getName()[7:]
+		print("going to set " + variableToSet + " to " + value)
 		environment = {}
 		environment[variableToSet] = value
 		root = Node("root")
