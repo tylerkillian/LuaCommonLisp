@@ -73,6 +73,7 @@ def eval(expression, environment):
 			"body" : body,
 		}
 	else:
+		print("else statement")
 		functionName = Node("root")
 		functionName.addChild(expression.getChild(0).getChild(0))
 		functionCode = eval(functionName, environment)
