@@ -2,5 +2,5 @@
 	(+ n 1)
 )
 
-(format t "addone(5) = ~a~%" (addone 5))
+(format t "addone(2) = ~a~%" (addone 2))
 

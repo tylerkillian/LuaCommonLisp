@@ -38,6 +38,12 @@ def createParseTree(expression, parent = None):
 def eval(expression, environment):
 	if expression.getChild(0).getName() == "symbol_1":
 		return "1"
+	if expression.getChild(0).getName() == "symbol_2":
+		return "2"
+	if expression.getChild(0).getName() == "symbol_3":
+		return "3"
+	if expression.getChild(0).getName() == "symbol_4":
+		return "4"
 	elif expression.getChild(0).getName() == "symbol_5":
 		return "5"
 	elif expression.getChild(0).getName()[0:6] == "symbol":
