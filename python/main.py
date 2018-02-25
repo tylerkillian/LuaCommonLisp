@@ -15,15 +15,15 @@ def getValue(environment, value):
 			return scope[value]
 	return None
 
-def eval(expression, environment):
-	if environment[expression]:
+def eval(expression, environment, getValue = False):
+	if getValue:
 		return environment[expression]
 	elif expression.getChild(0).getChild(0).getName()[7:] == "format":
 		message = expression.getChild(0).getChild(1).getChild(1).getChild(0).getName()[8:-1]
 		message = message.replace("~%", "\n")
 		if expression.getChild(0).getChild(1).getChild(1).getChild(1).getName() == "cons":
 			variableToLookup = expression.getChild(0).getChild(1).getChild(1).getChild(1).getChild(0).getName()[7:]
-			value = eval(variableToLookup, environment)
+			value = eval(variableToLookup, environment, True)
 			message = message.replace("~a", value)
 		sys.stdout.write(message)
 	elif expression.getChild(0).getChild(0).getName()[7:] == "setf":
