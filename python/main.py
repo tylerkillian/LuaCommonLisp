@@ -66,8 +66,7 @@ def eval(expression, environment):
 		functionName = expression.getChild(0).getChild(1).getChild(0).getName()[7:]
 		argument = expression.getChild(0).getChild(1).getChild(1).getChild(0).getChild(0).getName()[7:]
 		print("got defun " + functionName + " " + argument)
-		body = Node("root")
-		body.addChild(expression.getChild(0).getChild(1).getChild(1).getChild(1))
+		body = expression.getChild(0).getChild(1).getChild(1).getChild(1)
 		environment[functionName] = {
 			argument : argument,
 			body : body,
