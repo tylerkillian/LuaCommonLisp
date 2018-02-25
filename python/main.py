@@ -24,10 +24,13 @@ def createParseTree(expression, parent = None):
 		if type(expression) is str:
 			return Node("symbol_" + expression, parent)
 		else:
-			topNode = Node("cons", parent)
-			nextNode = topNode
-			for value in reverse(expression):
-				nextNode.addChild(createParseTree(value, nextNode))
+			previousValue = Node("symbol_nil")
+			currentCons = Node("cons")
+
+			for value in reversed(expression):
+				currentCons.addChild(createParseTree(value, currentCons))
+				currentCons.addChild(previousValue)
+				previousValue = currentCons
 
 def eval(expression, environment):
 	if expression.getChild(0).getName()[0:6] == "symbol":

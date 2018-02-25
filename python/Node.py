@@ -9,6 +9,8 @@ class Node():
 		self.name = name
 	def getParent(self):
 		return self.parent
+	def setParent(self, parent):
+		self.parent = parent
 	def getNumChildren(self):
 		return len(self.children)
 	def addChild(self, child):
