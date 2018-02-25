@@ -81,7 +81,6 @@ def eval(expression, environment):
 		functionCallArgument.addChild(expression.getChild(0).getChild(1).getChild(0))
 		functionCallArgumentEvaluated = eval(functionCallArgument, environment)
 
-
 		cons3 = Node("cons")
 		cons3.addChild(functionCode['body'])
 		cons3.addChild(Node("symbol_nil"))
