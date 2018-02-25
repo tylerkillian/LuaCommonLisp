@@ -37,9 +37,11 @@ def createParseTree(expression, parent = None):
 
 def eval(expression, environment):
 	if expression.getChild(0).getName() == "symbol_1":
-		return expression
+		print("got 1")
+		return "1"
 	elif expression.getChild(0).getName() == "symbol_5":
-		return expression
+		print("got 5")
+		return "5"
 	elif expression.getChild(0).getName()[0:6] == "symbol":
 		return environment[expression.getChild(0).getName()[7:]]
 	elif expression.getChild(0).getChild(0).getName()[7:] == "format":
@@ -61,9 +63,16 @@ def eval(expression, environment):
 		value = expression.getChild(0).getChild(1).getChild(1).getChild(0).getName()[7:]
 		environment[variable] = value
 	elif expression.getChild(0).getChild(0).getName()[7:] == "+":
-		left = eval(expression.getChild(0).getChild(1).getChild(0), environment)
-		right = eval(expression.getChild(0).getChild(1).getChild(1).getChild(0), environment), 
-		return left + right
+		print(expression.getChild(0).getChild(1).getChild(0).getName())
+		print(expression.getChild(0).getChild(1).getChild(1).getChild(0).getName())
+		left = Node("root")
+		left.addChild(expression.getChild(0).getChild(1).getChild(0))
+		leftValue = eval(left, environment)
+
+		right = Node("root")
+		right.addChild(expression.getChild(0).getChild(1).getChild(1).getChild(0))
+		rightValue = eval(right, environment)
+		return leftValue.getChild(0).getName() + rightValue.getChild(0).getName()
 	elif expression.getChild(0).getChild(0).getName()[7:] == "let":
 		variableToSet = expression.getChild(0).getChild(1).getChild(0).getChild(0).getChild(0).getName()[7:]
 		value = expression.getChild(0).getChild(1).getChild(0).getChild(0).getChild(1).getChild(0).getName()[7:]
@@ -90,7 +99,8 @@ def eval(expression, environment):
 		print(functionName.getChild(0).getName())
 		functionCallArgument.addChild(expression.getChild(0).getChild(1).getChild(0))
 		print("evaluating " + expression.getChild(0).getChild(1).getChild(0).getName())
-		functionCallArgumentEvaluated = eval(functionCallArgument, environment)
+		functionCallArgumentEvaluated = Node("root")
+		functionCallArgumentEvaluated.addChild(Node("symbol_" + eval(functionCallArgument, environment)))
 		print("after evaluating")
 
 		cons3 = functionCode['body']
