@@ -17,9 +17,9 @@ def getValue(environment, value):
 
 def eval(expression, environment, getValue = False):
 	print("above")
-	print(expression)
+	print(expression.getChild().getName())
 	print("below")
-	if expression.getChild(0)[0:6] == "symbol":
+	if expression.getChild(0).getName()[0:6] == "symbol":
 		return environment[expression.getChild(0)[7:0]]
 	elif expression.getChild(0).getChild(0).getName()[7:] == "format":
 		message = expression.getChild(0).getChild(1).getChild(1).getChild(0).getName()[8:-1]
