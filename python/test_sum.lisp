@@ -1,5 +1,5 @@
 (defun addone (n)
-	(+ n 1)
+	(+ 1 n)
 )
 
 (format t "addone(2) = ~a~%" (addone 2))
