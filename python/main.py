@@ -16,6 +16,9 @@ def getValue(environment, value):
 	return None
 
 def eval(expression, environment, getValue = False):
+	print("above")
+	print(expression)
+	print("below")
 	if expression in environment:
 		return environment[expression]
 	elif expression.getChild(0).getChild(0).getName()[7:] == "format":
