@@ -77,6 +77,7 @@ def eval(expression, environment):
 		functionName.addChild(expression.getChild(0).getChild(0))
 		functionCode = eval(functionName, environment)
 		letClause = createParseTree(["let", [["n" "5"]], ["sum", "n"]])
+		eval(letClause, environment)
 		assert(False)
 
 def lisp(inputFile):
