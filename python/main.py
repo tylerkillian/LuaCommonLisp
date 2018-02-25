@@ -53,6 +53,8 @@ def eval(expression, environment):
 			body : body,
 		}
 	else:
+		functionName = expression.getChild(0).getChild(0).getName()[7:]
+		functionCode = eval(functionName, environment)
 		assert(False)
 
 def lisp(inputFile):
