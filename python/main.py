@@ -36,7 +36,9 @@ def createParseTree(expression, parent = None):
 			return topCons
 
 def eval(expression, environment):
-	if expression.getChild(0).getName()[0:6] == "symbol":
+	if expression.getChild(0).getName()[0:6] == "symbol_5":
+		return expression
+	elif expression.getChild(0).getName()[0:6] == "symbol":
 		return environment[expression.getChild(0).getName()[7:]]
 	elif expression.getChild(0).getChild(0).getName()[7:] == "format":
 		message = expression.getChild(0).getChild(1).getChild(1).getChild(0).getName()[8:-1]
@@ -75,7 +77,11 @@ def eval(expression, environment):
 		functionName = Node("root")
 		functionName.addChild(expression.getChild(0).getChild(0))
 		functionCode = eval(functionName, environment)
-		functionCode['argument']
+
+		functionCallArgument = Node("root")
+		functionCallArgument.addChild(expression.getChild(0).getChild(1).getChild(0))
+		functionCallArgumentEvaluated = eval(functionCallArgument, environment)
+
 
 		cons3 = Node("cons")
 		cons3.addChild(functionCode['body'])
@@ -83,10 +89,17 @@ def eval(expression, environment):
 
 
 		cons2 = Node("cons")
-		cons2.addChild(argumentsExpression
+		cons2.addChild(argumentsExpression)
+		cons2.addChild(cons3)
+
+		cons1 = Node("cons")
+		cons1.addChild(Node("symbol_let"))
+		cons1.addChild(cons2)
+
 		letExpression = Node("root")
-		letClause.addChild(Node("cons"))
-		eval(letClause, environment)
+		letExpression.addChild(cons1)
+
+		eval(letExpression, environment)
 		assert(False)
 
 def lisp(inputFile):
