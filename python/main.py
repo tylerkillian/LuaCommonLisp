@@ -43,6 +43,7 @@ def eval(expression, environment):
 		print("got 5")
 		return "5"
 	elif expression.getChild(0).getName()[0:6] == "symbol":
+		print("trying to find value for " + expression.getChild(0).getName())
 		return environment[expression.getChild(0).getName()[7:]]
 	elif expression.getChild(0).getChild(0).getName()[7:] == "format":
 		message = expression.getChild(0).getChild(1).getChild(1).getChild(0).getName()[8:-1]
@@ -67,12 +68,15 @@ def eval(expression, environment):
 		print(expression.getChild(0).getChild(1).getChild(1).getChild(0).getName())
 		left = Node("root")
 		left.addChild(expression.getChild(0).getChild(1).getChild(0))
+		print("looking up " + expression.getChild(0).getChild(1).getChild(0).getName())
 		leftValue = eval(left, environment)
+		print("leftValue = " + leftValue)
 
 		right = Node("root")
 		right.addChild(expression.getChild(0).getChild(1).getChild(1).getChild(0))
 		rightValue = eval(right, environment)
-		return leftValue.getChild(0).getName() + rightValue.getChild(0).getName()
+		print("rightValue = " + rightValue)
+		return leftValue + rightValue
 	elif expression.getChild(0).getChild(0).getName()[7:] == "let":
 		variableToSet = expression.getChild(0).getChild(1).getChild(0).getChild(0).getChild(0).getName()[7:]
 		value = expression.getChild(0).getChild(1).getChild(0).getChild(0).getChild(1).getChild(0).getName()[7:]
