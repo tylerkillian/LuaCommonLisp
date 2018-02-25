@@ -16,9 +16,6 @@ def getValue(environment, value):
 	return None
 
 def eval(expression, environment, getValue = False):
-	print("above")
-	print(expression.getChild().getName())
-	print("below")
 	if expression.getChild(0).getName()[0:6] == "symbol":
 		return environment[expression.getChild(0)[7:0]]
 	elif expression.getChild(0).getChild(0).getName()[7:] == "format":
@@ -26,7 +23,7 @@ def eval(expression, environment, getValue = False):
 		message = message.replace("~%", "\n")
 		if expression.getChild(0).getChild(1).getChild(1).getChild(1).getName() == "cons":
 			variableToLookup = Node("root")
-			variableToLookup.addChild(expression.getChild(0).getChild(1).getChild(1).getChild(1).getChild(0).getName())
+			variableToLookup.addChild(expression.getChild(0).getChild(1).getChild(1).getChild(1).getChild(0))
 			value = eval(variableToLookup, environment)
 			message = message.replace("~a", value)
 		sys.stdout.write(message)
