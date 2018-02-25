@@ -1,5 +1,5 @@
 (defun sum (n)
-	(format t "yeah")
+	(+ n 1)
 )
 
 (format t "sum(5) = ~a~%" (sum 5))
