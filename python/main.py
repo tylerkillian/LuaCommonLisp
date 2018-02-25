@@ -76,7 +76,16 @@ def eval(expression, environment):
 		functionName.addChild(expression.getChild(0).getChild(0))
 		functionCode = eval(functionName, environment)
 		functionCode['argument']
-		letClause = createParseTree(["let", [["n" "5"]], ["sum", "n"]])
+
+		cons3 = Node("cons")
+		cons3.addChild(functionCode['body'])
+		cons3.addChild(Node("symbol_nil"))
+
+
+		cons2 = Node("cons")
+		cons2.addChild(argumentsExpression
+		letExpression = Node("root")
+		letClause.addChild(Node("cons"))
 		eval(letClause, environment)
 		assert(False)
 
