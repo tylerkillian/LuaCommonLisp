@@ -19,13 +19,14 @@ def eval(expression, environment, getValue = False):
 	print("above")
 	print(expression)
 	print("below")
-	if expression in environment:
-		return environment[expression]
+	if expression.getChild(0)[0:6] == "symbol":
+		return environment[expression.getChild(0)[7:0]]
 	elif expression.getChild(0).getChild(0).getName()[7:] == "format":
 		message = expression.getChild(0).getChild(1).getChild(1).getChild(0).getName()[8:-1]
 		message = message.replace("~%", "\n")
 		if expression.getChild(0).getChild(1).getChild(1).getChild(1).getName() == "cons":
-			variableToLookup = expression.getChild(0).getChild(1).getChild(1).getChild(1).getChild(0).getName()[7:]
+			variableToLookup = Node("root")
+			variableToLookup.addChild(expression.getChild(0).getChild(1).getChild(1).getChild(1).getChild(0).getName())
 			value = eval(variableToLookup, environment)
 			message = message.replace("~a", value)
 		sys.stdout.write(message)
