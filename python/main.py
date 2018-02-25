@@ -85,9 +85,7 @@ def eval(expression, environment):
 		functionCallArgumentEvaluated = eval(functionCallArgument, environment)
 		print("after evaluating")
 
-		cons3 = Node("cons")
-		cons3.addChild(functionCode['body'])
-		cons3.addChild(Node("symbol_nil"))
+		cons3 = functionCode['body']
 
 		ae_cons2 = Node("cons")
 		ae_cons2.addChild(functionCallArgumentEvaluated)
@@ -114,7 +112,6 @@ def eval(expression, environment):
 
 		print(treeToString(letExpression))
 		eval(letExpression, environment)
-		assert(False)
 
 def lisp(inputFile):
 	input = open(inputFile, "r")
