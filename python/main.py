@@ -78,6 +78,7 @@ def eval(expression, environment):
 		functionCode = eval(functionName, environment)
 
 		functionCallArgument = Node("root")
+		print(functionName.getChild(0).getName())
 		functionCallArgument.addChild(expression.getChild(0).getChild(1).getChild(0))
 		functionCallArgumentEvaluated = eval(functionCallArgument, environment)
 
