@@ -53,6 +53,7 @@ def eval(expression, environment):
 			message = message.replace("~a", value)
 			print("a3")
 		sys.stdout.write(message)
+		return "nil"
 	elif expression.getChild(0).getChild(0).getName()[7:] == "setf":
 		variable = expression.getChild(0).getChild(1).getChild(0).getName()[7:]
 		value = expression.getChild(0).getChild(1).getChild(1).getChild(0).getName()[7:]
@@ -64,7 +65,7 @@ def eval(expression, environment):
 		environment[variableToSet] = value
 		root = Node("root")
 		root.addChild(expression.getChild(0).getChild(1).getChild(1).getChild(0))
-		eval(root, environment)
+		return eval(root, environment)
 	elif expression.getChild(0).getChild(0).getName()[7:] == "defun":
 		functionName = expression.getChild(0).getChild(1).getChild(0).getName()[7:]
 		argument = expression.getChild(0).getChild(1).getChild(1).getChild(0).getChild(0)
