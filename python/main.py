@@ -76,7 +76,7 @@ def eval(expression, environment):
 		right.addChild(expression.getChild(0).getChild(1).getChild(1).getChild(0))
 		rightValue = eval(right, environment)
 		print("rightValue = " + rightValue)
-		return leftValue + rightValue
+		return str(int(leftValue) + int(rightValue))
 	elif expression.getChild(0).getChild(0).getName()[7:] == "let":
 		variableToSet = expression.getChild(0).getChild(1).getChild(0).getChild(0).getChild(0).getName()[7:]
 		value = expression.getChild(0).getChild(1).getChild(0).getChild(0).getChild(1).getChild(0).getName()[7:]
