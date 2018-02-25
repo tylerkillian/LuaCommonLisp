@@ -38,7 +38,8 @@ def eval(expression, environment):
 		eval(root, environment)
 	elif expression.getChild(0).getChild(0).getName()[7:] == "defun":
 		functionName = expression.getChild(0).getChild(1).getChild(0).getName()[7:]
-		print("got defun " + functionName)
+		argument = expression.getChild(0).getChild(1).getChild(1).getChild(0).getChild(0).getName()[7:]
+		print("got defun " + functionName + " " + argument)
 	else:
 		assert(False)
 
