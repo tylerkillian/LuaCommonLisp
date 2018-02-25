@@ -112,6 +112,7 @@ def eval(expression, environment):
 		letExpression = Node("root")
 		letExpression.addChild(cons1)
 
+		print(treeToString(letExpression))
 		eval(letExpression, environment)
 		assert(False)
 
