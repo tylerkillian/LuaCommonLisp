@@ -87,8 +87,13 @@ def eval(expression, environment):
 		cons3.addChild(functionCode['body'])
 		cons3.addChild(Node("symbol_nil"))
 
+		ae_cons2 = Node("cons")
+		ae_cons2.addChild(functionCallArgumentEvaluated)
+		ae_cons2.addChild(Node("symbol_nil"))
+
 		ae_cons1 = Node("cons")
-		ae_cons1.addChild(functionCode['argument']
+		ae_cons1.addChild(functionCode['argument'])
+		ae_cons1.addChild(ae_cons2)
 
 		argumentsExpression = Node("cons")
 		argumentsExpression.addChild(ae_cons1)
