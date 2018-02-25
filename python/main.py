@@ -15,6 +15,20 @@ def getValue(environment, value):
 			return scope[value]
 	return None
 
+def createParseTree(expression, parent = None):
+	if not parent:
+		root = Node("root")	
+		root.addChild(createParseTree(expression, root)
+		return root
+	else:
+		if type(expression) is str:
+			return Node("symbol_" + expression, parent)
+		else:
+			topNode = Node("cons", parent)
+			nextNode = topNode
+			for value in reverse(expression):
+				nextNode.addChild(createParseTree(value, nextNode))
+
 def eval(expression, environment):
 	if expression.getChild(0).getName()[0:6] == "symbol":
 		return environment[expression.getChild(0).getName()[7:]]
