@@ -81,6 +81,7 @@ def eval(expression, environment):
 		functionCallArgument = Node("root")
 		print(functionName.getChild(0).getName())
 		functionCallArgument.addChild(expression.getChild(0).getChild(1).getChild(0))
+		print("evaluating " + expression.getChild(0).getChild(1).getChild(0).getName())
 		functionCallArgumentEvaluated = eval(functionCallArgument, environment)
 
 		cons3 = Node("cons")
