@@ -1,6 +1,6 @@
 assertEquals() {
 	testCommand="$1"
-	referenceValue="$2"
+	referenceCommand="$2"
 	if [ "$testValue" != "$referenceValue" ]
 	then
 		callerInfo=`caller`
