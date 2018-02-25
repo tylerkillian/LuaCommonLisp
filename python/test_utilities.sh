@@ -1,5 +1,5 @@
 assertEquals() {
-	testValue="$1"
+	testCommand="$1"
 	referenceValue="$2"
 	if [ "$testValue" != "$referenceValue" ]
 	then
