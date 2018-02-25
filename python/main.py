@@ -21,11 +21,14 @@ def eval(expression, environment):
 	elif expression.getChild(0).getChild(0).getName()[7:] == "format":
 		message = expression.getChild(0).getChild(1).getChild(1).getChild(0).getName()[8:-1]
 		message = message.replace("~%", "\n")
+		print("a1")
 		if expression.getChild(0).getChild(1).getChild(1).getChild(1).getName() == "cons":
+			print("a2")
 			variableToLookup = Node("root")
 			variableToLookup.addChild(expression.getChild(0).getChild(1).getChild(1).getChild(1).getChild(0))
 			value = eval(variableToLookup, environment)
 			message = message.replace("~a", value)
+			print("a3")
 		sys.stdout.write(message)
 	elif expression.getChild(0).getChild(0).getName()[7:] == "setf":
 		variable = expression.getChild(0).getChild(1).getChild(0).getName()[7:]
