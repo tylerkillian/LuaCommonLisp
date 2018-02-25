@@ -16,17 +16,14 @@ def getValue(environment, value):
 	return None
 
 def eval(expression, environment, getValue = False):
-	if getValue:
-		if environment[expression]:
-			return environment[expression]
-		else:
-			return
+	if expression in environment:
+		return environment[expression]
 	elif expression.getChild(0).getChild(0).getName()[7:] == "format":
 		message = expression.getChild(0).getChild(1).getChild(1).getChild(0).getName()[8:-1]
 		message = message.replace("~%", "\n")
 		if expression.getChild(0).getChild(1).getChild(1).getChild(1).getName() == "cons":
 			variableToLookup = expression.getChild(0).getChild(1).getChild(1).getChild(1).getChild(0).getName()[7:]
-			value = eval(variableToLookup, environment, True)
+			value = eval(variableToLookup, environment)
 			message = message.replace("~a", value)
 		sys.stdout.write(message)
 	elif expression.getChild(0).getChild(0).getName()[7:] == "setf":
