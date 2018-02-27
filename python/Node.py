@@ -25,6 +25,10 @@ class Node():
 			return "string"
 		elif self.name == "cons":
 			return "cons"
-		else
+		else:
 			assert(False)
+	def getValue(self):
+		return self.name
+	def setValue(self, value):
+		self.value = value
 
