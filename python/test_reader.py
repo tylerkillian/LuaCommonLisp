@@ -26,6 +26,10 @@ def test_ConsReader_emptyList():
 	assert(root.getChild(0).getNumChildren() == 2)
 	assert(root.getChild(0).getChild(0).getName() == "symbol_nil")
 	assert(root.getChild(0).getChild(1).getName() == "symbol_nil")
+
+	cons = reader.getValue2()
+	assert(cons.getCar() == None)
+	assert(cons.getCdr() == None)
 def test_ConsReader_singleElementList():
 	root = Node("root")
 	readerStack = []
