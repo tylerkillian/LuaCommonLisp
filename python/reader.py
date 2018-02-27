@@ -214,7 +214,10 @@ def treeToString(node, addParenthesis = True):
 		return node.getName()[7:]
 
 def treeToString2(node, addParenthesis = True):
+	print("calling")
 	if node.getName() == "cons":
+		print(node.getNumChildren())
+		print(addParenthesis)
 		if node.getChild(1).getName() == "cons":
 			result = treeToString(node.getChild(0)) + " " + treeToString(node.getChild(1), False)
 		else:
