@@ -3,6 +3,8 @@ class Node():
 		self.name = name
 		self.parent = parent
 		self.children = []
+		self.car = None
+		self.cdr = None
 	def getName(self):
 		return self.name
 	def setName(self, name):
@@ -31,4 +33,14 @@ class Node():
 		return self.name
 	def setValue(self, value):
 		self.value = value
+	def getCar(self):
+		return self.car
+	def setCar(self, car):
+		self.car = car
+	def getCdr(self):
+		return self.cdr
+	def setCdr(self, cdr):
+		self.cdr = cdr
 
+def Cons():
+	return Node("cons")

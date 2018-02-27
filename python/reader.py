@@ -1,4 +1,4 @@
-from Node import Node
+from Node import Node, Cons
 
 def newReader(readerStack, initialCharacter, parentNode):
 	if initialCharacter == "(":
@@ -93,24 +93,19 @@ class ConsReader():
 		readerStack.append(self)
 		self.stage = "waitingForCar"
 		self.value = Node("cons", parentNode)
+		self.value2 = Cons()
 		self.done = False
 	def getValue(self):
 		return self.value
 	def isDone(self):
 		return self.done
-	def read(self, string):
-		for characterIdx in range(0, len(string)):
-			character = string[characterIdx]
-			result = self.readNextCharacter(character)
-			if characterIdx < len(string) - 1:
-				assert(result == "")
-				assert(not self.isDone)
-		return result
 	def processStage_waitingForCar(self, readerStack, nextCharacter):
 		assert(self.stage == "waitingForCar")
 		if isWhitespace(nextCharacter):
 			return
 		elif nextCharacter == ")":
+			self.value2.setCar(None)
+			self.value2.setCdr(None)
 			self.value.addChild(Node("symbol_nil", self.value))
 			self.value.addChild(Node("symbol_nil", self.value))
 			assert(self.value.getNumChildren() == 2)
