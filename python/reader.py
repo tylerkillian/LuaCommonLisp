@@ -212,3 +212,20 @@ def treeToString(node, addParenthesis = True):
 		return node.getName()[7:]
 	elif node.getName()[0:7] == "string_":
 		return node.getName()[7:]
+
+def treeToString2(node, addParenthesis = True):
+	if node.getName() == "cons":
+		if node.getChild(1).getName() == "cons":
+			result = treeToString(node.getChild(0)) + " " + treeToString(node.getChild(1), False)
+		else:
+			if node.getChild(1).getName() == "symbol_nil":
+				result = treeToString(node.getChild(0))
+			else:
+				result = treeToString(node.getChild(0)) + " " + treeToString(node.getChild(1))
+		if addParenthesis:
+			result = "(" + result + ")" 
+		return result
+	elif node.getName()[0:7] == "symbol_":
+		return node.getName()[7:]
+	elif node.getName()[0:7] == "string_":
+		return node.getName()[7:]
