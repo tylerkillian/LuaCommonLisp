@@ -51,6 +51,7 @@ class SymbolReader():
 			return nextCharacter
 		else:
 			self.value.setName(self.value.getName() + nextCharacter)
+			self.value2.setValue(self.value2.getValue() + nextCharacter)
 			return
 
 class StringReader():
@@ -77,10 +78,12 @@ class StringReader():
 			return nextCharacter
 		elif nextCharacter == "\"":
 			self.value.setName(self.value.getName() + nextCharacter)
+			self.value2.setValue(self.value2.getValue() + nextCharacter)
 			self.mode = "waitingForTerminalCharacter"
 			return
 		else:
 			self.value.setName(self.value.getName() + nextCharacter)
+			self.value2.setValue(self.value2.getValue() + nextCharacter)
 			return
 
 def isWhitespace(character):
