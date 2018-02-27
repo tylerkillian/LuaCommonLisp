@@ -74,7 +74,6 @@ def test_ConsReader_singleElementList():
 
 	cons = consReader.getValue2()
 	assert(cons.getCar().getType() == "symbol")
-	print(cons.getCar().getName())
 	assert(cons.getCar().getValue() == "a")
 	assert(cons.getCdr() == None)
 def parseString(string):
@@ -83,6 +82,22 @@ def parseString(string):
 	newReader(readerStack, string[0], root)
 	assert(len(readerStack) == 1)
 	root.addChild(readerStack[-1].getValue())
+
+	for character in string[1:]:
+		characterUsed = False
+		while not characterUsed:
+			lastResult = readerStack[-1].readNextCharacter(readerStack, character)
+			if lastResult != character:
+				characterUsed = True
+			if len(readerStack) == 0:
+				assert(character == string[-1])
+				assert(character == lastResult)
+				return root
+	assert(False)
+def parseString2(string):
+	readerStack = []
+	reader = newReader(readerStack, string[0], root)
+	assert(len(readerStack) == 1)
 
 	for character in string[1:]:
 		characterUsed = False
