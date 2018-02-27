@@ -122,9 +122,8 @@ def test_ConsReader_twoElementList():
 	assert(root.getChild(0).getChild(1).getChild(0).getName() == "symbol_b")
 	assert(root.getChild(0).getChild(1).getChild(1).getName() == "symbol_nil")
 
-	reader = parseString2("(a b) ")
+	cons = parseString2("(a b) ")
 
-	cons = reader.getValue2()
 	assert(cons.getType() == "cons")
 	assert(cons.getCar().getType() == "symbol")
 	assert(cons.getCar().getValue() == "a")
