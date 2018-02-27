@@ -214,21 +214,19 @@ def treeToString(node, addParenthesis = True):
 		return node.getName()[7:]
 
 def treeToString2(node, addParenthesis = True):
-	print("calling")
-	if node.getName() == "cons":
-		print(node.getNumChildren())
-		print(addParenthesis)
-		if node.getChild(1).getName() == "cons":
-			result = treeToString(node.getChild(0)) + " " + treeToString(node.getChild(1), False)
+	if node.getType() == "cons":
+		if node.getCdr() == None:
+			result = treeToString2(node.getCar())
+		elif node.getCdr().getType() == "cons":
+			result = treeToString2(node.getCar()) + " " + treeToString2(node.getCdr(), False)
 		else:
-			if node.getChild(1).getName() == "symbol_nil":
-				result = treeToString(node.getChild(0))
-			else:
-				result = treeToString(node.getChild(0)) + " " + treeToString(node.getChild(1))
+			result = treeToString2(node.getCar()) + " " + treeToString2(node.getCdr())
 		if addParenthesis:
 			result = "(" + result + ")" 
 		return result
-	elif node.getName()[0:7] == "symbol_":
-		return node.getName()[7:]
-	elif node.getName()[0:7] == "string_":
-		return node.getName()[7:]
+	elif node.getType() == "symbol":
+		return node.getValue()
+	elif node.getType() == "string":
+		return node.getValue()
+	else:
+		assert(False)
