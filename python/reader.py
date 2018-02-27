@@ -143,6 +143,7 @@ class ConsReader():
 			return
 		elif nextCharacter == ")":
 			self.value.addChild(Node("symbol_nil", self.value))
+			self.value2.setCdr(None)
 			assert(self.value.getNumChildren() == 2)
 			self.stage = "waitingForTerminalCharacter"
 			return
