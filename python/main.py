@@ -46,7 +46,7 @@ def eval(expression, environment):
 		return "4"
 	elif expression.getChild(0).getName() == "symbol_5":
 		return "5"
-	elif expression.getChild(0).getName()[0:6] == "symbol":
+	elif expression.getChild(0).getType() == "symbol":
 		return environment[expression.getChild(0).getName()[7:]]
 	elif expression.getChild(0).getChild(0).getName()[7:] == "format":
 		message = expression.getChild(0).getChild(1).getChild(1).getChild(0).getName()[8:-1]

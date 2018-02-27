@@ -148,6 +148,9 @@ def test_readExpressions_setf():
 def test_readExpressions_format():
 	root = parseString("(format t \"a = ~a~%\" a) ")
 	assert(treeToString(root) == "(format t \"a = ~a~%\" a)")
+
+	cons = parseString2("(format t \"a = ~a~%\" a) ")
+	assert(treeToString2(cons) == "(format t \"a = ~a~%\" a)")
 test_readExpressions = {
 	"test_readExpressions_setf": test_readExpressions_setf,
 	"test_readExpressions_format": test_readExpressions_format,
