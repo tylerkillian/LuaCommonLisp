@@ -3,6 +3,7 @@ class Node():
 		self.name = name
 		self.parent = parent
 		self.children = []
+		self.value = ""
 		self.car = None
 		self.cdr = None
 	def getName(self):
@@ -30,7 +31,7 @@ class Node():
 		else:
 			assert(False)
 	def getValue(self):
-		return self.name
+		return self.value
 	def setValue(self, value):
 		self.value = value
 	def getCar(self):

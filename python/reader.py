@@ -129,6 +129,7 @@ class ConsReader():
 		readerStack.pop()
 		readNextListElement = ConsReader(readerStack, "(", self.value)
 		self.value.addChild(readNextListElement.getValue())
+		self.value2.setCdr(readNextListElement.getValue2())
 		assert(self.value.getNumChildren() == 2)
 		for nextCharacter in characters:
 			readNextListElement.readNextCharacter(readerStack, nextCharacter)
