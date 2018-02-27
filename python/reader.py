@@ -33,7 +33,7 @@ class SymbolReader():
 	def __init__(self, readerStack, initialCharacter, parentNode = None):
 		readerStack.append(self)
 		self.value = Node("symbol_" + initialCharacter, parentNode)
-		self.value2 = Symbol()
+		self.value2 = Symbol(initialCharacter)
 		self.done = False
 	def getValue(self):
 		return self.value
@@ -59,7 +59,7 @@ class StringReader():
 		assert(initialCharacter == "\"")
 		readerStack.append(self)
 		self.value = Node("string_" + initialCharacter, parentNode)
-		self.value2 = String()
+		self.value2 = String(initialCharacter)
 		self.mode = "readingString"
 		self.done = False
 	def getValue(self):

@@ -3,7 +3,7 @@ class Node():
 		self.name = name
 		self.parent = parent
 		self.children = []
-		self.value = ""
+		self.value = name[7:]
 		self.car = None
 		self.cdr = None
 	def getName(self):
