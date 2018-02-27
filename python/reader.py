@@ -1,6 +1,6 @@
 from Node import Node, Cons, Symbol, String
 
-def newReader(readerStack, initialCharacter, parentNode):
+def newReader(readerStack, initialCharacter, parentNode = None):
 	if initialCharacter == "(":
 		return ConsReader(readerStack, initialCharacter, parentNode)
 	elif initialCharacter == "\"":

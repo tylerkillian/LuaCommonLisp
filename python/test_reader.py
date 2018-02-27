@@ -96,7 +96,7 @@ def parseString(string):
 	assert(False)
 def parseString2(string):
 	readerStack = []
-	reader = newReader(readerStack, string[0], root)
+	reader = newReader(readerStack, string[0])
 	assert(len(readerStack) == 1)
 
 	for character in string[1:]:
@@ -108,7 +108,7 @@ def parseString2(string):
 			if len(readerStack) == 0:
 				assert(character == string[-1])
 				assert(character == lastResult)
-				return root
+				return reader.getValue2()
 	assert(False)
 def test_ConsReader_twoElementList():
 	root = parseString("(a b) ")
@@ -121,6 +121,17 @@ def test_ConsReader_twoElementList():
 	assert(root.getChild(0).getChild(1).getNumChildren() == 2)
 	assert(root.getChild(0).getChild(1).getChild(0).getName() == "symbol_b")
 	assert(root.getChild(0).getChild(1).getChild(1).getName() == "symbol_nil")
+
+	reader = parseString2("(a b) ")
+
+	cons = reader.getValue2()
+	assert(cons.getType() == "cons")
+	assert(cons.getCar().getType() == "symbol")
+	assert(cons.getCar().getValue() == "a")
+	assert(cons.getCdr().getType() == "cons")
+	assert(cons.getCdr().getCar().getType() == "symbol")
+	assert(cons.getCdr().getCar().getValue() == "b")
+	assert(cons.getCdr().getCdr() == None)
 test_ConsReader = {
 	"test_ConsReader_emptyList": test_ConsReader_emptyList,
 	"test_ConsReader_singleElementList": test_ConsReader_singleElementList,
