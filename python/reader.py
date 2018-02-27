@@ -1,4 +1,4 @@
-from Node import Node, Cons
+from Node import Node, Cons, Symbol, String
 
 def newReader(readerStack, initialCharacter, parentNode):
 	if initialCharacter == "(":
@@ -33,9 +33,12 @@ class SymbolReader():
 	def __init__(self, readerStack, initialCharacter, parentNode = None):
 		readerStack.append(self)
 		self.value = Node("symbol_" + initialCharacter, parentNode)
+		self.value2 = Symbol()
 		self.done = False
 	def getValue(self):
 		return self.value
+	def getValue2(self):
+		return self.value2
 	def isDone(self):
 		return self.done
 	def readNextCharacter(self, readerStack, nextCharacter):
@@ -55,10 +58,13 @@ class StringReader():
 		assert(initialCharacter == "\"")
 		readerStack.append(self)
 		self.value = Node("string_" + initialCharacter, parentNode)
+		self.value2 = String()
 		self.mode = "readingString"
 		self.done = False
 	def getValue(self):
 		return self.value
+	def getValue2(self):
+		return self.value2
 	def isDone(self):
 		return self.done
 	def readNextCharacter(self, readerStack, nextCharacter):
@@ -97,6 +103,8 @@ class ConsReader():
 		self.done = False
 	def getValue(self):
 		return self.value
+	def getValue2(self):
+		return self.value2
 	def isDone(self):
 		return self.done
 	def processStage_waitingForCar(self, readerStack, nextCharacter):
@@ -114,6 +122,7 @@ class ConsReader():
 			self.stage = "waitingForDot"
 			readCar = newReader(readerStack, nextCharacter, self.value)
 			self.value.addChild(readCar.getValue())
+			self.value2.setCar(readCar.getValue2())
 			assert(self.value.getNumChildren() == 1)
 	def beginReadingNextListElement(self, readerStack, characters):
 		self.done = True

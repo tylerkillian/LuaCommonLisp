@@ -44,3 +44,9 @@ class Node():
 
 def Cons():
 	return Node("cons")
+
+def Symbol(name = ""):
+	return Node("symbol_" + name)
+
+def String(value = ""):
+	return Node("string_" + value)
