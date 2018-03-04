@@ -126,36 +126,6 @@ def eval(expression, environment):
 			"body_v2" : body_v2,
 		}
 	else:
-		functionName = expression.getCar()
-		functionCode = eval(functionName, environment)
-
-		functionCallArgument = expression.getCdr().getCar()
-		functionCallArgumentEvaluated = Symbol(eval(functionCallArgument, environment))
-
-		cons3 = functionCode['body']
-
-		ae_cons2 = Cons()
-		ae_cons2.setCar(functionCallArgumentEvaluated)
-		ae_cons2.setCdr(Symbol("nil"))
-
-		ae_cons1 = Cons()
-		ae_cons1.setCar(functionCode['argument'])
-		ae_cons1.setCdr(ae_cons2)
-
-		argumentsExpression = Cons()
-		argumentsExpression.setCar(ae_cons1)
-		argumentsExpression.setCdr(Symbol("nil"))
-
-		cons2 = Cons()
-		cons2.setCar(argumentsExpression)
-		cons2.setCdr(cons3)
-
-		cons1 = Cons()
-		cons1.setCar(Symbol("let"))
-		cons1.setCdr(cons2)
-
-		letExpression = cons1
-
 		functionName_v2 = Expression_get(expression, 0)
 		functionPointer_v2 = eval(functionName_v2, environment)
 		assert((Expression_getLength(expression)-1) == len(functionPointer_v2['arguments_v2']))
@@ -166,7 +136,6 @@ def eval(expression, environment):
 		for command in functionPointer_v2['body_v2']:
 			returnValue_v2 = eval(command, environment)
 		
-		returnValue1 = eval(letExpression, environment)
 		return returnValue_v2
 
 def lisp(inputFile):
