@@ -35,61 +35,61 @@ def createParseTree(expression, parent = None):
 			topCons.setParent(parent)
 			return topCons
 
-def eval(expression2, environment):
-	if expression2.getType() == "symbol":
-		if expression2.getValue() == "1":
+def eval(expression, environment):
+	if expression.getType() == "symbol":
+		if expression.getValue() == "1":
 			return "1"
-		elif expression2.getValue() == "2":
+		elif expression.getValue() == "2":
 			return "2"
-		elif expression2.getValue() == "3":
+		elif expression.getValue() == "3":
 			return "3"
-		elif expression2.getValue() == "4":
+		elif expression.getValue() == "4":
 			return "4"
-		elif expression2.getValue() == "5":
+		elif expression.getValue() == "5":
 			return "5"
 		else:
-			return environment[expression2.getValue()]
-	elif expression2.getCar().getValue() == "format":
-		message = expression2.getCdr().getCdr().getCar().getValue()[1:-1]
+			return environment[expression.getValue()]
+	elif expression.getCar().getValue() == "format":
+		message = expression.getCdr().getCdr().getCar().getValue()[1:-1]
 		message = message.replace("~%", "\n")
-		if expression2.getCdr().getCdr().getCdr():
-			if expression2.getCdr().getCdr().getCdr().getType() == "cons":
-				variableToLookup = expression2.getCdr().getCdr().getCdr().getCar()
+		if expression.getCdr().getCdr().getCdr():
+			if expression.getCdr().getCdr().getCdr().getType() == "cons":
+				variableToLookup = expression.getCdr().getCdr().getCdr().getCar()
 				value = eval(variableToLookup, environment)
 				message = message.replace("~a", value)
 		sys.stdout.write(message)
 		return "nil"
-	elif expression2.getCar().getValue() == "setf":
-		variable = expression2.getCdr().getCar().getValue()
-		value = expression2.getCdr().getCdr().getCar().getValue()
+	elif expression.getCar().getValue() == "setf":
+		variable = expression.getCdr().getCar().getValue()
+		value = expression.getCdr().getCdr().getCar().getValue()
 		environment[variable] = value
-	elif expression2.getCar().getValue() == "+":
-		left = expression2.getCdr().getCar()
+	elif expression.getCar().getValue() == "+":
+		left = expression.getCdr().getCar()
 		leftValue = eval(left, environment)
 
-		right = expression2.getCdr().getCdr().getCar()
+		right = expression.getCdr().getCdr().getCar()
 		rightValue = eval(right, environment)
 		return str(int(leftValue) + int(rightValue))
-	elif expression2.getCar().getValue() == "let":
-		variableToSet = expression2.getCdr().getCar().getCar().getCar().getValue()
-		value = expression2.getCdr().getCar().getCar().getCdr().getCar().getValue()
+	elif expression.getCar().getValue() == "let":
+		variableToSet = expression.getCdr().getCar().getCar().getCar().getValue()
+		value = expression.getCdr().getCar().getCar().getCdr().getCar().getValue()
 		environment = {}
 		environment[variableToSet] = value
-		root = expression2.getCdr().getCdr().getCar()
+		root = expression.getCdr().getCdr().getCar()
 		return eval(root, environment)
-	elif expression2.getCar().getValue() == "defun":
-		functionName = expression2.getCdr().getCar().getValue()
-		argument = expression2.getCdr().getCdr().getCar().getCar()
-		body = expression2.getCdr().getCdr().getCdr()
+	elif expression.getCar().getValue() == "defun":
+		functionName = expression.getCdr().getCar().getValue()
+		argument = expression.getCdr().getCdr().getCar().getCar()
+		body = expression.getCdr().getCdr().getCdr()
 		environment[functionName] = {
 			"argument" : argument,
 			"body" : body,
 		}
 	else:
-		functionName = expression2.getCar()
+		functionName = expression.getCar()
 		functionCode = eval(functionName, environment)
 
-		functionCallArgument = expression2.getCdr().getCar()
+		functionCallArgument = expression.getCdr().getCar()
 		functionCallArgumentEvaluated = Symbol(eval(functionCallArgument, environment))
 
 		cons3 = functionCode['body']
