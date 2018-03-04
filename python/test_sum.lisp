@@ -2,5 +2,5 @@
 	(+ x y)
 )
 
-(format t "sum(2, 3) = ~a~%" (sum 1 2))
+(format t "sum(2, 3) = ~a~%" (sum 2 3))
 
