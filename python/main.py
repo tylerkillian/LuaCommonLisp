@@ -109,8 +109,6 @@ def eval(expression, environment):
 		return eval(root, environment)
 	elif expression.getCar().getValue() == "defun":
 		functionName = expression.getCdr().getCar().getValue()
-		argument = expression.getCdr().getCdr().getCar().getCar()
-		body = expression.getCdr().getCdr().getCdr()
 
 		argumentsExpression_v2 = Expression_get(expression, 2)
 		arguments_v2 = []
@@ -120,8 +118,6 @@ def eval(expression, environment):
 		for expressionIndex in range(3, Expression_getLength(expression)):
 			body_v2.append(Expression_get(expression, expressionIndex))
 		environment[functionName] = {
-			"argument" : argument,
-			"body" : body,
 			"arguments_v2" : arguments_v2,
 			"body_v2" : body_v2,
 		}
