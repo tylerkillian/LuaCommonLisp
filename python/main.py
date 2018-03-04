@@ -9,22 +9,6 @@ def sendToReaderStack(readerStack, nextCharacter):
 			assert(characterToProcess == nextCharacter)
 			return characterToProcess
 
-def getValue(environment, value):
-	for scope in reversed(environment):
-		if scope[value]:
-			return scope[value]
-	return None
-
-def expressionToList(expression):
-	assert(expression.getType() == "cons")
-	current = expression
-	result = []
-	while current:
-		assert(current.getType() == "cons")
-		result.append(current.getCar())
-		current = current.getCdr()
-	return result
-
 def Expression_get(expression, index):
 	assert(expression.getType() == "cons")
 	count = 0
