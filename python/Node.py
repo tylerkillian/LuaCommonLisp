@@ -65,14 +65,7 @@ class Cons():
 		assert(childIdx < len(self.children))
 		return self.children[childIdx]
 	def getType(self):
-		if self.name[0:6] == "symbol":
-			return "symbol"
-		elif self.name[0:6] == "string":
-			return "string"
-		elif self.name == "cons":
-			return "cons"
-		else:
-			assert(False)
+		return "cons"
 	def getValue(self):
 		return self.value
 	def setValue(self, value):
