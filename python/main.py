@@ -83,11 +83,11 @@ def eval(expression, environment):
 		return eval(root, environment)
 	elif expression.value2.getCar().getValue() == "defun":
 		functionName = expression.value2.getCdr().getCar().getValue()
-		argument_v2 = expression.value2.getCdr().getCdr().getCar().getCar()
-		body_v2 = expression.value2.getCdr().getCdr().getCdr()
+		argument = expression.value2.getCdr().getCdr().getCar().getCar()
+		body = expression.value2.getCdr().getCdr().getCdr()
 		environment[functionName] = {
-			"argument_v2" : argument_v2,
-			"body_v2" : body_v2,
+			"argument" : argument,
+			"body" : body,
 		}
 	else:
 		functionName = Node("root")
@@ -96,32 +96,32 @@ def eval(expression, environment):
 
 		functionCallArgument = Node("root")
 		functionCallArgument.value2 = expression.value2.getCdr().getCar()
-		functionCallArgumentEvaluated_v2 = Symbol(eval(functionCallArgument, environment))
+		functionCallArgumentEvaluated = Symbol(eval(functionCallArgument, environment))
 
-		cons3_v2 = functionCode['body_v2']
+		cons3 = functionCode['body']
 
-		ae_cons2_v2 = Cons()
-		ae_cons2_v2.setCar(functionCallArgumentEvaluated_v2)
-		ae_cons2_v2.setCdr(Symbol("nil"))
+		ae_cons2 = Cons()
+		ae_cons2.setCar(functionCallArgumentEvaluated)
+		ae_cons2.setCdr(Symbol("nil"))
 
-		ae_cons1_v2 = Cons()
-		ae_cons1_v2.setCar(functionCode['argument_v2'])
-		ae_cons1_v2.setCdr(ae_cons2_v2)
+		ae_cons1 = Cons()
+		ae_cons1.setCar(functionCode['argument'])
+		ae_cons1.setCdr(ae_cons2)
 
-		argumentsExpression_v2 = Cons()
-		argumentsExpression_v2.setCar(ae_cons1_v2)
-		argumentsExpression_v2.setCdr(Symbol("nil"))
+		argumentsExpression = Cons()
+		argumentsExpression.setCar(ae_cons1)
+		argumentsExpression.setCdr(Symbol("nil"))
 
-		cons2_v2 = Cons()
-		cons2_v2.setCar(argumentsExpression_v2)
-		cons2_v2.setCdr(cons3_v2)
+		cons2 = Cons()
+		cons2.setCar(argumentsExpression)
+		cons2.setCdr(cons3)
 
-		cons1_v2 = Cons()
-		cons1_v2.setCar(Symbol("let"))
-		cons1_v2.setCdr(cons2_v2)
+		cons1 = Cons()
+		cons1.setCar(Symbol("let"))
+		cons1.setCdr(cons2)
 
 		letExpression = Node("root")
-		letExpression.value2 = cons1_v2
+		letExpression.value2 = cons1
 
 		return eval(letExpression, environment)
 
