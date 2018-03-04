@@ -55,6 +55,7 @@ def eval(expression, environment):
 		if expression.getChild(0).getChild(1).getChild(1).getChild(1).getName() == "cons":
 			variableToLookup = Node("root")
 			variableToLookup.addChild(expression.getChild(0).getChild(1).getChild(1).getChild(1).getChild(0))
+			variableToLookup.value2 = expression.value2.getCdr().getCdr().getCdr().getCar()
 			value = eval(variableToLookup, environment)
 			message = message.replace("~a", value)
 		sys.stdout.write(message)
@@ -66,10 +67,12 @@ def eval(expression, environment):
 	elif expression.getChild(0).getChild(0).getName()[7:] == "+":
 		left = Node("root")
 		left.addChild(expression.getChild(0).getChild(1).getChild(0))
+		left.value2 = expression.value2.getCdr().getCar()
 		leftValue = eval(left, environment)
 
 		right = Node("root")
 		right.addChild(expression.getChild(0).getChild(1).getChild(1).getChild(0))
+		right.value2 = expression.value2.getCdr().getCdr().getCar()
 		rightValue = eval(right, environment)
 		return str(int(leftValue) + int(rightValue))
 	elif expression.getChild(0).getChild(0).getName()[7:] == "let":
@@ -79,6 +82,7 @@ def eval(expression, environment):
 		environment[variableToSet] = value
 		root = Node("root")
 		root.addChild(expression.getChild(0).getChild(1).getChild(1).getChild(0))
+		root.value2 = expression.value2.getCdr().getCdr().getCar()
 		return eval(root, environment)
 	elif expression.getChild(0).getChild(0).getName()[7:] == "defun":
 		functionName = expression.getChild(0).getChild(1).getChild(0).getName()[7:]
@@ -91,10 +95,12 @@ def eval(expression, environment):
 	else:
 		functionName = Node("root")
 		functionName.addChild(expression.getChild(0).getChild(0))
+		functionName.value2 = expression.value2.getCar()
 		functionCode = eval(functionName, environment)
 
 		functionCallArgument = Node("root")
 		functionCallArgument.addChild(expression.getChild(0).getChild(1).getChild(0))
+		functionCallArgument.value2 = expression.value2.getCdr().getCar()
 		functionCallArgumentEvaluated = Node("symbol_" + eval(functionCallArgument, environment))
 
 		cons3 = functionCode['body']
@@ -118,9 +124,11 @@ def eval(expression, environment):
 		cons1 = Node("cons")
 		cons1.addChild(Node("symbol_let"))
 		cons1.addChild(cons2)
+		cons1_v2 = 
 
 		letExpression = Node("root")
 		letExpression.addChild(cons1)
+		letexpression.value2 = cons1_v2
 
 		return eval(letExpression, environment)
 
