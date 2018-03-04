@@ -38,18 +38,18 @@ def createParseTree(expression, parent = None):
 def eval(expression, environment):
 	expression2 = expression.value2
 	if expression2.getType() == "symbol":
-		if expression.value2.getValue() == "1":
+		if expression2.getValue() == "1":
 			return "1"
-		elif expression.value2.getValue() == "2":
+		elif expression2.getValue() == "2":
 			return "2"
-		elif expression.value2.getValue() == "3":
+		elif expression2.getValue() == "3":
 			return "3"
-		elif expression.value2.getValue() == "4":
+		elif expression2.getValue() == "4":
 			return "4"
-		elif expression.value2.getValue() == "5":
+		elif expression2.getValue() == "5":
 			return "5"
 		else:
-			return environment[expression.value2.getValue()]
+			return environment[expression2.getValue()]
 	elif expression.value2.getCar().getValue() == "format":
 		message = expression.value2.getCdr().getCdr().getCar().getValue()[1:-1]
 		message = message.replace("~%", "\n")
