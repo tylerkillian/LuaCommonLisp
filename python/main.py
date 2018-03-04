@@ -88,6 +88,9 @@ def eval(expression, environment):
 		root = expression.getCdr().getCdr().getCar()
 		return eval(root, environment)
 	elif expression.getCar().getValue() == "defun":
+		expressionAsList = expressionToList(expression)
+		print(expressionAsList)
+
 		functionName = expression.getCdr().getCar().getValue()
 		argument = expression.getCdr().getCdr().getCar().getCar()
 		body = expression.getCdr().getCdr().getCdr()
@@ -96,9 +99,6 @@ def eval(expression, environment):
 			"body" : body,
 		}
 	else:
-		expressionAsList = expressionToList(expression)
-		print(expressionAsList)
-
 		functionName = expression.getCar()
 		functionCode = eval(functionName, environment)
 
