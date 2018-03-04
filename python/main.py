@@ -60,7 +60,7 @@ def Expression_getLength(expression):
 	assert(expression.getType() == "cons")
 	length = 0
 	current = expression
-	while current.getType() == "cons":
+	while current:
 		current = current.getCdr()
 		length += 1
 	return length
@@ -115,8 +115,8 @@ def eval(expression, environment):
 		body = expression.getCdr().getCdr().getCdr()
 
 		body_v2 = []
-#		for commandIndex in range(3, Expression_getLength(expression)):
-#			body_v2.append(Expression_get(expression, commandIndex))
+		for commandIndex in range(3, Expression_getLength(expression)):
+			body_v2.append(Expression_get(expression, commandIndex))
 		environment[functionName] = {
 			"argument" : argument,
 			"body" : body,
