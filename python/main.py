@@ -54,9 +54,8 @@ def eval(expression2, environment):
 		message = message.replace("~%", "\n")
 		if expression2.getCdr().getCdr().getCdr():
 			if expression2.getCdr().getCdr().getCdr().getType() == "cons":
-				variableToLookup = Node("root")
-				variableToLookup.value2 = expression2.getCdr().getCdr().getCdr().getCar()
-				value = eval(variableToLookup.value2, environment)
+				variableToLookup = expression2.getCdr().getCdr().getCdr().getCar()
+				value = eval(variableToLookup, environment)
 				message = message.replace("~a", value)
 		sys.stdout.write(message)
 		return "nil"
@@ -65,22 +64,19 @@ def eval(expression2, environment):
 		value = expression2.getCdr().getCdr().getCar().getValue()
 		environment[variable] = value
 	elif expression2.getCar().getValue() == "+":
-		left = Node("root")
-		left.value2 = expression2.getCdr().getCar()
-		leftValue = eval(left.value2, environment)
+		left = expression2.getCdr().getCar()
+		leftValue = eval(left, environment)
 
-		right = Node("root")
-		right.value2 = expression2.getCdr().getCdr().getCar()
-		rightValue = eval(right.value2, environment)
+		right = expression2.getCdr().getCdr().getCar()
+		rightValue = eval(right, environment)
 		return str(int(leftValue) + int(rightValue))
 	elif expression2.getCar().getValue() == "let":
 		variableToSet = expression2.getCdr().getCar().getCar().getCar().getValue()
 		value = expression2.getCdr().getCar().getCar().getCdr().getCar().getValue()
 		environment = {}
 		environment[variableToSet] = value
-		root = Node("root")
-		root.value2 = expression2.getCdr().getCdr().getCar()
-		return eval(root.value2, environment)
+		root = expression2.getCdr().getCdr().getCar()
+		return eval(root, environment)
 	elif expression2.getCar().getValue() == "defun":
 		functionName = expression2.getCdr().getCar().getValue()
 		argument = expression2.getCdr().getCdr().getCar().getCar()
@@ -90,9 +86,8 @@ def eval(expression2, environment):
 			"body" : body,
 		}
 	else:
-		functionName = Node("root")
-		functionName.value2 = expression2.getCar()
-		functionCode = eval(functionName.value2, environment)
+		functionName = expression2.getCar()
+		functionCode = eval(functionName, environment)
 
 		functionCallArgument = Node("root")
 		functionCallArgument.value2 = expression2.getCdr().getCar()
