@@ -1,4 +1,4 @@
-from Node import Node, Cons, Symbol, String
+from Node import Cons, Symbol, String
 
 def newReader(readerStack, initialCharacter):
 	if initialCharacter == "(":
@@ -52,7 +52,6 @@ class StringReader():
 	def __init__(self, readerStack, initialCharacter):
 		assert(initialCharacter == "\"")
 		readerStack.append(self)
-		self.value = Node("string_" + initialCharacter)
 		self.value2 = String(initialCharacter)
 		self.mode = "readingString"
 		self.done = False
