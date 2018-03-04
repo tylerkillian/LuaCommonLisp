@@ -1,12 +1,12 @@
 from Node import Node, Cons, Symbol, String
 
-def newReader(readerStack, initialCharacter, parentNode = None):
+def newReader(readerStack, initialCharacter):
 	if initialCharacter == "(":
-		return ConsReader(readerStack, initialCharacter, parentNode)
+		return ConsReader(readerStack, initialCharacter)
 	elif initialCharacter == "\"":
-		return StringReader(readerStack, initialCharacter, parentNode)
+		return StringReader(readerStack, initialCharacter)
 	else:
-		return SymbolReader(readerStack, initialCharacter, parentNode)
+		return SymbolReader(readerStack, initialCharacter)
 
 class RootReader():
 	def __init__(self, readerStack):
@@ -22,7 +22,7 @@ class RootReader():
 		if nextCharacter == "(":
 			self.done = True
 			readerStack.pop()
-			consReader = newReader(readerStack, nextCharacter, self.value)
+			consReader = newReader(readerStack, nextCharacter)
 			self.value['value2'] = consReader.getValue2()
 			return
 
