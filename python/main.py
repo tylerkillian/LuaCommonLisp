@@ -167,7 +167,7 @@ def eval(expression, environment):
 			returnValue_v2 = eval(command, environment)
 		
 		returnValue1 = eval(letExpression, environment)
-		return returnValue1
+		return returnValue_v2
 
 def lisp(inputFile):
 	input = open(inputFile, "r")
