@@ -35,6 +35,16 @@ def createParseTree(expression, parent = None):
 			topCons.setParent(parent)
 			return topCons
 
+def expressionToList(expression):
+	assert(expression.getType() == "cons")
+	current = expression
+	result = []
+	while current:
+		assert(current.getCdr().getType() == "cons")
+		result.append(current.getCar())
+		current = current.getCdr()
+	return result
+
 def eval(expression, environment):
 	if expression.getType() == "symbol":
 		if expression.getValue() == "1":
