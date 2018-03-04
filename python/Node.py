@@ -60,8 +60,15 @@ class Cons():
 	def setCdr(self, cdr):
 		self.cdr = cdr
 
-def Symbol(name = ""):
-	return Node("symbol_" + name)
+class Symbol:
+	def __init__(self, value = ""):
+		self.value = value
+	def getType(self):
+		return "symbol"
+	def getValue(self):
+		return self.value
+	def setValue(self, value):
+		self.value = value
 
 def String(value = ""):
 	return Node("string_" + value)
