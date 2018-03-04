@@ -88,7 +88,7 @@ def eval(expression, environment):
 				value = eval(variableToLookup, environment)
 				message = message.replace("~a", str(value))
 		sys.stdout.write(message)
-		return
+		return None
 	elif expression.getCar().getValue() == "setf":
 		variable = expression.getCdr().getCar().getValue()
 		value = expression.getCdr().getCdr().getCar().getValue()
