@@ -50,53 +50,53 @@ def eval(expression, environment):
 			return "5"
 		else:
 			return environment[expression2.getValue()]
-	elif expression.value2.getCar().getValue() == "format":
-		message = expression.value2.getCdr().getCdr().getCar().getValue()[1:-1]
+	elif expression2.getCar().getValue() == "format":
+		message = expression2.getCdr().getCdr().getCar().getValue()[1:-1]
 		message = message.replace("~%", "\n")
-		if expression.value2.getCdr().getCdr().getCdr():
-			if expression.value2.getCdr().getCdr().getCdr().getType() == "cons":
+		if expression2.getCdr().getCdr().getCdr():
+			if expression2.getCdr().getCdr().getCdr().getType() == "cons":
 				variableToLookup = Node("root")
-				variableToLookup.value2 = expression.value2.getCdr().getCdr().getCdr().getCar()
+				variableToLookup.value2 = expression2.getCdr().getCdr().getCdr().getCar()
 				value = eval(variableToLookup, environment)
 				message = message.replace("~a", value)
 		sys.stdout.write(message)
 		return "nil"
-	elif expression.value2.getCar().getValue() == "setf":
-		variable = expression.value2.getCdr().getCar().getValue()
-		value = expression.value2.getCdr().getCdr().getCar().getValue()
+	elif expression2.getCar().getValue() == "setf":
+		variable = expression2.getCdr().getCar().getValue()
+		value = expression2.getCdr().getCdr().getCar().getValue()
 		environment[variable] = value
-	elif expression.value2.getCar().getValue() == "+":
+	elif expression2.getCar().getValue() == "+":
 		left = Node("root")
-		left.value2 = expression.value2.getCdr().getCar()
+		left.value2 = expression2.getCdr().getCar()
 		leftValue = eval(left, environment)
 
 		right = Node("root")
-		right.value2 = expression.value2.getCdr().getCdr().getCar()
+		right.value2 = expression2.getCdr().getCdr().getCar()
 		rightValue = eval(right, environment)
 		return str(int(leftValue) + int(rightValue))
-	elif expression.value2.getCar().getValue() == "let":
-		variableToSet = expression.value2.getCdr().getCar().getCar().getCar().getValue()
-		value = expression.value2.getCdr().getCar().getCar().getCdr().getCar().getValue()
+	elif expression2.getCar().getValue() == "let":
+		variableToSet = expression2.getCdr().getCar().getCar().getCar().getValue()
+		value = expression2.getCdr().getCar().getCar().getCdr().getCar().getValue()
 		environment = {}
 		environment[variableToSet] = value
 		root = Node("root")
-		root.value2 = expression.value2.getCdr().getCdr().getCar()
+		root.value2 = expression2.getCdr().getCdr().getCar()
 		return eval(root, environment)
-	elif expression.value2.getCar().getValue() == "defun":
-		functionName = expression.value2.getCdr().getCar().getValue()
-		argument = expression.value2.getCdr().getCdr().getCar().getCar()
-		body = expression.value2.getCdr().getCdr().getCdr()
+	elif expression2.getCar().getValue() == "defun":
+		functionName = expression2.getCdr().getCar().getValue()
+		argument = expression2.getCdr().getCdr().getCar().getCar()
+		body = expression2.getCdr().getCdr().getCdr()
 		environment[functionName] = {
 			"argument" : argument,
 			"body" : body,
 		}
 	else:
 		functionName = Node("root")
-		functionName.value2 = expression.value2.getCar()
+		functionName.value2 = expression2.getCar()
 		functionCode = eval(functionName, environment)
 
 		functionCallArgument = Node("root")
-		functionCallArgument.value2 = expression.value2.getCdr().getCar()
+		functionCallArgument.value2 = expression2.getCdr().getCar()
 		functionCallArgumentEvaluated = Symbol(eval(functionCallArgument, environment))
 
 		cons3 = functionCode['body']
