@@ -61,8 +61,8 @@ def eval(expression, environment):
 				message = message.replace("~a", value)
 		sys.stdout.write(message)
 		return "nil"
-	elif expression.getChild(0).getChild(0).getName()[7:] == "setf":
-		variable = expression.getChild(0).getChild(1).getChild(0).getName()[7:]
+	elif expression.value2.getCar().getValue() == "setf":
+		variable = expression.value2.getCdr().getCar().getValue()
 		value = expression.getChild(0).getChild(1).getChild(1).getChild(0).getName()[7:]
 		environment[variable] = value
 	elif expression.getChild(0).getChild(0).getName()[7:] == "+":
