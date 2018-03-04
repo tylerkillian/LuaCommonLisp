@@ -97,10 +97,10 @@ runTests(test_ConsReader)
 
 def test_readExpressions_setf():
 	cons = parseString("(setf a 3) ")
-	assert(treeToString2(cons) == "(setf a 3)")
+	assert(treeToString(cons) == "(setf a 3)")
 def test_readExpressions_format():
 	cons = parseString("(format t \"a = ~a~%\" a) ")
-	assert(treeToString2(cons) == "(format t \"a = ~a~%\" a)")
+	assert(treeToString(cons) == "(format t \"a = ~a~%\" a)")
 test_readExpressions = {
 	"test_readExpressions_setf": test_readExpressions_setf,
 	"test_readExpressions_format": test_readExpressions_format,
