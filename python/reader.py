@@ -171,14 +171,14 @@ class ConsReader():
 			assert(self.stage == "waitingForTerminalCharacter")
 			return self.processStage_waitingForTerminalCharacter(readerStack, nextCharacter)
 
-def treeToString2(node, addParenthesis = True):
+def treeToString(node, addParenthesis = True):
 	if node.getType() == "cons":
 		if node.getCdr() == None:
-			result = treeToString2(node.getCar())
+			result = treeToString(node.getCar())
 		elif node.getCdr().getType() == "cons":
-			result = treeToString2(node.getCar()) + " " + treeToString2(node.getCdr(), False)
+			result = treeToString(node.getCar()) + " " + treeToString(node.getCdr(), False)
 		else:
-			result = treeToString2(node.getCar()) + " " + treeToString2(node.getCdr())
+			result = treeToString(node.getCar()) + " " + treeToString(node.getCdr())
 		if addParenthesis:
 			result = "(" + result + ")" 
 		return result
