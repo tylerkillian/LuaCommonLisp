@@ -107,7 +107,7 @@ def lisp(inputFile):
 	while nextCharacter:
 		if len(readerStack) == 0:
 			RootReader(readerStack)
-			root = readerStack[0].getValue()
+			root = readerStack[0].value
 		characterToProcess = sendToReaderStack(readerStack, nextCharacter)
 		if characterToProcess:
 			assert(characterToProcess == nextCharacter)
