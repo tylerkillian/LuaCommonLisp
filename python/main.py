@@ -77,8 +77,8 @@ def eval(expression, environment):
 		rightValue = eval(right, environment)
 		return str(int(leftValue) + int(rightValue))
 	elif expression.value2.getCar().getValue() == "let":
-		variableToSet = expression.getChild(0).getChild(1).getChild(0).getChild(0).getChild(0).getName()[7:]
-		value = expression.getChild(0).getChild(1).getChild(0).getChild(0).getChild(1).getChild(0).getName()[7:]
+		variableToSet = expression.value2.getCdr().getCar().getCar().getCar().getValue()
+		value = expression.value2.getCdr().getCar().getCar().getCdr().getCar().getValue()
 		environment = {}
 		environment[variableToSet] = value
 		root = Node("root")
