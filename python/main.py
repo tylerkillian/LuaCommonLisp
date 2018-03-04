@@ -110,29 +110,29 @@ def eval(expression, environment):
 	elif expression.getCar().getValue() == "defun":
 		functionName = expression.getCdr().getCar().getValue()
 
-		argumentsExpression_v2 = Expression_get(expression, 2)
-		arguments_v2 = []
-		for expressionIndex in range(0, Expression_getLength(argumentsExpression_v2)):
-			arguments_v2.append(Expression_get(argumentsExpression_v2, expressionIndex).getValue())
-		body_v2 = []
+		argumentsExpression = Expression_get(expression, 2)
+		arguments = []
+		for expressionIndex in range(0, Expression_getLength(argumentsExpression)):
+			arguments.append(Expression_get(argumentsExpression, expressionIndex).getValue())
+		body = []
 		for expressionIndex in range(3, Expression_getLength(expression)):
-			body_v2.append(Expression_get(expression, expressionIndex))
+			body.append(Expression_get(expression, expressionIndex))
 		environment[functionName] = {
-			"arguments_v2" : arguments_v2,
-			"body_v2" : body_v2,
+			"arguments" : arguments,
+			"body" : body,
 		}
 	else:
-		functionName_v2 = Expression_get(expression, 0)
-		functionPointer_v2 = eval(functionName_v2, environment)
-		assert((Expression_getLength(expression)-1) == len(functionPointer_v2['arguments_v2']))
+		functionName = Expression_get(expression, 0)
+		functionPointer = eval(functionName, environment)
+		assert((Expression_getLength(expression)-1) == len(functionPointer['arguments']))
 		for expressionIndex in range(1, Expression_getLength(expression)):
-			argumentName = functionPointer_v2['arguments_v2'][expressionIndex - 1]
+			argumentName = functionPointer['arguments'][expressionIndex - 1]
 			environment[argumentName] = eval(Expression_get(expression, expressionIndex), environment)
-		returnValue_v2 = None
-		for command in functionPointer_v2['body_v2']:
-			returnValue_v2 = eval(command, environment)
+		returnValue = None
+		for command in functionPointer['body']:
+			returnValue = eval(command, environment)
 		
-		return returnValue_v2
+		return returnValue
 
 def lisp(inputFile):
 	input = open(inputFile, "r")
