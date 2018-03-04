@@ -121,6 +121,7 @@ def eval(expression, environment):
 			"arguments" : arguments,
 			"body" : body,
 		}
+		return environment[functionName]
 	else:
 		functionName = Expression_get(expression, 0)
 		functionPointer = eval(functionName, environment)
