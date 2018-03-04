@@ -86,7 +86,7 @@ def eval(expression, environment):
 			if expression.getCdr().getCdr().getCdr().getType() == "cons":
 				variableToLookup = expression.getCdr().getCdr().getCdr().getCar()
 				value = eval(variableToLookup, environment)
-				message = message.replace("~a", value)
+				message = message.replace("~a", str(value))
 		sys.stdout.write(message)
 		return "nil"
 	elif expression.getCar().getValue() == "setf":
@@ -99,7 +99,7 @@ def eval(expression, environment):
 
 		right = expression.getCdr().getCdr().getCar()
 		rightValue = eval(right, environment)
-		return str(int(leftValue) + int(rightValue))
+		return int(leftValue) + int(rightValue)
 	elif expression.getCar().getValue() == "let":
 		variableToSet = expression.getCdr().getCar().getCar().getCar().getValue()
 		value = expression.getCdr().getCar().getCar().getCdr().getCar().getValue()
