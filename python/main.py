@@ -97,6 +97,7 @@ def eval(expression, environment):
 		}
 	else:
 		expressionAsList = expressionToList(expression)
+		print(expressionAsList)
 
 		functionName = expression.getCar()
 		functionCode = eval(functionName, environment)

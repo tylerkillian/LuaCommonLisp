@@ -6,6 +6,8 @@ class Node():
 		self.value = name[7:]
 		self.car = None
 		self.cdr = None
+	def __repr__(self):
+		return self.value
 	def getName(self):
 		return self.name
 	def setName(self, name):
