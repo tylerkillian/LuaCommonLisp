@@ -45,6 +45,16 @@ def expressionToList(expression):
 		current = current.getCdr()
 	return result
 
+def expression_get(expression, index):
+	assert(expression.getType() == "cons")
+	count = 0
+	current = expression
+	while count < index:
+		assert(current.getType() == "cons")
+		current = current.getCdr()
+	assert(current)
+	return current.getCar()
+
 def eval(expression, environment):
 	if expression.getType() == "symbol":
 		if expression.getValue() == "1":
@@ -89,7 +99,8 @@ def eval(expression, environment):
 		return eval(root, environment)
 	elif expression.getCar().getValue() == "defun":
 		expressionAsList = expressionToList(expression)
-		print(expressionAsList)
+		print(treeToString2(expression))
+		print(treeToString2(Expression_get(expression, 0)))
 
 		functionName = expression.getCdr().getCar().getValue()
 		argument = expression.getCdr().getCdr().getCar().getCar()
