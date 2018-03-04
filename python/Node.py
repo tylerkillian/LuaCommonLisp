@@ -47,17 +47,12 @@ class Node():
 
 class Cons():
 	def __init__(self):
-		self.name = "cons"
 		self.children = []
 		self.value = ""
 		self.car = None
 		self.cdr = None
 	def __repr__(self):
 		return self.value
-	def getName(self):
-		return self.name
-	def setName(self, name):
-		self.name = name
 	def getParent(self):
 		return self.parent
 	def setParent(self, parent):
