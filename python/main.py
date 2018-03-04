@@ -36,18 +36,24 @@ def createParseTree(expression, parent = None):
 			return topCons
 
 def eval(expression, environment):
-	if expression.getChild(0).getName() == "symbol_1":
-		return "1"
-	if expression.getChild(0).getName() == "symbol_2":
-		return "2"
-	if expression.getChild(0).getName() == "symbol_3":
-		return "3"
-	if expression.getChild(0).getName() == "symbol_4":
-		return "4"
-	elif expression.getChild(0).getName() == "symbol_5":
-		return "5"
-	elif expression.getChild(0).getType() == "symbol":
-		return environment[expression.getChild(0).getName()[7:]]
+	if expression.getChild(0).getType() == "symbol":
+		if expression.getChild(0).getValue() == "1":
+			return "1"
+		elif expression.getChild(0).getValue() == "2":
+			return "2"
+		elif expression.getChild(0).getValue() == "3":
+			return "3"
+		elif expression.getChild(0).getValue() == "4":
+			return "4"
+		elif expression.getChild(0).getValue() == "5":
+			return "5"
+		else:
+			print("----")
+			print(">" + expression.getChild(0).getName()[7:] + "<")
+			print(">" + expression.getChild(0).getValue() + "<")
+			print("----")
+			assert(expression.getChild(0).getName()[7:] == expression.getChild(0).getValue())
+			return environment[expression.getChild(0).getValue()]
 	elif expression.getChild(0).getChild(0).getName()[7:] == "format":
 		message = expression.getChild(0).getChild(1).getChild(1).getChild(0).getName()[8:-1]
 		message = message.replace("~%", "\n")

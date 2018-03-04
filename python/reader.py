@@ -50,6 +50,7 @@ class SymbolReader():
 			readerStack.pop()
 			return nextCharacter
 		else:
+			assert(self.value.getName()[7:] == self.value2.getValue())
 			self.value.setName(self.value.getName() + nextCharacter)
 			self.value2.setValue(self.value2.getValue() + nextCharacter)
 			return
