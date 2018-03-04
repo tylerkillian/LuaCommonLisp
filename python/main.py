@@ -56,6 +56,15 @@ def Expression_get(expression, index):
 	assert(current)
 	return current.getCar()
 
+def Expression_getLength(expression):
+	assert(expression.getType() == "cons")
+	length = 0
+	current = expression
+	while current.getType() == "cons":
+		current = current.getCdr()
+		length += 1
+	return length
+
 def eval(expression, environment):
 	if expression.getType() == "symbol":
 		if expression.getValue() == "1":
@@ -100,19 +109,14 @@ def eval(expression, environment):
 		return eval(root, environment)
 	elif expression.getCar().getValue() == "defun":
 		expressionAsList = expressionToList(expression)
-		print(treeToString2(expression))
-		print(treeToString2(Expression_get(expression, 0)))
-		print(treeToString2(Expression_get(expression, 1)))
-		print(treeToString2(Expression_get(expression, 2)))
-		print(treeToString2(Expression_get(expression, 3)))
 
 		functionName = expression.getCdr().getCar().getValue()
 		argument = expression.getCdr().getCdr().getCar().getCar()
 		body = expression.getCdr().getCdr().getCdr()
 
 		body_v2 = []
-		for commandIndex in range(3, Expression_getLength(expression)):
-			body_v2.append(Expression_get(expression, commandIndex))
+#		for commandIndex in range(3, Expression_getLength(expression)):
+#			body_v2.append(Expression_get(expression, commandIndex))
 		environment[functionName] = {
 			"argument" : argument,
 			"body" : body,
