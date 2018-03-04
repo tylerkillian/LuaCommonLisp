@@ -40,7 +40,7 @@ def expressionToList(expression):
 	current = expression
 	result = []
 	while current:
-		assert(current.getCdr().getType() == "cons")
+		assert(current.getType() == "cons")
 		result.append(current.getCar())
 		current = current.getCdr()
 	return result
@@ -96,6 +96,8 @@ def eval(expression, environment):
 			"body" : body,
 		}
 	else:
+		expressionAsList = expressionToList(expression)
+
 		functionName = expression.getCar()
 		functionCode = eval(functionName, environment)
 
