@@ -1,6 +1,6 @@
-(defun addone (n)
-	(+ n 1)
+(defun sum (x y)
+	(+ x y)
 )
 
-(format t "addone(2) = ~a~%" (addone 2))
+(format t "sum(2, 3) = ~a~%" (sum 1 2))
 
