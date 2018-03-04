@@ -49,8 +49,8 @@ def eval(expression, environment):
 			return "5"
 		else:
 			return environment[expression.value2.getValue()]
-	elif expression.getChild(0).getChild(0).getName()[7:] == "format":
-		message = expression.getChild(0).getChild(1).getChild(1).getChild(0).getName()[8:-1]
+	elif expression.value2.getCar().getValue() == "format":
+		message = expression.value2.getCdr().getCdr().getCar().getValue()[1:-1]
 		message = message.replace("~%", "\n")
 		if expression.getChild(0).getChild(1).getChild(1).getChild(1).getName() == "cons":
 			variableToLookup = Node("root")
