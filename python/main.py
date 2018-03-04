@@ -85,7 +85,7 @@ def eval(expression, environment):
 		root.addChild(expression.getChild(0).getChild(1).getChild(1).getChild(0))
 		root.value2 = expression.value2.getCdr().getCdr().getCar()
 		return eval(root, environment)
-	elif expression.getChild(0).getChild(0).getName()[7:] == "defun":
+	elif expression.value2.getCar().getValue() == "defun":
 		functionName = expression.getChild(0).getChild(1).getChild(0).getName()[7:]
 		argument = expression.getChild(0).getChild(1).getChild(1).getChild(0).getChild(0)
 		argument_v2 = expression.value2.getCdr().getCdr().getCar().getCar()
