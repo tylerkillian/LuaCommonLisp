@@ -89,9 +89,8 @@ def eval(expression2, environment):
 		functionName = expression2.getCar()
 		functionCode = eval(functionName, environment)
 
-		functionCallArgument = Node("root")
-		functionCallArgument.value2 = expression2.getCdr().getCar()
-		functionCallArgumentEvaluated = Symbol(eval(functionCallArgument.value2, environment))
+		functionCallArgument = expression2.getCdr().getCar()
+		functionCallArgumentEvaluated = Symbol(eval(functionCallArgument, environment))
 
 		cons3 = functionCode['body']
 
@@ -115,10 +114,9 @@ def eval(expression2, environment):
 		cons1.setCar(Symbol("let"))
 		cons1.setCdr(cons2)
 
-		letExpression = Node("root")
-		letExpression.value2 = cons1
+		letExpression = cons1
 
-		return eval(letExpression.value2, environment)
+		return eval(letExpression, environment)
 
 def lisp(inputFile):
 	input = open(inputFile, "r")
