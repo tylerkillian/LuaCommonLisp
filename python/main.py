@@ -158,8 +158,6 @@ def eval(expression, environment):
 
 		functionName_v2 = Expression_get(expression, 0)
 		functionPointer_v2 = eval(functionName_v2, environment)
-		print((Expression_getLength(expression)-1))
-		print(len(functionPointer_v2['arguments_v2']))
 		assert((Expression_getLength(expression)-1) == len(functionPointer_v2['arguments_v2']))
 		for expressionIndex in range(1, Expression_getLength(expression)):
 			argumentName = functionPointer_v2['arguments_v2'][expressionIndex - 1]
