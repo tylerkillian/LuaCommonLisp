@@ -83,14 +83,10 @@ def eval(expression, environment):
 		return eval(root, environment)
 	elif expression.value2.getCar().getValue() == "defun":
 		functionName = expression.value2.getCdr().getCar().getValue()
-		argument = expression.getChild(0).getChild(1).getChild(1).getChild(0).getChild(0)
 		argument_v2 = expression.value2.getCdr().getCdr().getCar().getCar()
-		body = expression.getChild(0).getChild(1).getChild(1).getChild(1)
 		body_v2 = expression.value2.getCdr().getCdr().getCdr()
 		environment[functionName] = {
-			"argument" : argument,
 			"argument_v2" : argument_v2,
-			"body" : body,
 			"body_v2" : body_v2,
 		}
 	else:
@@ -100,33 +96,26 @@ def eval(expression, environment):
 
 		functionCallArgument = Node("root")
 		functionCallArgument.value2 = expression.value2.getCdr().getCar()
-		functionCallArgumentEvaluated = Node("symbol_" + eval(functionCallArgument, environment))
 		functionCallArgumentEvaluated_v2 = Symbol(eval(functionCallArgument, environment))
 
-		cons3 = functionCode['body']
 		cons3_v2 = functionCode['body_v2']
 
-		ae_cons2 = Node("cons")
 		ae_cons2_v2 = Cons()
 		ae_cons2_v2.setCar(functionCallArgumentEvaluated_v2)
 		ae_cons2_v2.setCdr(Symbol("nil"))
 
-		ae_cons1 = Node("cons")
 		ae_cons1_v2 = Cons()
 		ae_cons1_v2.setCar(functionCode['argument_v2'])
 		ae_cons1_v2.setCdr(ae_cons2_v2)
 
-		argumentsExpression = Node("cons")
 		argumentsExpression_v2 = Cons()
 		argumentsExpression_v2.setCar(ae_cons1_v2)
 		argumentsExpression_v2.setCdr(Symbol("nil"))
 
-		cons2 = Node("cons")
 		cons2_v2 = Cons()
 		cons2_v2.setCar(argumentsExpression_v2)
 		cons2_v2.setCdr(cons3_v2)
 
-		cons1 = Node("cons")
 		cons1_v2 = Cons()
 		cons1_v2.setCar(Symbol("let"))
 		cons1_v2.setCdr(cons2_v2)
