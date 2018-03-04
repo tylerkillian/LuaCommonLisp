@@ -52,12 +52,13 @@ def eval(expression, environment):
 	elif expression.value2.getCar().getValue() == "format":
 		message = expression.value2.getCdr().getCdr().getCar().getValue()[1:-1]
 		message = message.replace("~%", "\n")
-		if expression.getChild(0).getChild(1).getChild(1).getChild(1).getName() == "cons":
-			variableToLookup = Node("root")
-			variableToLookup.addChild(expression.getChild(0).getChild(1).getChild(1).getChild(1).getChild(0))
-			variableToLookup.value2 = expression.value2.getCdr().getCdr().getCdr().getCar()
-			value = eval(variableToLookup, environment)
-			message = message.replace("~a", value)
+		if expression.value2.getCdr().getCdr().getCdr():
+			if expression.value2.getCdr().getCdr().getCdr().getType() == "cons":
+				variableToLookup = Node("root")
+				variableToLookup.addChild(expression.getChild(0).getChild(1).getChild(1).getChild(1).getChild(0))
+				variableToLookup.value2 = expression.value2.getCdr().getCdr().getCdr().getCar()
+				value = eval(variableToLookup, environment)
+				message = message.replace("~a", value)
 		sys.stdout.write(message)
 		return "nil"
 	elif expression.getChild(0).getChild(0).getName()[7:] == "setf":
