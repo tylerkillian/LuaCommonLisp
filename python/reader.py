@@ -8,7 +8,7 @@ def newReader(readerStack, initialCharacter, parentNode = None):
 	else:
 		return SymbolReader(readerStack, initialCharacter, parentNode)
 
-class RootReader():
+class RootReader2():
 	def __init__(self, readerStack):
 		readerStack.append(self)
 		self.value = Node("root")
