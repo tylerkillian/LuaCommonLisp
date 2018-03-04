@@ -47,29 +47,10 @@ class Node():
 
 class Cons():
 	def __init__(self):
-		self.children = []
-		self.value = ""
 		self.car = None
 		self.cdr = None
-	def __repr__(self):
-		return self.value
-	def getParent(self):
-		return self.parent
-	def setParent(self, parent):
-		self.parent = parent
-	def getNumChildren(self):
-		return len(self.children)
-	def addChild(self, child):
-		self.children.append(child)
-	def getChild(self, childIdx):
-		assert(childIdx < len(self.children))
-		return self.children[childIdx]
 	def getType(self):
 		return "cons"
-	def getValue(self):
-		return self.value
-	def setValue(self, value):
-		self.value = value
 	def getCar(self):
 		return self.car
 	def setCar(self, car):
