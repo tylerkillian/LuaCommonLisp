@@ -11,7 +11,7 @@ def newReader(readerStack, initialCharacter, parentNode = None):
 class RootReader():
 	def __init__(self, readerStack):
 		readerStack.append(self)
-		self.value = Node("root")
+		self.value = {'value2': None}
 		self.done = False
 	def isDone(self):
 		return self.done
