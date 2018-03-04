@@ -112,9 +112,10 @@ def eval(expression, environment):
 		argument = expression.getCdr().getCdr().getCar().getCar()
 		body = expression.getCdr().getCdr().getCdr()
 
+		argumentsExpression_v2 = Expression_get(expression, 2)
 		arguments_v2 = []
-		for expressionIndex in range(2, Expression_getLength(expression)):
-			arguments_v2.append(Expression_get(expression, expressionIndex))
+		for expressionIndex in range(0, Expression_getLength(argumentsExpression_v2)):
+			arguments_v2.append(Expression_get(argumentsExpression_v2, expressionIndex))
 		body_v2 = []
 		for expressionIndex in range(3, Expression_getLength(expression)):
 			body_v2.append(Expression_get(expression, expressionIndex))
@@ -157,7 +158,8 @@ def eval(expression, environment):
 
 		functionName_v2 = Expression_get(expression, 0)
 		functionPointer_v2 = eval(functionName_v2, environment)
-		arguments_v2 = []
+		print((Expression_getLength(expression)-1))
+		print(len(functionPointer_v2['arguments_v2']))
 		assert((Expression_getLength(expression)-1) == len(functionPointer_v2['arguments_v2']))
 		for expressionIndex in range(1, Expression_getLength(expression)):
 			argumentName = functionPointer_v2['arguments_v2'][expressionIndex - 1]
