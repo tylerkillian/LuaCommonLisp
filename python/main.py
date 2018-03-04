@@ -108,23 +108,37 @@ def eval(expression, environment):
 		ae_cons2 = Node("cons")
 		ae_cons2.addChild(functionCallArgumentEvaluated)
 		ae_cons2.addChild(Node("symbol_nil"))
+		ae_cons2_v2 = Cons()
+		ae_cons2_v2.setCar(functionCallArgumentEvaluated_v2)
+		ae_cons2_v2.setCdr(Symbol("nil"))
 
 		ae_cons1 = Node("cons")
 		ae_cons1.addChild(functionCode['argument'])
 		ae_cons1.addChild(ae_cons2)
+		ae_cons1_v2 = Cons()
+		ae_cons1_v2.setCar(functionCode['argument_v2'])
+		ae_cons1_v2.setCdr(ae_cons2_v2)
 
 		argumentsExpression = Node("cons")
 		argumentsExpression.addChild(ae_cons1)
 		argumentsExpression.addChild(Node("symbol_nil"))
+		argumentsExpression_v2 = Cons()
+		argumentsExpression_v2.setCar(ae_cons1_v2)
+		argumentsExpression_v2.setCdr(Symbol("nil"))
 
 		cons2 = Node("cons")
 		cons2.addChild(argumentsExpression)
 		cons2.addChild(cons3)
+		cons2_v2 = Cons()
+		cons2_v2.setCar(argumentsExpression_v2)
+		cons2_v2.setCdr(cons3)
 
 		cons1 = Node("cons")
 		cons1.addChild(Node("symbol_let"))
 		cons1.addChild(cons2)
-		cons1_v2 = 
+		cons1_v2 = Cons()
+		cons1_v2.setCar(Symbol("let"))
+		cons1_v2.setCdr(cons2_v2)
 
 		letExpression = Node("root")
 		letExpression.addChild(cons1)
