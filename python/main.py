@@ -52,6 +52,7 @@ def Expression_get(expression, index):
 	while count < index:
 		assert(current.getType() == "cons")
 		current = current.getCdr()
+		count += 1
 	assert(current)
 	return current.getCar()
 
