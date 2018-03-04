@@ -23,7 +23,7 @@ class RootReader():
 			self.done = True
 			readerStack.pop()
 			consReader = newReader(readerStack, nextCharacter, self.value)
-			self.value.value2 = consReader.getValue2()
+			self.value['value2'] = consReader.getValue2()
 			return
 
 
