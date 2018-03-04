@@ -70,5 +70,12 @@ class Symbol:
 	def setValue(self, value):
 		self.value = value
 
-def String(value = ""):
-	return Node("string_" + value)
+class String:
+	def __init__(self, value = ""):
+		self.value = value
+	def getType(self):
+		return "string"
+	def getValue(self):
+		return self.value
+	def setValue(self, value):
+		self.value = value
