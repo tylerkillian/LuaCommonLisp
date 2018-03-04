@@ -63,9 +63,9 @@ def eval(expression, environment):
 		return "nil"
 	elif expression.value2.getCar().getValue() == "setf":
 		variable = expression.value2.getCdr().getCar().getValue()
-		value = expression.getChild(0).getChild(1).getChild(1).getChild(0).getName()[7:]
+		value = expression.value2.getCdr().getCdr().getCar().getValue()
 		environment[variable] = value
-	elif expression.getChild(0).getChild(0).getName()[7:] == "+":
+	elif expression.value2.getCar().getValue() == "+":
 		left = Node("root")
 		left.addChild(expression.getChild(0).getChild(1).getChild(0))
 		left.value2 = expression.value2.getCdr().getCar()
@@ -76,7 +76,7 @@ def eval(expression, environment):
 		right.value2 = expression.value2.getCdr().getCdr().getCar()
 		rightValue = eval(right, environment)
 		return str(int(leftValue) + int(rightValue))
-	elif expression.getChild(0).getChild(0).getName()[7:] == "let":
+	elif expression.value2.getCar().getValue() == "let":
 		variableToSet = expression.getChild(0).getChild(1).getChild(0).getChild(0).getChild(0).getName()[7:]
 		value = expression.getChild(0).getChild(1).getChild(0).getChild(0).getChild(1).getChild(0).getName()[7:]
 		environment = {}
