@@ -55,7 +55,6 @@ def eval(expression, environment):
 		if expression.value2.getCdr().getCdr().getCdr():
 			if expression.value2.getCdr().getCdr().getCdr().getType() == "cons":
 				variableToLookup = Node("root")
-				variableToLookup.addChild(expression.getChild(0).getChild(1).getChild(1).getChild(1).getChild(0))
 				variableToLookup.value2 = expression.value2.getCdr().getCdr().getCdr().getCar()
 				value = eval(variableToLookup, environment)
 				message = message.replace("~a", value)
@@ -99,12 +98,10 @@ def eval(expression, environment):
 		}
 	else:
 		functionName = Node("root")
-		functionName.addChild(expression.getChild(0).getChild(0))
 		functionName.value2 = expression.value2.getCar()
 		functionCode = eval(functionName, environment)
 
 		functionCallArgument = Node("root")
-		functionCallArgument.addChild(expression.getChild(0).getChild(1).getChild(0))
 		functionCallArgument.value2 = expression.value2.getCdr().getCar()
 		functionCallArgumentEvaluated = Node("symbol_" + eval(functionCallArgument, environment))
 		functionCallArgumentEvaluated_v2 = Symbol(eval(functionCallArgument, environment))
