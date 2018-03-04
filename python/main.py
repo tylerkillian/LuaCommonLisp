@@ -66,12 +66,10 @@ def eval(expression, environment):
 		environment[variable] = value
 	elif expression.value2.getCar().getValue() == "+":
 		left = Node("root")
-		left.addChild(expression.getChild(0).getChild(1).getChild(0))
 		left.value2 = expression.value2.getCdr().getCar()
 		leftValue = eval(left, environment)
 
 		right = Node("root")
-		right.addChild(expression.getChild(0).getChild(1).getChild(1).getChild(0))
 		right.value2 = expression.value2.getCdr().getCdr().getCar()
 		rightValue = eval(right, environment)
 		return str(int(leftValue) + int(rightValue))
@@ -81,7 +79,6 @@ def eval(expression, environment):
 		environment = {}
 		environment[variableToSet] = value
 		root = Node("root")
-		root.addChild(expression.getChild(0).getChild(1).getChild(1).getChild(0))
 		root.value2 = expression.value2.getCdr().getCdr().getCar()
 		return eval(root, environment)
 	elif expression.value2.getCar().getValue() == "defun":
@@ -110,42 +107,31 @@ def eval(expression, environment):
 		cons3_v2 = functionCode['body_v2']
 
 		ae_cons2 = Node("cons")
-		ae_cons2.addChild(functionCallArgumentEvaluated)
-		ae_cons2.addChild(Node("symbol_nil"))
 		ae_cons2_v2 = Cons()
 		ae_cons2_v2.setCar(functionCallArgumentEvaluated_v2)
 		ae_cons2_v2.setCdr(Symbol("nil"))
 
 		ae_cons1 = Node("cons")
-		ae_cons1.addChild(functionCode['argument'])
-		ae_cons1.addChild(ae_cons2)
 		ae_cons1_v2 = Cons()
 		ae_cons1_v2.setCar(functionCode['argument_v2'])
 		ae_cons1_v2.setCdr(ae_cons2_v2)
 
 		argumentsExpression = Node("cons")
-		argumentsExpression.addChild(ae_cons1)
-		argumentsExpression.addChild(Node("symbol_nil"))
 		argumentsExpression_v2 = Cons()
 		argumentsExpression_v2.setCar(ae_cons1_v2)
 		argumentsExpression_v2.setCdr(Symbol("nil"))
 
 		cons2 = Node("cons")
-		cons2.addChild(argumentsExpression)
-		cons2.addChild(cons3)
 		cons2_v2 = Cons()
 		cons2_v2.setCar(argumentsExpression_v2)
 		cons2_v2.setCdr(cons3_v2)
 
 		cons1 = Node("cons")
-		cons1.addChild(Node("symbol_let"))
-		cons1.addChild(cons2)
 		cons1_v2 = Cons()
 		cons1_v2.setCar(Symbol("let"))
 		cons1_v2.setCdr(cons2_v2)
 
 		letExpression = Node("root")
-		letExpression.addChild(cons1)
 		letExpression.value2 = cons1_v2
 
 		return eval(letExpression, environment)
