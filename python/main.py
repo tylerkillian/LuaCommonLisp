@@ -87,10 +87,14 @@ def eval(expression, environment):
 	elif expression.getChild(0).getChild(0).getName()[7:] == "defun":
 		functionName = expression.getChild(0).getChild(1).getChild(0).getName()[7:]
 		argument = expression.getChild(0).getChild(1).getChild(1).getChild(0).getChild(0)
+		argument_v2 = expression.value2.getCdr().getCdr().getCar().getCar()
 		body = expression.getChild(0).getChild(1).getChild(1).getChild(1)
+		body_v2 = expression.value2.getCdr().getCdr().getCdr()
 		environment[functionName] = {
 			"argument" : argument,
+			"argument_v2" : argument_v2,
 			"body" : body,
+			"body_v2" : body_v2,
 		}
 	else:
 		functionName = Node("root")
@@ -102,8 +106,10 @@ def eval(expression, environment):
 		functionCallArgument.addChild(expression.getChild(0).getChild(1).getChild(0))
 		functionCallArgument.value2 = expression.value2.getCdr().getCar()
 		functionCallArgumentEvaluated = Node("symbol_" + eval(functionCallArgument, environment))
+		functionCallArgumentEvaluated_v2 = Symbol(eval(functionCallArgument, environment))
 
 		cons3 = functionCode['body']
+		cons3_v2 = functionCode['body_v2']
 
 		ae_cons2 = Node("cons")
 		ae_cons2.addChild(functionCallArgumentEvaluated)
@@ -131,7 +137,7 @@ def eval(expression, environment):
 		cons2.addChild(cons3)
 		cons2_v2 = Cons()
 		cons2_v2.setCar(argumentsExpression_v2)
-		cons2_v2.setCdr(cons3)
+		cons2_v2.setCdr(cons3_v2)
 
 		cons1 = Node("cons")
 		cons1.addChild(Node("symbol_let"))
