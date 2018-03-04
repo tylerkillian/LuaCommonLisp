@@ -28,7 +28,7 @@ class RootReader():
 
 
 class SymbolReader():
-	def __init__(self, readerStack, initialCharacter, parentNode = None):
+	def __init__(self, readerStack, initialCharacter):
 		readerStack.append(self)
 		self.value2 = Symbol(initialCharacter)
 		self.done = False
@@ -49,10 +49,10 @@ class SymbolReader():
 			return
 
 class StringReader():
-	def __init__(self, readerStack, initialCharacter, parentNode = None):
+	def __init__(self, readerStack, initialCharacter):
 		assert(initialCharacter == "\"")
 		readerStack.append(self)
-		self.value = Node("string_" + initialCharacter, parentNode)
+		self.value = Node("string_" + initialCharacter)
 		self.value2 = String(initialCharacter)
 		self.mode = "readingString"
 		self.done = False
@@ -87,7 +87,7 @@ def isWhitespace(character):
 		return False
 
 class ConsReader():
-	def __init__(self, readerStack, initialCharacter, parentNode = None):
+	def __init__(self, readerStack, initialCharacter):
 		assert(initialCharacter == "(")
 		readerStack.append(self)
 		self.stage = "waitingForCar"

@@ -2,10 +2,9 @@ from test_utilities import *
 from reader import *
 
 def test_ConsReader_emptyList():
-	root = Node("root")
 	readerStack = []
 
-	ConsReader(readerStack, "(", root)
+	ConsReader(readerStack, "(")
 	assert(len(readerStack) == 1)
 
 	reader = readerStack[-1]
