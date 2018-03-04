@@ -35,8 +35,8 @@ def createParseTree(expression, parent = None):
 			topCons.setParent(parent)
 			return topCons
 
-def eval(expression, environment):
-	expression2 = expression.value2
+def eval(expression2, environment):
+	#expression2 = expression.value2
 	if expression2.getType() == "symbol":
 		if expression2.getValue() == "1":
 			return "1"
@@ -57,7 +57,7 @@ def eval(expression, environment):
 			if expression2.getCdr().getCdr().getCdr().getType() == "cons":
 				variableToLookup = Node("root")
 				variableToLookup.value2 = expression2.getCdr().getCdr().getCdr().getCar()
-				value = eval(variableToLookup, environment)
+				value = eval(variableToLookup.value2, environment)
 				message = message.replace("~a", value)
 		sys.stdout.write(message)
 		return "nil"
@@ -68,11 +68,11 @@ def eval(expression, environment):
 	elif expression2.getCar().getValue() == "+":
 		left = Node("root")
 		left.value2 = expression2.getCdr().getCar()
-		leftValue = eval(left, environment)
+		leftValue = eval(left.value2, environment)
 
 		right = Node("root")
 		right.value2 = expression2.getCdr().getCdr().getCar()
-		rightValue = eval(right, environment)
+		rightValue = eval(right.value2, environment)
 		return str(int(leftValue) + int(rightValue))
 	elif expression2.getCar().getValue() == "let":
 		variableToSet = expression2.getCdr().getCar().getCar().getCar().getValue()
@@ -81,7 +81,7 @@ def eval(expression, environment):
 		environment[variableToSet] = value
 		root = Node("root")
 		root.value2 = expression2.getCdr().getCdr().getCar()
-		return eval(root, environment)
+		return eval(root.value2, environment)
 	elif expression2.getCar().getValue() == "defun":
 		functionName = expression2.getCdr().getCar().getValue()
 		argument = expression2.getCdr().getCdr().getCar().getCar()
@@ -93,11 +93,11 @@ def eval(expression, environment):
 	else:
 		functionName = Node("root")
 		functionName.value2 = expression2.getCar()
-		functionCode = eval(functionName, environment)
+		functionCode = eval(functionName.value2, environment)
 
 		functionCallArgument = Node("root")
 		functionCallArgument.value2 = expression2.getCdr().getCar()
-		functionCallArgumentEvaluated = Symbol(eval(functionCallArgument, environment))
+		functionCallArgumentEvaluated = Symbol(eval(functionCallArgument.value2, environment))
 
 		cons3 = functionCode['body']
 
@@ -124,7 +124,7 @@ def eval(expression, environment):
 		letExpression = Node("root")
 		letExpression.value2 = cons1
 
-		return eval(letExpression, environment)
+		return eval(letExpression.value2, environment)
 
 def lisp(inputFile):
 	input = open(inputFile, "r")
@@ -138,7 +138,7 @@ def lisp(inputFile):
 		characterToProcess = sendToReaderStack(readerStack, nextCharacter)
 		if characterToProcess:
 			assert(characterToProcess == nextCharacter)
-			eval(root, environment)
+			eval(root.value2, environment)
 		else:
 			nextCharacter = input.read(1)
 lisp(sys.argv[1])
