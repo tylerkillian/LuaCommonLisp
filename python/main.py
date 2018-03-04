@@ -48,12 +48,7 @@ def eval(expression, environment):
 		elif expression.getChild(0).getValue() == "5":
 			return "5"
 		else:
-			print("----")
-			print(">" + expression.getChild(0).getName()[7:] + "<")
-			print(">" + expression.getChild(0).getValue() + "<")
-			print("----")
-			assert(expression.getChild(0).getName()[7:] == expression.getChild(0).getValue())
-			return environment[expression.getChild(0).getValue()]
+			return environment[expression.getChild(0).getName()[7:]]
 	elif expression.getChild(0).getChild(0).getName()[7:] == "format":
 		message = expression.getChild(0).getChild(1).getChild(1).getChild(0).getName()[8:-1]
 		message = message.replace("~%", "\n")
