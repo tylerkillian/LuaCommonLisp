@@ -13,8 +13,6 @@ class RootReader():
 		readerStack.append(self)
 		self.value = Node("root")
 		self.done = False
-	def getValue(self):
-		return self.value
 	def isDone(self):
 		return self.done
 	def readNextCharacter(self, readerStack, nextCharacter):
@@ -25,7 +23,6 @@ class RootReader():
 			self.done = True
 			readerStack.pop()
 			consReader = newReader(readerStack, nextCharacter, self.value)
-			self.value.addChild(consReader.getValue())
 			self.value.value2 = consReader.getValue2()
 			return
 
@@ -33,11 +30,8 @@ class RootReader():
 class SymbolReader():
 	def __init__(self, readerStack, initialCharacter, parentNode = None):
 		readerStack.append(self)
-		self.value = Node("symbol_" + initialCharacter, parentNode)
 		self.value2 = Symbol(initialCharacter)
 		self.done = False
-	def getValue(self):
-		return self.value
 	def getValue2(self):
 		return self.value2
 	def isDone(self):
@@ -51,8 +45,6 @@ class SymbolReader():
 			readerStack.pop()
 			return nextCharacter
 		else:
-			assert(self.value.getName()[7:] == self.value2.getValue())
-			self.value.setName(self.value.getName() + nextCharacter)
 			self.value2.setValue(self.value2.getValue() + nextCharacter)
 			return
 
@@ -64,8 +56,6 @@ class StringReader():
 		self.value2 = String(initialCharacter)
 		self.mode = "readingString"
 		self.done = False
-	def getValue(self):
-		return self.value
 	def getValue2(self):
 		return self.value2
 	def isDone(self):
@@ -79,12 +69,10 @@ class StringReader():
 			readerStack.pop()
 			return nextCharacter
 		elif nextCharacter == "\"":
-			self.value.setName(self.value.getName() + nextCharacter)
 			self.value2.setValue(self.value2.getValue() + nextCharacter)
 			self.mode = "waitingForTerminalCharacter"
 			return
 		else:
-			self.value.setName(self.value.getName() + nextCharacter)
 			self.value2.setValue(self.value2.getValue() + nextCharacter)
 			return
 
@@ -103,11 +91,8 @@ class ConsReader():
 		assert(initialCharacter == "(")
 		readerStack.append(self)
 		self.stage = "waitingForCar"
-		self.value = Node("cons", parentNode)
 		self.value2 = Cons()
 		self.done = False
-	def getValue(self):
-		return self.value
 	def getValue2(self):
 		return self.value2
 	def isDone(self):
@@ -119,23 +104,16 @@ class ConsReader():
 		elif nextCharacter == ")":
 			self.value2.setCar(None)
 			self.value2.setCdr(None)
-			self.value.addChild(Node("symbol_nil", self.value))
-			self.value.addChild(Node("symbol_nil", self.value))
-			assert(self.value.getNumChildren() == 2)
 			self.stage = "waitingForTerminalCharacter"
 		else:
 			self.stage = "waitingForDot"
-			readCar = newReader(readerStack, nextCharacter, self.value)
-			self.value.addChild(readCar.getValue())
+			readCar = newReader(readerStack, nextCharacter)
 			self.value2.setCar(readCar.getValue2())
-			assert(self.value.getNumChildren() == 1)
 	def beginReadingNextListElement(self, readerStack, characters):
 		self.done = True
 		readerStack.pop()
-		readNextListElement = ConsReader(readerStack, "(", self.value)
-		self.value.addChild(readNextListElement.getValue())
+		readNextListElement = ConsReader(readerStack, "(")
 		self.value2.setCdr(readNextListElement.getValue2())
-		assert(self.value.getNumChildren() == 2)
 		for nextCharacter in characters:
 			readNextListElement.readNextCharacter(readerStack, nextCharacter)
 		return
@@ -147,9 +125,7 @@ class ConsReader():
 		elif isWhitespace(nextCharacter):
 			return
 		elif nextCharacter == ")":
-			self.value.addChild(Node("symbol_nil", self.value))
 			self.value2.setCdr(None)
-			assert(self.value.getNumChildren() == 2)
 			self.stage = "waitingForTerminalCharacter"
 			return
 		else:
@@ -166,7 +142,7 @@ class ConsReader():
 		if not isWhitespace(nextCharacter):
 			assert(nextcharacter != ")")
 			self.stage = "waitingForParenthesis"
-			cdrReader = newReader(readerStack, nextCharacter, self.value)
+			cdrReader = newReader(readerStack, nextCharacter)
 	def processStage_waitingForParenthesis(self, readerStack, nextCharacter):
 		assert(self.stage == "waitingForParenthesis")
 		if nextCharacter == ")":

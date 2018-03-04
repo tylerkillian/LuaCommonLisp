@@ -9,7 +9,6 @@ def test_ConsReader_emptyList():
 	assert(len(readerStack) == 1)
 
 	reader = readerStack[-1]
-	root.addChild(reader.getValue())
 
 	shouldBeNull = readerStack[-1].readNextCharacter(readerStack, ")")
 	assert(not shouldBeNull)
@@ -22,23 +21,16 @@ def test_ConsReader_emptyList():
 
 	assert(len(readerStack) == 0)
 
-	assert(root.getNumChildren() == 1)
-	assert(root.getChild(0).getNumChildren() == 2)
-	assert(root.getChild(0).getChild(0).getName() == "symbol_nil")
-	assert(root.getChild(0).getChild(1).getName() == "symbol_nil")
-
 	cons = reader.getValue2()
 	assert(cons.getCar() == None)
 	assert(cons.getCdr() == None)
 def test_ConsReader_singleElementList():
-	root = Node("root")
 	readerStack = []
 
-	ConsReader(readerStack, "(", root)
+	ConsReader(readerStack, "(")
 	assert(len(readerStack) == 1)
 
 	consReader = readerStack[-1]
-	root.addChild(consReader.getValue())
 
 	shouldBeNull = readerStack[-1].readNextCharacter(readerStack, "a")
 	assert(not shouldBeNull)
@@ -65,12 +57,6 @@ def test_ConsReader_singleElementList():
 	assert(consReader.isDone())
 
 	assert(len(readerStack) == 0)
-
-	assert(root.getNumChildren() == 1)
-	cons = root.getChild(0)
-	assert(cons.getNumChildren() == 2)
-	assert(cons.getChild(0).getName() == "symbol_a")
-	assert(cons.getChild(1).getName() == "symbol_nil")
 
 	cons = consReader.getValue2()
 	assert(cons.getCar().getType() == "symbol")
@@ -111,17 +97,6 @@ def parseString2(string):
 				return reader.getValue2()
 	assert(False)
 def test_ConsReader_twoElementList():
-	root = parseString("(a b) ")
-
-	assert(root.getNumChildren() == 1)
-	assert(root.getChild(0).getName() == "cons")
-	assert(root.getChild(0).getNumChildren() == 2)
-	assert(root.getChild(0).getChild(0).getName() == "symbol_a")
-	assert(root.getChild(0).getChild(1).getName() == "cons")
-	assert(root.getChild(0).getChild(1).getNumChildren() == 2)
-	assert(root.getChild(0).getChild(1).getChild(0).getName() == "symbol_b")
-	assert(root.getChild(0).getChild(1).getChild(1).getName() == "symbol_nil")
-
 	cons = parseString2("(a b) ")
 
 	assert(cons.getType() == "cons")
@@ -140,15 +115,9 @@ runTests(test_ConsReader)
 
 
 def test_readExpressions_setf():
-	root = parseString("(setf a 3) ")
-	assert(treeToString(root) == "(setf a 3)")
-
 	cons = parseString2("(setf a 3) ")
 	assert(treeToString2(cons) == "(setf a 3)")
 def test_readExpressions_format():
-	root = parseString("(format t \"a = ~a~%\" a) ")
-	assert(treeToString(root) == "(format t \"a = ~a~%\" a)")
-
 	cons = parseString2("(format t \"a = ~a~%\" a) ")
 	assert(treeToString2(cons) == "(format t \"a = ~a~%\" a)")
 test_readExpressions = {
