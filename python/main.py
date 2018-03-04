@@ -101,9 +101,9 @@ def eval(expression, environment):
 		expressionAsList = expressionToList(expression)
 		print(treeToString2(expression))
 		print(treeToString2(Expression_get(expression, 0)))
-		print(treeToString2(Expression_get(expression, 0)))
-		print(treeToString2(Expression_get(expression, 0)))
-		print(treeToString2(Expression_get(expression, 0)))
+		print(treeToString2(Expression_get(expression, 1)))
+		print(treeToString2(Expression_get(expression, 2)))
+		print(treeToString2(Expression_get(expression, 3)))
 
 		functionName = expression.getCdr().getCar().getValue()
 		argument = expression.getCdr().getCdr().getCar().getCar()
