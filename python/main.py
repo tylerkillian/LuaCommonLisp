@@ -15,26 +15,6 @@ def getValue(environment, value):
 			return scope[value]
 	return None
 
-def createParseTree(expression, parent = None):
-	if not parent:
-		root = Node("root")	
-		root.addChild(createParseTree(expression, root))
-		return root
-	else:
-		if type(expression) is str:
-			return Node("symbol_" + expression, parent)
-		else:
-			previousValue = Node("symbol_nil")
-			currentCons = Node("cons")
-			for value in reversed(expression):
-				currentCons.addChild(createParseTree(value, currentCons))
-				currentCons.addChild(previousValue)
-				previousValue.setParent(currentCons)
-				previousValue = currentCons
-			topCons = previousValue
-			topCons.setParent(parent)
-			return topCons
-
 def expressionToList(expression):
 	assert(expression.getType() == "cons")
 	current = expression
