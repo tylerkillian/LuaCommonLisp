@@ -156,15 +156,15 @@ def eval(expression, environment):
 
 		letExpression = cons1
 
-		functionName_v2 = Expression_get(expression, 0)
-		functionPointer_v2 = eval(functionName_v2, environment)
-		assert((Expression_getLength(expression)-1) == len(functionPointer_v2['arguments_v2']))
-		for expressionIndex in range(1, Expression_getLength(expression)):
-			argumentName = functionPointer_v2['arguments_v2'][expressionIndex - 1]
-			environment[argumentName] = eval(Expression_get(expression, expressionIndex), environment)
-		returnValue = None
-		for command in functionPointer_v2['body_v2']:
-			returnValue = eval(command, environment)
+#		functionName_v2 = Expression_get(expression, 0)
+#		functionPointer_v2 = eval(functionName_v2, environment)
+#		assert((Expression_getLength(expression)-1) == len(functionPointer_v2['arguments_v2']))
+#		for expressionIndex in range(1, Expression_getLength(expression)):
+#			argumentName = functionPointer_v2['arguments_v2'][expressionIndex - 1]
+#			environment[argumentName] = eval(Expression_get(expression, expressionIndex), environment)
+#		returnValue = None
+#		for command in functionPointer_v2['body_v2']:
+#			returnValue = eval(command, environment)
 		
 
 		return eval(letExpression, environment)
