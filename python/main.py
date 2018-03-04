@@ -109,9 +109,15 @@ def eval(expression, environment):
 		functionName = expression.getCdr().getCar().getValue()
 		argument = expression.getCdr().getCdr().getCar().getCar()
 		body = expression.getCdr().getCdr().getCdr()
+
+		body_v2 = []
+		for commandIndex in range(3, Expression_getLength(expression)):
+			body_v2.append(Expression_get(expression, commandIndex))
 		environment[functionName] = {
 			"argument" : argument,
 			"body" : body,
+			"argumentList" : Expression_get(expression, 2),
+			"body_v2" : body_v2,
 		}
 	else:
 		functionName = expression.getCar()
