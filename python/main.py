@@ -148,7 +148,7 @@ def eval(expression, environment):
 
 		letExpression = Node("root")
 		letExpression.addChild(cons1)
-		letexpression.value2 = cons1_v2
+		letExpression.value2 = cons1_v2
 
 		return eval(letExpression, environment)
 
