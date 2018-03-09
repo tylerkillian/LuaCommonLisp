@@ -1,5 +1,15 @@
 from Node import Cons, Symbol, String
 
+def isWhitespace(character):
+	if character == " ":
+		return True
+	elif character == "\t":
+		return True
+	elif character == "\n":
+		return True
+	else:
+		return False
+
 def newReader(readerStack, initialCharacter):
 	if initialCharacter == "(":
 		return ConsReader(readerStack, initialCharacter)
@@ -21,13 +31,11 @@ class RootReader():
 		assert(not self.done)
 		assert(readerStack[-1] == self)
 
-		if nextCharacter == "(":
+		if not isWhitespace(nextCharacter):
 			self.done = True
 			readerStack.pop()
-			consReader = newReader(readerStack, nextCharacter)
-			self.value['value'] = consReader.getValue()
-			return
-
+			nextReader = newReader(readerStack, nextCharacter)
+			self.value['value'] = nextReader.getValue()
 
 class SymbolReader():
 	def __init__(self, readerStack, initialCharacter):
@@ -76,16 +84,6 @@ class StringReader():
 		else:
 			self.value.setValue(self.value.getValue() + nextCharacter)
 			return
-
-def isWhitespace(character):
-	if character == " ":
-		return True
-	elif character == "\t":
-		return True
-	elif character == "\n":
-		return True
-	else:
-		return False
 
 class ConsReader():
 	def __init__(self, readerStack, initialCharacter):
@@ -173,6 +171,23 @@ class ConsReader():
 			assert(self.stage == "waitingForTerminalCharacter")
 			return self.processStage_waitingForTerminalCharacter(readerStack, nextCharacter)
 
+class QuoteReader():
+	def __init__(self, readerStack, initialCharacter):
+		assert(initialCharacter == "'")
+		readerStack.append(self)
+		self.value = Quote()
+		self.done = False
+	def isDone(self):
+		return self.done
+	def readNextCharacter(self, readerStack, nextCharacter):
+		assert(not self.done)
+		assert(readerStack[-1] == self)
+
+		self.done = True
+		readerStack.pop()
+		nextReader = newReader(readerStack, nextCharacter)
+		self.value.setOperand(nextReader.getValue())
+
 def treeToString(node, addParenthesis = True):
 	if node.getType() == "cons":
 		if node.getCdr() == None:
@@ -190,24 +205,4 @@ def treeToString(node, addParenthesis = True):
 		return node.getValue()
 	else:
 		assert(False)
-
-class QuoteReader():
-	def __init__(self, readerStack, initialCharacter):
-		assert(initialCharacter == "'")
-		readerStack.append(self)
-		self.value = Quote()
-		self.done = False
-	def isDone(self):
-		return self.done
-	def readNextCharacter(self, readerStack, nextCharacter):
-		assert(not self.done)
-		assert(readerStack[-1] == self)
-
-		if nextCharacter == "(":
-			self.done = True
-			readerStack.pop()
-			nextReader = newReader(readerStack, nextCharacter)
-			self.value['value'] = nextReader.getValue()
-			return
-
 
