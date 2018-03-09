@@ -13,7 +13,7 @@ def newReader(readerStack, initialCharacter):
 class RootReader():
 	def __init__(self, readerStack):
 		readerStack.append(self)
-		self.value = {'value2': None}
+		self.value = {'value': None}
 		self.done = False
 	def isDone(self):
 		return self.done
@@ -25,17 +25,17 @@ class RootReader():
 			self.done = True
 			readerStack.pop()
 			consReader = newReader(readerStack, nextCharacter)
-			self.value['value2'] = consReader.getValue2()
+			self.value['value'] = consReader.getValue()
 			return
 
 
 class SymbolReader():
 	def __init__(self, readerStack, initialCharacter):
 		readerStack.append(self)
-		self.value2 = Symbol(initialCharacter)
+		self.value = Symbol(initialCharacter)
 		self.done = False
-	def getValue2(self):
-		return self.value2
+	def getValue(self):
+		return self.value
 	def isDone(self):
 		return self.done
 	def readNextCharacter(self, readerStack, nextCharacter):
@@ -47,18 +47,18 @@ class SymbolReader():
 			readerStack.pop()
 			return nextCharacter
 		else:
-			self.value2.setValue(self.value2.getValue() + nextCharacter)
+			self.value.setValue(self.value.getValue() + nextCharacter)
 			return
 
 class StringReader():
 	def __init__(self, readerStack, initialCharacter):
 		assert(initialCharacter == "\"")
 		readerStack.append(self)
-		self.value2 = String(initialCharacter)
+		self.value = String(initialCharacter)
 		self.mode = "readingString"
 		self.done = False
-	def getValue2(self):
-		return self.value2
+	def getValue(self):
+		return self.value
 	def isDone(self):
 		return self.done
 	def readNextCharacter(self, readerStack, nextCharacter):
@@ -70,11 +70,11 @@ class StringReader():
 			readerStack.pop()
 			return nextCharacter
 		elif nextCharacter == "\"":
-			self.value2.setValue(self.value2.getValue() + nextCharacter)
+			self.value.setValue(self.value.getValue() + nextCharacter)
 			self.mode = "waitingForTerminalCharacter"
 			return
 		else:
-			self.value2.setValue(self.value2.getValue() + nextCharacter)
+			self.value.setValue(self.value.getValue() + nextCharacter)
 			return
 
 def isWhitespace(character):
@@ -92,10 +92,10 @@ class ConsReader():
 		assert(initialCharacter == "(")
 		readerStack.append(self)
 		self.stage = "waitingForCar"
-		self.value2 = Cons()
+		self.value = Cons()
 		self.done = False
-	def getValue2(self):
-		return self.value2
+	def getValue(self):
+		return self.value
 	def isDone(self):
 		return self.done
 	def processStage_waitingForCar(self, readerStack, nextCharacter):
@@ -103,18 +103,18 @@ class ConsReader():
 		if isWhitespace(nextCharacter):
 			return
 		elif nextCharacter == ")":
-			self.value2.setCar(None)
-			self.value2.setCdr(None)
+			self.value.setCar(None)
+			self.value.setCdr(None)
 			self.stage = "waitingForTerminalCharacter"
 		else:
 			self.stage = "waitingForDot"
 			readCar = newReader(readerStack, nextCharacter)
-			self.value2.setCar(readCar.getValue2())
+			self.value.setCar(readCar.getValue())
 	def beginReadingNextListElement(self, readerStack, characters):
 		self.done = True
 		readerStack.pop()
 		readNextListElement = ConsReader(readerStack, "(")
-		self.value2.setCdr(readNextListElement.getValue2())
+		self.value.setCdr(readNextListElement.getValue())
 		for nextCharacter in characters:
 			readNextListElement.readNextCharacter(readerStack, nextCharacter)
 		return
@@ -126,7 +126,7 @@ class ConsReader():
 		elif isWhitespace(nextCharacter):
 			return
 		elif nextCharacter == ")":
-			self.value2.setCdr(None)
+			self.value.setCdr(None)
 			self.stage = "waitingForTerminalCharacter"
 			return
 		else:
@@ -192,9 +192,10 @@ def treeToString(node, addParenthesis = True):
 		assert(False)
 
 class QuoteReader():
-	def __init__(self, readerStack):
+	def __init__(self, readerStack, initialCharacter):
+		assert(initialCharacter == "'")
 		readerStack.append(self)
-		self.value = {'value2': None}
+		self.value = Quote()
 		self.done = False
 	def isDone(self):
 		return self.done
@@ -205,8 +206,8 @@ class QuoteReader():
 		if nextCharacter == "(":
 			self.done = True
 			readerStack.pop()
-			consReader = newReader(readerStack, nextCharacter)
-			self.value['value2'] = consReader.getValue2()
+			nextReader = newReader(readerStack, nextCharacter)
+			self.value['value'] = nextReader.getValue()
 			return
 
 

@@ -20,7 +20,7 @@ def test_ConsReader_emptyList():
 
 	assert(len(readerStack) == 0)
 
-	cons = reader.getValue2()
+	cons = reader.getValue()
 	assert(cons.getCar() == None)
 	assert(cons.getCdr() == None)
 def test_ConsReader_singleElementList():
@@ -57,7 +57,7 @@ def test_ConsReader_singleElementList():
 
 	assert(len(readerStack) == 0)
 
-	cons = consReader.getValue2()
+	cons = consReader.getValue()
 	assert(cons.getCar().getType() == "symbol")
 	assert(cons.getCar().getValue() == "a")
 	assert(cons.getCdr() == None)
@@ -75,7 +75,7 @@ def parseString(string):
 			if len(readerStack) == 0:
 				assert(character == string[-1])
 				assert(character == lastResult)
-				return reader.getValue2()
+				return reader.getValue()
 	assert(False)
 def test_ConsReader_twoElementList():
 	cons = parseString("(a b) ")

@@ -111,7 +111,7 @@ def lisp(inputFile):
 		characterToProcess = sendToReaderStack(readerStack, nextCharacter)
 		if characterToProcess:
 			assert(characterToProcess == nextCharacter)
-			eval(root['value2'], environment)
+			eval(root['value'], environment)
 		else:
 			nextCharacter = input.read(1)
 lisp(sys.argv[1])
