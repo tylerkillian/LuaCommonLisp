@@ -32,3 +32,12 @@ class String:
 		return self.value
 	def setValue(self, value):
 		self.value = value
+
+class Quote:
+	def __init__(self):
+		self.operand = None
+	def getOperand(self):
+		return self.operand
+	def setOperand(self, operand):
+		self.operand = operand
+
