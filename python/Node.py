@@ -36,6 +36,8 @@ class String:
 class Quote:
 	def __init__(self):
 		self.operand = None
+	def getType(self):
+		return "quote"
 	def getOperand(self):
 		return self.operand
 	def setOperand(self, operand):

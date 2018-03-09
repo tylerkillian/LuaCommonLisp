@@ -1,4 +1,4 @@
-from Node import Cons, Symbol, String
+from Node import Cons, Symbol, String, Quote
 
 def isWhitespace(character):
 	if character == " ":
@@ -177,6 +177,8 @@ class QuoteReader():
 		readerStack.append(self)
 		self.value = Quote()
 		self.done = False
+	def getValue(self):
+		return self.value
 	def isDone(self):
 		return self.done
 	def readNextCharacter(self, readerStack, nextCharacter):
@@ -203,6 +205,8 @@ def treeToString(node, addParenthesis = True):
 		return node.getValue()
 	elif node.getType() == "string":
 		return node.getValue()
+	elif node.getType() == "quote":
+		return "'" + treeToString(node.getOperand())
 	else:
 		assert(False)
 
