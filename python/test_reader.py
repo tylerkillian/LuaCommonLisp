@@ -104,10 +104,14 @@ def test_readExpressions_format():
 def test_readExpressions_quoteSymbol():
 	tree = parseString("'a ")
 	assert(treeToString(tree) == "'a")
+def test_readExpressions_quasiquoteSymbol():
+	tree = parseString("`a ")
+	assert(treeToString(tree) == "`a")
 test_readExpressions = {
 	"test_readExpressions_setf": test_readExpressions_setf,
 	"test_readExpressions_format": test_readExpressions_format,
 	"test_readExpressions_quoteSymbol": test_readExpressions_quoteSymbol,
+	"test_readExpressions_quasiquoteSymbol": test_readExpressions_quasiquoteSymbol,
 }
 runTests(test_readExpressions)
 
