@@ -190,6 +190,44 @@ class QuoteReader():
 		nextReader = newReader(readerStack, nextCharacter)
 		self.value.setOperand(nextReader.getValue())
 
+class QuasiquoteReader():
+	def __init__(self, readerStack, initialCharacter):
+		assert(initialCharacter == "`")
+		readerStack.append(self)
+		self.value = Quasiquote()
+		self.done = False
+	def getValue(self):
+		return self.value
+	def isDone(self):
+		return self.done
+	def readNextCharacter(self, readerStack, nextCharacter):
+		assert(not self.done)
+		assert(readerStack[-1] == self)
+
+		self.done = True
+		readerStack.pop()
+		nextReader = newReader(readerStack, nextCharacter)
+		self.value.setOperand(nextReader.getValue())
+
+class CommaReader():
+	def __init__(self, readerStack, initialCharacter):
+		assert(initialCharacter == ",")
+		readerStack.append(self)
+		self.value = Comma()
+		self.done = False
+	def getValue(self):
+		return self.value
+	def isDone(self):
+		return self.done
+	def readNextCharacter(self, readerStack, nextCharacter):
+		assert(not self.done)
+		assert(readerStack[-1] == self)
+
+		self.done = True
+		readerStack.pop()
+		nextReader = newReader(readerStack, nextCharacter)
+		self.value.setOperand(nextReader.getValue())
+
 def treeToString(node, addParenthesis = True):
 	if node.getType() == "cons":
 		if node.getCdr() == None:
@@ -207,6 +245,10 @@ def treeToString(node, addParenthesis = True):
 		return node.getValue()
 	elif node.getType() == "quote":
 		return "'" + treeToString(node.getOperand())
+	elif node.getType() == "quasiquote":
+		return "`" + treeToString(node.getOperand())
+	elif node.getType() == "comma":
+		return "," + treeToString(node.getOperand())
 	else:
 		assert(False)
 

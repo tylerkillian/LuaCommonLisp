@@ -43,3 +43,23 @@ class Quote:
 	def setOperand(self, operand):
 		self.operand = operand
 
+class Quasiquote:
+	def __init__(self):
+		self.operand = None
+	def getType(self):
+		return "quasiquote"
+	def getOperand(self):
+		return self.operand
+	def setOperand(self, operand):
+		self.operand = operand
+
+class Comma:
+	def __init__(self):
+		self.operand = None
+	def getType(self):
+		return "comma"
+	def getOperand(self):
+		return self.operand
+	def setOperand(self, operand):
+		self.operand = operand
+
