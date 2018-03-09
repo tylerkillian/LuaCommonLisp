@@ -5,6 +5,8 @@ def newReader(readerStack, initialCharacter):
 		return ConsReader(readerStack, initialCharacter)
 	elif initialCharacter == "\"":
 		return StringReader(readerStack, initialCharacter)
+	elif initialCharacter == "'":
+		return QuoteReader(readerStack, initialCharacter)
 	else:
 		return SymbolReader(readerStack, initialCharacter)
 
@@ -188,3 +190,23 @@ def treeToString(node, addParenthesis = True):
 		return node.getValue()
 	else:
 		assert(False)
+
+class QuoteReader():
+	def __init__(self, readerStack):
+		readerStack.append(self)
+		self.value = {'value2': None}
+		self.done = False
+	def isDone(self):
+		return self.done
+	def readNextCharacter(self, readerStack, nextCharacter):
+		assert(not self.done)
+		assert(readerStack[-1] == self)
+
+		if nextCharacter == "(":
+			self.done = True
+			readerStack.pop()
+			consReader = newReader(readerStack, nextCharacter)
+			self.value['value2'] = consReader.getValue2()
+			return
+
+
