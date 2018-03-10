@@ -109,7 +109,6 @@ def test_readExpressions_quasiquoteSymbol():
 	assert(treeToString(tree) == "`a")
 def test_readExpressions_quasiquoteAndComma():
 	tree = parseString("``(w ,x ,,y) ")
-	print(treeToString(tree))
 	assert(treeToString(tree) == "``(w ,x ,,y)")
 test_readExpressions = {
 	"test_readExpressions_setf": test_readExpressions_setf,

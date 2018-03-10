@@ -1,4 +1,4 @@
-from Node import Cons, Symbol, String, Quote
+from Node import *
 
 def isWhitespace(character):
 	if character == " ":
@@ -17,10 +17,10 @@ def newReader(readerStack, initialCharacter):
 		return StringReader(readerStack, initialCharacter)
 	elif initialCharacter == "'":
 		return QuoteReader(readerStack, initialCharacter)
-	elif initialCharacter == "'":
-		return QuoteReader(readerStack, initialCharacter)
-	elif initialCharacter == "'":
-		return QuoteReader(readerStack, initialCharacter)
+	elif initialCharacter == "`":
+		return QuasiquoteReader(readerStack, initialCharacter)
+	elif initialCharacter == ",":
+		return CommaReader(readerStack, initialCharacter)
 	else:
 		return SymbolReader(readerStack, initialCharacter)
 
