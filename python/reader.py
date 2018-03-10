@@ -17,6 +17,10 @@ def newReader(readerStack, initialCharacter):
 		return StringReader(readerStack, initialCharacter)
 	elif initialCharacter == "'":
 		return QuoteReader(readerStack, initialCharacter)
+	elif initialCharacter == "'":
+		return QuoteReader(readerStack, initialCharacter)
+	elif initialCharacter == "'":
+		return QuoteReader(readerStack, initialCharacter)
 	else:
 		return SymbolReader(readerStack, initialCharacter)
 
