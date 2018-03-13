@@ -252,7 +252,7 @@ class ConsReader2():
 			self.value.setCar(car)
 			self.carReader = None
 			if nextCharacter == ")":
-			self.value.setCdr(None)
+				self.value.setCdr(None)
 				if self.listTail:
 					self.done = True
 					return self.value
