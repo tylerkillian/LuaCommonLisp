@@ -273,7 +273,6 @@ class ConsReader2():
 			cars = self.elements[0:-1]
 			lastCdr = self.elements[len(self.elements)-1]
 		else:
-			print("not dotted")
 			cars = self.elements
 			lastCdr = None
 

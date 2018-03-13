@@ -77,13 +77,10 @@ def test_ConsReader_twoElementList():
 	#cons = parseString2("(a b) ")
 	reader = ConsReader2("(")
 	cons = reader.readNextCharacter("a")
-	assert(reader.stage == "readingCar")
 	cons = reader.readNextCharacter(" ")
-	assert(reader.stage == "waitingForDot")
 	cons = reader.readNextCharacter("b")
-	assert(reader.stage == "readingCdr")
 	cons = reader.readNextCharacter(")")
-	assert(reader.stage == "waitingForTerminalCharacter")
+	cons = reader.readNextCharacter(" ")
 
 	assert(cons.getType() == "cons")
 	assert(cons.getCar().getType() == "symbol")
@@ -93,9 +90,9 @@ def test_ConsReader_twoElementList():
 	assert(cons.getCdr().getCar().getValue() == "b")
 	assert(cons.getCdr().getCdr() == None)
 test_ConsReader = {
-	#"test_ConsReader2_emptyList": test_ConsReader2_emptyList,
+	"test_ConsReader2_emptyList": test_ConsReader2_emptyList,
 	"test_ConsReader_singleElementList": test_ConsReader_singleElementList,
-	#"test_ConsReader_twoElementList": test_ConsReader_twoElementList,
+	"test_ConsReader_twoElementList": test_ConsReader_twoElementList,
 }
 runTests(test_ConsReader)
 
