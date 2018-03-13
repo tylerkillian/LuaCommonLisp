@@ -29,10 +29,9 @@ def test_ConsReader2_emptyList():
 	shouldBeNull = reader.readNextCharacter(")")
 	assert(not shouldBeNull)
 
-	cons = reader.readNextCharacter(" ")
-	assert(cons.getCar() == None)
-	assert(cons.getCdr() == None)
-def test_ConsReader_singleElementList():
+	result = reader.readNextCharacter(" ")
+	assert(result == None)
+def test_ConsReader2_singleElementList():
 	reader = ConsReader2("(")
 	assert(reader.stage == "waitingForElement")
 
@@ -73,7 +72,7 @@ def parseString2(string):
 			assert(character == string[-1])
 			return lastResult
 	assert(False)
-def test_ConsReader_twoElementList():
+def test_ConsReader2_twoElementList():
 	#cons = parseString2("(a b) ")
 	reader = ConsReader2("(")
 	cons = reader.readNextCharacter("a")
@@ -91,8 +90,8 @@ def test_ConsReader_twoElementList():
 	assert(cons.getCdr().getCdr() == None)
 test_ConsReader = {
 	"test_ConsReader2_emptyList": test_ConsReader2_emptyList,
-	"test_ConsReader_singleElementList": test_ConsReader_singleElementList,
-	"test_ConsReader_twoElementList": test_ConsReader_twoElementList,
+	"test_ConsReader2_singleElementList": test_ConsReader2_singleElementList,
+	"test_ConsReader2_twoElementList": test_ConsReader2_twoElementList,
 }
 runTests(test_ConsReader)
 

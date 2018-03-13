@@ -270,11 +270,15 @@ class ConsReader2():
 		self.done = True
 
 		if self.isDotted:
+			assert(len(self.elements) >= 2)
 			cars = self.elements[0:-1]
 			lastCdr = self.elements[len(self.elements)-1]
 		else:
 			cars = self.elements
 			lastCdr = None
+
+		if len(self.elements) == 0:
+			return None
 
 		result = Cons()
 		currentCons = result
