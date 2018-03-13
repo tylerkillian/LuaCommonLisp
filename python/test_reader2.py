@@ -24,25 +24,12 @@ test_StringReader2 = {
 runTests(test_StringReader2)
 
 def test_ConsReader2_emptyList():
-	readerStack = []
+	reader = ConsReader(readerStack, "(")
 
-	ConsReader(readerStack, "(")
-	assert(len(readerStack) == 1)
-
-	reader = readerStack[-1]
-
-	shouldBeNull = readerStack[-1].readNextCharacter(readerStack, ")")
+	shouldBeNull = reader.readNextCharacter(readerStack, ")")
 	assert(not shouldBeNull)
-	assert(readerStack[-1] == reader)
-	assert(not reader.isDone())
 
-	shouldBeSpace = readerStack[-1].readNextCharacter(readerStack, " ")
-	assert(shouldBeSpace == " ")
-	assert(reader.isDone())
-
-	assert(len(readerStack) == 0)
-
-	cons = reader.getValue()
+	cons = reader.readNextCharacter(readerStack, " ")
 	assert(cons.getCar() == None)
 	assert(cons.getCdr() == None)
 def test_ConsReader_singleElementList():
