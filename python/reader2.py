@@ -295,7 +295,7 @@ class ConsReader2():
 	def processStage_waitingForParenthesis(self, nextCharacter):
 		assert(self.stage == "waitingForParenthesis")
 		if nextCharacter == ")":
-			if listTail:
+			if self.listTail:
 				self.done = True
 				return self.value
 			else:
