@@ -10,7 +10,21 @@ def isWhitespace(character):
 	else:
 		return False
 
-def newReader(initialCharacter):
+def newReader(readerStack, initialCharacter):
+        if initialCharacter == "(":
+                return ConsReader(readerStack, initialCharacter)
+        elif initialCharacter == "\"":
+                return StringReader(readerStack, initialCharacter)
+        elif initialCharacter == "'":
+                return QuoteReader(readerStack, initialCharacter)
+        elif initialCharacter == "`":
+                return QuasiquoteReader(readerStack, initialCharacter)
+        elif initialCharacter == ",":
+                return CommaReader(readerStack, initialCharacter)
+        else:
+                return SymbolReader(readerStack, initialCharacter)
+
+def newReader2(initialCharacter):
 	if initialCharacter == "(":
 		return ConsReader(initialCharacter)
 	elif initialCharacter == "\"":
@@ -228,7 +242,7 @@ class ConsReader2():
 			self.stage = "waitingForTerminalCharacter"
 		else:
 			self.stage = "readingCar"
-			self.carReader = newReader(nextCharacter)
+			self.carReader = newReader2(nextCharacter)
 	def processStage_readingCar(self, nextCharacter):
 		assert(self.stage == "readingCar")
 		assert(self.carReader)
@@ -250,7 +264,7 @@ class ConsReader2():
 			return
 		else:
 			self.stage = "readingCdr"
-			self.cdrReader = newReader("(")
+			self.cdrReader = newReader2("(")
 			self.cdrReader.readNextCharacter(nextCharacter)
 	def processStage_readingDot(self, nextCharacter):
 		assert(self.stage == "readingDot")
@@ -261,7 +275,7 @@ class ConsReader2():
 		if not isWhitespace(nextCharacter):
 			assert(nextcharacter != ")")
 			self.stage = "readingCdr"
-			self.cdrReader = newReader("(")
+			self.cdrReader = newReader2("(")
 			self.cdrReader.readNextCharacter(nextCharacter)
 	def processStage_readingCdr(self, nextCharacter):
 		assert(self.stage == "readingCdr")
