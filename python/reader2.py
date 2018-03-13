@@ -225,13 +225,14 @@ class ConsReader():
 			return self.processStage_waitingForTerminalCharacter(readerStack, nextCharacter)
 
 class ConsReader2():
-	def __init__(self, initialCharacter):
+	def __init__(self, initialCharacter, listTail = False):
 		assert(initialCharacter == "(")
 		self.stage = "waitingForCar"
 		self.value = Cons()
 		self.done = False
 		self.carReader = None
 		self.cdrReader = None
+		self.listTail = listTail
 	def processStage_waitingForCar(self, nextCharacter):
 		assert(self.stage == "waitingForCar")
 		if isWhitespace(nextCharacter):
@@ -278,7 +279,7 @@ class ConsReader2():
 		if not isWhitespace(nextCharacter):
 			assert(nextcharacter != ")")
 			self.stage = "readingCdr"
-			self.cdrReader = newReader2("(")
+			self.cdrReader = ConsReader2("(", True)
 			self.cdrReader.readNextCharacter(nextCharacter)
 	def processStage_readingCdr(self, nextCharacter):
 		assert(self.stage == "readingCdr")
@@ -290,13 +291,19 @@ class ConsReader2():
 			if nextCharacter == ")":
 				self.stage = "waitingForTerminalCharacter"
 			else:
-				self.stage = "waitingForTerminalCharacter"
+				self.stage = "waitingForParenthesis"
 	def processStage_waitingForParenthesis(self, nextCharacter):
 		assert(self.stage == "waitingForParenthesis")
 		if nextCharacter == ")":
-			self.stage = "waitingForTerminalCharacter"
+			if listTail:
+				self.done = True
+				return self.value
+			else:
+				self.stage = "waitingForTerminalCharacter"
+				return
 		else:
 			assert(isWhitespace(nextCharacter))
+			return
 	def processStage_waitingForTerminalCharacter(self, nextCharacter):
 		assert(self.stage == "waitingForTerminalCharacter")
 		self.done = True

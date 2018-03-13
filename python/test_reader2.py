@@ -78,6 +78,10 @@ def test_ConsReader_twoElementList():
 	assert(reader.stage == "readingCar")
 	cons = reader.readNextCharacter(" ")
 	assert(reader.stage == "waitingForDot")
+	cons = reader.readNextCharacter("b")
+	assert(reader.stage == "readingCdr")
+	cons = reader.readNextCharacter(")")
+	assert(reader.stage == "waitingForTerminalCharacter")
 
 	assert(cons.getType() == "cons")
 	assert(cons.getCar().getType() == "symbol")
