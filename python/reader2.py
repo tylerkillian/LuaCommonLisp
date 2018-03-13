@@ -250,7 +250,10 @@ class ConsReader2():
 		if car:
 			self.value.setCar(car)
 			self.carReader = None
-			self.stage = "waitingForDot"
+			if nextCharacter == ")":
+				self.stage = "waitingForTerminalCharacter"
+			else:
+				self.stage = "waitingForDot"
 	def processStage_waitingForDot(self, nextCharacter):
 		assert(self.stage == "waitingForDot")
 		if nextCharacter == ".":
@@ -282,7 +285,7 @@ class ConsReader2():
 		assert(self.cdrReader)
 		cdr = self.cdrReader.readNextCharacter(nextCharacter)
 		if cdr:
-			self.value.setCdr(car)
+			self.value.setCdr(cdr)
 			self.cdrReader = None
 			if nextCharacter == ")":
 				self.stage = "waitingForTerminalCharacter"
