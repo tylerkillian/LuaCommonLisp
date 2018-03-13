@@ -249,7 +249,7 @@ class ConsReader2():
 			self.stage = "readingElement"
 			self.elementReader = newReader2(nextCharacter)
 			return
-	def processStage_readingCar(self, nextCharacter):
+	def processStage_readingElement(self, nextCharacter):
 		assert(self.stage == "readingElement")
 		assert(self.elementReader)
 		element = self.elementReader.readNextCharacter(nextCharacter)
@@ -257,8 +257,8 @@ class ConsReader2():
 			self.elements.append(element)
 			self.elementReader = None
 			if nextCharacter == ")":
-					self.stage = "waitingForTerminalCharacter"
-					return
+				self.stage = "waitingForTerminalCharacter"
+				return
 			else:
 				self.stage = "waitingForElement"
 	def processStage_readingDot(self, nextCharacter):
@@ -269,18 +269,21 @@ class ConsReader2():
 		assert(self.stage == "waitingForTerminalCharacter")
 		self.done = True
 
-		result = Cons()
 		if self.isDotted:
 			cars = self.elements[0:-1]
 			lastCdr = self.elements[len(self.elements)-1]
-		else
+		else:
+			print("not dotted")
 			cars = self.elements
 			lastCdr = None
+
+		result = Cons()
 		currentCons = result
-		for car in cars:
-			currentCons.setCar(car)
+		for carIdx in range(0, len(cars)-1):
+			currentCons.setCar(cars[carIdx])
 			currentCons.setCdr(Cons())
 			currentCons = currentCons.getCdr()
+		currentCons.setCar(cars[-1])
 		currentCons.setCdr(lastCdr)
 		return result
 	def readNextCharacter(self, nextCharacter):
