@@ -297,8 +297,7 @@ class ConsReader2():
 	def processStage_waitingForTerminalCharacter(self, nextCharacter):
 		assert(self.stage == "waitingForTerminalCharacter")
 		self.done = True
-		readerStack.pop()
-		return nextCharacter
+		return self.value
 	def readNextCharacter(self, nextCharacter):
 		assert(not self.done)
 
