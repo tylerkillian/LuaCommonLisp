@@ -1,5 +1,15 @@
 from test_utilities import *
-from reader import *
+from reader2 import *
+
+def test_SymbolReader2_singleLetter():
+	reader = SymbolReader2("a")
+	result = reader.readNextCharacter(" ")
+	assert(result.getValue() == "a")
+
+test_SymbolReader2 = {
+	"test_SymbolReader2_singleLetter": test_SymbolReader2_singleLetter,
+}
+runTests(test_SymbolReader2)
 
 def test_ConsReader_emptyList():
 	readerStack = []

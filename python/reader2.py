@@ -62,6 +62,20 @@ class SymbolReader():
 			self.value.setValue(self.value.getValue() + nextCharacter)
 			return
 
+class SymbolReader2():
+	def __init__(self, initialCharacter):
+		self.buffer = initialCharacter
+		self.done = False
+	def readNextCharacter(self, nextCharacter):
+		assert(not self.done)
+
+		if nextCharacter == " " or nextCharacter == ")" or nextCharacter == "\n":
+			self.done = True
+			return Symbol(self.buffer)
+		else:
+			self.buffer = self.buffer + nextCharacter
+			return
+
 class StringReader():
 	def __init__(self, readerStack, initialCharacter):
 		assert(initialCharacter == "\"")
