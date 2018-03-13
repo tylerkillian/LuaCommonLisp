@@ -252,7 +252,13 @@ class ConsReader2():
 			self.value.setCar(car)
 			self.carReader = None
 			if nextCharacter == ")":
-				self.stage = "waitingForTerminalCharacter"
+			self.value.setCdr(None)
+				if self.listTail:
+					self.done = True
+					return self.value
+				else:
+					self.stage = "waitingForTerminalCharacter"
+					return
 			else:
 				self.stage = "waitingForDot"
 	def processStage_waitingForDot(self, nextCharacter):
@@ -264,8 +270,12 @@ class ConsReader2():
 			return
 		elif nextCharacter == ")":
 			self.value.setCdr(None)
-			self.stage = "waitingForTerminalCharacter"
-			return
+			if self.listTail:
+				self.done = True
+				return self.value
+			else:
+				self.stage = "waitingForTerminalCharacter"
+				return
 		else:
 			self.stage = "readingCdr"
 			self.cdrReader = newReader2("(")
