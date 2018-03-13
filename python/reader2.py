@@ -103,6 +103,27 @@ class StringReader():
 			self.value.setValue(self.value.getValue() + nextCharacter)
 			return
 
+class StringReader2():
+	def __init__(self, initialCharacter):
+		assert(initialCharacter == "\"")
+		self.buffer = initialCharacter
+		self.mode = "readingString"
+		self.done = False
+	def readNextCharacter(self, nextCharacter):
+		assert(not self.done)
+
+		if self.mode == "waitingForTerminalCharacter":
+			self.done = True
+			return String(self.buffer)
+		elif nextCharacter == "\"":
+			self.buffer = self.buffer + nextCharacter
+			self.mode = "waitingForTerminalCharacter"
+			return
+		else:
+			self.buffer = self.buffer + nextCharacter
+			return
+
+
 class ConsReader():
 	def __init__(self, readerStack, initialCharacter):
 		assert(initialCharacter == "(")

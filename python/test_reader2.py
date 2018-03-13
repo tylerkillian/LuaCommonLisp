@@ -5,11 +5,23 @@ def test_SymbolReader2_singleLetter():
 	reader = SymbolReader2("a")
 	result = reader.readNextCharacter(" ")
 	assert(result.getValue() == "a")
-
 test_SymbolReader2 = {
 	"test_SymbolReader2_singleLetter": test_SymbolReader2_singleLetter,
 }
 runTests(test_SymbolReader2)
+
+def test_StringReader2_singleLetter():
+	reader = StringReader2("\"")
+	result = reader.readNextCharacter("a")
+	assert(not result)
+	result = reader.readNextCharacter("\"")
+	assert(not result)
+	result = reader.readNextCharacter(" ")
+	assert(result.getValue() == "\"a\"")
+test_StringReader2 = {
+	"test_StringReader2_singleLetter": test_StringReader2_singleLetter,
+}
+runTests(test_StringReader2)
 
 def test_ConsReader_emptyList():
 	readerStack = []
