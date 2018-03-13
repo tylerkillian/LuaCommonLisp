@@ -225,116 +225,73 @@ class ConsReader():
 			return self.processStage_waitingForTerminalCharacter(readerStack, nextCharacter)
 
 class ConsReader2():
-	def __init__(self, initialCharacter, listTail = False):
+	def __init__(self, initialCharacter):
 		assert(initialCharacter == "(")
-		self.stage = "waitingForCar"
-		self.value = Cons()
+		self.stage = "waitingForElement"
+		self.elements = []
+		self.isDotted = False
 		self.done = False
-		self.carReader = None
-		self.cdrReader = None
-		self.listTail = listTail
-	def processStage_waitingForCar(self, nextCharacter):
-		assert(self.stage == "waitingForCar")
+		self.elementReader = None
+	def processStage_waitingForElement(self, nextCharacter):
+		assert(self.stage == "waitingForElement")
 		if isWhitespace(nextCharacter):
 			return
+		elif nextCharacter == ".":
+			assert(len(self.elements) > 0)
+			assert(not self.isDotted)
+			self.isDotted = True
+			self.stage = "readingDot"
+			return
 		elif nextCharacter == ")":
-			self.value.setCar(None)
-			self.value.setCdr(None)
 			self.stage = "waitingForTerminalCharacter"
+			return
 		else:
-			self.stage = "readingCar"
-			self.carReader = newReader2(nextCharacter)
+			self.stage = "readingElement"
+			self.elementReader = newReader2(nextCharacter)
+			return
 	def processStage_readingCar(self, nextCharacter):
-		assert(self.stage == "readingCar")
-		assert(self.carReader)
-		car = self.carReader.readNextCharacter(nextCharacter)
-		if car:
-			self.value.setCar(car)
-			self.carReader = None
+		assert(self.stage == "readingElement")
+		assert(self.elementReader)
+		element = self.elementReader.readNextCharacter(nextCharacter)
+		if element:
+			self.elements.append(element)
+			self.elementReader = None
 			if nextCharacter == ")":
-				self.value.setCdr(None)
-				if self.listTail:
-					self.done = True
-					return self.value
-				else:
 					self.stage = "waitingForTerminalCharacter"
 					return
 			else:
-				self.stage = "waitingForDot"
-	def processStage_waitingForDot(self, nextCharacter):
-		assert(self.stage == "waitingForDot")
-		if nextCharacter == ".":
-			self.stage = "readingDot"
-			return
-		elif isWhitespace(nextCharacter):
-			return
-		elif nextCharacter == ")":
-			self.value.setCdr(None)
-			if self.listTail:
-				self.done = True
-				return self.value
-			else:
-				self.stage = "waitingForTerminalCharacter"
-				return
-		else:
-			self.stage = "readingCdr"
-			self.cdrReader = newReader2("(")
-			self.cdrReader.readNextCharacter(nextCharacter)
+				self.stage = "waitingForElement"
 	def processStage_readingDot(self, nextCharacter):
 		assert(self.stage == "readingDot")
 		assert(isWhitespace(nextCharacter))
-		self.stage = "waitingForCdr"
-	def processStage_waitingForCdr(self, readerStack, nextCharacter):
-		assert(self.stage == "waitingForCdr")
-		if not isWhitespace(nextCharacter):
-			assert(nextcharacter != ")")
-			self.stage = "readingCdr"
-			self.cdrReader = ConsReader2("(", True)
-			self.cdrReader.readNextCharacter(nextCharacter)
-	def processStage_readingCdr(self, nextCharacter):
-		assert(self.stage == "readingCdr")
-		assert(self.cdrReader)
-		cdr = self.cdrReader.readNextCharacter(nextCharacter)
-		if cdr:
-			self.value.setCdr(cdr)
-			self.cdrReader = None
-			if nextCharacter == ")":
-				self.stage = "waitingForTerminalCharacter"
-			else:
-				self.stage = "waitingForParenthesis"
-	def processStage_waitingForParenthesis(self, nextCharacter):
-		assert(self.stage == "waitingForParenthesis")
-		if nextCharacter == ")":
-			if self.listTail:
-				self.done = True
-				return self.value
-			else:
-				self.stage = "waitingForTerminalCharacter"
-				return
-		else:
-			assert(isWhitespace(nextCharacter))
-			return
+		self.stage = "waitingForElement"
 	def processStage_waitingForTerminalCharacter(self, nextCharacter):
 		assert(self.stage == "waitingForTerminalCharacter")
 		self.done = True
-		return self.value
+
+		result = Cons()
+		if self.isDotted:
+			cars = self.elements[0:-1]
+			lastCdr = self.elements[len(self.elements)-1]
+		else
+			cars = self.elements
+			lastCdr = None
+		currentCons = result
+		for car in cars:
+			currentCons.setCar(car)
+			currentCons.setCdr(Cons())
+			currentCons = currentCons.getCdr()
+		currentCons.setCdr(lastCdr)
+		return result
 	def readNextCharacter(self, nextCharacter):
 		assert(not self.done)
 
-		if self.stage == "waitingForCar":
-			return self.processStage_waitingForCar(nextCharacter)
-		elif self.stage == "readingCar":
-			return self.processStage_readingCar(nextCharacter)
-		elif self.stage == "waitingForDot":
-			return self.processStage_waitingForDot(nextCharacter)
+		if self.stage == "waitingForElement":
+			return self.processStage_waitingForElement(nextCharacter)
+		elif self.stage == "readingElement":
+			return self.processStage_readingElement(nextCharacter)
 		elif self.stage == "readingDot":
 			return self.processStage_readingDot(nextCharacter)
-		elif self.stage == "waitingForCdr":
-			return self.processStage_waitingForCdr(nextCharacter)
-		elif self.stage == "readingCdr":
-			return self.processStage_readingCdr(nextCharacter)
-		elif self.stage == "waitingForParenthesis":
-			return self.processStage_waitingForParenthesis(nextCharacter)
 		else:
 			assert(self.stage == "waitingForTerminalCharacter")
 			return self.processStage_waitingForTerminalCharacter(nextCharacter)
