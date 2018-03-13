@@ -23,7 +23,7 @@ test_StringReader2 = {
 }
 runTests(test_StringReader2)
 
-def test_ConsReader_emptyList():
+def test_ConsReader2_emptyList():
 	readerStack = []
 
 	ConsReader(readerStack, "(")
@@ -110,7 +110,7 @@ def test_ConsReader_twoElementList():
 	assert(cons.getCdr().getCar().getValue() == "b")
 	assert(cons.getCdr().getCdr() == None)
 test_ConsReader = {
-	"test_ConsReader_emptyList": test_ConsReader_emptyList,
+	"test_ConsReader2_emptyList": test_ConsReader_emptyList,
 	"test_ConsReader_singleElementList": test_ConsReader_singleElementList,
 	"test_ConsReader_twoElementList": test_ConsReader_twoElementList,
 }
