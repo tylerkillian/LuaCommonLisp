@@ -26,17 +26,17 @@ def newReader(readerStack, initialCharacter):
 
 def newReader2(initialCharacter):
 	if initialCharacter == "(":
-		return ConsReader(initialCharacter)
+		return ConsReader2(initialCharacter)
 	elif initialCharacter == "\"":
-		return StringReader(initialCharacter)
+		return StringReader2(initialCharacter)
 	elif initialCharacter == "'":
-		return QuoteReader(initialCharacter)
+		return QuoteReader2(initialCharacter)
 	elif initialCharacter == "`":
-		return QuasiquoteReader(initialCharacter)
+		return QuasiquoteReader2(initialCharacter)
 	elif initialCharacter == ",":
-		return CommaReader(initialCharacter)
+		return CommaReader2(initialCharacter)
 	else:
-		return SymbolReader(initialCharacter)
+		return SymbolReader2(initialCharacter)
 
 class RootReader():
 	def __init__(self, readerStack):

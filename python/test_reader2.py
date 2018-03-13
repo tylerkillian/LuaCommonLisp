@@ -24,49 +24,27 @@ test_StringReader2 = {
 runTests(test_StringReader2)
 
 def test_ConsReader2_emptyList():
-	reader = ConsReader(readerStack, "(")
+	reader = ConsReader2("(")
 
-	shouldBeNull = reader.readNextCharacter(readerStack, ")")
+	shouldBeNull = reader.readNextCharacter(")")
 	assert(not shouldBeNull)
 
-	cons = reader.readNextCharacter(readerStack, " ")
+	cons = reader.readNextCharacter(" ")
 	assert(cons.getCar() == None)
 	assert(cons.getCdr() == None)
 def test_ConsReader_singleElementList():
-	readerStack = []
+	reader = ConsReader2("(")
+	assert(reader.stage == "waitingForCar")
 
-	ConsReader(readerStack, "(")
-	assert(len(readerStack) == 1)
-
-	consReader = readerStack[-1]
-
-	shouldBeNull = readerStack[-1].readNextCharacter(readerStack, "a")
+	shouldBeNull = reader.readNextCharacter("a")
+	assert(reader.stage == "readingCar")
 	assert(not shouldBeNull)
-	assert(len(readerStack) == 2)
-	assert(readerStack[0] == consReader)
-	assert(not consReader.isDone())
-	symbolReader = readerStack[-1]
 
-	shouldBeParenthesis = readerStack[-1].readNextCharacter(readerStack, ")")
-	assert(shouldBeParenthesis == ")")
-	assert(len(readerStack) == 1)
-	assert(readerStack[0] == consReader)
-	assert(not consReader.isDone())
-	assert(symbolReader.isDone())
-
-	shouldBeNull = readerStack[-1].readNextCharacter(readerStack, ")")
+	shouldBeNull = reader.readNextCharacter(")")
+	assert(reader.stage == "waitingForTerminalCharacter")
 	assert(not shouldBeNull)
-	assert(len(readerStack) == 1)
-	assert(readerStack[0] == consReader)
-	assert(not consReader.isDone())
 
-	shouldBeSpace = readerStack[-1].readNextCharacter(readerStack, " ")
-	assert(shouldBeSpace == " ")
-	assert(consReader.isDone())
-
-	assert(len(readerStack) == 0)
-
-	cons = consReader.getValue()
+	cons = reader.readNextCharacter(" ")
 	assert(cons.getCar().getType() == "symbol")
 	assert(cons.getCar().getValue() == "a")
 	assert(cons.getCdr() == None)
