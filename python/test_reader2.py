@@ -66,20 +66,13 @@ def parseString2(string):
 	reader = newReader2(string[0])
 
 	for character in string[1:]:
-		print(character)
 		lastResult = reader.readNextCharacter(character)
 		if lastResult:
 			assert(character == string[-1])
 			return lastResult
 	assert(False)
 def test_ConsReader2_twoElementList():
-	#cons = parseString2("(a b) ")
-	reader = ConsReader2("(")
-	cons = reader.readNextCharacter("a")
-	cons = reader.readNextCharacter(" ")
-	cons = reader.readNextCharacter("b")
-	cons = reader.readNextCharacter(")")
-	cons = reader.readNextCharacter(" ")
+	cons = parseString2("(a b) ")
 
 	assert(cons.getType() == "cons")
 	assert(cons.getCar().getType() == "symbol")
