@@ -1,5 +1,5 @@
 import sys
-from reader import *
+from reader2 import *
 
 def sendToReaderStack(readerStack, nextCharacter):
 	characterToProcess = nextCharacter

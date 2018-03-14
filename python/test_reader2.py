@@ -50,12 +50,12 @@ def parseString2(string):
 	assert(False)
 def test_ConsReader2_emptyList():
 	result = parseString2("() ")
-	assert(result == None)
+	assert(result == NIL)
 def test_ConsReader2_singleElementList():
 	cons = parseString2("(a) ")
 	assert(cons.getCar().getType() == "symbol")
 	assert(cons.getCar().getValue() == "a")
-	assert(cons.getCdr() == None)
+	assert(cons.getCdr() == NIL)
 def test_ConsReader2_twoElementList():
 	cons = parseString2("(a b) ")
 	assert(cons.getType() == "cons")
@@ -64,7 +64,7 @@ def test_ConsReader2_twoElementList():
 	assert(cons.getCdr().getType() == "cons")
 	assert(cons.getCdr().getCar().getType() == "symbol")
 	assert(cons.getCdr().getCar().getValue() == "b")
-	assert(cons.getCdr().getCdr() == None)
+	assert(cons.getCdr().getCdr() == NIL)
 test_ConsReader = {
 	"test_ConsReader2_emptyList": test_ConsReader2_emptyList,
 	"test_ConsReader2_singleElementList": test_ConsReader2_singleElementList,

@@ -38,6 +38,23 @@ def newReader2(initialCharacter):
 	else:
 		return SymbolReader2(initialCharacter)
 
+class RootReader():
+	def __init__(self, readerStack):
+		readerStack.append(self)
+		self.value = {'value': None}
+		self.done = False
+	def isDone(self):
+		return self.done
+	def readNextCharacter(self, readerStack, nextCharacter):
+		assert(not self.done)
+		assert(readerStack[-1] == self)
+
+		if not isWhitespace(nextCharacter):
+			self.done = True
+			readerStack.pop()
+			nextReader = newReader(readerStack, nextCharacter)
+			self.value['value'] = nextReader.getValue()
+
 class RootReader2():
 	def __init__(self):
 		self.childReader = None
@@ -278,10 +295,10 @@ class ConsReader2():
 			lastCdr = self.elements[len(self.elements)-1]
 		else:
 			cars = self.elements
-			lastCdr = None
+			lastCdr = NIL
 
 		if len(self.elements) == 0:
-			return None
+			return NIL
 
 		result = Cons()
 		currentCons = result
