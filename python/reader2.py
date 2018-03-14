@@ -38,22 +38,25 @@ def newReader2(initialCharacter):
 	else:
 		return SymbolReader2(initialCharacter)
 
-class RootReader():
-	def __init__(self, readerStack):
-		readerStack.append(self)
-		self.value = {'value': None}
+class RootReader2():
+	def __init__(self):
+		self.childReader = None
 		self.done = False
 	def isDone(self):
 		return self.done
 	def readNextCharacter(self, readerStack, nextCharacter):
 		assert(not self.done)
-		assert(readerStack[-1] == self)
 
-		if not isWhitespace(nextCharacter):
-			self.done = True
-			readerStack.pop()
-			nextReader = newReader(readerStack, nextCharacter)
-			self.value['value'] = nextReader.getValue()
+		if self.childReader:
+			result = self.childReader.readNextCharacter(nextCharacter)
+			if result:
+				self.done = True
+				self.childReader = None
+				return result
+			return
+		elif not isWhitespace(nextCharacter):
+			self.childReader = newReader2(nextCharacter)
+			return
 
 class SymbolReader():
 	def __init__(self, readerStack, initialCharacter):
