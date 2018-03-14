@@ -10,20 +10,6 @@ def isWhitespace(character):
 	else:
 		return False
 
-def newReader(readerStack, initialCharacter):
-        if initialCharacter == "(":
-                return ConsReader(readerStack, initialCharacter)
-        elif initialCharacter == "\"":
-                return StringReader(readerStack, initialCharacter)
-        elif initialCharacter == "'":
-                return QuoteReader(readerStack, initialCharacter)
-        elif initialCharacter == "`":
-                return QuasiquoteReader(readerStack, initialCharacter)
-        elif initialCharacter == ",":
-                return CommaReader(readerStack, initialCharacter)
-        else:
-                return SymbolReader(readerStack, initialCharacter)
-
 def newReader2(initialCharacter):
 	if initialCharacter == "(":
 		return ConsReader2(initialCharacter)
@@ -226,30 +212,6 @@ class CommaReader():
 		readerStack.pop()
 		nextReader = newReader(readerStack, nextCharacter)
 		self.value.setOperand(nextReader.getValue())
-
-def treeToString(node, addParenthesis = True):
-	if node.getType() == "cons":
-		if node.getCdr() == None:
-			result = treeToString(node.getCar())
-		elif node.getCdr().getType() == "cons":
-			result = treeToString(node.getCar()) + " " + treeToString(node.getCdr(), False)
-		else:
-			result = treeToString(node.getCar()) + " " + treeToString(node.getCdr())
-		if addParenthesis:
-			result = "(" + result + ")" 
-		return result
-	elif node.getType() == "symbol":
-		return node.getValue()
-	elif node.getType() == "string":
-		return node.getValue()
-	elif node.getType() == "quote":
-		return "'" + treeToString(node.getOperand())
-	elif node.getType() == "quasiquote":
-		return "`" + treeToString(node.getOperand())
-	elif node.getType() == "comma":
-		return "," + treeToString(node.getOperand())
-	else:
-		assert(False)
 
 def treeToString2(node, addParenthesis = True):
 	if node.getType() == "cons":
