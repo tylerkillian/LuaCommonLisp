@@ -49,7 +49,7 @@ def eval2(expression, environment):
 		if expression.getCdr().getCdr().getCdr() != NIL:
 			if expression.getCdr().getCdr().getCdr().getType() == "cons":
 				variableToLookup = expression.getCdr().getCdr().getCdr().getCar()
-				value = eval(variableToLookup, environment)
+				value = eval2(variableToLookup, environment)
 				message = message.replace("~a", str(value))
 		sys.stdout.write(message)
 		return None
@@ -59,10 +59,10 @@ def eval2(expression, environment):
 		environment[variable] = value
 	elif expression.getCar().getValue() == "+":
 		left = expression.getCdr().getCar()
-		leftValue = eval(left, environment)
+		leftValue = eval2(left, environment)
 
 		right = expression.getCdr().getCdr().getCar()
-		rightValue = eval(right, environment)
+		rightValue = eval2(right, environment)
 		return int(leftValue) + int(rightValue)
 	elif expression.getCar().getValue() == "let":
 		variableToSet = expression.getCdr().getCar().getCar().getCar().getValue()
@@ -70,7 +70,7 @@ def eval2(expression, environment):
 		environment = {}
 		environment[variableToSet] = value
 		root = expression.getCdr().getCdr().getCar()
-		return eval(root, environment)
+		return eval2(root, environment)
 	elif expression.getCar().getValue() == "defun":
 		functionName = expression.getCdr().getCar().getValue()
 
@@ -88,14 +88,14 @@ def eval2(expression, environment):
 		return environment[functionName]
 	else:
 		functionName = Expression_get(expression, 0)
-		functionPointer = eval(functionName, environment)
+		functionPointer = eval2(functionName, environment)
 		assert((Expression_getLength(expression)-1) == len(functionPointer['arguments']))
 		for expressionIndex in range(1, Expression_getLength(expression)):
 			argumentName = functionPointer['arguments'][expressionIndex - 1]
-			environment[argumentName] = eval(Expression_get(expression, expressionIndex), environment)
+			environment[argumentName] = eval2(Expression_get(expression, expressionIndex), environment)
 		returnValue = None
 		for command in functionPointer['body']:
-			returnValue = eval(command, environment)
+			returnValue = eval2(command, environment)
 		
 		return returnValue
 
