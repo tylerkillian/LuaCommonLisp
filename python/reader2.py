@@ -61,7 +61,7 @@ class RootReader2():
 		self.done = False
 	def isDone(self):
 		return self.done
-	def readNextCharacter(self, readerStack, nextCharacter):
+	def readNextCharacter(self, nextCharacter):
 		assert(not self.done)
 
 		if self.childReader:

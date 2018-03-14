@@ -114,4 +114,16 @@ def lisp(inputFile):
 			eval(root['value'], environment)
 		else:
 			nextCharacter = input.read(1)
+def lisp2(inputFile):
+	input = open(inputFile, "r")
+	nextCharacter = input.read(1)
+	environment = {}
+	reader = RootReader2()
+	while nextCharacter:
+		result = reader.readNextCharacter(nextCharacter)
+		if result:
+			reader = RootReader2()
+			eval(result, environment)
+		else:
+			nextCharacter = input.read(1)
 lisp(sys.argv[1])
