@@ -1,14 +1,6 @@
 import sys
 from reader2 import *
 
-def sendToReaderStack(readerStack, nextCharacter):
-	characterToProcess = nextCharacter
-	while characterToProcess:
-		characterToProcess = readerStack[-1].readNextCharacter(readerStack, nextCharacter)
-		if len(readerStack) == 0:
-			assert(characterToProcess == nextCharacter)
-			return characterToProcess
-
 def Expression_get(expression, index):
 	assert(expression.getType() == "cons")
 	count = 0
