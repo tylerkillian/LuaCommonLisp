@@ -16,7 +16,7 @@ def newReader2(initialCharacter):
 	elif initialCharacter == "\"":
 		return StringReader2(initialCharacter)
 	elif initialCharacter == "'":
-		return QuoteReader(initialCharacter)
+		return QuoteReader2(initialCharacter)
 	elif initialCharacter == "`":
 		return QuasiquoteReader(initialCharacter)
 	elif initialCharacter == ",":
@@ -174,6 +174,23 @@ class QuoteReader():
 		readerStack.pop()
 		nextReader = newReader(readerStack, nextCharacter)
 		self.value.setOperand(nextReader.getValue())
+
+class QuoteReader2():
+	def __init__(self, initialCharacter):
+		assert(initialCharacter == "'")
+		self.reader = None
+		self.done = False
+	def readNextCharacter(self, nextCharacter):
+		assert(not self.done)
+
+		if not self.reader:
+			self.reader = newReader2(nextCharacter)
+		else:
+			result = self.reader.readNextCharacter(nextCharacter)
+			if result:
+				self.done = True
+				self.reader = None
+				return Quote(result)
 
 class QuasiquoteReader():
 	def __init__(self, readerStack, initialCharacter):
