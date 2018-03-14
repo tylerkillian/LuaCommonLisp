@@ -251,3 +251,27 @@ def treeToString(node, addParenthesis = True):
 	else:
 		assert(False)
 
+def treeToString2(node, addParenthesis = True):
+	if node.getType() == "cons":
+		if node.getCdr() == NIL:
+			result = treeToString2(node.getCar())
+		elif node.getCdr().getType() == "cons":
+			result = treeToString2(node.getCar()) + " " + treeToString2(node.getCdr(), False)
+		else:
+			result = treeToString2(node.getCar()) + " " + treeToString2(node.getCdr())
+		if addParenthesis:
+			result = "(" + result + ")" 
+		return result
+	elif node.getType() == "symbol":
+		return node.getValue()
+	elif node.getType() == "string":
+		return node.getValue()
+	elif node.getType() == "quote":
+		return "'" + treeToString2(node.getOperand())
+	elif node.getType() == "quasiquote":
+		return "`" + treeToString2(node.getOperand())
+	elif node.getType() == "comma":
+		return "," + treeToString2(node.getOperand())
+	else:
+		assert(False)
+

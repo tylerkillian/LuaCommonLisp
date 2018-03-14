@@ -59,22 +59,22 @@ runTests(test_ConsReader)
 
 def test_readExpressions_setf():
 	tree = parseString2("(setf a 3) ")
-	assert(treeToString(tree) == "(setf a 3)")
+	assert(treeToString2(tree) == "(setf a 3)")
 def test_readExpressions_format():
 	tree = parseString2("(format t \"a = ~a~%\" a) ")
-	assert(treeToString(tree) == "(format t \"a = ~a~%\" a)")
+	assert(treeToString2(tree) == "(format t \"a = ~a~%\" a)")
 def test_readExpressions_quoteSymbol():
 	tree = parseString2("'a ")
-	assert(treeToString(tree) == "'a")
+	assert(treeToString2(tree) == "'a")
 def test_readExpressions_quasiquoteSymbol():
 	tree = parseString2("`a ")
-	assert(treeToString(tree) == "`a")
+	assert(treeToString2(tree) == "`a")
 def test_readExpressions_quasiquoteAndComma():
 	tree = parseString2("``(w ,x ,,y) ")
-	assert(treeToString(tree) == "``(w ,x ,,y)")
+	assert(treeToString2(tree) == "``(w ,x ,,y)")
 test_readExpressions = {
-	#"test_readExpressions_setf": test_readExpressions_setf,
-	#"test_readExpressions_format": test_readExpressions_format,
+	"test_readExpressions_setf": test_readExpressions_setf,
+	"test_readExpressions_format": test_readExpressions_format,
 	#"test_readExpressions_quoteSymbol": test_readExpressions_quoteSymbol,
 	#"test_readExpressions_quasiquoteSymbol": test_readExpressions_quasiquoteSymbol,
 	#"test_readExpressions_quasiquoteAndComma": test_readExpressions_quasiquoteAndComma,
