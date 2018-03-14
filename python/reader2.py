@@ -18,9 +18,9 @@ def newReader2(initialCharacter):
 	elif initialCharacter == "'":
 		return QuoteReader2(initialCharacter)
 	elif initialCharacter == "`":
-		return QuasiquoteReader(initialCharacter)
+		return QuasiquoteReader2(initialCharacter)
 	elif initialCharacter == ",":
-		return CommaReader(initialCharacter)
+		return CommaReader2(initialCharacter)
 	else:
 		return SymbolReader2(initialCharacter)
 
@@ -193,24 +193,23 @@ class QuoteReader2():
 				result = Cons(Symbol("quote"), Cons(operand, NIL))
 				return result
 
-class QuasiquoteReader():
-	def __init__(self, readerStack, initialCharacter):
+class QuasiquoteReader2():
+	def __init__(self, initialCharacter):
 		assert(initialCharacter == "`")
-		readerStack.append(self)
-		self.value = Quasiquote()
+		self.reader = None
 		self.done = False
-	def getValue(self):
-		return self.value
-	def isDone(self):
-		return self.done
-	def readNextCharacter(self, readerStack, nextCharacter):
+	def readNextCharacter(self, nextCharacter):
 		assert(not self.done)
-		assert(readerStack[-1] == self)
 
-		self.done = True
-		readerStack.pop()
-		nextReader = newReader(readerStack, nextCharacter)
-		self.value.setOperand(nextReader.getValue())
+		if not self.reader:
+			self.reader = newReader2(nextCharacter)
+		else:
+			operand = self.reader.readNextCharacter(nextCharacter)
+			if operand:
+				self.done = True
+				self.reader = None
+				result = Cons(Symbol("quasiquote"), Cons(operand, NIL))
+				return result
 
 class CommaReader():
 	def __init__(self, readerStack, initialCharacter):
