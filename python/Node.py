@@ -1,4 +1,4 @@
-NIL = {}
+NIL = {"nil"}
 
 class Cons():
 	def __init__(self):

@@ -44,7 +44,7 @@ def parseString2(string):
 
 	for character in string[1:]:
 		lastResult = reader.readNextCharacter(character)
-		if reader.done:
+		if lastResult:
 			assert(character == string[-1])
 			return lastResult
 	assert(False)
