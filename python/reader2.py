@@ -186,11 +186,12 @@ class QuoteReader2():
 		if not self.reader:
 			self.reader = newReader2(nextCharacter)
 		else:
-			result = self.reader.readNextCharacter(nextCharacter)
-			if result:
+			operand = self.reader.readNextCharacter(nextCharacter)
+			if operand:
 				self.done = True
 				self.reader = None
-				return Quote(result)
+				result = Cons(Symbol("quote"), Cons(operand, NIL))
+				return result
 
 class QuasiquoteReader():
 	def __init__(self, readerStack, initialCharacter):

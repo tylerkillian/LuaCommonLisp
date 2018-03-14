@@ -1,9 +1,9 @@
 NIL = {"nil"}
 
 class Cons():
-	def __init__(self):
-		self.car = NIL
-		self.cdr = NIL
+	def __init__(self, car = NIL, cdr = NIL):
+		self.car = car
+		self.cdr = cdr
 	def getType(self):
 		return "cons"
 	def getCar(self):
