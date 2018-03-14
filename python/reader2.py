@@ -211,6 +211,24 @@ class QuasiquoteReader2():
 				result = Cons(Symbol("quasiquote"), Cons(operand, NIL))
 				return result
 
+class CommaReader2():
+	def __init__(self, initialCharacter):
+		assert(initialCharacter == ",")
+		self.reader = None
+		self.done = False
+	def readNextCharacter(self, nextCharacter):
+		assert(not self.done)
+
+		if not self.reader:
+			self.reader = newReader2(nextCharacter)
+		else:
+			operand = self.reader.readNextCharacter(nextCharacter)
+			if operand:
+				self.done = True
+				self.reader = None
+				result = Cons(Symbol("comma"), Cons(operand, NIL))
+				return result
+
 class CommaReader():
 	def __init__(self, readerStack, initialCharacter):
 		assert(initialCharacter == ",")
@@ -231,6 +249,15 @@ class CommaReader():
 		self.value.setOperand(nextReader.getValue())
 
 def treeToString2(node, addParenthesis = True):
+	if node.getType() == "cons":
+		if node.getCar() != NIL:
+			if node.getCar().getType() == "symbol":
+				if node.getCar().getValue() == "quote":
+					return "'" + treeToString2(node.getCdr().getCar())
+				elif node.getCar().getValue() == "quasiquote":
+					return "`" + treeToString2(node.getCdr().getCar())
+				elif node.getCar().getValue() == "comma":
+					return "," + treeToString2(node.getCdr().getCar())
 	if node.getType() == "cons":
 		if node.getCdr() == NIL:
 			result = treeToString2(node.getCar())

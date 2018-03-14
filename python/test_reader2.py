@@ -65,10 +65,10 @@ def test_readExpressions_format():
 	assert(treeToString2(tree) == "(format t \"a = ~a~%\" a)")
 def test_readExpressions_quoteSymbol():
 	tree = parseString2("'a ")
-	assert(treeToString2(tree) == "(quote a)")
+	assert(treeToString2(tree) == "'a")
 def test_readExpressions_quasiquoteSymbol():
 	tree = parseString2("`a ")
-	assert(treeToString2(tree) == "(quasiquote a)")
+	assert(treeToString2(tree) == "`a")
 def test_readExpressions_quasiquoteAndComma():
 	tree = parseString2("``(w ,x ,,y) ")
 	assert(treeToString2(tree) == "``(w ,x ,,y)")
@@ -77,7 +77,7 @@ test_readExpressions = {
 	"test_readExpressions_format": test_readExpressions_format,
 	"test_readExpressions_quoteSymbol": test_readExpressions_quoteSymbol,
 	"test_readExpressions_quasiquoteSymbol": test_readExpressions_quasiquoteSymbol,
-	#"test_readExpressions_quasiquoteAndComma": test_readExpressions_quasiquoteAndComma,
+	"test_readExpressions_quasiquoteAndComma": test_readExpressions_quasiquoteAndComma,
 }
 runTests(test_readExpressions)
 
