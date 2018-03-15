@@ -216,6 +216,18 @@ def add_n_quotes(consOrAtom, n):
 		result = Cons(Symbol("quote"), result)
 	return result
 
+def list_appendElement(cons, element):
+	lastElement = cons
+	while lastElement.getCdr() != NIL:
+		lastElement = lastElement.getCdr()
+	lastElement.setCdr(Cons(element, NIL))
+
+def list_appendList(cons, listToAppend):
+	lastElement = cons
+	while lastElement.getCdr() != NIL:
+		lastElement = lastElement.getCdr()
+	lastElement.setCdr(listToAppend)
+
 def expandBackquoteMacro(consOrAtom, backquoteLevel = 0):
 	if consOrAtom.getType() == "cons":
 		if consOrAtom.getCar().getValue() == "backquote":
@@ -229,7 +241,8 @@ def expandBackquoteMacro(consOrAtom, backquoteLevel = 0):
 			result = Cons()
 			for idx in range(0, backquoteLevel):
 				list_appendElement(result, add_n_quotes(Symbol("list"), idx))
-			return list_appendList(result, consOrAtom)
+			list_appendList(result, consOrAtom)
+			return result
 	else:
 		return add_n_quotes(consOrAtom)
 
