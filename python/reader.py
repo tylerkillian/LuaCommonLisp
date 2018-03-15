@@ -228,50 +228,37 @@ def list_append(cons, element):
 	return cons
 
 def expandBackquoteMacro(consOrAtom, backquoteLevel = 0):
-	print("inside call")
 	if consOrAtom.getType() == "cons":
 		if consOrAtom.getCar().getValue() == "quasiquote":
 			backquoteLevel += 1
-			print("expanding quasiquote " + consOrAtom.getCdr().getCar().getValue())
-			print(backquoteLevel)
 			return expandBackquoteMacro(consOrAtom.getCdr().getCar(), backquoteLevel)
 		elif consOrAtom.getCar().getValue() == "comma":
 			assert(backquoteLevel > 0)
 			backquoteLevel -= 1
-			print("reducing comma " + consOrAtom.getCdr().getCar().getValue())
-			print(backquoteLevel)
 			return expandBackquoteMacro(consOrAtom.getCdr().getCar(), backquoteLevel)
 		else:
 			result = None
 			for idx in range(0, backquoteLevel):
-				result = list_append(result, Symbol("list"))
+				result = list_append(result, add_n_quotes(Symbol("list"), idx))
 			currentCons = consOrAtom
 			while currentCons != NIL:
 				nextElement = currentCons.getCar()
-				print("expanding next element " + treeToString(result))
-				print(nextElement.getValue())
 				result = list_append(result, expandBackquoteMacro(nextElement, backquoteLevel))
 				currentCons = currentCons.getCdr()
 			return result
 	else:
-		print(consOrAtom.getValue())
-		print(backquoteLevel)
-		print(treeToString(add_n_quotes(consOrAtom, backquoteLevel)))
 		return add_n_quotes(consOrAtom, backquoteLevel)
 
 def treeToString(node, addParenthesis = True):
-#	if node.getType() == "cons":
-#		if node.getCar() != NIL:
-#			if node.getCar().getType() == "symbol":
-#				if node.getCar().getValue() == "quote":
-#					return "'" + treeToString(node.getCdr().getCar())
-#				elif node.getCar().getValue() == "quasiquote":
-#					return "`" + treeToString(node.getCdr().getCar())
-#				elif node.getCar().getValue() == "comma":
-#					return "," + treeToString(node.getCdr().getCar())
 	if node.getType() == "cons":
 		if node.getCdr() == NIL:
 			result = treeToString(node.getCar())
+		elif node.getCar().getValue() == "quote":
+			return "'" + treeToString(node.getCdr(), False)
+		elif node.getCar().getValue() == "quasiquote":
+			return "`" + treeToString(node.getCdr(), False)
+		elif node.getCar().getValue() == "comma":
+			return "," + treeToString(node.getCdr(), False)
 		elif node.getCdr().getType() == "cons":
 			result = treeToString(node.getCar()) + " " + treeToString(node.getCdr(), False)
 		else:
