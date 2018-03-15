@@ -217,10 +217,13 @@ def add_n_quotes(consOrAtom, n):
 	return result
 
 def list_append(cons, element):
+	if not cons:
+		return Cons(element, NIL)
 	lastElement = cons
 	while lastElement.getCdr() != NIL:
 		lastElement = lastElement.getCdr()
 	lastElement.setCdr(Cons(element, NIL))
+	return cons
 
 def expandBackquoteMacro(consOrAtom, backquoteLevel = 0):
 	print("inside call")
@@ -237,14 +240,14 @@ def expandBackquoteMacro(consOrAtom, backquoteLevel = 0):
 			print(backquoteLevel)
 			return expandBackquoteMacro(consOrAtom.getCdr().getCar(), backquoteLevel)
 		else:
-			result = Cons()
+			result = None
 			for idx in range(0, backquoteLevel):
-				list_append(result, add_n_quotes(Symbol("list"), idx))
+				result = list_append(result, Symbol("list"))
 			currentCons = consOrAtom
 			while currentCons != NIL:
 				nextElement = currentCons.getCar()
-				print("expanding next element")
-				list_append(result, expandBackquoteMacro(nextElement, backquoteLevel))
+				print("expanding next element " + treeToString(result))
+				result = list_append(result, expandBackquoteMacro(nextElement, backquoteLevel))
 				currentCons = currentCons.getCdr()
 			return result
 	else:
