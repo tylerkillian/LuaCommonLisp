@@ -10,21 +10,21 @@ def isWhitespace(character):
 	else:
 		return False
 
-def newReader2(initialCharacter):
+def newReader(initialCharacter):
 	if initialCharacter == "(":
-		return ConsReader2(initialCharacter)
+		return ConsReader(initialCharacter)
 	elif initialCharacter == "\"":
-		return StringReader2(initialCharacter)
+		return StringReader(initialCharacter)
 	elif initialCharacter == "'":
-		return QuoteReader2(initialCharacter)
+		return QuoteReader(initialCharacter)
 	elif initialCharacter == "`":
-		return QuasiquoteReader2(initialCharacter)
+		return QuasiquoteReader(initialCharacter)
 	elif initialCharacter == ",":
-		return CommaReader2(initialCharacter)
+		return CommaReader(initialCharacter)
 	else:
-		return SymbolReader2(initialCharacter)
+		return SymbolReader(initialCharacter)
 
-class RootReader2():
+class RootReader():
 	def __init__(self):
 		self.childReader = None
 		self.done = False
@@ -41,10 +41,10 @@ class RootReader2():
 				return result
 			return
 		elif not isWhitespace(nextCharacter):
-			self.childReader = newReader2(nextCharacter)
+			self.childReader = newReader(nextCharacter)
 			return
 
-class SymbolReader2():
+class SymbolReader():
 	def __init__(self, initialCharacter):
 		self.buffer = initialCharacter
 		self.done = False
@@ -58,7 +58,7 @@ class SymbolReader2():
 			self.buffer = self.buffer + nextCharacter
 			return
 
-class StringReader2():
+class StringReader():
 	def __init__(self, initialCharacter):
 		assert(initialCharacter == "\"")
 		self.buffer = initialCharacter
@@ -78,7 +78,7 @@ class StringReader2():
 			self.buffer = self.buffer + nextCharacter
 			return
 
-class ConsReader2():
+class ConsReader():
 	def __init__(self, initialCharacter):
 		assert(initialCharacter == "(")
 		self.stage = "waitingForElement"
@@ -101,7 +101,7 @@ class ConsReader2():
 			return
 		else:
 			self.stage = "readingElement"
-			self.elementReader = newReader2(nextCharacter)
+			self.elementReader = newReader(nextCharacter)
 			return
 	def processStage_readingElement(self, nextCharacter):
 		assert(self.stage == "readingElement")
@@ -157,25 +157,6 @@ class ConsReader2():
 			return self.processStage_waitingForTerminalCharacter(nextCharacter)
 
 class QuoteReader():
-	def __init__(self, readerStack, initialCharacter):
-		assert(initialCharacter == "'")
-		readerStack.append(self)
-		self.value = Quote()
-		self.done = False
-	def getValue(self):
-		return self.value
-	def isDone(self):
-		return self.done
-	def readNextCharacter(self, readerStack, nextCharacter):
-		assert(not self.done)
-		assert(readerStack[-1] == self)
-
-		self.done = True
-		readerStack.pop()
-		nextReader = newReader(readerStack, nextCharacter)
-		self.value.setOperand(nextReader.getValue())
-
-class QuoteReader2():
 	def __init__(self, initialCharacter):
 		assert(initialCharacter == "'")
 		self.reader = None
@@ -184,7 +165,7 @@ class QuoteReader2():
 		assert(not self.done)
 
 		if not self.reader:
-			self.reader = newReader2(nextCharacter)
+			self.reader = newReader(nextCharacter)
 		else:
 			operand = self.reader.readNextCharacter(nextCharacter)
 			if operand:
@@ -193,7 +174,7 @@ class QuoteReader2():
 				result = Cons(Symbol("quote"), Cons(operand, NIL))
 				return result
 
-class QuasiquoteReader2():
+class QuasiquoteReader():
 	def __init__(self, initialCharacter):
 		assert(initialCharacter == "`")
 		self.reader = None
@@ -202,7 +183,7 @@ class QuasiquoteReader2():
 		assert(not self.done)
 
 		if not self.reader:
-			self.reader = newReader2(nextCharacter)
+			self.reader = newReader(nextCharacter)
 		else:
 			operand = self.reader.readNextCharacter(nextCharacter)
 			if operand:
@@ -211,7 +192,7 @@ class QuasiquoteReader2():
 				result = Cons(Symbol("quasiquote"), Cons(operand, NIL))
 				return result
 
-class CommaReader2():
+class CommaReader():
 	def __init__(self, initialCharacter):
 		assert(initialCharacter == ",")
 		self.reader = None
@@ -220,7 +201,7 @@ class CommaReader2():
 		assert(not self.done)
 
 		if not self.reader:
-			self.reader = newReader2(nextCharacter)
+			self.reader = newReader(nextCharacter)
 		else:
 			operand = self.reader.readNextCharacter(nextCharacter)
 			if operand:
@@ -228,25 +209,6 @@ class CommaReader2():
 				self.reader = None
 				result = Cons(Symbol("comma"), Cons(operand, NIL))
 				return result
-
-class CommaReader():
-	def __init__(self, readerStack, initialCharacter):
-		assert(initialCharacter == ",")
-		readerStack.append(self)
-		self.value = Comma()
-		self.done = False
-	def getValue(self):
-		return self.value
-	def isDone(self):
-		return self.done
-	def readNextCharacter(self, readerStack, nextCharacter):
-		assert(not self.done)
-		assert(readerStack[-1] == self)
-
-		self.done = True
-		readerStack.pop()
-		nextReader = newReader(readerStack, nextCharacter)
-		self.value.setOperand(nextReader.getValue())
 
 def treeToString2(node, addParenthesis = True):
 	if node.getType() == "cons":

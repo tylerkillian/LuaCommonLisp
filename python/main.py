@@ -1,5 +1,5 @@
 import sys
-from reader2 import *
+from reader import *
 
 def Expression_get(expression, index):
 	assert(expression.getType() == "cons")
@@ -21,7 +21,7 @@ def Expression_getLength(expression):
 		length += 1
 	return length
 
-def eval2(expression, environment):
+def eval(expression, environment):
 	if expression.getType() == "symbol":
 		if expression.getValue() == "1":
 			return "1"
@@ -41,7 +41,7 @@ def eval2(expression, environment):
 		if expression.getCdr().getCdr().getCdr() != NIL:
 			if expression.getCdr().getCdr().getCdr().getType() == "cons":
 				variableToLookup = expression.getCdr().getCdr().getCdr().getCar()
-				value = eval2(variableToLookup, environment)
+				value = eval(variableToLookup, environment)
 				message = message.replace("~a", str(value))
 		sys.stdout.write(message)
 		return None
@@ -51,10 +51,10 @@ def eval2(expression, environment):
 		environment[variable] = value
 	elif expression.getCar().getValue() == "+":
 		left = expression.getCdr().getCar()
-		leftValue = eval2(left, environment)
+		leftValue = eval(left, environment)
 
 		right = expression.getCdr().getCdr().getCar()
-		rightValue = eval2(right, environment)
+		rightValue = eval(right, environment)
 		return int(leftValue) + int(rightValue)
 	elif expression.getCar().getValue() == "let":
 		variableToSet = expression.getCdr().getCar().getCar().getCar().getValue()
@@ -62,7 +62,7 @@ def eval2(expression, environment):
 		environment = {}
 		environment[variableToSet] = value
 		root = expression.getCdr().getCdr().getCar()
-		return eval2(root, environment)
+		return eval(root, environment)
 	elif expression.getCar().getValue() == "defun":
 		functionName = expression.getCdr().getCar().getValue()
 
@@ -80,27 +80,27 @@ def eval2(expression, environment):
 		return environment[functionName]
 	else:
 		functionName = Expression_get(expression, 0)
-		functionPointer = eval2(functionName, environment)
+		functionPointer = eval(functionName, environment)
 		assert((Expression_getLength(expression)-1) == len(functionPointer['arguments']))
 		for expressionIndex in range(1, Expression_getLength(expression)):
 			argumentName = functionPointer['arguments'][expressionIndex - 1]
-			environment[argumentName] = eval2(Expression_get(expression, expressionIndex), environment)
+			environment[argumentName] = eval(Expression_get(expression, expressionIndex), environment)
 		returnValue = None
 		for command in functionPointer['body']:
-			returnValue = eval2(command, environment)
+			returnValue = eval(command, environment)
 		
 		return returnValue
 
-def lisp2(inputFile):
+def lisp(inputFile):
 	input = open(inputFile, "r")
 	nextCharacter = input.read(1)
 	environment = {}
-	reader = RootReader2()
+	reader = RootReader()
 	while nextCharacter:
 		result = reader.readNextCharacter(nextCharacter)
 		if result:
-			reader = RootReader2()
-			eval2(result, environment)
+			reader = RootReader()
+			eval(result, environment)
 		else:
 			nextCharacter = input.read(1)
-lisp2(sys.argv[1])
+lisp(sys.argv[1])
