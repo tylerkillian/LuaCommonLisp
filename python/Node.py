@@ -14,8 +14,6 @@ class Cons():
 		return self.cdr
 	def setCdr(self, cdr):
 		self.cdr = cdr
-	def getValue(self):
-		return "cons"
 
 class Symbol:
 	def __init__(self, value = ""):
