@@ -211,7 +211,7 @@ class CommaReader():
 				return result
 
 def add_n_quotes(consOrAtom, n):
-	result = consOrAtom
+	result = Cons(consOrAtom, NIL)
 	for quoteIdx in range(0, n):
 		result = Cons(Symbol("quote"), result)
 	return result
@@ -247,10 +247,14 @@ def expandBackquoteMacro(consOrAtom, backquoteLevel = 0):
 			while currentCons != NIL:
 				nextElement = currentCons.getCar()
 				print("expanding next element " + treeToString(result))
+				print(nextElement.getValue())
 				result = list_append(result, expandBackquoteMacro(nextElement, backquoteLevel))
 				currentCons = currentCons.getCdr()
 			return result
 	else:
+		print(consOrAtom.getValue())
+		print(backquoteLevel)
+		print(treeToString(add_n_quotes(consOrAtom, backquoteLevel)))
 		return add_n_quotes(consOrAtom, backquoteLevel)
 
 def treeToString(node, addParenthesis = True):
@@ -277,12 +281,6 @@ def treeToString(node, addParenthesis = True):
 		return node.getValue()
 	elif node.getType() == "string":
 		return node.getValue()
-	elif node.getType() == "quote":
-		return "'" + treeToString(node.getOperand())
-	elif node.getType() == "quasiquote":
-		return "`" + treeToString(node.getOperand())
-	elif node.getType() == "comma":
-		return "," + treeToString(node.getOperand())
 	else:
 		assert(False)
 
