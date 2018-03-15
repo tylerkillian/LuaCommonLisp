@@ -210,23 +210,23 @@ class CommaReader():
 				result = Cons(Symbol("comma"), Cons(operand, NIL))
 				return result
 
-def treeToString2(node, addParenthesis = True):
+def treeToString(node, addParenthesis = True):
 	if node.getType() == "cons":
 		if node.getCar() != NIL:
 			if node.getCar().getType() == "symbol":
 				if node.getCar().getValue() == "quote":
-					return "'" + treeToString2(node.getCdr().getCar())
+					return "'" + treeToString(node.getCdr().getCar())
 				elif node.getCar().getValue() == "quasiquote":
-					return "`" + treeToString2(node.getCdr().getCar())
+					return "`" + treeToString(node.getCdr().getCar())
 				elif node.getCar().getValue() == "comma":
-					return "," + treeToString2(node.getCdr().getCar())
+					return "," + treeToString(node.getCdr().getCar())
 	if node.getType() == "cons":
 		if node.getCdr() == NIL:
-			result = treeToString2(node.getCar())
+			result = treeToString(node.getCar())
 		elif node.getCdr().getType() == "cons":
-			result = treeToString2(node.getCar()) + " " + treeToString2(node.getCdr(), False)
+			result = treeToString(node.getCar()) + " " + treeToString(node.getCdr(), False)
 		else:
-			result = treeToString2(node.getCar()) + " " + treeToString2(node.getCdr())
+			result = treeToString(node.getCar()) + " " + treeToString(node.getCdr())
 		if addParenthesis:
 			result = "(" + result + ")" 
 		return result
@@ -235,11 +235,11 @@ def treeToString2(node, addParenthesis = True):
 	elif node.getType() == "string":
 		return node.getValue()
 	elif node.getType() == "quote":
-		return "'" + treeToString2(node.getOperand())
+		return "'" + treeToString(node.getOperand())
 	elif node.getType() == "quasiquote":
-		return "`" + treeToString2(node.getOperand())
+		return "`" + treeToString(node.getOperand())
 	elif node.getType() == "comma":
-		return "," + treeToString2(node.getOperand())
+		return "," + treeToString(node.getOperand())
 	else:
 		assert(False)
 

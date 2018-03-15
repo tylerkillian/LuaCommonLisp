@@ -1,30 +1,30 @@
 from test_utilities import *
-from reader2 import *
+from reader import *
 
-def test_SymbolReader2_singleLetter():
-	reader = SymbolReader2("a")
+def test_SymbolReader_singleLetter():
+	reader = SymbolReader("a")
 	result = reader.readNextCharacter(" ")
 	assert(result.getValue() == "a")
-test_SymbolReader2 = {
-	"test_SymbolReader2_singleLetter": test_SymbolReader2_singleLetter,
+test_SymbolReader = {
+	"test_SymbolReader_singleLetter": test_SymbolReader_singleLetter,
 }
-runTests(test_SymbolReader2)
+runTests(test_SymbolReader)
 
-def test_StringReader2_singleLetter():
-	reader = StringReader2("\"")
+def test_StringReader_singleLetter():
+	reader = StringReader("\"")
 	result = reader.readNextCharacter("a")
 	assert(not result)
 	result = reader.readNextCharacter("\"")
 	assert(not result)
 	result = reader.readNextCharacter(" ")
 	assert(result.getValue() == "\"a\"")
-test_StringReader2 = {
-	"test_StringReader2_singleLetter": test_StringReader2_singleLetter,
+test_StringReader = {
+	"test_StringReader_singleLetter": test_StringReader_singleLetter,
 }
-runTests(test_StringReader2)
+runTests(test_StringReader)
 
-def parseString2(string):
-	reader = newReader2(string[0])
+def parseString(string):
+	reader = newReader(string[0])
 
 	for character in string[1:]:
 		lastResult = reader.readNextCharacter(character)
@@ -32,16 +32,16 @@ def parseString2(string):
 			assert(character == string[-1])
 			return lastResult
 	assert(False)
-def test_ConsReader2_emptyList():
-	result = parseString2("() ")
+def test_ConsReader_emptyList():
+	result = parseString("() ")
 	assert(result == NIL)
-def test_ConsReader2_singleElementList():
-	cons = parseString2("(a) ")
+def test_ConsReader_singleElementList():
+	cons = parseString("(a) ")
 	assert(cons.getCar().getType() == "symbol")
 	assert(cons.getCar().getValue() == "a")
 	assert(cons.getCdr() == NIL)
-def test_ConsReader2_twoElementList():
-	cons = parseString2("(a b) ")
+def test_ConsReader_twoElementList():
+	cons = parseString("(a b) ")
 	assert(cons.getType() == "cons")
 	assert(cons.getCar().getType() == "symbol")
 	assert(cons.getCar().getValue() == "a")
@@ -50,28 +50,28 @@ def test_ConsReader2_twoElementList():
 	assert(cons.getCdr().getCar().getValue() == "b")
 	assert(cons.getCdr().getCdr() == NIL)
 test_ConsReader = {
-	"test_ConsReader2_emptyList": test_ConsReader2_emptyList,
-	"test_ConsReader2_singleElementList": test_ConsReader2_singleElementList,
-	"test_ConsReader2_twoElementList": test_ConsReader2_twoElementList,
+	"test_ConsReader_emptyList": test_ConsReader_emptyList,
+	"test_ConsReader_singleElementList": test_ConsReader_singleElementList,
+	"test_ConsReader_twoElementList": test_ConsReader_twoElementList,
 }
 runTests(test_ConsReader)
 
 
 def test_readExpressions_setf():
-	tree = parseString2("(setf a 3) ")
-	assert(treeToString2(tree) == "(setf a 3)")
+	tree = parseString("(setf a 3) ")
+	assert(treeToString(tree) == "(setf a 3)")
 def test_readExpressions_format():
-	tree = parseString2("(format t \"a = ~a~%\" a) ")
-	assert(treeToString2(tree) == "(format t \"a = ~a~%\" a)")
+	tree = parseString("(format t \"a = ~a~%\" a) ")
+	assert(treeToString(tree) == "(format t \"a = ~a~%\" a)")
 def test_readExpressions_quoteSymbol():
-	tree = parseString2("'a ")
-	assert(treeToString2(tree) == "'a")
+	tree = parseString("'a ")
+	assert(treeToString(tree) == "'a")
 def test_readExpressions_quasiquoteSymbol():
-	tree = parseString2("`a ")
-	assert(treeToString2(tree) == "`a")
+	tree = parseString("`a ")
+	assert(treeToString(tree) == "`a")
 def test_readExpressions_quasiquoteAndComma():
-	tree = parseString2("``(w ,x ,,y) ")
-	assert(treeToString2(tree) == "``(w ,x ,,y)")
+	tree = parseString("``(w ,x ,,y) ")
+	assert(treeToString(tree) == "``(w ,x ,,y)")
 test_readExpressions = {
 	"test_readExpressions_setf": test_readExpressions_setf,
 	"test_readExpressions_format": test_readExpressions_format,

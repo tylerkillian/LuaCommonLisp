@@ -1,6 +1,6 @@
 set -e
 
-python3 test_reader2.py
+python3 test_reader.py
 bash test_hello.sh
 bash test_test1.sh
 bash test_let.sh
