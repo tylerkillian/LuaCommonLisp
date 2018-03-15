@@ -223,13 +223,18 @@ def list_append(cons, element):
 	lastElement.setCdr(Cons(element, NIL))
 
 def expandBackquoteMacro(consOrAtom, backquoteLevel = 0):
+	print("inside call")
 	if consOrAtom.getType() == "cons":
-		if consOrAtom.getCar().getValue() == "backquote":
+		if consOrAtom.getCar().getValue() == "quasiquote":
 			backquoteLevel += 1
+			print("expanding quasiquote " + consOrAtom.getCdr().getCar().getValue())
+			print(backquoteLevel)
 			return expandBackquoteMacro(consOrAtom.getCdr().getCar(), backquoteLevel)
 		elif consOrAtom.getCar().getValue() == "comma":
 			assert(backquoteLevel > 0)
 			backquoteLevel -= 1
+			print("reducing comma " + consOrAtom.getCdr().getCar().getValue())
+			print(backquoteLevel)
 			return expandBackquoteMacro(consOrAtom.getCdr().getCar(), backquoteLevel)
 		else:
 			result = Cons()
@@ -238,6 +243,7 @@ def expandBackquoteMacro(consOrAtom, backquoteLevel = 0):
 			currentCons = consOrAtom
 			while currentCons != NIL:
 				nextElement = currentCons.getCar()
+				print("expanding next element")
 				list_append(result, expandBackquoteMacro(nextElement, backquoteLevel))
 				currentCons = currentCons.getCdr()
 			return result
