@@ -258,15 +258,15 @@ def expandBackquoteMacro(consOrAtom, backquoteLevel = 0):
 		return add_n_quotes(consOrAtom, backquoteLevel)
 
 def treeToString(node, addParenthesis = True):
-	if node.getType() == "cons":
-		if node.getCar() != NIL:
-			if node.getCar().getType() == "symbol":
-				if node.getCar().getValue() == "quote":
-					return "'" + treeToString(node.getCdr().getCar())
-				elif node.getCar().getValue() == "quasiquote":
-					return "`" + treeToString(node.getCdr().getCar())
-				elif node.getCar().getValue() == "comma":
-					return "," + treeToString(node.getCdr().getCar())
+#	if node.getType() == "cons":
+#		if node.getCar() != NIL:
+#			if node.getCar().getType() == "symbol":
+#				if node.getCar().getValue() == "quote":
+#					return "'" + treeToString(node.getCdr().getCar())
+#				elif node.getCar().getValue() == "quasiquote":
+#					return "`" + treeToString(node.getCdr().getCar())
+#				elif node.getCar().getValue() == "comma":
+#					return "," + treeToString(node.getCdr().getCar())
 	if node.getType() == "cons":
 		if node.getCdr() == NIL:
 			result = treeToString(node.getCar())
