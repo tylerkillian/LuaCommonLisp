@@ -238,7 +238,7 @@ def expandBackquoteMacro(consOrAtom, backquoteLevel = 0):
 			currentCons = consOrAtom
 			for idx in range(0, list_length(consOrAtom)):
 				nextElement = currentCons.getCar()
-				list_append(result, expandBackquoteMacro(nextElement, backquoteLevel)
+				list_append(result, expandBackquoteMacro(nextElement, backquoteLevel))
 				currentCons = currentCons.getCdr()
 			return result
 	else:
