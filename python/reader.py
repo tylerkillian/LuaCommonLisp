@@ -211,6 +211,8 @@ class CommaReader():
 				return result
 
 def add_n_quotes(consOrAtom, n):
+	if n == 0:
+		return consOrAtom
 	result = Cons(consOrAtom, NIL)
 	for quoteIdx in range(0, n):
 		result = Cons(Symbol("quote"), result)
