@@ -72,7 +72,7 @@ def test_readExpressions_quasiquoteSymbol():
 def test_readExpressions_quasiquoteAndComma():
 	tree = parseString("``(w ,x ,,y) ")
 	assert(treeToString(tree) == "``(w ,x ,,y)")
-def test_readExpressions_backquoteMacro():
+def test_readExpressions_expandBackquoteMacro():
 	tree = parseString("``(w ,x ,,y) ")
 	treeAfterMacroExpansion = expandBackquoteMacro(tree)
 	assert(treeToString(treeAfterMacroExpansion) == "(list 'list ''w 'x y)")
@@ -82,6 +82,7 @@ test_readExpressions = {
 	"test_readExpressions_quoteSymbol": test_readExpressions_quoteSymbol,
 	"test_readExpressions_quasiquoteSymbol": test_readExpressions_quasiquoteSymbol,
 	"test_readExpressions_quasiquoteAndComma": test_readExpressions_quasiquoteAndComma,
+	"test_readExpressions_expandBackquoteMacro": test_readExpressions_expandBackquoteMacro,
 }
 runTests(test_readExpressions)
 

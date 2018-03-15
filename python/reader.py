@@ -210,6 +210,29 @@ class CommaReader():
 				result = Cons(Symbol("comma"), Cons(operand, NIL))
 				return result
 
+def add_n_quotes(consOrAtom, n):
+	result = consOrAtom
+	for quoteIdx in range(0, n):
+		result = Cons(Symbol("quote"), result)
+	return result
+
+def expandBackquoteMacro(consOrAtom, backquoteLevel = 0):
+	if consOrAtom.getType() == "cons":
+		if consOrAtom.getCar().getValue() == "backquote":
+			backquoteLevel += 1
+			return expandBackquoteMacro(consOrAtom, backquoteLevel)
+		elif consOrAtom.getCar().getValue() == "comma":
+			assert(backquoteLevel > 0)
+			backquoteLevel -= 1
+			return expandBackquoteMacro(consOrAtom, backquoteLevel)
+		else:
+			result = Cons()
+			for idx in range(0, backquoteLevel):
+				list_appendElement(result, add_n_quotes(Symbol("list"), idx))
+			return list_appendList(result, consOrAtom)
+	else:
+		return add_n_quotes(consOrAtom)
+
 def treeToString(node, addParenthesis = True):
 	if node.getType() == "cons":
 		if node.getCar() != NIL:
