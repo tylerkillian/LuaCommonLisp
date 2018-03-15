@@ -236,13 +236,13 @@ def expandBackquoteMacro(consOrAtom, backquoteLevel = 0):
 			for idx in range(0, backquoteLevel):
 				list_append(result, add_n_quotes(Symbol("list"), idx))
 			currentCons = consOrAtom
-			for idx in range(0, list_length(consOrAtom)):
+			while currentCons != NIL:
 				nextElement = currentCons.getCar()
 				list_append(result, expandBackquoteMacro(nextElement, backquoteLevel))
 				currentCons = currentCons.getCdr()
 			return result
 	else:
-		return add_n_quotes(consOrAtom)
+		return add_n_quotes(consOrAtom, backquoteLevel)
 
 def treeToString(node, addParenthesis = True):
 	if node.getType() == "cons":
