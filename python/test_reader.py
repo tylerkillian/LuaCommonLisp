@@ -92,9 +92,12 @@ test_readExpressions = {
 runTests(test_readExpressions)
 
 
-def test_backQuoteExpansion_getInnerBackquote():
+def test_backquoteExpansion_getInnerBackquote():
 	tree = parseString("`(a `(b ,,c) ,d) ")
 	innerBackquote = tree.getCdr().getCar().getCdr().getCar()
 	assert(innerBackquote.getCar().getValue() == "quasiquote")
-test_backQuoteExpansion = {
+test_backquoteExpansion = {
+	"test_backquoteExpansion_getInnerBackquote": test_backquoteExpansion_getInnerBackquote,
 }
+runTests(test_backquoteExpansion)
+
