@@ -92,11 +92,20 @@ test_readExpressions = {
 runTests(test_readExpressions)
 
 
+def test_backquoteExpansion_getBackquoteDepth0():
+	tree = parseString("a ")
+	assert(getBackquoteDepth(tree) == 0)
+def test_backquoteExpansion_getBackquoteDepth1():
+	tree = parseString("`a ")
+	assert(getBackquoteDepth(tree) == 1)
 def test_backquoteExpansion_getInnerBackquote():
 	tree = parseString("`(a `(b ,,c) ,d) ")
 	innerBackquote = tree.getCdr().getCar().getCdr().getCar()
 	assert(innerBackquote.getCar().getValue() == "quasiquote")
+	#assert(getInnerBackquote(tree) == innerBackquote)
 test_backquoteExpansion = {
+	"test_backquoteExpansion_getBackquoteDepth0": test_backquoteExpansion_getBackquoteDepth0,
+	"test_backquoteExpansion_getBackquoteDepth1": test_backquoteExpansion_getBackquoteDepth1,
 	"test_backquoteExpansion_getInnerBackquote": test_backquoteExpansion_getInnerBackquote,
 }
 runTests(test_backquoteExpansion)

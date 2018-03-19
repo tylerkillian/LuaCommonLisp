@@ -249,6 +249,29 @@ def expandBackquoteMacro(consOrAtom, backquoteLevel = 0):
 	else:
 		return add_n_quotes(consOrAtom, backquoteLevel)
 
+def isSymbol(expression, name):
+	if expression.getType() == "symbol":
+		if expression.getValue() == name:
+			return True
+	return False
+
+def getBackquoteDepth(expression, backquoteLevel = 0):
+	if expression.getType() == "symbol" or expression.getType == "string":
+		return backquoteLevel
+	elif expression.getType() == "cons":
+		if isSymbol(expression.getCar(), "quasiquote"):
+			backquoteLevel += 1
+			return getBackquoteDepth(expression.getCar(), backquoteLevel)
+		else:
+			carBackquoteDepth = getBackquoteDepth(expression.getCar(), backquoteLevel)
+			cdrBackquoteDepth = getBackquoteDepth(expression.getCdr(), backquoteLevel)
+			return max(carBackquoteDepth, cdrBackquoteDepth)
+	else:
+		assert(False)
+
+def getInnerBackquote(expression):
+	result = None
+
 def treeToString(node, addParenthesis = True):
 	if node.getType() == "cons":
 		if node.getCar().getType() == "symbol":
