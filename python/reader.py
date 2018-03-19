@@ -280,7 +280,7 @@ def findFirstBackquoteAtGivenDepth(expression, depthToFind, currentDepth = 0):
 			currentDepth += 1
 			if currentDepth == depthToFind:
 				return expression
-			else
+			else:
 				return findFirstBackquoteAtGivenDepth(expression.getCdr(), depthToFind, currentDepth)
 		else:
 			resultFromCar = findFirstBackquoteAtGivenDepth(expression.getCar(), depthToFind, currentDepth)
