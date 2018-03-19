@@ -274,8 +274,29 @@ def getBackquoteDepth(expression, backquoteLevel = 0):
 	else:
 		assert(False)
 
+def findFirstBackquoteAtGivenDepth(expression, depthToFind, currentDepth = 0):
+	if expression.getType() == "cons":
+		if isSymbol(expression.getCar(), "quasiquote"):
+			currentDepth += 1
+			if currentDepth == depthToFind:
+				return expression
+			else
+				return findFirstBackquoteAtGivenDepth(expression.getCdr(), depthToFind, currentDepth)
+		else:
+			resultFromCar = findFirstBackquoteAtGivenDepth(expression.getCar(), depthToFind, currentDepth)
+			if resultFromCar:
+				return resultFromCar
+			else:
+				return findFirstBackquoteAtGivenDepth(expression.getCdr(), depthToFind, currentDepth)
+	else:
+		return None
+
 def getInnerBackquote(expression):
-	result = None
+	innerBackquoteDepth = getBackquoteDepth(expression)
+	if innerBackquoteDepth == 0:
+		return None
+	else:
+		return findFirstBackquoteAtGivenDepth(expression, innerBackquoteDepth)
 
 def treeToString(node, addParenthesis = True):
 	if node.getType() == "cons":
