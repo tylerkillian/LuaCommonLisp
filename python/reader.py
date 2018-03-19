@@ -250,18 +250,23 @@ def expandBackquoteMacro(consOrAtom, backquoteLevel = 0):
 		return add_n_quotes(consOrAtom, backquoteLevel)
 
 def isSymbol(expression, name):
-	if expression.getType() == "symbol":
+	if expression == NIL:
+		return False
+	elif expression.getType() == "symbol":
 		if expression.getValue() == name:
 			return True
-	return False
+	else:
+		return False
 
 def getBackquoteDepth(expression, backquoteLevel = 0):
-	if expression.getType() == "symbol" or expression.getType == "string":
+	if expression == NIL:
+		return backquoteLevel
+	elif expression.getType() == "symbol" or expression.getType() == "string":
 		return backquoteLevel
 	elif expression.getType() == "cons":
 		if isSymbol(expression.getCar(), "quasiquote"):
 			backquoteLevel += 1
-			return getBackquoteDepth(expression.getCar(), backquoteLevel)
+			return getBackquoteDepth(expression.getCdr(), backquoteLevel)
 		else:
 			carBackquoteDepth = getBackquoteDepth(expression.getCar(), backquoteLevel)
 			cdrBackquoteDepth = getBackquoteDepth(expression.getCdr(), backquoteLevel)
