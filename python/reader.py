@@ -359,12 +359,11 @@ def expandSingleBackquote(expression):
 
 def expandBackquoteMacro(expression):
 	result = expression
-	backquoteDepth = getBackquoteDepth(expression)
-	while backquoteDepth > 0:
-		innerBackquote = getInnerBackquote(result)
+	innerBackquote = getInnerBackquote(result)
+	while innerBackquote:
 		expandedInnerBackquote = expandSingleBackquote(innerBackquote)
 		result = replaceInnerBackquote(result, expandedInnerBackquote)
-		backquoteDepth = getBackquoteDepth(expression)
+		innerBackquote = getInnerBackquote(result)
 	return result
 
 def treeToString(node, addParenthesis = True):
