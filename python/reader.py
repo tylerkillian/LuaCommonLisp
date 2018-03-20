@@ -341,6 +341,8 @@ def levelup(element):
 			return element.getCdr().getCar()
 		else:
 			result = list_append(None, Symbol("list"))
+			adding = Cons(Symbol("quasiquote"), element)
+			print("        adding " + treeToString(adding))
 			return list_append(result, Cons(Symbol("quasiquote"), element))
 			
 def expandSingleBackquote(expression):
@@ -381,7 +383,7 @@ def treeToString(node, addParenthesis = True):
 			if node.getCar().getValue() == "quote":
 				return "'" + treeToString(node.getCdr(), False)
 			elif node.getCar().getValue() == "quasiquote":
-				return "`" + treeToString(node.getCdr(), False)
+				return "`" + treeToString(node.getCdr().getCar(), False)
 			elif node.getCar().getValue() == "comma":
 				return "," + treeToString(node.getCdr(), False)
 			elif node.getCar().getValue() == "comma-at":
