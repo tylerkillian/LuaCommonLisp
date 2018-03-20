@@ -115,9 +115,9 @@ def test_backquoteExpansion_expandBackquoteMacro_symbol():
 	treeWithExpandedBackquote = expandBackquoteMacro2(tree)
 	assert(treeToString(treeWithExpandedBackquote) == "'a")
 def test_backquoteExpansion_expandBackquoteMacro_expression():
-	tree = parseString("`(a ,b) ")
+	tree = parseString("`(a ,@b ,c) ")
 	treeWithExpandedBackquote = expandBackquoteMacro2(tree)
-	assert(treeToString(treeWithExpandedBackquote) == "(append (list 'a) (list b))")
+	assert(treeToString(treeWithExpandedBackquote) == "(append (list 'a) b (list c))")
 test_backquoteExpansion = {
 	"test_backquoteExpansion_getBackquoteDepth0": test_backquoteExpansion_getBackquoteDepth0,
 	"test_backquoteExpansion_getBackquoteDepth1": test_backquoteExpansion_getBackquoteDepth1,
