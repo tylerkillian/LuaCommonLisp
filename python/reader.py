@@ -345,6 +345,23 @@ def replaceInnerBackquote(expression, replacement):
 	else:
 		return replaceFirstBackquoteAtGivenDepth(expression, replacement, innerBackquoteDepth)
 
+def levelup(element):
+	if element == NIL:
+		result = list_append(None, Symbol("list"))
+		return list_append(result, Cons(Symbol("quote"), NIL))
+	elif element.getType() == "symbol" or element.getType() == "string":
+		result = list_append(None, Symbol("list"))
+		return list_append(result, Cons(Symbol("quote"), element))
+	elif element.getType() == "cons":
+		if element.getCar() == "comma":
+			result = list_append(None, Symbol("list"))
+			return list_append(result, element.getCdr())
+		elif element.getCar() == "comma-at":
+			return element.getCdr()
+		else:
+			result = list_append(None, Symbol("list"))
+			return list_append(result, Cons(Symbol("quasiquote"), element))
+			
 def expandBackquoteMacro2(expression):
 	assert(expression.getCar().getValue() == "quasiquote")
 	subexpression = expression.getCdr().getCar()
@@ -356,17 +373,10 @@ def expandBackquoteMacro2(expression):
 		if subexpression.getCar().getValue() == "comma":
 			return subexpression.getCdr().getCar()
 		else:
-			result = None
-			list_append(result, Symbol("append"))
+			result = list_append(None, Symbol("append"))
 			for idx in range(0, list_getLength(subexpression)):
 				element = list_get(subexpression, idx)
-				
-				result = list_append(result, add_n_quotes(Symbol("list"), idx))
-			currentCons = expression
-			while currentCons != NIL:
-				nextElement = currentCons.getCar()
-				result = list_append(result, expandBackquoteMacro(nextElement, backquoteLevel))
-				currentCons = currentCons.getCdr()
+				result = list_append(result, levelup(element))
 			return result
 
 def treeToString(node, addParenthesis = True):
