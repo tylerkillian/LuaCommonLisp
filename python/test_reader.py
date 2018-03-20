@@ -105,11 +105,17 @@ def test_backquoteExpansion_getInnerBackquote():
 	tree = parseString("`(a `(b ,,c) ,d) ")
 	innerBackquote = tree.getCdr().getCar().getCdr().getCar()
 	assert(getInnerBackquote(tree) == innerBackquote)
+def test_backquoteExpansion_replaceInnerBackquote():
+	originalTree = parseString("`(a `(b ,,c) ,d) ")
+	replacement = parseString("e ")
+	newTree = replaceInnerBackquote(originalTree, replacement)
+	assert(treeToString(newTree) == "`(a e ,d)")
 test_backquoteExpansion = {
 	"test_backquoteExpansion_getBackquoteDepth0": test_backquoteExpansion_getBackquoteDepth0,
 	"test_backquoteExpansion_getBackquoteDepth1": test_backquoteExpansion_getBackquoteDepth1,
 	"test_backquoteExpansion_getBackquoteDepth2": test_backquoteExpansion_getBackquoteDepth2,
 	"test_backquoteExpansion_getInnerBackquote": test_backquoteExpansion_getInnerBackquote,
+	"test_backquoteExpansion_replaceInnerBackquote": test_backquoteExpansion_replaceInnerBackquote,
 }
 runTests(test_backquoteExpansion)
 

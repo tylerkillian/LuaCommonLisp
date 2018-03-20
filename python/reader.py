@@ -298,6 +298,33 @@ def getInnerBackquote(expression):
 	else:
 		return findFirstBackquoteAtGivenDepth(expression, innerBackquoteDepth)
 
+def replaceFirstBackquoteAtGivenDepth(expression, replacement, depthToFind, currentDepth = 0):
+	if expression.getType() == "cons":
+		if isSymbol(expression.getCar(), "quasiquote"):
+			currentDepth += 1
+			if currentDepth == depthToFind:
+				return replacement
+			else:
+				newCdr = replaceFirstBackquoteAtGivenDepth(expression.getCdr(), replacement, depthToFind, currentDepth)
+				return Cons(expression.getCar(), newCdr)
+		else:
+			foundInCar = findFirstBackquoteAtGivenDepth(expression.getCar(), depthToFind, currentDepth)
+			if foundInCar:
+				newCar = replaceFirstBackquoteAtGivenDepth(expression.getCar(), replacement, depthToFind, currentDepth)
+				return Cons(newCar, expression.getCdr())
+			else:
+				newCdr = replaceFirstBackquoteAtGivenDepth(expression.getCdr(), replacement, depthToFind, currentDepth)
+				return Cons(expression.getCar(), newCdr)
+	else:
+		return expression
+
+def replaceInnerBackquote(expression, replacement):
+	innerBackquoteDepth = getBackquoteDepth(expression)
+	if innerBackquoteDepth == 0:
+		return expression
+	else:
+		return replaceFirstBackquoteAtGivenDepth(expression, replacement, innerBackquoteDepth)
+
 def treeToString(node, addParenthesis = True):
 	if node.getType() == "cons":
 		if node.getCar().getType() == "symbol":
