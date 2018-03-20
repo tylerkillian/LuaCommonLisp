@@ -273,7 +273,9 @@ def getBackquoteDepth(expression, backquoteLevel = 0):
 		assert(False)
 
 def findFirstBackquoteAtGivenDepth(expression, depthToFind, currentDepth = 0):
-	if expression.getType() == "cons":
+	if expression == NIL:
+		return None
+	elif expression.getType() == "cons":
 		if isSymbol(expression.getCar(), "quasiquote"):
 			currentDepth += 1
 			if currentDepth == depthToFind:
