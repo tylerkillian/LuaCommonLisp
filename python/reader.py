@@ -365,7 +365,7 @@ def levelup(element):
 			result = list_append(None, Symbol("list"))
 			return list_append(result, element.getCdr().getCar())
 		elif element.getCar().getValue() == "comma-at":
-			return element.getCdr()
+			return element.getCdr().getCar()
 		else:
 			result = list_append(None, Symbol("list"))
 			return list_append(result, Cons(Symbol("quasiquote"), element))
@@ -396,6 +396,8 @@ def treeToString(node, addParenthesis = True):
 				return "`" + treeToString(node.getCdr(), False)
 			elif node.getCar().getValue() == "comma":
 				return "," + treeToString(node.getCdr(), False)
+			elif node.getCar().getValue() == "comma-at":
+				return ",@" + treeToString(node.getCdr(), False)
 			
 		if node.getCdr() == NIL:
 			result = treeToString(node.getCar())
