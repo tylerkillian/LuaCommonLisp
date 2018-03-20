@@ -329,7 +329,6 @@ def replaceInnerBackquote(expression, replacement):
 		return replaceFirstBackquoteAtGivenDepth(expression, replacement, innerBackquoteDepth)
 
 def levelup(element):
-	print("      element = " + treeToString(element))
 	if element == NIL:
 		result = list_append(None, Symbol("list"))
 		return list_append(result, makeTwoElementList(Symbol("quote"), NIL))
@@ -345,13 +344,11 @@ def levelup(element):
 		else:
 			result = list_append(None, Symbol("list"))
 			adding = Cons(Symbol("quasiquote"), element)
-			print("        adding " + treeToString(adding))
 			return list_append(result, makeTwoElementList(Symbol("quasiquote"), element))
 			
 def expandSingleBackquote(expression):
 	assert(expression.getCar().getValue() == "quasiquote")
 	subexpression = expression.getCdr().getCar()
-	print("  subexpression = " + treeToString(subexpression))
 	if subexpression == NIL:
 		return makeTwoElementList(Symbol("quote"), NIL)
 	elif subexpression.getType() == "symbol" or subexpression.getType() == "string":
@@ -360,22 +357,17 @@ def expandSingleBackquote(expression):
 		if subexpression.getCar().getValue() == "comma":
 			return subexpression.getCdr().getCar()
 		else:
-			print("  building")
 			result = list_append(None, Symbol("append"))
-			print("    " + treeToString(result))
 			for idx in range(0, list_getLength(subexpression)):
 				element = list_get(subexpression, idx)
 				result = list_append(result, levelup(element))
-				print("    " + treeToString(result))
 			return result
 
 def expandBackquoteMacro(expression):
 	result = expression
 	innerBackquote = getInnerBackquote(result)
 	while innerBackquote:
-		print("innerbackquote = " + treeToString(innerBackquote))
 		expandedInnerBackquote = expandSingleBackquote(innerBackquote)
-		print("replacing with " + treeToString(expandedInnerBackquote))
 		result = replaceInnerBackquote(result, expandedInnerBackquote)
 		innerBackquote = getInnerBackquote(result)
 	return result
