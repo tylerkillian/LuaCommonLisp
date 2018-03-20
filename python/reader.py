@@ -156,6 +156,9 @@ class ConsReader():
 			assert(self.stage == "waitingForTerminalCharacter")
 			return self.processStage_waitingForTerminalCharacter(nextCharacter)
 
+def makeTwoElementList(itemOne, itemTwo):
+	return Cons(itemOne, Cons(itemTwo))
+
 class QuoteReader():
 	def __init__(self, initialCharacter):
 		assert(initialCharacter == "'")
@@ -171,7 +174,7 @@ class QuoteReader():
 			if operand:
 				self.done = True
 				self.reader = None
-				result = Cons(Symbol("quote"), Cons(operand, NIL))
+				result = makeTwoElementList(Symbol("quote"), operand)
 				return result
 
 class QuasiquoteReader():
@@ -329,10 +332,10 @@ def levelup(element):
 	print("      element = " + treeToString(element))
 	if element == NIL:
 		result = list_append(None, Symbol("list"))
-		return list_append(result, Cons(Symbol("quote"), NIL))
+		return list_append(result, makeTwoElementList(Symbol("quote"), NIL))
 	elif element.getType() == "symbol" or element.getType() == "string":
 		result = list_append(None, Symbol("list"))
-		return list_append(result, Cons(Symbol("quote"), element))
+		return list_append(result, makeTwoElementList(Symbol("quote"), element))
 	elif element.getType() == "cons":
 		if element.getCar().getValue() == "comma":
 			result = list_append(None, Symbol("list"))
@@ -343,16 +346,16 @@ def levelup(element):
 			result = list_append(None, Symbol("list"))
 			adding = Cons(Symbol("quasiquote"), element)
 			print("        adding " + treeToString(adding))
-			return list_append(result, Cons(Symbol("quasiquote"), element))
+			return list_append(result, makeTwoElementList(Symbol("quasiquote"), element))
 			
 def expandSingleBackquote(expression):
 	assert(expression.getCar().getValue() == "quasiquote")
 	subexpression = expression.getCdr().getCar()
 	print("  subexpression = " + treeToString(subexpression))
 	if subexpression == NIL:
-		return Cons(Symbol("quote"), NIL)
+		return makeTwoElementList(Symbol("quote"), NIL)
 	elif subexpression.getType() == "symbol" or subexpression.getType() == "string":
-		return Cons(Symbol("quote"), subexpression)
+		return makeTwoElementList(Symbol("quote"), subexpression)
 	else:
 		if subexpression.getCar().getValue() == "comma":
 			return subexpression.getCdr().getCar()
