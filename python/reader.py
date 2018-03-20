@@ -357,6 +357,16 @@ def expandSingleBackquote(expression):
 				result = list_append(result, levelup(element))
 			return result
 
+def expandBackquoteMacro(expression):
+	result = expression
+	backquoteDepth = getBackquoteDepth(expression)
+	while backquoteDepth > 0:
+		innerBackquote = getInnerBackquote(result)
+		expandedInnerBackquote = expandSingleBackquote(innerBackquote)
+		result = replaceInnerBackquote(result, expandedInnerBackquote)
+		backquoteDepth = getBackquoteDepth(expression)
+	return result
+
 def treeToString(node, addParenthesis = True):
 	if node.getType() == "cons":
 		if node.getCar().getType() == "symbol":
