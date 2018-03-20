@@ -356,11 +356,11 @@ def expandSingleBackquote(expression):
 		else:
 			print("  building")
 			result = list_append(None, Symbol("append"))
-			print("    " + result)
+			print("    " + treeToString(result))
 			for idx in range(0, list_getLength(subexpression)):
 				element = list_get(subexpression, idx)
 				result = list_append(result, levelup(element))
-				print("    " + result)
+				print("    " + treeToString(result))
 			return result
 
 def expandBackquoteMacro(expression):
