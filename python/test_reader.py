@@ -113,7 +113,7 @@ def test_backquoteExpansion_expandBackquoteMacro_expression():
 	treeWithExpandedBackquote = expandBackquoteMacro(tree)
 	assert(treeToString(treeWithExpandedBackquote) == "(append (list 'a) b (list c))")
 def test_backquoteExpansion_expandBackquoteMacro_nestedExpression():
-	tree = parseString("`(a `(b ,,c) d) ")
+	tree = parseString("`(a `(b ,,c) ,d) ")
 	treeWithExpandedBackquote = expandBackquoteMacro(tree)
 	print(treeToString(treeWithExpandedBackquote))
 	assert(treeToString(treeWithExpandedBackquote) == "(append (list 'a) b (list c))")
