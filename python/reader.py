@@ -340,7 +340,7 @@ def levelup(element):
 			result = list_append(None, Symbol("list"))
 			return list_append(result, Cons(Symbol("quasiquote"), element))
 			
-def expandBackquoteMacro2(expression):
+def expandSingleBackquote(expression):
 	assert(expression.getCar().getValue() == "quasiquote")
 	subexpression = expression.getCdr().getCar()
 	if subexpression == NIL:
