@@ -218,14 +218,6 @@ class CommaReader():
 				result = Cons(Symbol(self.commaType), Cons(operand, NIL))
 				return result
 
-def add_n_quotes(consOrAtom, n):
-	if n == 0:
-		return consOrAtom
-	result = Cons(consOrAtom, NIL)
-	for quoteIdx in range(0, n):
-		result = Cons(Symbol("quote"), result)
-	return result
-
 def list_getLength(cons):
         assert(cons.getType() == "cons")
         length = 0
@@ -254,28 +246,6 @@ def list_append(cons, element):
 		lastElement = lastElement.getCdr()
 	lastElement.setCdr(Cons(element, NIL))
 	return cons
-
-def expandBackquoteMacro(consOrAtom, backquoteLevel = 0):
-	if consOrAtom.getType() == "cons":
-		if consOrAtom.getCar().getValue() == "quasiquote":
-			backquoteLevel += 1
-			return expandBackquoteMacro(consOrAtom.getCdr().getCar(), backquoteLevel)
-		elif consOrAtom.getCar().getValue() == "comma":
-			assert(backquoteLevel > 0)
-			backquoteLevel -= 1
-			return expandBackquoteMacro(consOrAtom.getCdr().getCar(), backquoteLevel)
-		else:
-			result = None
-			for idx in range(0, backquoteLevel):
-				result = list_append(result, add_n_quotes(Symbol("list"), idx))
-			currentCons = consOrAtom
-			while currentCons != NIL:
-				nextElement = currentCons.getCar()
-				result = list_append(result, expandBackquoteMacro(nextElement, backquoteLevel))
-				currentCons = currentCons.getCdr()
-			return result
-	else:
-		return add_n_quotes(consOrAtom, backquoteLevel)
 
 def isSymbol(expression, name):
 	if expression == NIL:
