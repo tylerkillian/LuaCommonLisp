@@ -381,13 +381,13 @@ def treeToString(node, addParenthesis = True):
 	if node.getType() == "cons":
 		if node.getCar().getType() == "symbol":
 			if node.getCar().getValue() == "quote":
-				return "'" + treeToString(node.getCdr(), False)
+				return "'" + treeToString(node.getCdr().getCar())
 			elif node.getCar().getValue() == "quasiquote":
-				return "`" + treeToString(node.getCdr().getCar(), False)
+				return "`" + treeToString(node.getCdr().getCar())
 			elif node.getCar().getValue() == "comma":
-				return "," + treeToString(node.getCdr(), False)
+				return "," + treeToString(node.getCdr().getCar())
 			elif node.getCar().getValue() == "comma-at":
-				return ",@" + treeToString(node.getCdr(), False)
+				return ",@" + treeToString(node.getCdr().getCar())
 			
 		if node.getCdr() == NIL:
 			result = treeToString(node.getCar())
