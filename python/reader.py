@@ -197,8 +197,16 @@ class CommaReader():
 		assert(initialCharacter == ",")
 		self.reader = None
 		self.done = False
+		self.readingSecondCharacter = True
+		self.commaType = "comma"
 	def readNextCharacter(self, nextCharacter):
 		assert(not self.done)
+
+		if self.readingSecondCharacter:
+			self.readingSecondCharacter = False
+			if nextCharacter == "@":
+				self.commaType = "comma-at"
+				return
 
 		if not self.reader:
 			self.reader = newReader(nextCharacter)
@@ -207,7 +215,7 @@ class CommaReader():
 			if operand:
 				self.done = True
 				self.reader = None
-				result = Cons(Symbol("comma"), Cons(operand, NIL))
+				result = Cons(Symbol(self.commaType), Cons(operand, NIL))
 				return result
 
 def add_n_quotes(consOrAtom, n):
