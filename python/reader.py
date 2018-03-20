@@ -218,6 +218,26 @@ def add_n_quotes(consOrAtom, n):
 		result = Cons(Symbol("quote"), result)
 	return result
 
+def list_getLength(cons):
+        assert(cons.getType() == "cons")
+        length = 0
+        current = cons
+        while current != NIL:
+                current = current.getCdr()
+                length += 1
+        return length
+
+def list_get(cons, index):
+        assert(cons.getType() == "cons")
+        count = 0
+        current = cons
+        while count < index:
+                assert(current.getType() == "cons")
+                current = current.getCdr()
+                count += 1
+        assert(current)
+        return current.getCar()
+
 def list_append(cons, element):
 	if not cons:
 		return Cons(element, NIL)
@@ -325,7 +345,7 @@ def replaceInnerBackquote(expression, replacement):
 	else:
 		return replaceFirstBackquoteAtGivenDepth(expression, replacement, innerBackquoteDepth)
 
-def expandBackquoteMacro2(expression, backquoteLevel = 0):
+def expandBackquoteMacro2(expression):
 	assert(expression.getCar().getValue() == "quasiquote")
 	subexpression = expression.getCdr().getCar()
 	if subexpression == NIL:
@@ -333,16 +353,14 @@ def expandBackquoteMacro2(expression, backquoteLevel = 0):
 	elif subexpression.getType() == "symbol" or subexpression.getType() == "string":
 		return Cons(Symbol("quote"), subexpression)
 	else:
-		if expression.getCar().getValue() == "quasiquote":
-			backquoteLevel += 1
-			return expandBackquoteMacro(expression.getCdr().getCar(), backquoteLevel)
-		elif expression.getCar().getValue() == "comma":
-			assert(backquoteLevel > 0)
-			backquoteLevel -= 1
-			return expandBackquoteMacro(expression.getCdr().getCar(), backquoteLevel)
+		if subexpression.getCar().getValue() == "comma":
+			return subexpression.getCdr().getCar()
 		else:
 			result = None
-			for idx in range(0, backquoteLevel):
+			list_append(result, Symbol("append"))
+			for idx in range(0, list_getLength(subexpression)):
+				element = list_get(subexpression, idx)
+				
 				result = list_append(result, add_n_quotes(Symbol("list"), idx))
 			currentCons = expression
 			while currentCons != NIL:
