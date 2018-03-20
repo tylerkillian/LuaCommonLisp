@@ -363,7 +363,9 @@ def expandBackquoteMacro(expression):
 	result = expression
 	innerBackquote = getInnerBackquote(result)
 	while innerBackquote:
+		print("innerbackquote = " + treeToString(innerBackquote))
 		expandedInnerBackquote = expandSingleBackquote(innerBackquote)
+		print("replacing with " + treeToString(expandedInnerBackquote))
 		result = replaceInnerBackquote(result, expandedInnerBackquote)
 		innerBackquote = getInnerBackquote(result)
 	return result
