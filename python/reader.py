@@ -326,6 +326,7 @@ def replaceInnerBackquote(expression, replacement):
 		return replaceFirstBackquoteAtGivenDepth(expression, replacement, innerBackquoteDepth)
 
 def levelup(element):
+	print("      element = " + treeToString(element))
 	if element == NIL:
 		result = list_append(None, Symbol("list"))
 		return list_append(result, Cons(Symbol("quote"), NIL))
