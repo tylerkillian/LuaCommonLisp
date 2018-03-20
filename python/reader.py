@@ -345,6 +345,7 @@ def levelup(element):
 def expandSingleBackquote(expression):
 	assert(expression.getCar().getValue() == "quasiquote")
 	subexpression = expression.getCdr().getCar()
+	print("  subexpression = " + treeToString(subexpression))
 	if subexpression == NIL:
 		return Cons(Symbol("quote"), NIL)
 	elif subexpression.getType() == "symbol" or subexpression.getType() == "string":
@@ -353,10 +354,13 @@ def expandSingleBackquote(expression):
 		if subexpression.getCar().getValue() == "comma":
 			return subexpression.getCdr().getCar()
 		else:
+			print("  building")
 			result = list_append(None, Symbol("append"))
+			print("    " + result)
 			for idx in range(0, list_getLength(subexpression)):
 				element = list_get(subexpression, idx)
 				result = list_append(result, levelup(element))
+				print("    " + result)
 			return result
 
 def expandBackquoteMacro(expression):
