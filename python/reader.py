@@ -353,10 +353,10 @@ def levelup(element):
 		result = list_append(None, Symbol("list"))
 		return list_append(result, Cons(Symbol("quote"), element))
 	elif element.getType() == "cons":
-		if element.getCar() == "comma":
+		if element.getCar().getValue() == "comma":
 			result = list_append(None, Symbol("list"))
-			return list_append(result, element.getCdr())
-		elif element.getCar() == "comma-at":
+			return list_append(result, element.getCdr().getCar())
+		elif element.getCar().getValue() == "comma-at":
 			return element.getCdr()
 		else:
 			result = list_append(None, Symbol("list"))
