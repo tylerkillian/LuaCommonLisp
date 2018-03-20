@@ -325,6 +325,32 @@ def replaceInnerBackquote(expression, replacement):
 	else:
 		return replaceFirstBackquoteAtGivenDepth(expression, replacement, innerBackquoteDepth)
 
+def expandBackquoteMacro2(expression, backquoteLevel = 0):
+	assert(expression.getCar().getValue() == "quasiquote")
+	subexpression = expression.getCdr().getCar()
+	if subexpression == NIL:
+		return Cons(Symbol("quote"), NIL)
+	elif subexpression.getType() == "symbol" or subexpression.getType() == "string":
+		return Cons(Symbol("quote"), subexpression)
+	else:
+		if expression.getCar().getValue() == "quasiquote":
+			backquoteLevel += 1
+			return expandBackquoteMacro(expression.getCdr().getCar(), backquoteLevel)
+		elif expression.getCar().getValue() == "comma":
+			assert(backquoteLevel > 0)
+			backquoteLevel -= 1
+			return expandBackquoteMacro(expression.getCdr().getCar(), backquoteLevel)
+		else:
+			result = None
+			for idx in range(0, backquoteLevel):
+				result = list_append(result, add_n_quotes(Symbol("list"), idx))
+			currentCons = expression
+			while currentCons != NIL:
+				nextElement = currentCons.getCar()
+				result = list_append(result, expandBackquoteMacro(nextElement, backquoteLevel))
+				currentCons = currentCons.getCdr()
+			return result
+
 def treeToString(node, addParenthesis = True):
 	if node.getType() == "cons":
 		if node.getCar().getType() == "symbol":
