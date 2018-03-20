@@ -106,11 +106,11 @@ def test_backquoteExpansion_replaceInnerBackquote():
 	assert(treeToString(newTree) == "`(a e ,d)")
 def test_backquoteExpansion_expandBackquoteMacro_symbol():
 	tree = parseString("`a ")
-	treeWithExpandedBackquote = expandBackquoteMacro2(tree)
+	treeWithExpandedBackquote = expandBackquoteMacro(tree)
 	assert(treeToString(treeWithExpandedBackquote) == "'a")
 def test_backquoteExpansion_expandBackquoteMacro_expression():
 	tree = parseString("`(a ,@b ,c) ")
-	treeWithExpandedBackquote = expandBackquoteMacro2(tree)
+	treeWithExpandedBackquote = expandBackquoteMacro(tree)
 	assert(treeToString(treeWithExpandedBackquote) == "(append (list 'a) b (list c))")
 test_backquoteExpansion = {
 	"test_backquoteExpansion_getBackquoteDepth0": test_backquoteExpansion_getBackquoteDepth0,
