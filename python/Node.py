@@ -1,6 +1,6 @@
 NIL = {"nil"}
 
-class Cons():
+class Cons:
 	def __init__(self, car = NIL, cdr = NIL):
 		self.car = car
 		self.cdr = cdr
