@@ -63,8 +63,7 @@ def isString(node, value = None):
 			return False
 	return True
 
-def String(value = "",yo=False):
-	assert(yo)
+def String(value = ""):
 	return Node("string_" + value)
 
 def getStringValue(node):

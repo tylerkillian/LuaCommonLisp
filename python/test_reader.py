@@ -12,7 +12,7 @@ def test_StringReader_singleLetter():
 	result = reader.readNextCharacter("\"")
 	assert(not result)
 	result = reader.readNextCharacter(" ")
-	assert(result.getValue() == "\"a\"")
+	assert(result.getValue() == "a")
 
 def parseString(string):
 	reader = newReader(string[0])

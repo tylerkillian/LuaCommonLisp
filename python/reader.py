@@ -61,7 +61,7 @@ class SymbolReader:
 class StringReader:
 	def __init__(self, initialCharacter):
 		assert(initialCharacter == "\"")
-		self.buffer = initialCharacter
+		self.buffer = ""
 		self.mode = "readingString"
 		self.done = False
 	def readNextCharacter(self, nextCharacter):
@@ -71,7 +71,6 @@ class StringReader:
 			self.done = True
 			return String(self.buffer)
 		elif nextCharacter == "\"":
-			self.buffer = self.buffer + nextCharacter
 			self.mode = "waitingForTerminalCharacter"
 			return
 		else:
@@ -389,7 +388,7 @@ def expressionToString(node, addParenthesis = True):
 	elif isSymbol(node):
 		return node.getValue()
 	elif isString(node):
-		return node.getValue()
+		return '"' + node.getValue() + '"'
 	else:
 		assert(False)
 
