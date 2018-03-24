@@ -5,7 +5,9 @@ from evaluate import evaluate
 def lisp(inputFile):
 	input = open(inputFile, "r")
 	nextCharacter = input.read(1)
-	environment = {}
+	environment = {
+		"*standard-output*": sys.stdout,
+	}
 	reader = RootReader()
 	while nextCharacter:
 		result = reader.readNextCharacter(nextCharacter)

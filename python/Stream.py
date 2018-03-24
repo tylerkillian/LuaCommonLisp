@@ -13,6 +13,6 @@ class Stream:
 			return
 		else:
 			return self.values.pop(0)
-	def push(self, string):
+	def write(self, string):
 		for character in string:
 			self.values.append(character)

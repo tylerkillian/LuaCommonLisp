@@ -2,7 +2,7 @@ from Stream import *
 
 def test_popSingleCharacter():
 	stream = Stream()
-	stream.push("abc")
+	stream.write("abc")
 	assert(stream.popCharacter() == "a")
 	assert(stream.popCharacter() == "b")
 	assert(stream.popCharacter() == "c")
