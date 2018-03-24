@@ -1,14 +1,9 @@
-from test_utilities import *
 from reader import *
 
 def test_SymbolReader_singleLetter():
 	reader = SymbolReader("a")
 	result = reader.readNextCharacter(" ")
 	assert(result.getValue() == "a")
-test_SymbolReader = {
-	"test_SymbolReader_singleLetter": test_SymbolReader_singleLetter,
-}
-runTests(test_SymbolReader)
 
 def test_StringReader_singleLetter():
 	reader = StringReader("\"")
@@ -18,10 +13,6 @@ def test_StringReader_singleLetter():
 	assert(not result)
 	result = reader.readNextCharacter(" ")
 	assert(result.getValue() == "\"a\"")
-test_StringReader = {
-	"test_StringReader_singleLetter": test_StringReader_singleLetter,
-}
-runTests(test_StringReader)
 
 def parseString(string):
 	reader = newReader(string[0])
@@ -49,12 +40,6 @@ def test_ConsReader_twoElementList():
 	assert(cons.getCdr().getCar().getType() == "symbol")
 	assert(cons.getCdr().getCar().getValue() == "b")
 	assert(cons.getCdr().getCdr() == NIL)
-test_ConsReader = {
-	"test_ConsReader_emptyList": test_ConsReader_emptyList,
-	"test_ConsReader_singleElementList": test_ConsReader_singleElementList,
-	"test_ConsReader_twoElementList": test_ConsReader_twoElementList,
-}
-runTests(test_ConsReader)
 
 
 def test_readExpressions_setf():
@@ -75,15 +60,6 @@ def test_readExpressions_quasiquoteAndComma():
 def test_readExpressions_quasiquoteAndCommaAt():
 	tree = parseString("``(w ,x ,@y) ")
 	assert(treeToString(tree) == "``(w ,x ,@y)")
-test_readExpressions = {
-	"test_readExpressions_setf": test_readExpressions_setf,
-	"test_readExpressions_format": test_readExpressions_format,
-	"test_readExpressions_quoteSymbol": test_readExpressions_quoteSymbol,
-	"test_readExpressions_quasiquoteSymbol": test_readExpressions_quasiquoteSymbol,
-	"test_readExpressions_quasiquoteAndComma": test_readExpressions_quasiquoteAndComma,
-	"test_readExpressions_quasiquoteAndCommaAt": test_readExpressions_quasiquoteAndCommaAt,
-}
-runTests(test_readExpressions)
 
 
 def test_backquoteExpansion_getBackquoteDepth0():
@@ -116,15 +92,3 @@ def test_backquoteExpansion_expandBackquoteMacro_nestedExpression():
 	tree = parseString("`(a `(b ,,c) ,d) ")
 	treeWithExpandedBackquote = expandBackquoteMacro(tree)
 	assert(treeToString(treeWithExpandedBackquote) == "(append (list 'a) (list (append (list 'append) (list (append (list 'list) (list (append (list 'quote) (list 'b))))) (list (append (list 'list) (list c))))) (list d))")
-test_backquoteExpansion = {
-	"test_backquoteExpansion_getBackquoteDepth0": test_backquoteExpansion_getBackquoteDepth0,
-	"test_backquoteExpansion_getBackquoteDepth1": test_backquoteExpansion_getBackquoteDepth1,
-	"test_backquoteExpansion_getBackquoteDepth2": test_backquoteExpansion_getBackquoteDepth2,
-	"test_backquoteExpansion_getInnerBackquote": test_backquoteExpansion_getInnerBackquote,
-	"test_backquoteExpansion_replaceInnerBackquote": test_backquoteExpansion_replaceInnerBackquote,
-	"test_backquoteExpansion_expandBackquoteMacro_symbol": test_backquoteExpansion_expandBackquoteMacro_symbol,
-	"test_backquoteExpansion_expandBackquoteMacro_expression": test_backquoteExpansion_expandBackquoteMacro_expression,
-	"test_backquoteExpansion_expandBackquoteMacro_nestedExpression": test_backquoteExpansion_expandBackquoteMacro_nestedExpression,
-}
-runTests(test_backquoteExpansion)
-
