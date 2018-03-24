@@ -77,17 +77,6 @@ def isSymbol(value, name = None):
 			return False
 	return True
 
-class Symbol:
-	def __init__(self, value = ""):
-		self.value = value
-	def getType(self):
-		return "symbol"
-	def getValue(self):
-		return self.value
-	def setValue(self, value):
-		self.value = value
-
-Symbol = Cons
 def Symbol(value = ""):
 	return Node("symbol_" + value)
 
@@ -100,4 +89,6 @@ class String:
 		return self.value
 	def setValue(self, value):
 		self.value = value
+def String(value = ""):
+	return Node("string_" + value)
 
