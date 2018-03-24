@@ -49,6 +49,10 @@ def isSymbol(node, value = None):
 def Symbol(value = ""):
 	return Node("symbol_" + value)
 
+def getSymbolValue(node):
+	assert(isSymbol(node))
+	return node.getValue2()[7:]
+
 def isString(node, value = None):
 	if node == NIL:
 		return False
@@ -61,4 +65,8 @@ def isString(node, value = None):
 
 def String(value = ""):
 	return Node("string_" + value)
+
+def getStringValue(node):
+	assert(isString(node))
+	return node.getValue2()[7:]
 
