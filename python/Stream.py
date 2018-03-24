@@ -8,7 +8,7 @@ class Stream:
 			return
 		else:
 			return self.values[0]
-	def popCharacter(self):
+	def readCharacter(self):
 		if len(self.values) == 0:
 			return
 		else:

@@ -1,23 +1,23 @@
 from Stream import *
 
-def test_popSingleCharacter():
+def test_readSingleCharacter():
 	stream = Stream()
 	stream.write("abc")
-	assert(stream.popCharacter() == "a")
-	assert(stream.popCharacter() == "b")
-	assert(stream.popCharacter() == "c")
-	assert(not stream.popCharacter())
+	assert(stream.readCharacter() == "a")
+	assert(stream.readCharacter() == "b")
+	assert(stream.readCharacter() == "c")
+	assert(not stream.readCharacter())
 
 def test_constructor():
 	stream = Stream("abc")
-	assert(stream.popCharacter() == "a")
-	assert(stream.popCharacter() == "b")
-	assert(stream.popCharacter() == "c")
-	assert(not stream.popCharacter())
+	assert(stream.readCharacter() == "a")
+	assert(stream.readCharacter() == "b")
+	assert(stream.readCharacter() == "c")
+	assert(not stream.readCharacter())
 
 def test_peekNextCharacter():
 	stream = Stream("ab")
 	assert(stream.peekNextCharacter() == "a")
-	stream.popCharacter()
+	stream.readCharacter()
 	assert(stream.peekNextCharacter() == "b")
 

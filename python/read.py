@@ -8,6 +8,6 @@ def read(inputStream):
 		if result:
 			return result
 		else:
-			inputStream.popCharacter()
+			inputStream.readCharacter()
 			nextCharacter = inputStream.peekNextCharacter()
 
