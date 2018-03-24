@@ -13,7 +13,7 @@ def lisp(inputFile):
 		result = reader.readNextCharacter(nextCharacter)
 		if result:
 			reader = RootReader()
-			evaluate(result, environment)
+			evaluate(environment, result)
 		else:
 			nextCharacter = input.read(1)
 lisp(sys.argv[1])

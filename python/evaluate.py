@@ -21,7 +21,7 @@ def Expression_getLength(expression):
 		length += 1
 	return length
 
-def evaluate(expression, environment):
+def evaluate(environment, expression):
 	if isSymbol(expression, "1"):
 		return "1"
 	elif isSymbol(expression, "2"):
@@ -40,7 +40,7 @@ def evaluate(expression, environment):
 		if expression.getCdr().getCdr().getCdr() != NIL:
 			if isCons(expression.getCdr().getCdr().getCdr()):
 				variableToLookup = expression.getCdr().getCdr().getCdr().getCar()
-				value = evaluate(variableToLookup, environment)
+				value = evaluate(environment, variableToLookup)
 				message = message.replace("~a", str(value))
 		environment["*standard-output*"].write(message)
 		return None
@@ -50,10 +50,10 @@ def evaluate(expression, environment):
 		environment[variable] = value
 	elif isSymbol(expression.getCar(), "+"):
 		left = expression.getCdr().getCar()
-		leftValue = evaluate(left, environment)
+		leftValue = evaluate(environment, left)
 
 		right = expression.getCdr().getCdr().getCar()
-		rightValue = evaluate(right, environment)
+		rightValue = evaluate(environment, right)
 		return int(leftValue) + int(rightValue)
 	elif isSymbol(expression.getCar(), "let"):
 		variableToSet = getSymbolValue(expression.getCdr().getCar().getCar().getCar())
@@ -61,7 +61,7 @@ def evaluate(expression, environment):
 		environment = { "*standard-output*": environment["*standard-output*"] }
 		environment[variableToSet] = value
 		root = expression.getCdr().getCdr().getCar()
-		return evaluate(root, environment)
+		return evaluate(environment, root)
 	elif isSymbol(expression.getCar(), "defun"):
 		functionName = getSymbolValue(expression.getCdr().getCar())
 
@@ -79,14 +79,14 @@ def evaluate(expression, environment):
 		return environment[functionName]
 	else:
 		functionName = Expression_get(expression, 0)
-		functionPointer = evaluate(functionName, environment)
+		functionPointer = evaluate(environment, functionName)
 		assert((Expression_getLength(expression)-1) == len(functionPointer['arguments']))
 		for expressionIndex in range(1, Expression_getLength(expression)):
 			argumentName = functionPointer['arguments'][expressionIndex - 1]
-			environment[argumentName] = evaluate(Expression_get(expression, expressionIndex), environment)
+			environment[argumentName] = evaluate(environment, Expression_get(expression, expressionIndex))
 		returnValue = None
 		for command in functionPointer['body']:
-			returnValue = evaluate(command, environment)
+			returnValue = evaluate(environment, command)
 		
 		return returnValue
 

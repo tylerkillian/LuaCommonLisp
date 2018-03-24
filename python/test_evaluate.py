@@ -10,7 +10,7 @@ def assertStdout(inputString, result):
 	environment = {
 		"*standard-output*": outputStream,
 	}
-	evaluate(expression, environment)
+	evaluate(environment, expression)
 	assert(environment["*standard-output*"].read() == result)
 
 def test_formatHelloWorld():
