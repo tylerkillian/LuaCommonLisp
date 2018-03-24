@@ -22,7 +22,7 @@ def Expression_getLength(expression):
 	return length
 
 def eval(expression, environment):
-	if expression.getType() == "symbol":
+	if isSymbol(expression):
 		if expression.getValue() == "1":
 			return "1"
 		elif expression.getValue() == "2":
