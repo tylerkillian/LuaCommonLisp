@@ -6,14 +6,6 @@ class Node:
 		self.car = car
 		self.cdr = cdr
 	def getValue(self):
-		if self.value == "cons":
-			return "cons"
-		elif self.value[0:6] == "symbol":
-			return self.value[7:]
-		else:
-			assert(self.value[0:6] == "string")
-			return self.value[7:]
-	def getValue2(self):
 		return self.value
 	def setValue(self, value):
 		self.value = value
@@ -39,10 +31,10 @@ def Cons(car = NIL, cdr = NIL):
 def isSymbol(node, value = None):
 	if node == NIL:
 		return False
-	if node.getValue2()[0:6] != "symbol":
+	if node.getValue()[0:6] != "symbol":
 		return False
 	if value:
-		if node.getValue2()[7:] != value:
+		if node.getValue()[7:] != value:
 			return False
 	return True
 
@@ -51,15 +43,15 @@ def Symbol(value = ""):
 
 def getSymbolValue(node):
 	assert(isSymbol(node))
-	return node.getValue2()[7:]
+	return node.getValue()[7:]
 
 def isString(node, value = None):
 	if node == NIL:
 		return False
-	if node.getValue2()[0:6] != "string":
+	if node.getValue()[0:6] != "string":
 		return False
 	if value:
-		if node.getValue2()[7:] != value:
+		if node.getValue()[7:] != value:
 			return False
 	return True
 
@@ -68,5 +60,5 @@ def String(value = ""):
 
 def getStringValue(node):
 	assert(isString(node))
-	return node.getValue2()[7:]
+	return node.getValue()[7:]
 
