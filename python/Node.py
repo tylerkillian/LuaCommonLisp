@@ -5,14 +5,6 @@ class Node:
 		self.value = value
 		self.car = car
 		self.cdr = cdr
-	def getType(self):
-		if self.value == "cons":
-			return "cons"
-		elif self.value[0:6] == "symbol":
-			return "symbol"
-		else:
-			assert(self.value[0:6] == "string")
-			return "string"
 	def getValue(self):
 		if self.value == "cons":
 			return "cons"
