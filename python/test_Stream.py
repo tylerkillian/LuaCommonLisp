@@ -21,3 +21,7 @@ def test_peekNextCharacter():
 	stream.readCharacter()
 	assert(stream.peekNextCharacter() == "b")
 
+def test_readAllCharacters():
+	stream = Stream()
+	stream.write("abc")
+	assert(stream.read() == "abc")

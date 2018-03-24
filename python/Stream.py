@@ -13,6 +13,13 @@ class Stream:
 			return
 		else:
 			return self.values.pop(0)
+	def read(self):
+		result = ""
+		nextCharacter = self.readCharacter()
+		while nextCharacter:
+			result += nextCharacter
+			nextCharacter = self.readCharacter()
+		return result
 	def write(self, string):
 		for character in string:
 			self.values.append(character)
