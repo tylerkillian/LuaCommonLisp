@@ -35,11 +35,11 @@ def eval(expression, environment):
 			return "5"
 		else:
 			return environment[expression.getValue()]
-	elif expression.getCar().getValue() == "format":
+	elif isSymbol(expression.getCar(), "format"):
 		message = expression.getCdr().getCdr().getCar().getValue()[1:-1]
 		message = message.replace("~%", "\n")
 		if expression.getCdr().getCdr().getCdr() != NIL:
-			if expression.getCdr().getCdr().getCdr().getType() == "cons":
+			if isCons(expression.getCdr().getCdr().getCdr()):
 				variableToLookup = expression.getCdr().getCdr().getCdr().getCar()
 				value = eval(variableToLookup, environment)
 				message = message.replace("~a", str(value))
