@@ -397,6 +397,8 @@ def expressionToString(node, addParenthesis = True):
 		return node.getValue()
 	elif node.getType() == "string":
 		return node.getValue()
+	elif node == NIL:
+		return "nil"
 	else:
 		assert(False)
 
