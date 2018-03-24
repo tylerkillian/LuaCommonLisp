@@ -222,24 +222,24 @@ class CommaReader:
 				return result
 
 def list_getLength(cons):
-        assert(cons.getType() == "cons")
-        length = 0
-        current = cons
-        while current != NIL:
-                current = current.getCdr()
-                length += 1
-        return length
+	assert(isCons(cons))
+	length = 0
+	current = cons
+	while current != NIL:
+		current = current.getCdr()
+		length += 1
+	return length
 
 def list_get(cons, index):
-        assert(cons.getType() == "cons")
-        count = 0
-        current = cons
-        while count < index:
-                assert(current.getType() == "cons")
-                current = current.getCdr()
-                count += 1
-        assert(current)
-        return current.getCar()
+	assert(isCons(cons))
+	count = 0
+	current = cons
+	while count < index:
+		assert(isCons(cons))
+		current = current.getCdr()
+		count += 1
+	assert(current)
+	return current.getCar()
 
 def list_append(cons, element):
 	if not cons:
@@ -253,9 +253,9 @@ def list_append(cons, element):
 def getBackquoteDepth(expression, backquoteLevel = 0):
 	if expression == NIL:
 		return backquoteLevel
-	elif expression.getType() == "symbol" or expression.getType() == "string":
+	elif isSymbol(expression) or isString(expression):
 		return backquoteLevel
-	elif expression.getType() == "cons":
+	elif isCons(expression):
 		if isSymbol(expression.getCar(), "backquote"):
 			backquoteLevel += 1
 			return getBackquoteDepth(expression.getCdr(), backquoteLevel)
@@ -269,7 +269,7 @@ def getBackquoteDepth(expression, backquoteLevel = 0):
 def findFirstBackquoteAtGivenDepth(expression, depthToFind, currentDepth = 0):
 	if expression == NIL:
 		return None
-	elif expression.getType() == "cons":
+	elif isCons(expression):
 		if isSymbol(expression.getCar(), "backquote"):
 			currentDepth += 1
 			if currentDepth == depthToFind:
@@ -293,7 +293,7 @@ def getInnerBackquote(expression):
 		return findFirstBackquoteAtGivenDepth(expression, innerBackquoteDepth)
 
 def replaceFirstBackquoteAtGivenDepth(expression, replacement, depthToFind, currentDepth = 0):
-	if expression.getType() == "cons":
+	if isCons(expression):
 		if isSymbol(expression.getCar(), "backquote"):
 			currentDepth += 1
 			if currentDepth == depthToFind:
@@ -319,14 +319,14 @@ def replaceInnerBackquote(expression, replacement):
 	else:
 		return replaceFirstBackquoteAtGivenDepth(expression, replacement, innerBackquoteDepth)
 
-def levelup(element):
+def levelUp(element):
 	if element == NIL:
 		result = list_append(None, Symbol("list"))
 		return list_append(result, makeTwoElementList(Symbol("quote"), NIL))
-	elif element.getType() == "symbol" or element.getType() == "string":
+	elif isSymbol(element) or isString(element):
 		result = list_append(None, Symbol("list"))
 		return list_append(result, makeTwoElementList(Symbol("quote"), element))
-	elif element.getType() == "cons":
+	elif isCons(element):
 		if element.getCar().getValue() == "comma":
 			result = list_append(None, Symbol("list"))
 			return list_append(result, element.getCdr().getCar())
@@ -342,7 +342,7 @@ def expandSingleBackquote(expression):
 	subexpression = expression.getCdr().getCar()
 	if subexpression == NIL:
 		return makeTwoElementList(Symbol("quote"), NIL)
-	elif subexpression.getType() == "symbol" or subexpression.getType() == "string":
+	elif isSymbol(subexpression) or isString(subexpression):
 		return makeTwoElementList(Symbol("quote"), subexpression)
 	else:
 		if subexpression.getCar().getValue() == "comma":
@@ -351,7 +351,7 @@ def expandSingleBackquote(expression):
 			result = list_append(None, Symbol("append"))
 			for idx in range(0, list_getLength(subexpression)):
 				element = list_get(subexpression, idx)
-				result = list_append(result, levelup(element))
+				result = list_append(result, levelUp(element))
 			return result
 
 def expandBackquoteMacro(expression):
@@ -366,8 +366,8 @@ def expandBackquoteMacro(expression):
 def expressionToString(node, addParenthesis = True):
 	if node == NIL:
 		return "nil"
-	elif node.getType() == "cons":
-		if node.getCar().getType() == "symbol":
+	elif isCons(node):
+		if isSymbol(node.getCar()):
 			if node.getCar().getValue() == "quote":
 				return "'" + expressionToString(node.getCdr().getCar())
 			elif node.getCar().getValue() == "backquote":
@@ -379,16 +379,16 @@ def expressionToString(node, addParenthesis = True):
 			
 		if node.getCdr() == NIL:
 			result = expressionToString(node.getCar())
-		elif node.getCdr().getType() == "cons":
+		elif isCons(node.getCdr()):
 			result = expressionToString(node.getCar()) + " " + expressionToString(node.getCdr(), False)
 		else:
 			result = expressionToString(node.getCar()) + " " + expressionToString(node.getCdr())
 		if addParenthesis:
 			result = "(" + result + ")" 
 		return result
-	elif node.getType() == "symbol":
+	elif isSymbol(node):
 		return node.getValue()
-	elif node.getType() == "string":
+	elif isString(node):
 		return node.getValue()
 	else:
 		assert(False)
