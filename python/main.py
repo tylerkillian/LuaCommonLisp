@@ -2,18 +2,18 @@ import sys
 from reader import *
 
 def Expression_get(expression, index):
-	assert(expression.getType() == "cons")
+	assert(isCons(expression))
 	count = 0
 	current = expression
 	while count < index:
-		assert(current.getType() == "cons")
+		assert(isCons(current))
 		current = current.getCdr()
 		count += 1
 	assert(current)
 	return current.getCar()
 
 def Expression_getLength(expression):
-	assert(expression.getType() == "cons")
+	assert(isCons(expression))
 	length = 0
 	current = expression
 	while current != NIL:

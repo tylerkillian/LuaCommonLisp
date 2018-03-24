@@ -33,15 +33,18 @@ class Node:
 		self.cdr = cdr
 
 def isCons(node):
+	if node == NIL:
+		return False
 	if node.getValue() == "cons":
 		return True
-	else:
-		return False
+	return False
 
 def Cons(car = NIL, cdr = NIL):
 	return Node("cons", car, cdr)
 
 def isSymbol(node, value = None):
+	if node == NIL:
+		return False
 	if node.getValue()[0:6] != "symbol":
 		return False
 	if value:
@@ -53,6 +56,8 @@ def Symbol(value = ""):
 	return Node("symbol_" + value)
 
 def isString(node, value = None):
+	if node == NIL:
+		return False
 	if node.getValue()[0:6] != "string":
 		return False
 	if value:
