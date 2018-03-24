@@ -28,17 +28,14 @@ def test_ConsReader_emptyList():
 	assert(result == NIL)
 def test_ConsReader_singleElementList():
 	cons = parseString("(a) ")
-	assert(cons.getCar().getType() == "symbol")
-	assert(cons.getCar().getValue() == "a")
+	assert(isSymbol(cons.getCar(), "a"))
 	assert(cons.getCdr() == NIL)
 def test_ConsReader_twoElementList():
 	cons = parseString("(a b) ")
-	assert(cons.getType() == "cons")
-	assert(cons.getCar().getType() == "symbol")
-	assert(cons.getCar().getValue() == "a")
-	assert(cons.getCdr().getType() == "cons")
-	assert(cons.getCdr().getCar().getType() == "symbol")
-	assert(cons.getCdr().getCar().getValue() == "b")
+	assert(isCons(cons))
+	assert(isSymbol(cons.getCar(), "a"))
+	assert(isCons(cons.getCdr()))
+	assert(isSymbol(cons.getCdr().getCar(), "b"))
 	assert(cons.getCdr().getCdr() == NIL)
 
 
