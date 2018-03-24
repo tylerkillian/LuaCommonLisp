@@ -1,11 +1,18 @@
 class Stream:
-	def __init__(self):
+	def __init__(self, initialize = ""):
 		self.values = []
-	def push(self, string):
-		for character in string:
-			self.values.append(character)
+		for value in initialize:
+			self.values.append(value)
+	def peekNextCharacter(self):
+		if len(self.values) == 0:
+			return
+		else:
+			return self.values[0]
 	def popCharacter(self):
 		if len(self.values) == 0:
 			return
 		else:
 			return self.values.pop(0)
+	def push(self, string):
+		for character in string:
+			self.values.append(character)

@@ -15,6 +15,14 @@ class Cons:
 	def setCdr(self, cdr):
 		self.cdr = cdr
 
+def isSymbol(value, name = None):
+	if value.getType() != "symbol":
+		return False
+	if name:
+		if value.getValue() != name:
+			return False
+	return True
+
 class Symbol:
 	def __init__(self, value = ""):
 		self.value = value
