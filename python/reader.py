@@ -24,7 +24,7 @@ def newReader(initialCharacter):
 	else:
 		return SymbolReader(initialCharacter)
 
-class RootReader():
+class RootReader:
 	def __init__(self):
 		self.childReader = None
 		self.done = False
@@ -44,7 +44,7 @@ class RootReader():
 			self.childReader = newReader(nextCharacter)
 			return
 
-class SymbolReader():
+class SymbolReader:
 	def __init__(self, initialCharacter):
 		self.buffer = initialCharacter
 		self.done = False
@@ -58,7 +58,7 @@ class SymbolReader():
 			self.buffer = self.buffer + nextCharacter
 			return
 
-class StringReader():
+class StringReader:
 	def __init__(self, initialCharacter):
 		assert(initialCharacter == "\"")
 		self.buffer = initialCharacter
@@ -78,7 +78,7 @@ class StringReader():
 			self.buffer = self.buffer + nextCharacter
 			return
 
-class ConsReader():
+class ConsReader:
 	def __init__(self, initialCharacter):
 		assert(initialCharacter == "(")
 		self.stage = "waitingForElement"
@@ -159,7 +159,7 @@ class ConsReader():
 def makeTwoElementList(itemOne, itemTwo):
 	return Cons(itemOne, Cons(itemTwo))
 
-class QuoteReader():
+class QuoteReader:
 	def __init__(self, initialCharacter):
 		assert(initialCharacter == "'")
 		self.reader = None
@@ -177,7 +177,7 @@ class QuoteReader():
 				result = makeTwoElementList(Symbol("quote"), operand)
 				return result
 
-class BackquoteReader():
+class BackquoteReader:
 	def __init__(self, initialCharacter):
 		assert(initialCharacter == "`")
 		self.reader = None
@@ -195,7 +195,7 @@ class BackquoteReader():
 				result = Cons(Symbol("backquote"), Cons(operand, NIL))
 				return result
 
-class CommaReader():
+class CommaReader:
 	def __init__(self, initialCharacter):
 		assert(initialCharacter == ",")
 		self.reader = None
