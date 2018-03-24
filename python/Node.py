@@ -2,10 +2,20 @@ NIL = {"nil"}
 
 class Cons:
 	def __init__(self, car = NIL, cdr = NIL):
-		self.car = car
-		self.cdr = cdr
+		if type(car) == str:
+			self.value = car
+			self.car = NIL
+			self.cdr = NIL
+		else:
+			self.value = "cons"
+			self.car = car
+			self.cdr = cdr
 	def getType(self):
 		return "cons"
+	def getValue(self):
+		return self.value
+	def setValue(self, value):
+		self.value = value
 	def getCar(self):
 		return self.car
 	def setCar(self, car):
