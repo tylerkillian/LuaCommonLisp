@@ -4,14 +4,20 @@ class Cons:
 	def __init__(self, car = NIL, cdr = NIL):
 		if type(car) == str:
 			self.value = car
-			self.car = NIL
-			self.cdr = NIL
+			self.car = None
+			self.cdr = None
 		else:
 			self.value = "cons"
 			self.car = car
 			self.cdr = cdr
 	def getType(self):
-		return "cons"
+		if self.value == "cons":
+			return "cons"
+		elif self.value[0:6] == "symbol":
+			return self.value[7:]
+		else:
+			assert(self.value[0:6] == "string")
+			return self.value[7:]
 	def getValue(self):
 		return self.value
 	def setValue(self, value):
