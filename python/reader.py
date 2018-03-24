@@ -387,7 +387,7 @@ def expressionToString(node, addParenthesis = True):
 	elif isSymbol(node):
 		return getSymbolValue(node)
 	elif isString(node):
-		return '"' + node.getValue() + '"'
+		return '"' + getStringValue(node) + '"'
 	else:
 		assert(False)
 
