@@ -373,7 +373,9 @@ def expandBackquoteMacro(expression):
 	return result
 
 def expressionToString(node, addParenthesis = True):
-	if node.getType() == "cons":
+	if node == NIL:
+		return "nil"
+	elif node.getType() == "cons":
 		if node.getCar().getType() == "symbol":
 			if node.getCar().getValue() == "quote":
 				return "'" + expressionToString(node.getCdr().getCar())
@@ -397,8 +399,6 @@ def expressionToString(node, addParenthesis = True):
 		return node.getValue()
 	elif node.getType() == "string":
 		return node.getValue()
-	elif node == NIL:
-		return "nil"
 	else:
 		assert(False)
 

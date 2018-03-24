@@ -3,17 +3,16 @@ from reader import expressionToString
 from Stream import Stream
 from Node import isSymbol, NIL
 
+def assertExpressionRead(inputString, result):
+	inputStream = Stream(inputString)
+	expression = read(inputStream)
+	assert(expressionToString(expression) == result)
+
 def test_readSymbol():
-	inputStream = Stream("a ")
-	symbol = read(inputStream)
-	assert(isSymbol(symbol, "a"))
+	assertExpressionRead("a ", "a")
 
 def test_readQuotedSymbol():
-	inputStream = Stream("'a ")
-	expression = read(inputStream)
-	assert(expressionToString(expression) == "'a")
+	assertExpressionRead("'a ", "'a")
 
 def test_readEmptyParentheses():
-	inputStream = Stream("() ")
-	expression = read(inputStream)
-	assert(expression == NIL)
+	assertExpressionRead("() ", "nil")
