@@ -21,6 +21,23 @@ def Expression_getLength(expression):
 		length += 1
 	return length
 
+def addition(arguments):
+	assert(len(arguments) == 2)
+	assert(isSymbol(arguments[0]))
+	assert(isSymbol(arguments[1]))
+	left = getSymbolValue(arguments[0])
+	right = getSymbolValue(arguments[1])
+	intResult = int(left) + int(right)
+	return Symbol(str(intResult))
+
+def createStandardEnvironment():
+	return {
+		"*standard-output*": sys.stdout,
+		"functions": {
+			"+": addition,
+		},
+	}
+
 def evaluate(environment, expression):
 	if isSymbol(expression, "1"):
 		return "1"
@@ -89,4 +106,36 @@ def evaluate(environment, expression):
 			returnValue = evaluate(environment, command)
 		
 		return returnValue
+
+def isFunction(environment, expression):
+	if not isCons(expression):
+		return False
+	if Expression_getLength(expression) < 1:
+		return False
+	if not isSymbol(Expression_get(expression, 0)):
+		return False
+
+	functionName = getSymbolValue(Expression_get(expression, 0))
+	if environment["functions"][functionName]:
+		return True
+
+	return False
+
+def evaluate2(environment, expression):
+	if isNumber(expression):
+		return expression
+	elif isSymbol(expression):
+		return environment[getSymbolValue(expression)]
+	elif isString(expression):
+		pass
+	elif isFunction(environment, expression):
+		functionName = getSymbolValue(Expression_get(expression, 0))
+		function = environment["functions"][functionName]
+		argumentsEvaluated = []
+		for expressionIndex in range(1, Expression_getLength(expression)):
+			nextArgument = Expression_get(expression, expressionIndex)
+			argumentsEvaluated.append(evaluate2(environment, nextArgument))
+		return function(argumentsEvaluated)
+	else:
+		assert(isMacro(environment, expression))
 

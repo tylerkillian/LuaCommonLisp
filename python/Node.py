@@ -62,3 +62,16 @@ def getStringValue(node):
 	assert(isString(node))
 	return node.getValue()[7:]
 
+def isNumber(node):
+	if isSymbol(node, "1"):
+		return True
+	elif isSymbol(node, "2"):
+		return True
+	elif isSymbol(node, "3"):
+		return True
+	elif isSymbol(node, "4"):
+		return True
+	elif isSymbol(node, "5"):
+		return True
+	else:
+		return False
