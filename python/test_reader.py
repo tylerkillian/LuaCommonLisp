@@ -44,22 +44,22 @@ def test_ConsReader_twoElementList():
 
 def test_readExpressions_setf():
 	tree = parseString("(setf a 3) ")
-	assert(treeToString(tree) == "(setf a 3)")
+	assert(expressionToString(tree) == "(setf a 3)")
 def test_readExpressions_format():
 	tree = parseString("(format t \"a = ~a~%\" a) ")
-	assert(treeToString(tree) == "(format t \"a = ~a~%\" a)")
+	assert(expressionToString(tree) == "(format t \"a = ~a~%\" a)")
 def test_readExpressions_quoteSymbol():
 	tree = parseString("'a ")
-	assert(treeToString(tree) == "'a")
+	assert(expressionToString(tree) == "'a")
 def test_readExpressions_quasiquoteSymbol():
 	tree = parseString("`a ")
-	assert(treeToString(tree) == "`a")
+	assert(expressionToString(tree) == "`a")
 def test_readExpressions_quasiquoteAndComma():
 	tree = parseString("``(w ,x ,,y) ")
-	assert(treeToString(tree) == "``(w ,x ,,y)")
+	assert(expressionToString(tree) == "``(w ,x ,,y)")
 def test_readExpressions_quasiquoteAndCommaAt():
 	tree = parseString("``(w ,x ,@y) ")
-	assert(treeToString(tree) == "``(w ,x ,@y)")
+	assert(expressionToString(tree) == "``(w ,x ,@y)")
 
 
 def test_backquoteExpansion_getBackquoteDepth0():
@@ -79,16 +79,16 @@ def test_backquoteExpansion_replaceInnerBackquote():
 	originalTree = parseString("`(a `(b ,,c) ,d) ")
 	replacement = parseString("e ")
 	newTree = replaceInnerBackquote(originalTree, replacement)
-	assert(treeToString(newTree) == "`(a e ,d)")
+	assert(expressionToString(newTree) == "`(a e ,d)")
 def test_backquoteExpansion_expandBackquoteMacro_symbol():
 	tree = parseString("`a ")
 	treeWithExpandedBackquote = expandBackquoteMacro(tree)
-	assert(treeToString(treeWithExpandedBackquote) == "'a")
+	assert(expressionToString(treeWithExpandedBackquote) == "'a")
 def test_backquoteExpansion_expandBackquoteMacro_expression():
 	tree = parseString("`(a ,@b ,c) ")
 	treeWithExpandedBackquote = expandBackquoteMacro(tree)
-	assert(treeToString(treeWithExpandedBackquote) == "(append (list 'a) b (list c))")
+	assert(expressionToString(treeWithExpandedBackquote) == "(append (list 'a) b (list c))")
 def test_backquoteExpansion_expandBackquoteMacro_nestedExpression():
 	tree = parseString("`(a `(b ,,c) ,d) ")
 	treeWithExpandedBackquote = expandBackquoteMacro(tree)
-	assert(treeToString(treeWithExpandedBackquote) == "(append (list 'a) (list (append (list 'append) (list (append (list 'list) (list (append (list 'quote) (list 'b))))) (list (append (list 'list) (list c))))) (list d))")
+	assert(expressionToString(treeWithExpandedBackquote) == "(append (list 'a) (list (append (list 'append) (list (append (list 'list) (list (append (list 'quote) (list 'b))))) (list (append (list 'list) (list c))))) (list d))")

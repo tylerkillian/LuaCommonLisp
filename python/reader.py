@@ -372,24 +372,24 @@ def expandBackquoteMacro(expression):
 		innerBackquote = getInnerBackquote(result)
 	return result
 
-def treeToString(node, addParenthesis = True):
+def expressionToString(node, addParenthesis = True):
 	if node.getType() == "cons":
 		if node.getCar().getType() == "symbol":
 			if node.getCar().getValue() == "quote":
-				return "'" + treeToString(node.getCdr().getCar())
+				return "'" + expressionToString(node.getCdr().getCar())
 			elif node.getCar().getValue() == "quasiquote":
-				return "`" + treeToString(node.getCdr().getCar())
+				return "`" + expressionToString(node.getCdr().getCar())
 			elif node.getCar().getValue() == "comma":
-				return "," + treeToString(node.getCdr().getCar())
+				return "," + expressionToString(node.getCdr().getCar())
 			elif node.getCar().getValue() == "comma-at":
-				return ",@" + treeToString(node.getCdr().getCar())
+				return ",@" + expressionToString(node.getCdr().getCar())
 			
 		if node.getCdr() == NIL:
-			result = treeToString(node.getCar())
+			result = expressionToString(node.getCar())
 		elif node.getCdr().getType() == "cons":
-			result = treeToString(node.getCar()) + " " + treeToString(node.getCdr(), False)
+			result = expressionToString(node.getCar()) + " " + expressionToString(node.getCdr(), False)
 		else:
-			result = treeToString(node.getCar()) + " " + treeToString(node.getCdr())
+			result = expressionToString(node.getCar()) + " " + expressionToString(node.getCdr())
 		if addParenthesis:
 			result = "(" + result + ")" 
 		return result
