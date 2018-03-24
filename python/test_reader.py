@@ -3,7 +3,7 @@ from reader import *
 def test_SymbolReader_singleLetter():
 	reader = SymbolReader("a")
 	result = reader.readNextCharacter(" ")
-	assert(result.getValue() == "a")
+	assert(isSymbol(result, "a"))
 
 def test_StringReader_singleLetter():
 	reader = StringReader("\"")
@@ -12,7 +12,7 @@ def test_StringReader_singleLetter():
 	result = reader.readNextCharacter("\"")
 	assert(not result)
 	result = reader.readNextCharacter(" ")
-	assert(result.getValue() == "a")
+	assert(isString(result, "a"))
 
 def parseString(string):
 	reader = newReader(string[0])
