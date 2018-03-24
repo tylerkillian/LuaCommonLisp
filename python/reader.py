@@ -250,15 +250,6 @@ def list_append(cons, element):
 	lastElement.setCdr(Cons(element, NIL))
 	return cons
 
-def isSymbol(expression, name):
-	if expression == NIL:
-		return False
-	elif expression.getType() == "symbol":
-		if expression.getValue() == name:
-			return True
-	else:
-		return False
-
 def getBackquoteDepth(expression, backquoteLevel = 0):
 	if expression == NIL:
 		return backquoteLevel
