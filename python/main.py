@@ -35,7 +35,7 @@ def eval(expression, environment):
 	elif isSymbol(expression):
 		return environment[getSymbolValue(expression)]
 	elif isSymbol(expression.getCar(), "format"):
-		message = expression.getCdr().getCdr().getCar().getValue()
+		message = getStringValue(expression.getCdr().getCdr().getCar())
 		message = message.replace("~%", "\n")
 		if expression.getCdr().getCdr().getCdr() != NIL:
 			if isCons(expression.getCdr().getCdr().getCdr()):
@@ -44,31 +44,31 @@ def eval(expression, environment):
 				message = message.replace("~a", str(value))
 		sys.stdout.write(message)
 		return None
-	elif expression.getCar().getValue() == "setf":
-		variable = expression.getCdr().getCar().getValue()
-		value = expression.getCdr().getCdr().getCar().getValue()
+	elif isSymbol(expression.getCar(), "setf"):
+		variable = getSymbolValue(expression.getCdr().getCar())
+		value = getSymbolValue(expression.getCdr().getCdr().getCar())
 		environment[variable] = value
-	elif expression.getCar().getValue() == "+":
+	elif isSymbol(expression.getCar(), "+"):
 		left = expression.getCdr().getCar()
 		leftValue = eval(left, environment)
 
 		right = expression.getCdr().getCdr().getCar()
 		rightValue = eval(right, environment)
 		return int(leftValue) + int(rightValue)
-	elif expression.getCar().getValue() == "let":
-		variableToSet = expression.getCdr().getCar().getCar().getCar().getValue()
-		value = expression.getCdr().getCar().getCar().getCdr().getCar().getValue()
+	elif isSymbol(expression.getCar(), "let"):
+		variableToSet = getSymbolValue(expression.getCdr().getCar().getCar().getCar())
+		value = getSymbolValue(expression.getCdr().getCar().getCar().getCdr().getCar())
 		environment = {}
 		environment[variableToSet] = value
 		root = expression.getCdr().getCdr().getCar()
 		return eval(root, environment)
-	elif expression.getCar().getValue() == "defun":
-		functionName = expression.getCdr().getCar().getValue()
+	elif isSymbol(expression.getCar(), "defun"):
+		functionName = getSymbolValue(expression.getCdr().getCar())
 
 		argumentsExpression = Expression_get(expression, 2)
 		arguments = []
 		for expressionIndex in range(0, Expression_getLength(argumentsExpression)):
-			arguments.append(Expression_get(argumentsExpression, expressionIndex).getValue())
+			arguments.append(getSymbolValue(Expression_get(argumentsExpression, expressionIndex)))
 		body = []
 		for expressionIndex in range(3, Expression_getLength(expression)):
 			body.append(Expression_get(expression, expressionIndex))

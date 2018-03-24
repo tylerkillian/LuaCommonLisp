@@ -326,10 +326,10 @@ def levelUp(element):
 		result = list_append(None, Symbol("list"))
 		return list_append(result, makeTwoElementList(Symbol("quote"), element))
 	elif isCons(element):
-		if element.getCar().getValue() == "comma":
+		if isSymbol(element.getCar(), "comma"):
 			result = list_append(None, Symbol("list"))
 			return list_append(result, element.getCdr().getCar())
-		elif element.getCar().getValue() == "comma-at":
+		elif isSymbol(element.getCar(), "comma-at"):
 			return element.getCdr().getCar()
 		else:
 			result = list_append(None, Symbol("list"))
@@ -337,14 +337,14 @@ def levelUp(element):
 			return list_append(result, makeTwoElementList(Symbol("backquote"), element))
 			
 def expandSingleBackquote(expression):
-	assert(expression.getCar().getValue() == "backquote")
+	assert(isSymbol(expression.getCar(), "backquote"))
 	subexpression = expression.getCdr().getCar()
 	if subexpression == NIL:
 		return makeTwoElementList(Symbol("quote"), NIL)
 	elif isSymbol(subexpression) or isString(subexpression):
 		return makeTwoElementList(Symbol("quote"), subexpression)
 	else:
-		if subexpression.getCar().getValue() == "comma":
+		if isSymbol(subexpression.getCar(), "comma"):
 			return subexpression.getCdr().getCar()
 		else:
 			result = list_append(None, Symbol("append"))
@@ -366,15 +366,14 @@ def expressionToString(node, addParenthesis = True):
 	if node == NIL:
 		return "nil"
 	elif isCons(node):
-		if isSymbol(node.getCar()):
-			if node.getCar().getValue() == "quote":
-				return "'" + expressionToString(node.getCdr().getCar())
-			elif node.getCar().getValue() == "backquote":
-				return "`" + expressionToString(node.getCdr().getCar())
-			elif node.getCar().getValue() == "comma":
-				return "," + expressionToString(node.getCdr().getCar())
-			elif node.getCar().getValue() == "comma-at":
-				return ",@" + expressionToString(node.getCdr().getCar())
+		if isSymbol(node.getCar(), "quote"):
+			return "'" + expressionToString(node.getCdr().getCar())
+		elif isSymbol(node.getCar(), "backquote"):
+			return "`" + expressionToString(node.getCdr().getCar())
+		elif isSymbol(node.getCar(), "comma"):
+			return "," + expressionToString(node.getCdr().getCar())
+		elif isSymbol(node.getCar(), "comma-at"):
+			return ",@" + expressionToString(node.getCdr().getCar())
 			
 		if node.getCdr() == NIL:
 			result = expressionToString(node.getCar())
