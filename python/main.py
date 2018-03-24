@@ -33,8 +33,9 @@ def eval(expression, environment):
 	elif isSymbol(expression, "5"):
 		return "5"
 	elif isSymbol(expression):
-		return environment[expression.getValue()]
+		return environment[getSymbolValue(expression)]
 	elif isSymbol(expression.getCar(), "format"):
+		print(expression.getCdr().getCdr().getCar().getValue())
 		message = expression.getCdr().getCdr().getCar().getValue()[1:-1]
 		message = message.replace("~%", "\n")
 		if expression.getCdr().getCdr().getCdr() != NIL:
