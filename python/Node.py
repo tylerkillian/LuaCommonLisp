@@ -1,5 +1,37 @@
 NIL = {"nil"}
 
+class Node:
+	def __init__(self, value = "", car = None, cdr = None):
+		self.value = value
+		self.car = car
+		self.cdr = cdr
+	def getType(self):
+		if self.value == "cons":
+			return "cons"
+		elif self.value[0:6] == "symbol":
+			return "symbol"
+		else:
+			assert(self.value[0:6] == "string")
+			return "string"
+	def getValue(self):
+		if self.value == "cons":
+			return "cons"
+		elif self.value[0:6] == "symbol":
+			return self.value[7:]
+		else:
+			assert(self.value[0:6] == "string")
+			return self.value[7:]
+	def setValue(self, value):
+		self.value = value
+	def getCar(self):
+		return self.car
+	def setCar(self, car):
+		self.car = car
+	def getCdr(self):
+		return self.cdr
+	def setCdr(self, cdr):
+		self.cdr = cdr
+
 class Cons:
 	def __init__(self, car = NIL, cdr = NIL):
 		if type(car) == str:
@@ -56,6 +88,8 @@ class Symbol:
 		self.value = value
 
 Symbol = Cons
+def Symbol(value = ""):
+	return Node("symbol_" + value)
 
 class String:
 	def __init__(self, value = ""):
