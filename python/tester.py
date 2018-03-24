@@ -1,9 +1,14 @@
 import sys
 import importlib
 
-testModule = importlib.import_module(sys.argv[1])
-for item in dir(testModule):
-	if item[0:5] == "test_":
-		print(item)
-		getattr(testModule, item)()
+testModuleName = sys.argv[1]
+
+testModuleAttributes = importlib.import_module(testModuleName)
+for attribute in dir(testModuleAttributes):
+	if attribute[0:5] == "test_":
+		testName = attribute[5:]
+		print(testModuleName + " : " + testName)
+
+		testFunction = getattr(testModuleAttributes, attribute)
+		testFunction()
 
