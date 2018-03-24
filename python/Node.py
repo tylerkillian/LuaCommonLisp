@@ -69,6 +69,9 @@ class Cons:
 	def setCdr(self, cdr):
 		self.cdr = cdr
 
+def Cons(car = NIL, cdr = NIL):
+	return Node("cons", car, cdr)
+
 def isSymbol(value, name = None):
 	if value.getType() != "symbol":
 		return False
@@ -80,15 +83,6 @@ def isSymbol(value, name = None):
 def Symbol(value = ""):
 	return Node("symbol_" + value)
 
-class String:
-	def __init__(self, value = ""):
-		self.value = value
-	def getType(self):
-		return "string"
-	def getValue(self):
-		return self.value
-	def setValue(self, value):
-		self.value = value
 def String(value = ""):
 	return Node("string_" + value)
 
