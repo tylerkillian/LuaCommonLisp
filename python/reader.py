@@ -18,7 +18,7 @@ def newReader(initialCharacter):
 	elif initialCharacter == "'":
 		return QuoteReader(initialCharacter)
 	elif initialCharacter == "`":
-		return QuasiquoteReader(initialCharacter)
+		return BackquoteReader(initialCharacter)
 	elif initialCharacter == ",":
 		return CommaReader(initialCharacter)
 	else:
@@ -177,7 +177,7 @@ class QuoteReader():
 				result = makeTwoElementList(Symbol("quote"), operand)
 				return result
 
-class QuasiquoteReader():
+class BackquoteReader():
 	def __init__(self, initialCharacter):
 		assert(initialCharacter == "`")
 		self.reader = None
@@ -192,7 +192,7 @@ class QuasiquoteReader():
 			if operand:
 				self.done = True
 				self.reader = None
-				result = Cons(Symbol("quasiquote"), Cons(operand, NIL))
+				result = Cons(Symbol("backquote"), Cons(operand, NIL))
 				return result
 
 class CommaReader():
@@ -265,7 +265,7 @@ def getBackquoteDepth(expression, backquoteLevel = 0):
 	elif expression.getType() == "symbol" or expression.getType() == "string":
 		return backquoteLevel
 	elif expression.getType() == "cons":
-		if isSymbol(expression.getCar(), "quasiquote"):
+		if isSymbol(expression.getCar(), "backquote"):
 			backquoteLevel += 1
 			return getBackquoteDepth(expression.getCdr(), backquoteLevel)
 		else:
@@ -279,7 +279,7 @@ def findFirstBackquoteAtGivenDepth(expression, depthToFind, currentDepth = 0):
 	if expression == NIL:
 		return None
 	elif expression.getType() == "cons":
-		if isSymbol(expression.getCar(), "quasiquote"):
+		if isSymbol(expression.getCar(), "backquote"):
 			currentDepth += 1
 			if currentDepth == depthToFind:
 				return expression
@@ -303,7 +303,7 @@ def getInnerBackquote(expression):
 
 def replaceFirstBackquoteAtGivenDepth(expression, replacement, depthToFind, currentDepth = 0):
 	if expression.getType() == "cons":
-		if isSymbol(expression.getCar(), "quasiquote"):
+		if isSymbol(expression.getCar(), "backquote"):
 			currentDepth += 1
 			if currentDepth == depthToFind:
 				return replacement
@@ -343,11 +343,11 @@ def levelup(element):
 			return element.getCdr().getCar()
 		else:
 			result = list_append(None, Symbol("list"))
-			adding = Cons(Symbol("quasiquote"), element)
-			return list_append(result, makeTwoElementList(Symbol("quasiquote"), element))
+			adding = Cons(Symbol("backquote"), element)
+			return list_append(result, makeTwoElementList(Symbol("backquote"), element))
 			
 def expandSingleBackquote(expression):
-	assert(expression.getCar().getValue() == "quasiquote")
+	assert(expression.getCar().getValue() == "backquote")
 	subexpression = expression.getCdr().getCar()
 	if subexpression == NIL:
 		return makeTwoElementList(Symbol("quote"), NIL)
@@ -377,7 +377,7 @@ def expressionToString(node, addParenthesis = True):
 		if node.getCar().getType() == "symbol":
 			if node.getCar().getValue() == "quote":
 				return "'" + expressionToString(node.getCdr().getCar())
-			elif node.getCar().getValue() == "quasiquote":
+			elif node.getCar().getValue() == "backquote":
 				return "`" + expressionToString(node.getCdr().getCar())
 			elif node.getCar().getValue() == "comma":
 				return "," + expressionToString(node.getCdr().getCar())

@@ -51,13 +51,13 @@ def test_readExpressions_format():
 def test_readExpressions_quoteSymbol():
 	tree = parseString("'a ")
 	assert(expressionToString(tree) == "'a")
-def test_readExpressions_quasiquoteSymbol():
+def test_readExpressions_backquoteSymbol():
 	tree = parseString("`a ")
 	assert(expressionToString(tree) == "`a")
-def test_readExpressions_quasiquoteAndComma():
+def test_readExpressions_backquoteAndComma():
 	tree = parseString("``(w ,x ,,y) ")
 	assert(expressionToString(tree) == "``(w ,x ,,y)")
-def test_readExpressions_quasiquoteAndCommaAt():
+def test_readExpressions_backquoteAndCommaAt():
 	tree = parseString("``(w ,x ,@y) ")
 	assert(expressionToString(tree) == "``(w ,x ,@y)")
 
