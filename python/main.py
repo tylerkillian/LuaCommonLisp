@@ -22,19 +22,18 @@ def Expression_getLength(expression):
 	return length
 
 def eval(expression, environment):
-	if isSymbol(expression):
-		if expression.getValue() == "1":
-			return "1"
-		elif expression.getValue() == "2":
-			return "2"
-		elif expression.getValue() == "3":
-			return "3"
-		elif expression.getValue() == "4":
-			return "4"
-		elif expression.getValue() == "5":
-			return "5"
-		else:
-			return environment[expression.getValue()]
+	if isSymbol(expression, "1"):
+		return "1"
+	elif isSymbol(expression, "2"):
+		return "2"
+	elif isSymbol(expression, "3"):
+		return "3"
+	elif isSymbol(expression, "4"):
+		return "4"
+	elif isSymbol(expression, "5"):
+		return "5"
+	elif isSymbol(expression):
+		return environment[expression.getValue()]
 	elif isSymbol(expression.getCar(), "format"):
 		message = expression.getCdr().getCdr().getCar().getValue()[1:-1]
 		message = message.replace("~%", "\n")
