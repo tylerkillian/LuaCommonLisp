@@ -3,7 +3,7 @@ NIL = {"nil"}
 class Cons:
 	def __init__(self, car = NIL, cdr = NIL):
 		if type(car) == str:
-			self.value = "symbol" + car
+			self.value = "symbol_" + car
 			self.car = None
 			self.cdr = None
 		else:
