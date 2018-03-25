@@ -199,5 +199,5 @@ def evaluate2(environment, expression):
 		for expressionIndex in range(1, Expression_getLength(expression)):
 			arguments.append(Expression_get(expression, expressionIndex))
 		metadata = environment["macros"][macroName]
-		return eval(macro(environment, metadata, arguments))
+		return macro(environment, metadata, arguments)
 
