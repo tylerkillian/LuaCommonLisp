@@ -61,3 +61,4 @@ def test_formatInteger2():
 
 def test_let():
 	code = '(setf b 2) (format t "b = ~a~%" b) (let ((b 3)) (format t "b = ~a~%" b)) (format t "b = ~a~%" b) '
+	assertStdout2(code, "hello, world\n")
