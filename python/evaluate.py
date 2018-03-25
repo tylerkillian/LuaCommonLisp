@@ -30,19 +30,18 @@ def addition(environment, arguments):
 	intResult = int(left) + int(right)
 	return Symbol(str(intResult))
 
-def defun(environment, arguments):
-	functionName = getSymbolValue(expression.getCdr().getCar())
-
-	argumentsExpression = Expression_get(expression, 2)
-	arguments = []
-	for expressionIndex in range(0, Expression_getLength(argumentsExpression)):
-		arguments.append(getSymbolValue(Expression_get(argumentsExpression, expressionIndex)))
+def defun(environment, argumentsToDefun):
+	functionName = getSymbolValue(argumentsToDefun[0])
+	argumentNames = []
+	for argumentIndex in range(0, Expression_getLength(argumentsToDefun[1])):
+		argumentNames.append(getSymbolValue(Expression_get(argumentsToDefun, argumentIndex)))
 	body = []
-	for expressionIndex in range(3, Expression_getLength(expression)):
-		body.append(Expression_get(expression, expressionIndex))
-	environment[functionName] = {
-		"arguments" : arguments,
-		"body" : body,
+	for argumentIndex in range(2, len(arguments)):
+		body.append(arguments[argumentIndex])
+	environment["functions"][functionName] = {
+		"name": callUserDefinedFunction, 
+		"argumentNames": argumentNames,
+		"body": body,
 	}
 	return environment[functionName]
 
@@ -165,4 +164,10 @@ def evaluate2(environment, expression):
 		return function(environment, argumentsEvaluated)
 	else:
 		assert(isMacro(environment, expression))
+		macroName = getSymbolValue(Expression_get(expression, 0))
+		macro = environment["macros"][macroName]["name"]
+		arguments = []
+		for expressionIndex in range(1, Expression_getLength(expression)):
+			arguments.append(Expression_get(expression, expressionIndex))
+		return eval(macro(environment, arguments))
 
