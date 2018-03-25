@@ -21,7 +21,7 @@ def Expression_getLength(expression):
 		length += 1
 	return length
 
-def addition(environment, arguments):
+def addition(environment, metadata, arguments):
 	assert(len(arguments) == 2)
 	assert(isSymbol(arguments[0]))
 	assert(isSymbol(arguments[1]))
@@ -30,7 +30,10 @@ def addition(environment, arguments):
 	intResult = int(left) + int(right)
 	return Symbol(str(intResult))
 
-def defun(environment, argumentsToDefun):
+def callUserDefinedFunction(environment, metadata, arguments):
+	pass
+
+def defun(environment, metadata, argumentsToDefun):
 	functionName = getSymbolValue(argumentsToDefun[0])
 	argumentNames = []
 	for argumentIndex in range(0, Expression_getLength(argumentsToDefun[1])):
@@ -161,7 +164,8 @@ def evaluate2(environment, expression):
 		for expressionIndex in range(1, Expression_getLength(expression)):
 			nextArgument = Expression_get(expression, expressionIndex)
 			argumentsEvaluated.append(evaluate2(environment, nextArgument))
-		return function(environment, argumentsEvaluated)
+		metadata = environment["functions"][functionName]
+		return function(environment, metadata, argumentsEvaluated)
 	else:
 		assert(isMacro(environment, expression))
 		macroName = getSymbolValue(Expression_get(expression, 0))
@@ -169,5 +173,6 @@ def evaluate2(environment, expression):
 		arguments = []
 		for expressionIndex in range(1, Expression_getLength(expression)):
 			arguments.append(Expression_get(expression, expressionIndex))
-		return eval(macro(environment, arguments))
+		metadata = environment["macros"][macroName]
+		return eval(macro(environment, metadata, arguments))
 
