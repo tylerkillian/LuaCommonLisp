@@ -20,6 +20,8 @@ def Expression_getLength(expression):
 		current = current.getCdr()
 		length += 1
 	return length
+Expression_get = list_get
+Expression_getLength = list_getLength
 
 def addition(environment, metadata, arguments):
 	assert(len(arguments) == 2)
