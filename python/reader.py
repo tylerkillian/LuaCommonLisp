@@ -155,8 +155,11 @@ class ConsReader:
 			assert(self.stage == "waitingForTerminalCharacter")
 			return self.processStage_waitingForTerminalCharacter(nextCharacter)
 
-def makeTwoElementList(itemOne, itemTwo):
-	return Cons(itemOne, Cons(itemTwo))
+def createList(*args):
+	result = None
+	for item in args:
+		result = list_append(result, item)
+	return result
 
 class QuoteReader:
 	def __init__(self, initialCharacter):
@@ -173,7 +176,7 @@ class QuoteReader:
 			if operand:
 				self.done = True
 				self.reader = None
-				result = makeTwoElementList(Symbol("quote"), operand)
+				result = createList(Symbol("quote"), operand)
 				return result
 
 class BackquoteReader:
@@ -321,10 +324,10 @@ def replaceInnerBackquote(expression, replacement):
 def levelUp(element):
 	if element == NIL:
 		result = list_append(None, Symbol("list"))
-		return list_append(result, makeTwoElementList(Symbol("quote"), NIL))
+		return list_append(result, createList(Symbol("quote"), NIL))
 	elif isSymbol(element) or isString(element):
 		result = list_append(None, Symbol("list"))
-		return list_append(result, makeTwoElementList(Symbol("quote"), element))
+		return list_append(result, createList(Symbol("quote"), element))
 	elif isCons(element):
 		if isSymbol(element.getCar(), "comma"):
 			result = list_append(None, Symbol("list"))
@@ -334,15 +337,15 @@ def levelUp(element):
 		else:
 			result = list_append(None, Symbol("list"))
 			adding = Cons(Symbol("backquote"), element)
-			return list_append(result, makeTwoElementList(Symbol("backquote"), element))
+			return list_append(result, createList(Symbol("backquote"), element))
 			
 def expandSingleBackquote(expression):
 	assert(isSymbol(expression.getCar(), "backquote"))
 	subexpression = expression.getCdr().getCar()
 	if subexpression == NIL:
-		return makeTwoElementList(Symbol("quote"), NIL)
+		return createList(Symbol("quote"), NIL)
 	elif isSymbol(subexpression) or isString(subexpression):
-		return makeTwoElementList(Symbol("quote"), subexpression)
+		return createList(Symbol("quote"), subexpression)
 	else:
 		if isSymbol(subexpression.getCar(), "comma"):
 			return subexpression.getCdr().getCar()
