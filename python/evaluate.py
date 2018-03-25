@@ -68,18 +68,18 @@ def format(environment, metadata, arguments):
 	message = message.replace("~%", "\n")
 	if len(arguments) > 2:
 		variableToLookup = arguments[2]
-		value = evaluate(environment, variableToLookup)
-		message = message.replace("~a", str(value))
+		value = evaluate2(environment, variableToLookup)
+		message = message.replace("~a", getSymbolValue(value))
 	environment["*standard-output*"].write(message)
 	return
 
 def let(environment, metadata, arguments):
 	variableToSet = getSymbolValue(arguments[0].getCar().getCar())
-	value = getSymbolValue(arguments[0].getCar().getCdr().getCar())
-	environment = createStandardEnvironment()
-	environment[variableToSet] = value
+	value = arguments[0].getCar().getCdr().getCar()
+	localEnvironment = copyEnvironment(environment)
+	localEnvironment[variableToSet] = value
 	body = arguments[1]
-	return evaluate(environment, body)
+	return evaluate2(localEnvironment, body)
 
 def createStandardEnvironment():
 	return {
@@ -117,6 +117,12 @@ def createStandardEnvironment():
 			},
 		},
 	}
+
+def copyEnvironment(environment):
+	copy =  {}
+	for key in environment:
+		copy[key] = environment[key]
+	return copy
 
 def evaluate(environment, expression):
 	if isSymbol(expression, "1"):
@@ -261,5 +267,5 @@ def evaluate2(environment, expression):
 		for expressionIndex in range(1, Expression_getLength(expression)):
 			arguments.append(Expression_get(expression, expressionIndex))
 		metadata = environment["special"][operatorName]
-		return special(environment, metadata, arguments)
+		return operator(environment, metadata, arguments)
 
