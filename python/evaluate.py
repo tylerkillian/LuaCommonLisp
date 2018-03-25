@@ -34,10 +34,10 @@ def defun(environment, argumentsToDefun):
 	functionName = getSymbolValue(argumentsToDefun[0])
 	argumentNames = []
 	for argumentIndex in range(0, Expression_getLength(argumentsToDefun[1])):
-		argumentNames.append(getSymbolValue(Expression_get(argumentsToDefun, argumentIndex)))
+		argumentNames.append(getSymbolValue(Expression_get(argumentsToDefun[1], argumentIndex)))
 	body = []
-	for argumentIndex in range(2, len(arguments)):
-		body.append(arguments[argumentIndex])
+	for argumentIndex in range(2, len(argumentsToDefun)):
+		body.append(argumentsToDefun[argumentIndex])
 	environment["functions"][functionName] = {
 		"name": callUserDefinedFunction, 
 		"argumentNames": argumentNames,
