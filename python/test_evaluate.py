@@ -36,8 +36,11 @@ def test_addition():
 
 def test_defunSum():
 	environment = createStandardEnvironment()
-	expression = createExpressionFromString("(defun sum (x y) (+ x y)) ")
-	evaluate2(environment, expression)
+	defineSum = createExpressionFromString("(defun sum (x y) (+ x y)) ")
+	evaluate2(environment, defineSum)
+	callSum = createExpressionFromString("(setf result (sum 2 3)) ")
+	evaluate2(environment, callSum)
+	assert(isSymbol(environment["result"], "5"))
 
 
 

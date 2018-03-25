@@ -32,7 +32,7 @@ def addition(environment, metadata, arguments):
 
 def callUserDefinedFunction(environment, metadata, arguments):
 	assert(len(arguments) == len(metadata['argumentNames']))
-	for argumentsIndex in range(0, len(arguments)):
+	for argumentIndex in range(0, len(arguments)):
 		argumentName = metadata['argumentNames'][argumentIndex]
 		environment[argumentName] = arguments[argumentIndex]
 	returnValue = None
@@ -59,6 +59,10 @@ def defun(environment, metadata, argumentsToDefun):
 	}
 	return
 
+def setf(environment, metadata, arguments):
+	environment[getSymbolValue(arguments[0])] = evaluate2(environment, arguments[1])
+	return
+
 def createStandardEnvironment():
 	return {
 		"*standard-output*": sys.stdout,
@@ -67,14 +71,19 @@ def createStandardEnvironment():
 				"name": addition,
 				"argumentNames": None,
 				"body": None,
-			}
+			},
 		},
 		"macros": {
 			"defun": {
 				"name": defun,
 				"argumentNames": None,
 				"body": None,
-			}
+			},
+			"setf": {
+				"name": setf,
+				"argumentNames": None,
+				"body": None,
+			},
 		},
 	}
 
