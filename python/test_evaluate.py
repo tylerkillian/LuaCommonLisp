@@ -58,3 +58,6 @@ def test_formatHelloWorld2():
 
 def test_formatInteger2():
 	assertStdout2('(format t "2 + 3 = ~a" 5) ', "2 + 3 = 5")
+
+def test_let():
+	code = '(setf b 2) (format t "b = ~a~%" b) (let ((b 3)) (format t "b = ~a~%" b)) (format t "b = ~a~%" b) '
