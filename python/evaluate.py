@@ -73,6 +73,14 @@ def format(environment, metadata, arguments):
 	environment["*standard-output*"].write(message)
 	return
 
+def let(environment, metadata, arguments):
+	variableToSet = getSymbolValue(arguments[0].getCar().getCar())
+	value = getSymbolValue(arguments[0].getCar().getCdr().getCar())
+	environment = createStandardEnvironment()
+	environment[variableToSet] = value
+	body = arguments[1]
+	return evaluate(environment, body)
+
 def createStandardEnvironment():
 	return {
 		"*standard-output*": sys.stdout,
@@ -97,6 +105,13 @@ def createStandardEnvironment():
 			},
 			"setf": {
 				"name": setf,
+				"argumentNames": None,
+				"body": None,
+			},
+		},
+		"special": {
+			"let": {
+				"name": let,
 				"argumentNames": None,
 				"body": None,
 			},
@@ -200,6 +215,20 @@ def isMacro(environment, expression):
 
 	return False
 
+def isSpecial(environment, expression):
+	if not isCons(expression):
+		return False
+	if Expression_getLength(expression) < 1:
+		return False
+	if not isSymbol(Expression_get(expression, 0)):
+		return False
+
+	macroName = getSymbolValue(Expression_get(expression, 0))
+	if macroName in environment["special"]:
+		return True
+
+	return False
+
 def evaluate2(environment, expression):
 	if isNumber(expression):
 		return expression
@@ -216,8 +245,7 @@ def evaluate2(environment, expression):
 			argumentsEvaluated.append(evaluate2(environment, nextArgument))
 		metadata = environment["functions"][functionName]
 		return function(environment, metadata, argumentsEvaluated)
-	else:
-		assert(isMacro(environment, expression))
+	elif isMacro(environment, expression):
 		macroName = getSymbolValue(Expression_get(expression, 0))
 		macro = environment["macros"][macroName]["name"]
 		arguments = []
@@ -225,4 +253,13 @@ def evaluate2(environment, expression):
 			arguments.append(Expression_get(expression, expressionIndex))
 		metadata = environment["macros"][macroName]
 		return macro(environment, metadata, arguments)
+	else:
+		assert(isSpecial(environment, expression))
+		operatorName = getSymbolValue(Expression_get(expression, 0))
+		operator = environment["special"][operatorName]["name"]
+		arguments = []
+		for expressionIndex in range(1, Expression_getLength(expression)):
+			arguments.append(Expression_get(expression, expressionIndex))
+		metadata = environment["special"][operatorName]
+		return special(environment, metadata, arguments)
 

@@ -23,3 +23,8 @@ class Stream:
 	def write(self, string):
 		for character in string:
 			self.values.append(character)
+	def isEmpty(self):
+		if len(self.values) == 0:
+			return True
+		else:
+			return False

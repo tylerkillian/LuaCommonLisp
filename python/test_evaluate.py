@@ -44,11 +44,13 @@ def test_defunSum():
 
 def assertStdout2(inputString, result):
 	inputStream = Stream(inputString)
-	expression = read(inputStream)
-	outputStream = Stream()
 	environment = createStandardEnvironment()
+	outputStream = Stream()
 	environment["*standard-output*"] = outputStream
-	evaluate2(environment, expression)
+	nextExpression = read(inputStream)
+	while nextExpression:
+		evaluate2(environment, nextExpression)
+		nextExpression = read(inputStream)
 	assert(environment["*standard-output*"].read() == result)
 
 def test_formatHelloWorld2():
