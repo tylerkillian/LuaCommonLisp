@@ -21,7 +21,7 @@ def Expression_getLength(expression):
 		length += 1
 	return length
 
-def addition(arguments):
+def addition(environment, arguments):
 	assert(len(arguments) == 2)
 	assert(isSymbol(arguments[0]))
 	assert(isSymbol(arguments[1]))
@@ -30,11 +30,38 @@ def addition(arguments):
 	intResult = int(left) + int(right)
 	return Symbol(str(intResult))
 
+def defun(environment, arguments):
+	functionName = getSymbolValue(expression.getCdr().getCar())
+
+	argumentsExpression = Expression_get(expression, 2)
+	arguments = []
+	for expressionIndex in range(0, Expression_getLength(argumentsExpression)):
+		arguments.append(getSymbolValue(Expression_get(argumentsExpression, expressionIndex)))
+	body = []
+	for expressionIndex in range(3, Expression_getLength(expression)):
+		body.append(Expression_get(expression, expressionIndex))
+	environment[functionName] = {
+		"arguments" : arguments,
+		"body" : body,
+	}
+	return environment[functionName]
+
 def createStandardEnvironment():
 	return {
 		"*standard-output*": sys.stdout,
 		"functions": {
-			"+": addition,
+			"+": {
+				"name": addition,
+				"argumentNames": None,
+				"body": None,
+			}
+		},
+		"macros": {
+			"defun": {
+				"name": defun,
+				"argumentNames": None,
+				"body": None,
+			}
 		},
 	}
 
@@ -130,12 +157,12 @@ def evaluate2(environment, expression):
 		pass
 	elif isFunction(environment, expression):
 		functionName = getSymbolValue(Expression_get(expression, 0))
-		function = environment["functions"][functionName]
+		function = environment["functions"][functionName]["name"]
 		argumentsEvaluated = []
 		for expressionIndex in range(1, Expression_getLength(expression)):
 			nextArgument = Expression_get(expression, expressionIndex)
 			argumentsEvaluated.append(evaluate2(environment, nextArgument))
-		return function(argumentsEvaluated)
+		return function(environment, argumentsEvaluated)
 	else:
 		assert(isMacro(environment, expression))
 
