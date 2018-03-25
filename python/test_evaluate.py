@@ -42,5 +42,17 @@ def test_defunSum():
 	evaluate2(environment, callSum)
 	assert(isSymbol(environment["result"], "5"))
 
+def assertStdout2(inputString, result):
+	inputStream = Stream(inputString)
+	expression = read(inputStream)
+	outputStream = Stream()
+	environment = createStandardEnvironment()
+	environment["*standard-output*"] = outputStream
+	evaluate2(environment, expression)
+	assert(environment["*standard-output*"].read() == result)
 
+def test_formatHelloWorld2():
+	assertStdout2('(format t "hello, world~%") ', "hello, world\n")
 
+def test_formatInteger2():
+	assertStdout2('(format t "2 + 3 = ~a" 5) ', "2 + 3 = 5")

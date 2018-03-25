@@ -77,6 +77,7 @@ def format(environment, metadata, arguments):
 def createStandardEnvironment():
 	return {
 		"*standard-output*": sys.stdout,
+		"t": Symbol("t"),
 		"functions": {
 			"+": {
 				"name": addition,
@@ -206,7 +207,7 @@ def evaluate2(environment, expression):
 	elif isSymbol(expression):
 		return environment[getSymbolValue(expression)]
 	elif isString(expression):
-		pass
+		return expression
 	elif isFunction(environment, expression):
 		functionName = getSymbolValue(Expression_get(expression, 0))
 		function = environment["functions"][functionName]["name"]
