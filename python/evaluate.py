@@ -156,7 +156,21 @@ def isFunction(environment, expression):
 		return False
 
 	functionName = getSymbolValue(Expression_get(expression, 0))
-	if environment["functions"][functionName]:
+	if functionName in environment["functions"]:
+		return True
+
+	return False
+
+def isMacro(environment, expression):
+	if not isCons(expression):
+		return False
+	if Expression_getLength(expression) < 1:
+		return False
+	if not isSymbol(Expression_get(expression, 0)):
+		return False
+
+	macroName = getSymbolValue(Expression_get(expression, 0))
+	if macroName in environment["macros"]:
 		return True
 
 	return False
