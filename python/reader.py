@@ -38,6 +38,34 @@ def list_append(cons, element):
 	lastElement.setCdr(Cons(element, NIL))
 	return cons
 
+def expressionToString(node, addParenthesis = True):
+	if node == NIL:
+		return "nil"
+	elif isCons(node):
+		if isSymbol(node.getCar(), "quote"):
+			return "'" + expressionToString(node.getCdr().getCar())
+		elif isSymbol(node.getCar(), "backquote"):
+			return "`" + expressionToString(node.getCdr().getCar())
+		elif isSymbol(node.getCar(), "comma"):
+			return "," + expressionToString(node.getCdr().getCar())
+		elif isSymbol(node.getCar(), "comma-at"):
+			return ",@" + expressionToString(node.getCdr().getCar())
+			
+		if node.getCdr() == NIL:
+			result = expressionToString(node.getCar())
+		elif isCons(node.getCdr()):
+			result = expressionToString(node.getCar()) + " " + expressionToString(node.getCdr(), False)
+		else:
+			result = expressionToString(node.getCar()) + " " + expressionToString(node.getCdr())
+		if addParenthesis:
+			result = "(" + result + ")" 
+		return result
+	elif isSymbol(node):
+		return getSymbolValue(node)
+	else:
+		assert(isString(node))
+		return '"' + getStringValue(node) + '"'
+
 def isWhitespace(character):
 	if character == " ":
 		return True
@@ -367,32 +395,4 @@ def expandBackquoteMacro(expression):
 		result = replaceInnerBackquote(result, expandedInnerBackquote)
 		innerBackquote = getInnerBackquote(result)
 	return result
-
-def expressionToString(node, addParenthesis = True):
-	if node == NIL:
-		return "nil"
-	elif isCons(node):
-		if isSymbol(node.getCar(), "quote"):
-			return "'" + expressionToString(node.getCdr().getCar())
-		elif isSymbol(node.getCar(), "backquote"):
-			return "`" + expressionToString(node.getCdr().getCar())
-		elif isSymbol(node.getCar(), "comma"):
-			return "," + expressionToString(node.getCdr().getCar())
-		elif isSymbol(node.getCar(), "comma-at"):
-			return ",@" + expressionToString(node.getCdr().getCar())
-			
-		if node.getCdr() == NIL:
-			result = expressionToString(node.getCar())
-		elif isCons(node.getCdr()):
-			result = expressionToString(node.getCar()) + " " + expressionToString(node.getCdr(), False)
-		else:
-			result = expressionToString(node.getCar()) + " " + expressionToString(node.getCdr())
-		if addParenthesis:
-			result = "(" + result + ")" 
-		return result
-	elif isSymbol(node):
-		return getSymbolValue(node)
-	else:
-		assert(isString(node))
-		return '"' + getStringValue(node) + '"'
 
