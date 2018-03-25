@@ -63,12 +63,28 @@ def setf(environment, metadata, arguments):
 	environment[getSymbolValue(arguments[0])] = evaluate2(environment, arguments[1])
 	return
 
+def format(environment, metadata, arguments):
+	message = getStringValue(arguments[1])
+	message = message.replace("~%", "\n")
+	if len(arguments) > 2:
+		if isCons(expression.getCdr().getCdr().getCdr()):
+			variableToLookup = arguments[2]
+			value = evaluate(environment, variableToLookup)
+			message = message.replace("~a", str(value))
+	environment["*standard-output*"].write(message)
+	return
+
 def createStandardEnvironment():
 	return {
 		"*standard-output*": sys.stdout,
 		"functions": {
 			"+": {
 				"name": addition,
+				"argumentNames": None,
+				"body": None,
+			},
+			"format": {
+				"name": format,
 				"argumentNames": None,
 				"body": None,
 			},
