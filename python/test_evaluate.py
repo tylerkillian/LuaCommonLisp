@@ -33,3 +33,11 @@ def test_addition():
 	environment = createStandardEnvironment()
 	expression = createExpressionFromString("(+ 2 3) ")
 	assert(isSymbol(evaluate2(environment, expression), "5"))
+
+def test_defunSum():
+	environment = createStandardEnvironment()
+	expression = createExpressionFromString("(defun sum (x y) (+ x y)) ")
+	evaluate2(environment, expression)
+
+
+
