@@ -1,5 +1,43 @@
 from Node import *
 
+def list_new(*args):
+	result = None
+	for item in args:
+		result = list_append(result, item)
+	if not result:
+		return NIL
+	else:
+		return result
+
+def list_getLength(cons):
+	assert(isCons(cons))
+	length = 0
+	current = cons
+	while current != NIL:
+		current = current.getCdr()
+		length += 1
+	return length
+
+def list_get(cons, index):
+	assert(isCons(cons))
+	count = 0
+	current = cons
+	while count < index:
+		assert(isCons(cons))
+		current = current.getCdr()
+		count += 1
+	assert(current)
+	return current.getCar()
+
+def list_append(cons, element):
+	if not cons:
+		return Cons(element, NIL)
+	lastElement = cons
+	while lastElement.getCdr() != NIL:
+		lastElement = lastElement.getCdr()
+	lastElement.setCdr(Cons(element, NIL))
+	return cons
+
 def isWhitespace(character):
 	if character == " ":
 		return True
@@ -155,12 +193,6 @@ class ConsReader:
 			assert(self.stage == "waitingForTerminalCharacter")
 			return self.processStage_waitingForTerminalCharacter(nextCharacter)
 
-def createList(*args):
-	result = None
-	for item in args:
-		result = list_append(result, item)
-	return result
-
 class QuoteReader:
 	def __init__(self, initialCharacter):
 		assert(initialCharacter == "'")
@@ -176,7 +208,7 @@ class QuoteReader:
 			if operand:
 				self.done = True
 				self.reader = None
-				result = createList(Symbol("quote"), operand)
+				result = list_new(Symbol("quote"), operand)
 				return result
 
 class BackquoteReader:
@@ -222,35 +254,6 @@ class CommaReader:
 				self.reader = None
 				result = Cons(Symbol(self.commaType), Cons(operand, NIL))
 				return result
-
-def list_getLength(cons):
-	assert(isCons(cons))
-	length = 0
-	current = cons
-	while current != NIL:
-		current = current.getCdr()
-		length += 1
-	return length
-
-def list_get(cons, index):
-	assert(isCons(cons))
-	count = 0
-	current = cons
-	while count < index:
-		assert(isCons(cons))
-		current = current.getCdr()
-		count += 1
-	assert(current)
-	return current.getCar()
-
-def list_append(cons, element):
-	if not cons:
-		return Cons(element, NIL)
-	lastElement = cons
-	while lastElement.getCdr() != NIL:
-		lastElement = lastElement.getCdr()
-	lastElement.setCdr(Cons(element, NIL))
-	return cons
 
 def getBackquoteDepth(expression, backquoteLevel = 0):
 	if expression == NIL:
@@ -324,10 +327,10 @@ def replaceInnerBackquote(expression, replacement):
 def levelUp(element):
 	if element == NIL:
 		result = list_append(None, Symbol("list"))
-		return list_append(result, createList(Symbol("quote"), NIL))
+		return list_append(result, list_new(Symbol("quote"), NIL))
 	elif isSymbol(element) or isString(element):
 		result = list_append(None, Symbol("list"))
-		return list_append(result, createList(Symbol("quote"), element))
+		return list_append(result, list_new(Symbol("quote"), element))
 	elif isCons(element):
 		if isSymbol(element.getCar(), "comma"):
 			result = list_append(None, Symbol("list"))
@@ -337,15 +340,15 @@ def levelUp(element):
 		else:
 			result = list_append(None, Symbol("list"))
 			adding = Cons(Symbol("backquote"), element)
-			return list_append(result, createList(Symbol("backquote"), element))
+			return list_append(result, list_new(Symbol("backquote"), element))
 			
 def expandSingleBackquote(expression):
 	assert(isSymbol(expression.getCar(), "backquote"))
 	subexpression = expression.getCdr().getCar()
 	if subexpression == NIL:
-		return createList(Symbol("quote"), NIL)
+		return list_new(Symbol("quote"), NIL)
 	elif isSymbol(subexpression) or isString(subexpression):
-		return createList(Symbol("quote"), subexpression)
+		return list_new(Symbol("quote"), subexpression)
 	else:
 		if isSymbol(subexpression.getCar(), "comma"):
 			return subexpression.getCdr().getCar()
