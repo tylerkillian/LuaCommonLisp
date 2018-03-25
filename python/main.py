@@ -1,13 +1,11 @@
 import sys
 from reader import *
-from evaluate import evaluate
+from evaluate import evaluate, createStandardEnvironment
 
 def lisp(inputFile):
 	input = open(inputFile, "r")
 	nextCharacter = input.read(1)
-	environment = {
-		"*standard-output*": sys.stdout,
-	}
+	environment = createStandardEnvironment()
 	reader = RootReader()
 	while nextCharacter:
 		result = reader.readNextCharacter(nextCharacter)

@@ -1,22 +1,41 @@
-from evaluate import evaluate, evaluate2, createStandardEnvironment
+from evaluate import evaluate, evaluate, createStandardEnvironment
 from Node import Symbol, isSymbol
 from read import read
 from reader import expressionToString
 from Stream import Stream
 
-def assertStdout(inputString, result):
-	inputStream = Stream(inputString)
-	expression = read(inputStream)
-	outputStream = Stream()
-	environment = {
-		"*standard-output*": outputStream,
-	}
-	evaluate(environment, expression)
-	assert(environment["*standard-output*"].read() == result)
-
 def createExpressionFromString(string):
 	inputStream = Stream(string)
 	return read(inputStream)
+
+def test_evaluateSymbol():
+	environment = createStandardEnvironment()
+	environment["a"] = Symbol("1")
+	assert(isSymbol(evaluate(environment, Symbol("a"))))
+
+def test_addition():
+	environment = createStandardEnvironment()
+	expression = createExpressionFromString("(+ 2 3) ")
+	assert(isSymbol(evaluate(environment, expression), "5"))
+
+def test_defunSum():
+	environment = createStandardEnvironment()
+	defineSum = createExpressionFromString("(defun sum (x y) (+ x y)) ")
+	evaluate(environment, defineSum)
+	callSum = createExpressionFromString("(setf result (sum 2 3)) ")
+	evaluate(environment, callSum)
+	assert(isSymbol(environment["result"], "5"))
+
+def assertStdout(inputString, result):
+	inputStream = Stream(inputString)
+	environment = createStandardEnvironment()
+	outputStream = Stream()
+	environment["*standard-output*"] = outputStream
+	nextExpression = read(inputStream)
+	while nextExpression:
+		evaluate(environment, nextExpression)
+		nextExpression = read(inputStream)
+	assert(environment["*standard-output*"].read() == result)
 
 def test_formatHelloWorld():
 	assertStdout('(format t "hello, world~%") ', "hello, world\n")
@@ -24,41 +43,6 @@ def test_formatHelloWorld():
 def test_formatInteger():
 	assertStdout('(format t "2 + 3 = ~a" 5) ', "2 + 3 = 5")
 
-def test_evaluateSymbol():
-	environment = createStandardEnvironment()
-	environment["a"] = Symbol("1")
-	assert(isSymbol(evaluate2(environment, Symbol("a"))))
-
-def test_addition():
-	environment = createStandardEnvironment()
-	expression = createExpressionFromString("(+ 2 3) ")
-	assert(isSymbol(evaluate2(environment, expression), "5"))
-
-def test_defunSum():
-	environment = createStandardEnvironment()
-	defineSum = createExpressionFromString("(defun sum (x y) (+ x y)) ")
-	evaluate2(environment, defineSum)
-	callSum = createExpressionFromString("(setf result (sum 2 3)) ")
-	evaluate2(environment, callSum)
-	assert(isSymbol(environment["result"], "5"))
-
-def assertStdout2(inputString, result):
-	inputStream = Stream(inputString)
-	environment = createStandardEnvironment()
-	outputStream = Stream()
-	environment["*standard-output*"] = outputStream
-	nextExpression = read(inputStream)
-	while nextExpression:
-		evaluate2(environment, nextExpression)
-		nextExpression = read(inputStream)
-	assert(environment["*standard-output*"].read() == result)
-
-def _test_formatHelloWorld2():
-	assertStdout2('(format t "hello, world~%") ', "hello, world\n")
-
-def _test_formatInteger2():
-	assertStdout2('(format t "2 + 3 = ~a" 5) ', "2 + 3 = 5")
-
 def test_let():
 	code = '(setf b 2) (format t "b = ~a~%" b) (let ((b 3)) (format t "b = ~a~%" b)) (format t "b = ~a~%" b) '
-	assertStdout2(code, "b = 2\nb = 3\nb = 2\n")
+	assertStdout(code, "b = 2\nb = 3\nb = 2\n")
