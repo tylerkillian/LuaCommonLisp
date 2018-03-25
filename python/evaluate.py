@@ -31,7 +31,20 @@ def addition(environment, metadata, arguments):
 	return Symbol(str(intResult))
 
 def callUserDefinedFunction(environment, metadata, arguments):
-	pass
+	functionName = Expression_get(expression, 0)
+	functionPointer = evaluate(environment, functionName)
+	assert((Expression_getLength(expression)-1) == len(functionPointer['arguments']))
+	for expressionIndex in range(1, Expression_getLength(expression)):
+		argumentName = functionPointer['arguments'][expressionIndex - 1]
+		environment[argumentName] = evaluate(environment, Expression_get(expression, expressionIndex))
+	returnValue = None
+	for command in functionPointer['body']:
+		returnValue = evaluate(environment, command)
+	return returnValue
+
+def isFunction(environment, expression):
+	if not isCons(expression):
+		return False
 
 def defun(environment, metadata, argumentsToDefun):
 	functionName = getSymbolValue(argumentsToDefun[0])
