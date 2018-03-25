@@ -67,10 +67,9 @@ def format(environment, metadata, arguments):
 	message = getStringValue(arguments[1])
 	message = message.replace("~%", "\n")
 	if len(arguments) > 2:
-		if isCons(expression.getCdr().getCdr().getCdr()):
-			variableToLookup = arguments[2]
-			value = evaluate(environment, variableToLookup)
-			message = message.replace("~a", str(value))
+		variableToLookup = arguments[2]
+		value = evaluate(environment, variableToLookup)
+		message = message.replace("~a", str(value))
 	environment["*standard-output*"].write(message)
 	return
 
