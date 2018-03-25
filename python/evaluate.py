@@ -43,7 +43,7 @@ def defun(environment, argumentsToDefun):
 		"argumentNames": argumentNames,
 		"body": body,
 	}
-	return environment[functionName]
+	return
 
 def createStandardEnvironment():
 	return {
