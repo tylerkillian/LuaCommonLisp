@@ -84,3 +84,7 @@ def test_progn():
 			(format t "5~%")
 		)
 	"""
+	returnValue, stdout = runCode(code)
+	assert(returnValue == NIL)
+	assert(stdout == "1\n2\n3\n4\n5\n")
+
