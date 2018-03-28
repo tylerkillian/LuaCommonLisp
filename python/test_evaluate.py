@@ -73,3 +73,13 @@ def test_ifFalse():
 		)
 	"""	
 	assertStdout(code, "false")
+
+def test_progn():
+	code = """
+		(progn
+			(format t "1~%")
+			(format t "2~%")
+			(format t "3~%")
+			(format t "4~%")
+			(format t "5~%")
+	"""
