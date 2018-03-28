@@ -88,11 +88,13 @@ def test_ifFalse():
 
 def test_progn():
 	code = """
+		(progn
 			(format t "1~%")
 			(format t "2~%")
 			(format t "3~%")
 			(format t "4~%")
 			(format t "5~%")
+		)
 	"""
 	returnValue, stdout = runCode(code)
 	assert(returnValue == NIL)
