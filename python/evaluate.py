@@ -51,7 +51,7 @@ def format(environment, metadata, arguments):
 		value = evaluate(environment, variableToLookup)
 		message = message.replace("~a", getSymbolValue(value))
 	environment["*standard-output*"].write(message)
-	return
+	return NIL
 
 def let(environment, metadata, arguments):
 	variableToSet = getSymbolValue(arguments[0].getCar().getCar())
