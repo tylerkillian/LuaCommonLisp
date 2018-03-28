@@ -81,6 +81,11 @@ def cl_if(environment, metadata, arguments):
 	else:
 		return evaluate(environment, callIfFalse)
 
+def progn(environment, metadata, arguments):
+	for nextExpression in arguments:
+		lastReturnValue = evaluate(environment, nextExpression)
+	return lastReturnValue
+
 def createStandardEnvironment():
 	return {
 		"*standard-output*": sys.stdout,
@@ -118,6 +123,11 @@ def createStandardEnvironment():
 			},
 			"if": {
 				"name": cl_if,
+				"argumentNames": None,
+				"body": None,
+			},
+			"progn": {
+				"name": progn,
 				"argumentNames": None,
 				"body": None,
 			},
