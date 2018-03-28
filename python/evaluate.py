@@ -61,21 +61,31 @@ def let(environment, metadata, arguments):
 	body = arguments[1]
 	return evaluate(localEnvironment, body)
 
+def isTrue(value):
+	if value == NIL:
+		return False
+
+	if getSymbolValue(value) == "t":
+		return True
+	else:
+		return False
+
 def cl_if(environment, metadata, arguments):
 	condition = arguments[0]
 	callIfTrue = arguments[1]
 	callIfFalse = arguments[2]
-	variableToSet = getSymbolValue(arguments[0].getCar().getCar())
-	value = arguments[0].getCar().getCdr().getCar()
-	localEnvironment = copyEnvironment(environment)
-	localEnvironment[variableToSet] = value
-	body = arguments[1]
-	return evaluate(localEnvironment, body)
+
+	conditionEvaluated = evaluate(environment, condition)
+	if isTrue(conditionEvaluated):
+		return evaluate(environment, callIfTrue)
+	else:
+		return evaluate(environment, callIfFalse)
 
 def createStandardEnvironment():
 	return {
 		"*standard-output*": sys.stdout,
 		"t": Symbol("t"),
+		"nil": NIL,
 		"functions": {
 			"+": {
 				"name": addition,

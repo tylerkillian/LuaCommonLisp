@@ -55,3 +55,21 @@ def test_let():
 		(format t "b = ~a~%" b)
 	"""
 	assertStdout(code, "b = 2\nb = 3\nb = 2\n")
+
+def test_ifTrue():
+	code = """
+		(if t
+			(format t "true")
+			(format t "false")
+		)
+	"""	
+	assertStdout(code, "true")
+
+def test_ifFalse():
+	code = """
+		(if nil
+			(format t "true")
+			(format t "false")
+		)
+	"""	
+	assertStdout(code, "false")
