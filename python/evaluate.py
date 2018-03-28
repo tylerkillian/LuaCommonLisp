@@ -61,6 +61,17 @@ def let(environment, metadata, arguments):
 	body = arguments[1]
 	return evaluate(localEnvironment, body)
 
+def cl_if(environment, metadata, arguments):
+	condition = arguments[0]
+	callIfTrue = arguments[1]
+	callIfFalse = arguments[2]
+	variableToSet = getSymbolValue(arguments[0].getCar().getCar())
+	value = arguments[0].getCar().getCdr().getCar()
+	localEnvironment = copyEnvironment(environment)
+	localEnvironment[variableToSet] = value
+	body = arguments[1]
+	return evaluate(localEnvironment, body)
+
 def createStandardEnvironment():
 	return {
 		"*standard-output*": sys.stdout,
@@ -92,6 +103,11 @@ def createStandardEnvironment():
 		"special": {
 			"let": {
 				"name": let,
+				"argumentNames": None,
+				"body": None,
+			},
+			"if": {
+				"name": cl_if,
 				"argumentNames": None,
 				"body": None,
 			},
