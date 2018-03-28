@@ -82,4 +82,5 @@ def test_progn():
 			(format t "3~%")
 			(format t "4~%")
 			(format t "5~%")
+		)
 	"""
