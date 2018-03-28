@@ -44,5 +44,14 @@ def test_formatInteger():
 	assertStdout('(format t "2 + 3 = ~a" 5) ', "2 + 3 = 5")
 
 def test_let():
-	code = '(setf b 2) (format t "b = ~a~%" b) (let ((b 3)) (format t "b = ~a~%" b)) (format t "b = ~a~%" b) '
+	code = """
+		(setf b 2)
+		(format t "b = ~a~%" b)
+
+		(let ((b 3))
+			(format t "b = ~a~%" b)
+		)
+
+		(format t "b = ~a~%" b)
+	"""
 	assertStdout(code, "b = 2\nb = 3\nb = 2\n")
