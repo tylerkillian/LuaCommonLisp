@@ -1,5 +1,5 @@
 from evaluate import evaluate, evaluate, createStandardEnvironment
-from Node import Symbol, isSymbol
+from Node import Symbol, isSymbol, NIL
 from read import read
 from reader import expressionToString
 from Stream import Stream
@@ -25,6 +25,18 @@ def test_defunSum():
 	callSum = createExpressionFromString("(setf result (sum 2 3)) ")
 	evaluate(environment, callSum)
 	assert(isSymbol(environment["result"], "5"))
+
+def runCode(code):
+	inputStream = Stream(code)
+	environment = createStandardEnvironment()
+	outputStream = Stream()
+	environment["*standard-output*"] = outputStream
+	nextExpression = read(inputStream)
+	while nextExpression:
+		lastReturnValue = evaluate(environment, nextExpression)
+		nextExpression = read(inputStream)
+	stdout = environment["*standard-output*"].read()
+	return lastReturnValue, stdout
 
 def assertStdout(inputString, result):
 	inputStream = Stream(inputString)
@@ -76,13 +88,11 @@ def test_ifFalse():
 
 def test_progn():
 	code = """
-		(progn
 			(format t "1~%")
 			(format t "2~%")
 			(format t "3~%")
 			(format t "4~%")
 			(format t "5~%")
-		)
 	"""
 	returnValue, stdout = runCode(code)
 	assert(returnValue == NIL)
