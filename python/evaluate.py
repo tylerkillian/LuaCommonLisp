@@ -122,7 +122,7 @@ def createStandardEnvironment():
 			},
 		},
 		"special": {
-			"defun": {
+			":defun": {
 				"name": special_defun,
 				"argumentNames": None,
 				"body": None,
