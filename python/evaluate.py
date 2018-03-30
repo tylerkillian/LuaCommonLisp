@@ -236,6 +236,8 @@ def isSpecial(environment, expression):
 	return False
 
 def evaluate(environment, expression):
+	expression = expandBackquoteMacro(expression)
+
 	if isNumber(expression):
 		return expression
 	elif isSymbol(expression):
