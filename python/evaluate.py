@@ -21,7 +21,6 @@ def callUserDefinedFunction(environment, metadata, arguments):
 	return returnValue
 
 def callUserDefinedMacro(environment, metadata, arguments, rest):
-	assert(len(arguments) == len(metadata['argumentNames']))
 	for argumentIndex in range(0, len(arguments)):
 		argumentName = metadata['argumentNames'][argumentIndex]
 		environment[argumentName] = arguments[argumentIndex]
