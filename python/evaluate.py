@@ -24,11 +24,17 @@ def callUserDefinedMacro(environment, metadata, arguments):
 	gotRest = False
 	rest = None
 	for argumentIndex in range(0, len(arguments)):
-		argumentName = metadata['argumentNames'][argumentIndex]
 		if argumentName == "&rest":
 			gotRest = True
+			restNameIndex = argumentIndex + 1
+		elif gotRest:
+			rest = list_append(rest, arguments[argumentIndex])
 		else:
+			argumentName = metadata['argumentNames'][argumentIndex]
 			environment[argumentName] = arguments[argumentIndex]
+	if gotRest:
+		restName = metadata['argumentNames'][restIndex]
+		environment[restName] = rest
 	returnValue = None
 	for command in metadata['body']:
 		returnValue = evaluate(environment, command)
