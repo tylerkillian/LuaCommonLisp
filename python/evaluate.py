@@ -46,6 +46,12 @@ def special_defun(environment, metadata, argumentsToDefun):
 	return
 
 def setf(environment, metadata, arguments):
+	result = list_new(Symbol(":setf"))
+	for argument in arguments:
+		result = list_append(result, argument)
+	return result
+
+def special_setf(environment, metadata, arguments):
 	environment[getSymbolValue(arguments[0])] = evaluate(environment, arguments[1])
 	return
 
@@ -124,6 +130,11 @@ def createStandardEnvironment():
 		"special": {
 			":defun": {
 				"name": special_defun,
+				"argumentNames": None,
+				"body": None,
+			},
+			":setf": {
+				"name": special_setf,
 				"argumentNames": None,
 				"body": None,
 			},

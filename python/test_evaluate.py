@@ -1,7 +1,7 @@
 from evaluate import evaluate, evaluate, createStandardEnvironment
 from Node import Symbol, isSymbol, NIL
 from read import read
-from reader import expressionToString, list_new
+from reader import expressionToString
 from Stream import Stream
 
 def createExpressionFromString(string):
