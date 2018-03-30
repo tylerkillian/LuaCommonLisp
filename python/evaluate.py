@@ -87,6 +87,14 @@ def fn_list(environment, metadata, arguments):
 		result = list_append(result, argument)
 	return result
 
+def fn_append(environment, metadata, arguments):
+	result = None
+	for nextList in arguments:
+		for listIndex in range(0, list_getLength(nextList)):
+			nextElement = list_get(nextList, listIndex)
+			result = list_append(result, nextElement)
+	return result
+
 def format(environment, metadata, arguments):
 	message = getStringValue(arguments[1])
 	message = message.replace("~%", "\n")
@@ -148,6 +156,11 @@ def createStandardEnvironment():
 			},
 			"list": {
 				"name": fn_list,
+				"argumentNames": None,
+				"body": None,
+			},
+			"append": {
+				"name": fn_append,
 				"argumentNames": None,
 				"body": None,
 			},
