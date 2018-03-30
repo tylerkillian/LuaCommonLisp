@@ -288,10 +288,19 @@ def evaluate(environment, expression):
 		macroName = getSymbolValue(list_get(expression, 0))
 		macro = environment["macros"][macroName]["name"]
 		arguments = []
+		rest = []
+		gotRest = False
 		for expressionIndex in range(1, list_getLength(expression)):
-			arguments.append(list_get(expression, expressionIndex))
+			nextArgument = list_get(expression, expressionIndex))
+			if gotRest:
+					rest.append(nextArgument)
+			else:
+				if isSymbol(nextArgument, "&rest"):
+					gotRest = True
+				else:
+					arguments.append(nextArgument)
 		metadata = environment["macros"][macroName]
-		return evaluate(environment, macro(environment, metadata, arguments))
+		return evaluate(environment, macro(environment, metadata, arguments, rest))
 	elif isSpecial(environment, expression):
 		assert(isSpecial(environment, expression))
 		operatorName = getSymbolValue(list_get(expression, 0))
