@@ -116,7 +116,15 @@ def test_append():
 	assert(expressionToString(returnValue) == "(1 2 3 4 5)")
 	assert(stdout == "")
 
-def test_defmacro():
+def test_quote():
+	code = """
+		'a
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "a")
+	assert(stdout == "")
+
+def _test_defmacro():
 	code = """
 		(:defmacro when (condition body)
 			`(if ,condition

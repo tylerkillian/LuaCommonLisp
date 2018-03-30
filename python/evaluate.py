@@ -81,6 +81,9 @@ def special_setf(environment, metadata, arguments):
 	environment[getSymbolValue(arguments[0])] = evaluate(environment, arguments[1])
 	return
 
+def special_quote(environment, metadata, arguments):
+	return arguments[0]
+
 def fn_list(environment, metadata, arguments):
 	result = None
 	for argument in arguments:
@@ -202,6 +205,9 @@ def createStandardEnvironment():
 				"name": cl_if,
 				"argumentNames": None,
 				"body": None,
+			},
+			"quote": {
+				"name":
 			},
 			"progn": {
 				"name": progn,
