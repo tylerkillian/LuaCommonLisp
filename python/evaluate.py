@@ -207,7 +207,9 @@ def createStandardEnvironment():
 				"body": None,
 			},
 			"quote": {
-				"name":
+				"name": special_quote,
+				"argumentNames": None,
+				"body": None,
 			},
 			"progn": {
 				"name": progn,
