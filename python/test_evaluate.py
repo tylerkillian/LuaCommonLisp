@@ -100,6 +100,14 @@ def test_progn():
 	assert(returnValue == NIL)
 	assert(stdout == "1\n2\n3\n4\n5\n")
 
+def test_list():
+	code = """
+		(list 1 2 3 4 5)
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "(1 2 3 4 5)")
+	assert(stdout == "")
+
 def _test_defmacro():
 	code = """
 		(:defmacro when (condition body)

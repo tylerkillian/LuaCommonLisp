@@ -81,6 +81,12 @@ def special_setf(environment, metadata, arguments):
 	environment[getSymbolValue(arguments[0])] = evaluate(environment, arguments[1])
 	return
 
+def fn_list(environment, metadata, arguments):
+	result = None
+	for argument in arguments:
+		result = list_append(result, argument)
+	return result
+
 def format(environment, metadata, arguments):
 	message = getStringValue(arguments[1])
 	message = message.replace("~%", "\n")
@@ -137,6 +143,11 @@ def createStandardEnvironment():
 			},
 			"format": {
 				"name": format,
+				"argumentNames": None,
+				"body": None,
+			},
+			"list": {
+				"name": fn_list,
 				"argumentNames": None,
 				"body": None,
 			},
