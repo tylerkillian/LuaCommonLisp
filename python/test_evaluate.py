@@ -108,7 +108,15 @@ def test_list():
 	assert(expressionToString(returnValue) == "(1 2 3 4 5)")
 	assert(stdout == "")
 
-def _test_defmacro():
+def test_append():
+	code = """
+		(append (list 1 2 3) (list 4 5))
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "(1 2 3 4 5)")
+	assert(stdout == "")
+
+def test_defmacro():
 	code = """
 		(:defmacro when (condition body)
 			`(if ,condition
