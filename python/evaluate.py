@@ -25,7 +25,6 @@ def callUserDefinedMacro(environment, metadata, arguments):
 	for argumentIndex in range(0, len(arguments)):
 		argumentName = metadata['argumentNames'][argumentIndex]
 		environment[argumentName] = arguments[argumentIndex]
-		print("assingging " + argumentName + " value " + expressionToString(arguments[argumentIndex]))
 	returnValue = None
 	for command in metadata['body']:
 		returnValue = evaluate(environment, command)
