@@ -20,7 +20,7 @@ def callUserDefinedFunction(environment, metadata, arguments):
 		returnValue = evaluate(environment, command)
 	return returnValue
 
-def callUserDefinedMacro(environment, metadata, arguments):
+def callUserDefinedMacro(environment, metadata, arguments, rest):
 	assert(len(arguments) == len(metadata['argumentNames']))
 	for argumentIndex in range(0, len(arguments)):
 		argumentName = metadata['argumentNames'][argumentIndex]
@@ -34,13 +34,13 @@ def isFunction(environment, expression):
 	if not isCons(expression):
 		return False
 
-def defun(environment, metadata, arguments):
+def defun(environment, metadata, arguments, rest):
 	result = list_new(Symbol(":defun"))
 	for argument in arguments:
 		result = list_append(result, argument)
 	return result
 
-def special_defun(environment, metadata, argumentsToDefun):
+def special_defun(environment, metadata, argumentsToDefun, rest):
 	functionName = getSymbolValue(argumentsToDefun[0])
 	argumentNames = []
 	for argumentIndex in range(0, list_getLength(argumentsToDefun[1])):
@@ -55,7 +55,7 @@ def special_defun(environment, metadata, argumentsToDefun):
 	}
 	return
 
-def special_defmacro(environment, metadata, argumentsToDefmacro):
+def special_defmacro(environment, metadata, argumentsToDefmacro, rest):
 	macroName = getSymbolValue(argumentsToDefmacro[0])
 	argumentNames = []
 	for argumentIndex in range(0, list_getLength(argumentsToDefmacro[1])):
@@ -70,17 +70,17 @@ def special_defmacro(environment, metadata, argumentsToDefmacro):
 	}
 	return
 
-def setf(environment, metadata, arguments):
+def setf(environment, metadata, arguments, rest):
 	result = list_new(Symbol(":setf"))
 	for argument in arguments:
 		result = list_append(result, argument)
 	return result
 
-def special_setf(environment, metadata, arguments):
+def special_setf(environment, metadata, arguments, rest):
 	environment[getSymbolValue(arguments[0])] = evaluate(environment, arguments[1])
 	return
 
-def special_quote(environment, metadata, arguments):
+def special_quote(environment, metadata, arguments, rest):
 	return arguments[0]
 
 def fn_list(environment, metadata, arguments):
@@ -107,7 +107,7 @@ def format(environment, metadata, arguments):
 	environment["*standard-output*"].write(message)
 	return NIL
 
-def let(environment, metadata, arguments):
+def let(environment, metadata, arguments, rest):
 	variableToSet = getSymbolValue(arguments[0].getCar().getCar())
 	value = arguments[0].getCar().getCdr().getCar()
 	localEnvironment = copyEnvironment(environment)
@@ -124,7 +124,7 @@ def isTrue(value):
 	else:
 		return False
 
-def cl_if(environment, metadata, arguments):
+def cl_if(environment, metadata, arguments, rest):
 	condition = arguments[0]
 	callIfTrue = arguments[1]
 	callIfFalse = arguments[2]
@@ -135,7 +135,7 @@ def cl_if(environment, metadata, arguments):
 	else:
 		return evaluate(environment, callIfFalse)
 
-def progn(environment, metadata, arguments):
+def progn(environment, metadata, arguments, rest):
 	for nextExpression in arguments:
 		lastReturnValue = evaluate(environment, nextExpression)
 	return lastReturnValue
@@ -291,7 +291,7 @@ def evaluate(environment, expression):
 		rest = []
 		gotRest = False
 		for expressionIndex in range(1, list_getLength(expression)):
-			nextArgument = list_get(expression, expressionIndex))
+			nextArgument = list_get(expression, expressionIndex)
 			if gotRest:
 					rest.append(nextArgument)
 			else:
@@ -306,10 +306,18 @@ def evaluate(environment, expression):
 		operatorName = getSymbolValue(list_get(expression, 0))
 		operator = environment["special"][operatorName]["name"]
 		arguments = []
+		gotRest = False
 		for expressionIndex in range(1, list_getLength(expression)):
-			arguments.append(list_get(expression, expressionIndex))
+			nextArgument = list_get(expression, expressionIndex)
+			if gotRest:
+					rest.append(nextArgument)
+			else:
+				if isSymbol(nextArgument, "&rest"):
+					gotRest = True
+				else:
+					arguments.append(nextArgument)
 		metadata = environment["special"][operatorName]
-		return operator(environment, metadata, arguments)
+		return operator(environment, metadata, arguments, rest)
 	else:
 		print("failed on " + expressionToString(expression))
 		assert(False)
