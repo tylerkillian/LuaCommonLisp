@@ -133,9 +133,13 @@ def test_defmacro():
 			)	
 		)
 
-		(when t (format t "one~%"))
+		(when t
+			(format t "one~%")
+			(format t "two~%")
+			(format t "three~%")
+		)
 	"""
 	returnValue, stdout = runCode(code)
 	assert(returnValue == NIL)
-	assert(stdout == "one\n")
+	assert(stdout == "one\ntwo\nthree\n")
 

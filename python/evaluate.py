@@ -31,6 +31,7 @@ def callUserDefinedMacro(environment, metadata, arguments):
 			if argumentName == "&rest":
 				gotRest = True
 				restNameIndex = argumentIndex + 1
+				rest = list_append(rest, arguments[argumentIndex])
 			else:
 				environment[argumentName] = arguments[argumentIndex]
 	if gotRest:
