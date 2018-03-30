@@ -100,3 +100,18 @@ def test_progn():
 	assert(returnValue == NIL)
 	assert(stdout == "1\n2\n3\n4\n5\n")
 
+def test_defmacro():
+	code = """
+		(defmacro when (condition body)
+			`(if ,condition
+				(progn ,body)
+				nil
+			)	
+		)
+
+		(when t (format t "one~%"))
+	"""
+	returnValue, stdout = runCode(code)
+	assert(returnValue == NIL)
+	assert(stdout == "one\n")
+
