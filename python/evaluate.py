@@ -24,7 +24,13 @@ def isFunction(environment, expression):
 	if not isCons(expression):
 		return False
 
-def defun(environment, metadata, argumentsToDefun):
+def defun(environment, metadata, arguments):
+	result = None
+	for argument in arguments:
+		result = list_append(result, argument)
+	return result
+
+def special_defun(environment, metadata, argumentsToDefun):
 	functionName = getSymbolValue(argumentsToDefun[0])
 	argumentNames = []
 	for argumentIndex in range(0, list_getLength(argumentsToDefun[1])):
@@ -116,6 +122,11 @@ def createStandardEnvironment():
 			},
 		},
 		"special": {
+			"defun": {
+				"name": special_defun,
+				"argumentNames": None,
+				"body": None,
+			},
 			"let": {
 				"name": let,
 				"argumentNames": None,
@@ -205,7 +216,7 @@ def evaluate(environment, expression):
 		for expressionIndex in range(1, list_getLength(expression)):
 			arguments.append(list_get(expression, expressionIndex))
 		metadata = environment["macros"][macroName]
-		return macro(environment, metadata, arguments)
+		return evaluate(environment, macro(environment, metadata, arguments))
 	else:
 		assert(isSpecial(environment, expression))
 		operatorName = getSymbolValue(list_get(expression, 0))
