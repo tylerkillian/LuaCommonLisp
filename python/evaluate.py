@@ -21,10 +21,14 @@ def callUserDefinedFunction(environment, metadata, arguments):
 	return returnValue
 
 def callUserDefinedMacro(environment, metadata, arguments):
-	assert(len(arguments) == len(metadata['argumentNames']))
+	gotRest = False
+	rest = None
 	for argumentIndex in range(0, len(arguments)):
 		argumentName = metadata['argumentNames'][argumentIndex]
-		environment[argumentName] = arguments[argumentIndex]
+		if argumentName == "&rest":
+			gotRest = True
+		else:
+			environment[argumentName] = arguments[argumentIndex]
 	returnValue = None
 	for command in metadata['body']:
 		returnValue = evaluate(environment, command)

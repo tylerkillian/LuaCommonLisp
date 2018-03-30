@@ -124,7 +124,7 @@ def test_quote():
 	assert(expressionToString(returnValue) == "a")
 	assert(stdout == "")
 
-def _test_defmacro():
+def test_defmacro():
 	code = """
 		(:defmacro when (condition &rest body)
 			`(if ,condition
