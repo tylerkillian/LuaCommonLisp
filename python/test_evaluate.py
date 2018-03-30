@@ -102,7 +102,7 @@ def test_progn():
 
 def test_defmacro():
 	code = """
-		(defmacro when (condition body)
+		(:defmacro when (condition body)
 			`(if ,condition
 				(progn ,body)
 				nil

@@ -20,6 +20,17 @@ def callUserDefinedFunction(environment, metadata, arguments):
 		returnValue = evaluate(environment, command)
 	return returnValue
 
+def callUserDefinedMacro(environment, metadata, arguments):
+	assert(len(arguments) == len(metadata['argumentNames']))
+	for argumentIndex in range(0, len(arguments)):
+		argumentName = metadata['argumentNames'][argumentIndex]
+		environment[argumentName] = arguments[argumentIndex]
+		print("assingging " + argumentName + " value " + expressionToString(arguments[argumentIndex]))
+	returnValue = None
+	for command in metadata['body']:
+		returnValue = evaluate(environment, command)
+	return returnValue
+
 def isFunction(environment, expression):
 	if not isCons(expression):
 		return False
@@ -40,6 +51,21 @@ def special_defun(environment, metadata, argumentsToDefun):
 		body.append(argumentsToDefun[argumentIndex])
 	environment["functions"][functionName] = {
 		"name": callUserDefinedFunction, 
+		"argumentNames": argumentNames,
+		"body": body,
+	}
+	return
+
+def special_defmacro(environment, metadata, argumentsToDefmacro):
+	macroName = getSymbolValue(argumentsToDefmacro[0])
+	argumentNames = []
+	for argumentIndex in range(0, list_getLength(argumentsToDefmacro[1])):
+		argumentNames.append(getSymbolValue(list_get(argumentsToDefmacro[1], argumentIndex)))
+	body = []
+	for argumentIndex in range(2, len(argumentsToDefmacro)):
+		body.append(argumentsToDefmacro[argumentIndex])
+	environment["macros"][macroName] = {
+		"name": callUserDefinedMacro, 
 		"argumentNames": argumentNames,
 		"body": body,
 	}
@@ -130,6 +156,11 @@ def createStandardEnvironment():
 		"special": {
 			":defun": {
 				"name": special_defun,
+				"argumentNames": None,
+				"body": None,
+			},
+			":defmacro": {
+				"name": special_defmacro,
 				"argumentNames": None,
 				"body": None,
 			},
@@ -228,7 +259,7 @@ def evaluate(environment, expression):
 			arguments.append(list_get(expression, expressionIndex))
 		metadata = environment["macros"][macroName]
 		return evaluate(environment, macro(environment, metadata, arguments))
-	else:
+	elif isSpecial(environment, expression):
 		assert(isSpecial(environment, expression))
 		operatorName = getSymbolValue(list_get(expression, 0))
 		operator = environment["special"][operatorName]["name"]
@@ -237,4 +268,7 @@ def evaluate(environment, expression):
 			arguments.append(list_get(expression, expressionIndex))
 		metadata = environment["special"][operatorName]
 		return operator(environment, metadata, arguments)
+	else:
+		print("failed on " + expressionToString(expression))
+		assert(False)
 
