@@ -306,6 +306,7 @@ def evaluate(environment, expression):
 		operatorName = getSymbolValue(list_get(expression, 0))
 		operator = environment["special"][operatorName]["name"]
 		arguments = []
+		rest = []
 		gotRest = False
 		for expressionIndex in range(1, list_getLength(expression)):
 			nextArgument = list_get(expression, expressionIndex)
