@@ -67,6 +67,12 @@ def special_defun(environment, metadata, argumentsToDefun):
 	}
 	return
 
+def defmacro(environment, metadata, arguments):
+	result = list_new(Symbol(":defmacro"))
+	for argument in arguments:
+		result = list_append(result, argument)
+	return result
+
 def special_defmacro(environment, metadata, argumentsToDefmacro):
 	macroName = getSymbolValue(argumentsToDefmacro[0])
 	argumentNames = []
@@ -182,6 +188,11 @@ def createStandardEnvironment():
 		"macros": {
 			"defun": {
 				"name": defun,
+				"argumentNames": None,
+				"body": None,
+			},
+			"defmacro": {
+				"name": defmacro,
 				"argumentNames": None,
 				"body": None,
 			},

@@ -126,7 +126,7 @@ def test_quote():
 
 def test_defmacro():
 	code = """
-		(:defmacro when (condition &rest body)
+		(defmacro when (condition &rest body)
 			`(if ,condition
 				(progn ,@body)
 				nil
