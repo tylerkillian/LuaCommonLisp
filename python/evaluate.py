@@ -25,7 +25,7 @@ def isFunction(environment, expression):
 		return False
 
 def defun(environment, metadata, arguments):
-	result = None
+	result = list_new(Symbol(":defun"))
 	for argument in arguments:
 		result = list_append(result, argument)
 	return result
