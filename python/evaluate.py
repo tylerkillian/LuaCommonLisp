@@ -86,7 +86,12 @@ def function_format(environment, metadata, arguments):
 
 def function_greaterThan(environment, metadata, arguments):
 	assert(len(arguments) == 2)
-	return Cons(arguments[0], arguments[1])
+	left = int(getSymbolValue(arguments[0]))
+	right = int(getSymbolValue(arguments[1]))
+	if left > right:
+		return Symbol("t")
+	else:
+		return NIL
 
 def function_list(environment, metadata, arguments):
 	result = None
