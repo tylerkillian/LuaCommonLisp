@@ -10,7 +10,7 @@ def isTrue(value):
 	else:
 		return False
 
-def fn_addition(environment, metadata, arguments):
+def function_addition(environment, metadata, arguments):
 	assert(len(arguments) == 2)
 	assert(isSymbol(arguments[0]))
 	assert(isSymbol(arguments[1]))
@@ -19,7 +19,7 @@ def fn_addition(environment, metadata, arguments):
 	intResult = int(left) + int(right)
 	return Symbol(str(intResult))
 
-def fn_append(environment, metadata, arguments):
+def function_append(environment, metadata, arguments):
 	result = None
 	for nextList in arguments:
 		for listIndex in range(0, list_getLength(nextList)):
@@ -27,27 +27,27 @@ def fn_append(environment, metadata, arguments):
 			result = list_append(result, nextElement)
 	return result
 
-def fn_car(environment, metadata, arguments):
+def function_car(environment, metadata, arguments):
 	if arguments[0] == NIL:
 		return NIL
 
 	assert(isCons(arguments[0]))
 	return arguments[0].getCar()
 
-def fn_cdr(environment, metadata, arguments):
+def function_cdr(environment, metadata, arguments):
 	if arguments[0] == NIL:
 		return NIL
 
 	assert(isCons(arguments[0]))
 	return arguments[0].getCdr()
 
-def fn_consp(environment, metadata, arguments):
+def function_consp(environment, metadata, arguments):
 	if isCons(arguments[0]):
 		return Symbol("t")
 	else:
 		return NIL
 
-def fn_eql(environment, metadata, arguments):
+def function_eql(environment, metadata, arguments):
 	if arguments[0] == arguments[1]:
 		return Symbol("t")
 	elif isSymbol(arguments[0]) and isSymbol(arguments[1]):
@@ -58,7 +58,7 @@ def fn_eql(environment, metadata, arguments):
 	else:
 		return NIL
 
-def fn_format(environment, metadata, arguments):
+def function_format(environment, metadata, arguments):
 	message = getStringValue(arguments[1])
 	message = message.replace("~%", "\n")
 	if len(arguments) > 2:
@@ -68,13 +68,13 @@ def fn_format(environment, metadata, arguments):
 	environment["*standard-output*"].write(message)
 	return NIL
 
-def fn_list(environment, metadata, arguments):
+def function_list(environment, metadata, arguments):
 	result = None
 	for argument in arguments:
 		result = list_append(result, argument)
 	return result
 
-def fn_null(environment, metadata, arguments):
+def function_null(environment, metadata, arguments):
 	if arguments[0] == NIL:
 		return Symbol("t")
 	else:
@@ -203,47 +203,47 @@ def createStandardEnvironment():
 		"nil": NIL,
 		"functions": {
 			"+": {
-				"name": fn_addition,
+				"name": function_addition,
 				"argumentNames": None,
 				"body": None,
 			},
 			"append": {
-				"name": fn_append,
+				"name": function_append,
 				"argumentNames": None,
 				"body": None,
 			},
 			"car": {
-				"name": fn_car,
+				"name": function_car,
 				"argumentNames": None,
 				"body": None,
 			},
 			"cdr": {
-				"name": fn_cdr,
+				"name": function_cdr,
 				"argumentNames": None,
 				"body": None,
 			},
 			"consp": {
-				"name": fn_consp,
+				"name": function_consp,
 				"argumentNames": None,
 				"body": None,
 			},
 			"eql": {
-				"name": fn_eql,
+				"name": function_eql,
 				"argumentNames": None,
 				"body": None,
 			},
 			"format": {
-				"name": fn_format,
+				"name": function_format,
 				"argumentNames": None,
 				"body": None,
 			},
 			"list": {
-				"name": fn_list,
+				"name": function_list,
 				"argumentNames": None,
 				"body": None,
 			},
 			"null": {
-				"name": fn_null,
+				"name": function_null,
 				"argumentNames": None,
 				"body": None,
 			},
