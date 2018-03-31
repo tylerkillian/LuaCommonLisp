@@ -115,6 +115,10 @@ def fn_append(environment, metadata, arguments):
 			result = list_append(result, nextElement)
 	return result
 
+def fn_car(environment, metadata, arguments):
+	assert(isCons(arguments[0]))
+	return arguments[0].getCar()
+
 def fn_consp(environment, metadata, arguments):
 	if isCons(arguments[0]):
 		return Symbol("t")
@@ -175,6 +179,16 @@ def createStandardEnvironment():
 				"argumentNames": None,
 				"body": None,
 			},
+			"car": {
+				"name": fn_car,
+				"argumentNames": None,
+				"body": None,
+			},
+			#"cdr": {
+			#	"name": fn_cdr,
+			#	"argumentNames": None,
+			#	"body": None,
+			#},
 			"consp": {
 				"name": fn_consp,
 				"argumentNames": None,

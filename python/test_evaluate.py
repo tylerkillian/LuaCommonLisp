@@ -159,3 +159,11 @@ def test_consp_false():
 	assert(expressionToString(returnValue) == "nil")
 	assert(stdout == "")
 
+def test_car_simpleList():
+	code = """
+		(car '(1 2 3))
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "1")
+	assert(stdout == "")
+
