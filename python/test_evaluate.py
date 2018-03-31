@@ -331,7 +331,7 @@ def test_equal_false():
 		(equal '(1 '(2 3) 4) '(1 '(2 5) 4))
 	"""
 	returnValue, stdout = runCode(code)
-	assert(expressionToString(returnValue) == "t")
+	assert(expressionToString(returnValue) == "nil")
 	assert(stdout == "")
 
 def test_rest_simpleList():

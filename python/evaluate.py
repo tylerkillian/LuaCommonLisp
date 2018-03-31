@@ -74,6 +74,33 @@ def function_eql(environment, metadata, arguments):
 	else:
 		return NIL
 
+def consAreEqual(a, b):
+	if a == NIL:
+		if b == NIL:
+			return True
+		else:
+			return False
+	elif isCons(a):
+		if not isCons(b):
+			return False
+		else:
+			return consAreEqual(a.getCar(), b.getCar()) and consAreEqual(a.getCdr(), b.getCdr())
+	else:
+		assert(isSymbol(a))
+		if not isSymbol(b):
+			return False
+		elif getSymbolValue(a) != getSymbolValue(b):
+			return False
+		else:
+			return True
+
+def function_equal(environment, metadata, arguments):
+	assert(len(arguments) == 2)
+	if consAreEqual(arguments[0], arguments[1]):
+		return Symbol("t")
+	else:
+		return NIL
+
 def function_format(environment, metadata, arguments):
 	message = getStringValue(arguments[1])
 	message = message.replace("~%", "\n")
@@ -302,6 +329,11 @@ def createStandardEnvironment():
 			},
 			"eql": {
 				"name": function_eql,
+				"argumentNames": None,
+				"body": None,
+			},
+			"equal": {
+				"name": function_equal,
 				"argumentNames": None,
 				"body": None,
 			},
