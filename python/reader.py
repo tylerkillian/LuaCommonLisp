@@ -62,6 +62,8 @@ def expressionToString(node, addParenthesis = True):
 		return result
 	elif isSymbol(node):
 		return getSymbolValue(node)
+	elif isFunctionPointer(node):
+		return getFunctionName(node)
 	else:
 		assert(isString(node))
 		return '"' + getStringValue(node) + '"'

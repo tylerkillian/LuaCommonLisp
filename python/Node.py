@@ -89,4 +89,8 @@ def isFunctionPointer(node):
 def FunctionPointer(name, pointer):
 	return Cons("function_" + name, None, None, pointer)
 
+def getFunctionName(node):
+	assert(isFunctionPointer(node))
+	return node.getValue()
+
 
