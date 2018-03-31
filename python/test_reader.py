@@ -92,5 +92,5 @@ def test_backquoteExpansion_expandBackquoteMacro_nestedExpression():
 
 def test_readFunction():
 	tree = parseString("#'a ")
-	assert(expressionToString(tree) == "(function f)")
+	assert(expressionToString(tree) == "(function a)")
 

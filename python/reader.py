@@ -87,6 +87,8 @@ def newReader(initialCharacter):
 		return BackquoteReader(initialCharacter)
 	elif initialCharacter == ",":
 		return CommaReader(initialCharacter)
+	elif initialCharacter == "#":
+		return ReadMacroDispatch(initialCharacter)
 	else:
 		return SymbolReader(initialCharacter)
 
@@ -281,6 +283,31 @@ class CommaReader:
 				self.done = True
 				self.reader = None
 				result = Cons(Symbol(self.commaType), Cons(operand, NIL))
+				return result
+
+class ReadMacroDispatch:
+	def __init__(self, initialCharacter):
+		assert(initialCharacter == "#")
+		self.reader = None
+		self.done = False
+		self.readingSecondCharacter = True
+	def readNextCharacter(self, nextCharacter):
+		assert(not self.done)
+
+		if self.readingSecondCharacter:
+			self.readingSecondCharacter = False
+			assert(nextCharacter == "'")
+			return
+
+		if not self.reader:
+			self.reader = newReader(nextCharacter)
+		else:
+			functionName = self.reader.readNextCharacter(nextCharacter)
+			if functionName:
+				assert(isSymbol(functionName))
+				self.done = True
+				self.reader = None
+				result = Cons(Symbol("function"), Cons(functionName, NIL))
 				return result
 
 def getBackquoteDepth(expression, backquoteLevel = 0):
