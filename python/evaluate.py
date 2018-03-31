@@ -177,13 +177,10 @@ def special_let(environment, metadata, arguments):
 	for variableIdx in range(0, list_getLength(arguments[0])):
 		variableDefinition = list_get(arguments[0], variableIdx)
 		variableToSet = getSymbolValue(list_get(variableDefinition, 0))
-		print(variableToSet)
 		variableValue = list_get(variableDefinition, 1)
-		print(expressionToString(variableValue))
 		localEnvironment[variableToSet] = variableValue
 	for expressionIdx in range(1, len(arguments)):
 		nextExpression = arguments[expressionIdx]
-		print(expressionToString(nextExpression))
 		lastReturnValue = evaluate(localEnvironment, nextExpression)
 	return lastReturnValue
 
