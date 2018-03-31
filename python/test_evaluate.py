@@ -240,6 +240,22 @@ def test_cdr_emptyList():
 	assert(expressionToString(returnValue) == "nil")
 	assert(stdout == "")
 
+def test_greaterThan_true():
+	code = """
+		(> 2 1)
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "t")
+	assert(stdout == "")
+
+def test_greaterThan_false():
+	code = """
+		(> 1 2)
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "nil")
+	assert(stdout == "")
+
 def test_null_true():
 	code = """
 		(null nil)

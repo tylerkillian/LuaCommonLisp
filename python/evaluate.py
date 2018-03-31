@@ -265,6 +265,11 @@ def createStandardEnvironment():
 				"argumentNames": None,
 				"body": None,
 			},
+			">": {
+				"name": function_greaterThan,
+				"argumentNames": None,
+				"body": None,
+			},
 			"append": {
 				"name": function_append,
 				"argumentNames": None,
