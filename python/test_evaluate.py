@@ -151,3 +151,11 @@ def test_consp_true():
 	assert(expressionToString(returnValue) == "t")
 	assert(stdout == "")
 
+def test_consp_false():
+	code = """
+		(consp 'a)
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "nil")
+	assert(stdout == "")
+
