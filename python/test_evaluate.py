@@ -8,24 +8,6 @@ def createExpressionFromString(string):
 	inputStream = Stream(string)
 	return read(inputStream)
 
-def test_evaluateSymbol():
-	environment = createStandardEnvironment()
-	environment["a"] = Symbol("1")
-	assert(isSymbol(evaluate(environment, Symbol("a"))))
-
-def test_addition():
-	environment = createStandardEnvironment()
-	expression = createExpressionFromString("(+ 2 3) ")
-	assert(isSymbol(evaluate(environment, expression), "5"))
-
-def test_defunSum():
-	environment = createStandardEnvironment()
-	defineSum = createExpressionFromString("(defun sum (x y) (+ x y)) ")
-	evaluate(environment, defineSum)
-	callSum = createExpressionFromString("(setf result (sum 2 3)) ")
-	evaluate(environment, callSum)
-	assert(isSymbol(environment["result"], "5"))
-
 def runCode(code):
 	inputStream = Stream(code)
 	environment = createStandardEnvironment()
@@ -49,10 +31,28 @@ def assertStdout(inputString, result):
 		nextExpression = read(inputStream)
 	assert(environment["*standard-output*"].read() == result)
 
-def test_formatHelloWorld():
+def test_evaluateSymbol():
+	environment = createStandardEnvironment()
+	environment["a"] = Symbol("1")
+	assert(isSymbol(evaluate(environment, Symbol("a"))))
+
+def test_addition():
+	environment = createStandardEnvironment()
+	expression = createExpressionFromString("(+ 2 3) ")
+	assert(isSymbol(evaluate(environment, expression), "5"))
+
+def test_defun_sum():
+	environment = createStandardEnvironment()
+	defineSum = createExpressionFromString("(defun sum (x y) (+ x y)) ")
+	evaluate(environment, defineSum)
+	callSum = createExpressionFromString("(setf result (sum 2 3)) ")
+	evaluate(environment, callSum)
+	assert(isSymbol(environment["result"], "5"))
+
+def test_format_HelloWorld():
 	assertStdout('(format t "hello, world~%") ', "hello, world\n")
 
-def test_formatInteger():
+def test_format_integer():
 	assertStdout('(format t "2 + 3 = ~a" 5) ', "2 + 3 = 5")
 
 def test_let():
@@ -68,7 +68,7 @@ def test_let():
 	"""
 	assertStdout(code, "b = 2\nb = 3\nb = 2\n")
 
-def test_ifTrue():
+def test_if_true():
 	code = """
 		(if t
 			(format t "true")
@@ -77,7 +77,7 @@ def test_ifTrue():
 	"""	
 	assertStdout(code, "true")
 
-def test_ifFalse():
+def test_if_false():
 	code = """
 		(if nil
 			(format t "true")
