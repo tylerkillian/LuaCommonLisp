@@ -197,7 +197,7 @@ def special_setf(environment, metadata, arguments):
 	return
 
 def createStandardEnvironment():
-	return {
+	environment = {
 		"*standard-output*": sys.stdout,
 		"t": Symbol("t"),
 		"nil": NIL,
@@ -303,12 +303,26 @@ def createStandardEnvironment():
 			},
 		},
 	}
+	load(environment, "basic.lisp")
+	return environment
 
 def copyEnvironment(environment):
 	copy =  {}
 	for key in environment:
 		copy[key] = environment[key]
 	return copy
+
+def load(environment, inputFile):
+        input = open(inputFile, "r")
+        nextCharacter = input.read(1)
+        reader = RootReader()
+        while nextCharacter:
+                result = reader.readNextCharacter(nextCharacter)
+                if result:
+                        reader = RootReader()
+                        evaluate(environment, result)
+                else:
+                        nextCharacter = input.read(1)
 
 def isFunction(environment, expression):
 	if not isCons(expression):
