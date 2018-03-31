@@ -2,16 +2,25 @@ import sys
 from reader import *
 from evaluate import evaluate, createStandardEnvironment
 
-def lisp(inputFile):
+def lisp(mode, inputFile):
 	input = open(inputFile, "r")
 	nextCharacter = input.read(1)
 	environment = createStandardEnvironment()
 	reader = RootReader()
 	while nextCharacter:
-		result = reader.readNextCharacter(nextCharacter)
-		if result:
+		expression = reader.readNextCharacter(nextCharacter)
+		if expression:
 			reader = RootReader()
-			evaluate(environment, result)
+			result = evaluate(environment, expression)
+			if mode == "normal":
+				print(expressionToString(result))
 		else:
 			nextCharacter = input.read(1)
-lisp(sys.argv[1])
+
+if sys.argv[1] == "-q":
+	mode = "quiet"
+	filename = sys.argv[2]
+else:
+	mode = "normal"
+	filename = sys.argv[1]
+lisp(mode, filename)
