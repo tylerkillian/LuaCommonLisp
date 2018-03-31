@@ -57,10 +57,10 @@ def test_format_integer():
 
 def test_function():
 	code = """
-		(function let)
+		(function rest)
 	"""
 	returnValue, stdout = runCode(code)
-	assert(expressionToString(returnValue) == "let")
+	assert(expressionToString(returnValue) == "rest")
 	assert(stdout == "")
 
 def test_let_singleValue():

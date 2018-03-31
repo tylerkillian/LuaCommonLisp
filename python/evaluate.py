@@ -243,6 +243,11 @@ def createStandardEnvironment():
 				"argumentNames": None,
 				"body": None,
 			},
+			"function": {
+				"name": function_function,
+				"argumentNames": None,
+				"body": None,
+			},
 			"list": {
 				"name": function_list,
 				"argumentNames": None,
