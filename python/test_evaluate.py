@@ -31,6 +31,14 @@ def assertStdout(inputString, result):
 		nextExpression = read(inputStream)
 	assert(environment["*standard-output*"].read() == result)
 
+def test_apply():
+	code = """
+		(apply #'+ '1 '2 '(3 4 5))
+	"""	
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "15")
+	assert(stdout == "")
+
 def test_evaluate_symbol():
 	environment = createStandardEnvironment()
 	environment["a"] = Symbol("1")
