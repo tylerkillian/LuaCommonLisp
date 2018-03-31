@@ -116,6 +116,9 @@ def fn_append(environment, metadata, arguments):
 	return result
 
 def fn_car(environment, metadata, arguments):
+	if arguments[0] == NIL:
+		return NIL
+
 	assert(isCons(arguments[0]))
 	return arguments[0].getCar()
 

@@ -167,3 +167,11 @@ def test_car_simpleList():
 	assert(expressionToString(returnValue) == "1")
 	assert(stdout == "")
 
+def test_car_emptyList():
+	code = """
+		(car '())
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "nil")
+	assert(stdout == "")
+
