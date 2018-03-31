@@ -293,6 +293,11 @@ def createStandardEnvironment():
 			},
 		},
 		"macros": {
+			"backquote": {
+				"name": macro_backquote,
+				"argumentNames": None,
+				"body": None,
+			},
 			"defun": {
 				"name": macro_defun,
 				"argumentNames": None,
