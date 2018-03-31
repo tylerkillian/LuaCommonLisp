@@ -175,3 +175,26 @@ def test_car_emptyList():
 	assert(expressionToString(returnValue) == "nil")
 	assert(stdout == "")
 
+def test_cdr_simpleList():
+	code = """
+		(cdr '(1 2 3))
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "(2 3)")
+	assert(stdout == "")
+
+def test_cdr_singleElement():
+	code = """
+		(cdr '(1))
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "nil")
+	assert(stdout == "")
+
+def test_cdr_emptyList():
+	code = """
+		(cdr '())
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "nil")
+	assert(stdout == "")

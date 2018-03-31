@@ -122,6 +122,13 @@ def fn_car(environment, metadata, arguments):
 	assert(isCons(arguments[0]))
 	return arguments[0].getCar()
 
+def fn_cdr(environment, metadata, arguments):
+	if arguments[0] == NIL:
+		return NIL
+
+	assert(isCons(arguments[0]))
+	return arguments[0].getCdr()
+
 def fn_consp(environment, metadata, arguments):
 	if isCons(arguments[0]):
 		return Symbol("t")
@@ -187,11 +194,11 @@ def createStandardEnvironment():
 				"argumentNames": None,
 				"body": None,
 			},
-			#"cdr": {
-			#	"name": fn_cdr,
-			#	"argumentNames": None,
-			#	"body": None,
-			#},
+			"cdr": {
+				"name": fn_cdr,
+				"argumentNames": None,
+				"body": None,
+			},
 			"consp": {
 				"name": fn_consp,
 				"argumentNames": None,
