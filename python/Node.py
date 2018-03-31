@@ -76,13 +76,10 @@ def isNumber(node):
 	else:
 		return False
 
-def isFunctionPointer(node, value):
+def isFunctionPointer(node):
 	if node == NIL:
 		return False
 	if node.getValue()[0:8] != "function":
 		return False
-	if value:
-		if node.getValue()[9:] != value:
-			return False
 	return True
 
