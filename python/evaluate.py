@@ -313,17 +313,16 @@ def copyEnvironment(environment):
 	return copy
 
 def load(environment, inputFile):
-	print("LOADING")
 	input = open(inputFile, "r")
-        nextCharacter = input.read(1)
-        reader = RootReader()
-        while nextCharacter:
-                result = reader.readNextCharacter(nextCharacter)
-                if result:
-                        reader = RootReader()
-                        evaluate(environment, result)
-                else:
-                        nextCharacter = input.read(1)
+	nextCharacter = input.read(1)
+	reader = RootReader()
+	while nextCharacter:
+		result = reader.readNextCharacter(nextCharacter)
+		if result:
+			reader = RootReader()
+			evaluate(environment, result)
+		else:
+			nextCharacter = input.read(1)
 
 def isFunction(environment, expression):
 	if not isCons(expression):
