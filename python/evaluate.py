@@ -1,10 +1,6 @@
 from reader import *
 import sys
 
-def isFunction(environment, expression):
-	if not isCons(expression):
-		return False
-
 def isTrue(value):
 	if value == NIL:
 		return False
