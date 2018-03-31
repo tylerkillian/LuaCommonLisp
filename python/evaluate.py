@@ -27,6 +27,14 @@ def function_append(environment, metadata, arguments):
 			result = list_append(result, nextElement)
 	return result
 
+def function_apply(environment, metadata, arguments):
+	assert(isFunctionPointer(arguments[0]))
+	assert(isCons(arguments[len(arguments)-1]))
+	argumentsToAppliedFunction = []
+	for argumentIndex in range(1, len(arguments)-1):
+		argumentsToAppliedFunction.append(arguments[argumentIndex]))
+	for argumentIndex in range(0, list_getLength(arguments[len(arguments)-1])):
+		argumentsToAppliedFunction.append(list_get(arguments[len(arguments)-1], argumentIndex))
 def function_car(environment, metadata, arguments):
 	if arguments[0] == NIL:
 		return NIL
@@ -215,6 +223,11 @@ def createStandardEnvironment():
 			},
 			"append": {
 				"name": function_append,
+				"argumentNames": None,
+				"body": None,
+			},
+			"apply": {
+				"name": function_apply,
 				"argumentNames": None,
 				"body": None,
 			},
