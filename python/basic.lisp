@@ -1,2 +1,2 @@
-(defun rest (x) (cdr rest))
+(defun rest (x) (cdr x))
 
