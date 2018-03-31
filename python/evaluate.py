@@ -500,6 +500,8 @@ def isSpecial(environment, expression):
 	return False
 
 def evaluate(environment, expression):
+	if epxression == NIL:
+		return NIL
 	if isNumber(expression):
 		return expression
 	elif isSymbol(expression):
