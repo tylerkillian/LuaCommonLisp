@@ -172,12 +172,20 @@ def special_if(environment, metadata, arguments):
 		return evaluate(environment, callIfFalse)
 
 def special_let(environment, metadata, arguments):
-	variableToSet = getSymbolValue(arguments[0].getCar().getCar())
-	value = arguments[0].getCar().getCdr().getCar()
+	assert(len(arguments) >= 2)
 	localEnvironment = copyEnvironment(environment)
-	localEnvironment[variableToSet] = value
-	body = arguments[1]
-	return evaluate(localEnvironment, body)
+	for variableIdx in range(0, list_getLength(arguments[0])):
+		variableDefinition = list_get(arguments[0], variableIdx)
+		variableToSet = getSymbolValue(list_get(variableDefinition, 0))
+		print(variableToSet)
+		variableValue = list_get(variableDefinition, 1)
+		print(expressionToString(variableValue))
+		localEnvironment[variableToSet] = variableValue
+	for expressionIdx in range(1, len(arguments)):
+		nextExpression = arguments[expressionIdx]
+		print(expressionToString(nextExpression))
+		lastReturnValue = evaluate(localEnvironment, nextExpression)
+	return lastReturnValue
 
 def special_progn(environment, metadata, arguments):
 	for nextExpression in arguments:
