@@ -11,7 +11,6 @@ def createExpressionFromString(string):
 def runCode(code):
 	inputStream = Stream(code)
 	environment = createStandardEnvironment()
-	print(environment["functions"]["rest"])
 	outputStream = Stream()
 	environment["*standard-output*"] = outputStream
 	nextExpression = read(inputStream)
