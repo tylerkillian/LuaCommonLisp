@@ -313,7 +313,8 @@ def copyEnvironment(environment):
 	return copy
 
 def load(environment, inputFile):
-        input = open(inputFile, "r")
+	print("LOADING")
+	input = open(inputFile, "r")
         nextCharacter = input.read(1)
         reader = RootReader()
         while nextCharacter:
