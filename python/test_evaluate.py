@@ -318,6 +318,22 @@ def test_eql_differentSymbols():
 	assert(expressionToString(returnValue) == "nil")
 	assert(stdout == "")
 
+def test_equal_true():
+	code = """
+		(equal '(1 '(2 3) 4) '(1 '(2 3) 4))
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "t")
+	assert(stdout == "")
+
+def test_equal_false():
+	code = """
+		(equal '(1 '(2 3) 4) '(1 '(2 5) 4))
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "t")
+	assert(stdout == "")
+
 def test_rest_simpleList():
 	code = """
 		(rest '(1 2 3))
