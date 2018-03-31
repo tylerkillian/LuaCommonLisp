@@ -63,6 +63,14 @@ def test_function():
 	assert(expressionToString(returnValue) == "rest")
 	assert(stdout == "")
 
+def test_function_readMacro():
+	code = """
+		#'rest
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "rest")
+	assert(stdout == "")
+
 def test_let_singleValue():
 	code = """
 		(setf b 2)
