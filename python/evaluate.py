@@ -38,7 +38,7 @@ def function_apply(environment, metadata, arguments):
 	functionPointer = argument[0]
 	metadata = functionPointer.getExtra()
 	function = metadata["name"]
-	return function(environment, metadata, argumentsEvaluated)
+	return function(environment, metadata, argumentsToAppliedFunction)
 
 def function_car(environment, metadata, arguments):
 	if arguments[0] == NIL:
