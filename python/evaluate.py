@@ -53,6 +53,10 @@ def function_cdr(environment, metadata, arguments):
 	assert(isCons(arguments[0]))
 	return arguments[0].getCdr()
 
+def function_cons(environment, metadata, arguments):
+	assert(len(arguments) == 2)
+	return Cons(arguments[0], arguments[1])
+
 def function_consp(environment, metadata, arguments):
 	if isCons(arguments[0]):
 		return Symbol("t")
@@ -269,6 +273,11 @@ def createStandardEnvironment():
 			},
 			"cdr": {
 				"name": function_cdr,
+				"argumentNames": None,
+				"body": None,
+			},
+			"cons": {
+				"name": function_cons,
 				"argumentNames": None,
 				"body": None,
 			},
