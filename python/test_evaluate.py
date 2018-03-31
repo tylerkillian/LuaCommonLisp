@@ -223,3 +223,13 @@ def test_eql_sameSymbol():
 	assert(expressionToString(returnValue) == "t")
 	assert(stdout == "")
 
+def test_eql_sameObject():
+	code = """
+		(setf a '(1 2 3))
+		(setf b a)
+		(eql a b)
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "t")
+	assert(stdout == "")
+
