@@ -160,8 +160,6 @@ def callUserDefinedFunction(environment, metadata, arguments):
 
 def macro_assert(environment, metadata, arguments):
 	condition = arguments[0]
-	callIfTrue = arguments[1]
-	callIfFalse = arguments[2]
 
 	conditionEvaluated = evaluate(environment, condition)
 	if isTrue(conditionEvaluated):
