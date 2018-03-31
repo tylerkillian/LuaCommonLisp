@@ -243,11 +243,6 @@ def createStandardEnvironment():
 				"argumentNames": None,
 				"body": None,
 			},
-			"function": {
-				"name": function_function,
-				"argumentNames": None,
-				"body": None,
-			},
 			"list": {
 				"name": function_list,
 				"argumentNames": None,
@@ -289,6 +284,11 @@ def createStandardEnvironment():
 			},
 			":setf": {
 				"name": special_setf,
+				"argumentNames": None,
+				"body": None,
+			},
+			"function": {
+				"name": special_function,
 				"argumentNames": None,
 				"body": None,
 			},
