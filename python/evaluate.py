@@ -192,7 +192,7 @@ def special_defun(environment, metadata, argumentsToDefun):
 		"argumentNames": argumentNames,
 		"body": body,
 	}
-	return
+	return argumentsToDefun[0]
 
 def special_function(environment, metadata, arguments):
 	assert(isSymbol(arguments[0]))
