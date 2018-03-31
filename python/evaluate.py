@@ -118,6 +118,12 @@ def macro_defmacro(environment, metadata, arguments):
 		result = list_append(result, argument)
 	return result
 
+def macro_backquote(environment, metadata, arguments):
+	originalExpression = list_new(Symbol("backquote"))
+	for argument in arguments:
+		originalExpression = list_append(originalExpression, argument)
+	return expandBackquoteMacro(originalExpression)
+
 def macro_defun(environment, metadata, arguments):
 	result = list_new(Symbol(":defun"))
 	for argument in arguments:
