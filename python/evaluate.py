@@ -158,6 +158,17 @@ def callUserDefinedFunction(environment, metadata, arguments):
 		returnValue = evaluate(environment, command)
 	return returnValue
 
+def macro_assert(environment, metadata, arguments):
+	condition = arguments[0]
+	callIfTrue = arguments[1]
+	callIfFalse = arguments[2]
+
+	conditionEvaluated = evaluate(environment, condition)
+	if isTrue(conditionEvaluated):
+		return evaluate(environment, callIfTrue)
+	else:
+		return evaluate(environment, callIfFalse)
+
 def macro_defmacro(environment, metadata, arguments):
 	result = list_new(Symbol(":defmacro"))
 	for argument in arguments:
@@ -359,6 +370,11 @@ def createStandardEnvironment():
 			},
 		},
 		"macros": {
+			"assert": {
+				"name": macro_assert,
+				"argumentNames": None,
+				"body": None,
+			},
 			"backquote": {
 				"name": macro_backquote,
 				"argumentNames": None,
