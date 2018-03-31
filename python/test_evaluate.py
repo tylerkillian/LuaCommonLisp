@@ -270,3 +270,12 @@ def test_eql_differentSymbols():
 	assert(expressionToString(returnValue) == "nil")
 	assert(stdout == "")
 
+def test_rest_simpleList():
+	code = """
+		(defun rest (x) (cdr x))
+
+		(rest '(1 2 3))
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "(2 3)")
+	assert(stdout == "")
