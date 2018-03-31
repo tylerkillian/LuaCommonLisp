@@ -162,8 +162,9 @@ def special_defun(environment, metadata, argumentsToDefun):
 
 def special_function(environment, metadata, arguments):
 	assert(isSymbol(arguments[0]))
-	assert(environment["functions"][getSymbolValue(arguments[0])])
-	return FunctionPointer(getSymbolValue(arguments[0]), environment["functions"][getSymbolValue(functionName)])
+	functionName = getSymbolValue(arguments[0])
+	assert(environment["functions"][functionName])
+	return FunctionPointer(functionName, environment["functions"][functionName])
 
 def special_if(environment, metadata, arguments):
 	condition = arguments[0]
