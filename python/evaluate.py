@@ -115,6 +115,12 @@ def fn_append(environment, metadata, arguments):
 			result = list_append(result, nextElement)
 	return result
 
+def fn_consp(environment, metadata, arguments):
+	if isCons(arguments[0]):
+		return Symbol("t")
+	else:
+		return NIL
+
 def format(environment, metadata, arguments):
 	message = getStringValue(arguments[1])
 	message = message.replace("~%", "\n")
@@ -166,6 +172,11 @@ def createStandardEnvironment():
 		"functions": {
 			"+": {
 				"name": addition,
+				"argumentNames": None,
+				"body": None,
+			},
+			"consp": {
+				"name": fn_consp,
 				"argumentNames": None,
 				"body": None,
 			},

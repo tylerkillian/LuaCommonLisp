@@ -143,3 +143,11 @@ def test_defmacro():
 	assert(returnValue == NIL)
 	assert(stdout == "one\ntwo\nthree\n")
 
+def test_consp_true():
+	code = """
+		(consp '(1 2 3))
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "t")
+	assert(stdout == "")
+
