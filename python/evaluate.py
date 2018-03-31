@@ -68,18 +68,6 @@ def function_format(environment, metadata, arguments):
 	environment["*standard-output*"].write(message)
 	return NIL
 
-class FunctionPointer:
-	def __init__(environment, functionName):
-		assert(environment["functions"][getSymbolValue(functionName)])
-		self.name = functionName
-		self.target = environment["functions"][getSymbolValue(functionName)]
-
-def function_function(environment, metadata, arguments):
-	functionName = arguments[0]
-	assert(isSymbol(functionName))
-	assert(environment["functions"][getSymbolValue(functionName)])
-	return FunctionPointer(functionName, environment["functions"][getSymbolValue(functionName)])
-
 def function_list(environment, metadata, arguments):
 	result = None
 	for argument in arguments:
@@ -171,6 +159,12 @@ def special_defun(environment, metadata, argumentsToDefun):
 		"body": body,
 	}
 	return
+
+def special_function(environment, metadata, arguments):
+	functionName = arguments[0]
+	assert(isSymbol(functionName))
+	assert(environment["functions"][getSymbolValue(functionName)])
+	return FunctionPointer(functionName, environment["functions"][getSymbolValue(functionName)])
 
 def special_if(environment, metadata, arguments):
 	condition = arguments[0]

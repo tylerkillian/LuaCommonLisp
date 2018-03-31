@@ -60,6 +60,7 @@ def test_function():
 		(function rest)
 	"""
 	returnValue, stdout = runCode(code)
+	print(expressionToString(returnValue))
 	assert(expressionToString(returnValue) == "rest")
 	assert(stdout == "")
 
