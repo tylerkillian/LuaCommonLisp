@@ -233,3 +233,31 @@ def test_eql_sameObject():
 	assert(expressionToString(returnValue) == "t")
 	assert(stdout == "")
 
+def test_eql_differentObject():
+	code = """
+		(setf a '(1 2 3))
+		(setf b '(1 2 3))
+		(eql a b)
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "nil")
+	assert(stdout == "")
+
+def test_eql_differentTypes():
+	code = """
+		(setf a '(1 2 3))
+		(setf b 1)
+		(eql a b)
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "nil")
+	assert(stdout == "")
+
+def test_eql_differentSymbols():
+	code = """
+		(eql 'a 'b)
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "nil")
+	assert(stdout == "")
+
