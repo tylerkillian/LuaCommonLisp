@@ -92,6 +92,16 @@ def function_null(environment, metadata, arguments):
 	else:
 		return NIL
 
+def function_subtraction(environment, metadata, arguments):
+	assert(len(arguments) >= 1)
+	result = int(getSymbolValue(arguments[0]))
+	for argumentIndex in range(1, len(arguments)):
+		nextArgument = arguments[argumentIndex]
+		assert(isSymbol(nextArgument))
+		nextValue = getSymbolValue(nextArgument)
+		result -= int(nextValue)
+	return Symbol(str(result))
+
 def callUserDefinedFunction(environment, metadata, arguments):
 	assert(len(arguments) == len(metadata['argumentNames']))
 	for argumentIndex in range(0, len(arguments)):
@@ -222,6 +232,11 @@ def createStandardEnvironment():
 		"functions": {
 			"+": {
 				"name": function_addition,
+				"argumentNames": None,
+				"body": None,
+			},
+			"-": {
+				"name": function_subtraction,
 				"argumentNames": None,
 				"body": None,
 			},

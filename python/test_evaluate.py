@@ -46,8 +46,8 @@ def test_evaluate_symbol():
 
 def test_addition():
 	environment = createStandardEnvironment()
-	expression = createExpressionFromString("(+ 2 3) ")
-	assert(isSymbol(evaluate(environment, expression), "5"))
+	expression = createExpressionFromString("(+ 1 2 3 4 5) ")
+	assert(isSymbol(evaluate(environment, expression), "15"))
 
 def test_defun_sum():
 	environment = createStandardEnvironment()
@@ -318,3 +318,7 @@ def test_rest_emptyList():
 	assert(expressionToString(returnValue) == "nil")
 	assert(stdout == "")
 
+def test_subtraction():
+	environment = createStandardEnvironment()
+	expression = createExpressionFromString("(- 1 2 3 4) ")
+	assert(isSymbol(evaluate(environment, expression), "-8"))
