@@ -102,6 +102,12 @@ def function_subtraction(environment, metadata, arguments):
 		result -= int(nextValue)
 	return Symbol(str(result))
 
+def function_zerop(environment, metadata, arguments):
+	if isSymbol(arguments[0], "0"):
+		return Symbol("t")
+	else:
+		return NIL
+
 def callUserDefinedFunction(environment, metadata, arguments):
 	assert(len(arguments) == len(metadata['argumentNames']))
 	for argumentIndex in range(0, len(arguments)):
@@ -288,6 +294,11 @@ def createStandardEnvironment():
 			},
 			"null": {
 				"name": function_null,
+				"argumentNames": None,
+				"body": None,
+			},
+			"zerop": {
+				"name": function_zerop,
 				"argumentNames": None,
 				"body": None,
 			},

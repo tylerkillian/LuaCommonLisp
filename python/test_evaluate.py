@@ -322,3 +322,19 @@ def test_subtraction():
 	environment = createStandardEnvironment()
 	expression = createExpressionFromString("(- 1 2 3 4) ")
 	assert(isSymbol(evaluate(environment, expression), "-8"))
+
+def test_zerop_true():
+	code = """
+		(zerop 0)
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "t")
+	assert(stdout == "")
+
+def test_zerop_false():
+	code = """
+		(zerop 1)
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "nil")
+	assert(stdout == "")
