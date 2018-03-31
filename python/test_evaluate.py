@@ -215,3 +215,11 @@ def test_null_false():
 	assert(expressionToString(returnValue) == "nil")
 	assert(stdout == "")
 
+def test_eql_sameSymbol():
+	code = """
+		(eql 'abc 'abc)
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "t")
+	assert(stdout == "")
+

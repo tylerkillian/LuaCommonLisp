@@ -47,6 +47,17 @@ def fn_consp(environment, metadata, arguments):
 	else:
 		return NIL
 
+def fn_eql(environment, metadata, arguments):
+	if arguments[0] == arguments[1]:
+		return Symbol("t")
+	elif isSymbol(arguments[0]) and isSymbol(arguments[1]):
+		if getSymbolValue(arguments[0]) == getSymbolValue(arguments[1]):
+			return Symbol("t")
+		else:
+			return NIL
+	else:
+		return NIL
+
 def fn_format(environment, metadata, arguments):
 	message = getStringValue(arguments[1])
 	message = message.replace("~%", "\n")
@@ -208,6 +219,11 @@ def createStandardEnvironment():
 			},
 			"consp": {
 				"name": fn_consp,
+				"argumentNames": None,
+				"body": None,
+			},
+			"eql": {
+				"name": fn_eql,
 				"argumentNames": None,
 				"body": None,
 			},
