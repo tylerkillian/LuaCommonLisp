@@ -207,3 +207,11 @@ def test_null_true():
 	assert(expressionToString(returnValue) == "t")
 	assert(stdout == "")
 
+def test_null_false():
+	code = """
+		(null 'a)
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "nil")
+	assert(stdout == "")
+

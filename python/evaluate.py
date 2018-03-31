@@ -5,69 +5,6 @@ def isFunction(environment, expression):
 	if not isCons(expression):
 		return False
 
-def defun(environment, metadata, arguments):
-	result = list_new(Symbol(":defun"))
-	for argument in arguments:
-		result = list_append(result, argument)
-	return result
-
-def special_defun(environment, metadata, argumentsToDefun):
-	functionName = getSymbolValue(argumentsToDefun[0])
-	argumentNames = []
-	for argumentIndex in range(0, list_getLength(argumentsToDefun[1])):
-		argumentNames.append(getSymbolValue(list_get(argumentsToDefun[1], argumentIndex)))
-	body = []
-	for argumentIndex in range(2, len(argumentsToDefun)):
-		body.append(argumentsToDefun[argumentIndex])
-	environment["functions"][functionName] = {
-		"name": callUserDefinedFunction, 
-		"argumentNames": argumentNames,
-		"body": body,
-	}
-	return
-
-def defmacro(environment, metadata, arguments):
-	result = list_new(Symbol(":defmacro"))
-	for argument in arguments:
-		result = list_append(result, argument)
-	return result
-
-def special_defmacro(environment, metadata, argumentsToDefmacro):
-	macroName = getSymbolValue(argumentsToDefmacro[0])
-	argumentNames = []
-	for argumentIndex in range(0, list_getLength(argumentsToDefmacro[1])):
-		argumentNames.append(getSymbolValue(list_get(argumentsToDefmacro[1], argumentIndex)))
-	body = []
-	for argumentIndex in range(2, len(argumentsToDefmacro)):
-		body.append(argumentsToDefmacro[argumentIndex])
-	environment["macros"][macroName] = {
-		"name": callUserDefinedMacro, 
-		"argumentNames": argumentNames,
-		"body": body,
-	}
-	return
-
-def setf(environment, metadata, arguments):
-	result = list_new(Symbol(":setf"))
-	for argument in arguments:
-		result = list_append(result, argument)
-	return result
-
-def special_setf(environment, metadata, arguments):
-	environment[getSymbolValue(arguments[0])] = evaluate(environment, arguments[1])
-	return
-
-def special_quote(environment, metadata, arguments):
-	return arguments[0]
-
-def let(environment, metadata, arguments):
-	variableToSet = getSymbolValue(arguments[0].getCar().getCar())
-	value = arguments[0].getCar().getCdr().getCar()
-	localEnvironment = copyEnvironment(environment)
-	localEnvironment[variableToSet] = value
-	body = arguments[1]
-	return evaluate(localEnvironment, body)
-
 
 def fn_addition(environment, metadata, arguments):
 	assert(len(arguments) == 2)
@@ -77,28 +14,6 @@ def fn_addition(environment, metadata, arguments):
 	right = getSymbolValue(arguments[1])
 	intResult = int(left) + int(right)
 	return Symbol(str(intResult))
-def callUserDefinedMacro(environment, metadata, arguments):
-	gotRest = False
-	rest = None
-	for argumentIndex in range(0, len(arguments)):
-		if gotRest:
-			rest = list_append(rest, arguments[argumentIndex])
-		else:
-			argumentName = metadata['argumentNames'][argumentIndex]
-			if argumentName == "&rest":
-				gotRest = True
-				restNameIndex = argumentIndex + 1
-				rest = list_append(rest, arguments[argumentIndex])
-			else:
-				environment[argumentName] = arguments[argumentIndex]
-	if gotRest:
-		restName = metadata['argumentNames'][restNameIndex]
-		environment[restName] = rest
-	returnValue = None
-	for command in metadata['body']:
-		returnValue = evaluate(environment, command)
-	return returnValue
-
 
 def fn_append(environment, metadata, arguments):
 	result = None
@@ -160,16 +75,78 @@ def callUserDefinedFunction(environment, metadata, arguments):
 		returnValue = evaluate(environment, command)
 	return returnValue
 
-def isTrue(value):
-	if value == NIL:
-		return False
+def macro_defmacro(environment, metadata, arguments):
+	result = list_new(Symbol(":defmacro"))
+	for argument in arguments:
+		result = list_append(result, argument)
+	return result
 
-	if getSymbolValue(value) == "t":
-		return True
-	else:
-		return False
+def macro_defun(environment, metadata, arguments):
+	result = list_new(Symbol(":defun"))
+	for argument in arguments:
+		result = list_append(result, argument)
+	return result
 
-def cl_if(environment, metadata, arguments):
+def macro_setf(environment, metadata, arguments):
+	result = list_new(Symbol(":setf"))
+	for argument in arguments:
+		result = list_append(result, argument)
+	return result
+
+def callUserDefinedMacro(environment, metadata, arguments):
+	gotRest = False
+	rest = None
+	for argumentIndex in range(0, len(arguments)):
+		if gotRest:
+			rest = list_append(rest, arguments[argumentIndex])
+		else:
+			argumentName = metadata['argumentNames'][argumentIndex]
+			if argumentName == "&rest":
+				gotRest = True
+				restNameIndex = argumentIndex + 1
+				rest = list_append(rest, arguments[argumentIndex])
+			else:
+				environment[argumentName] = arguments[argumentIndex]
+	if gotRest:
+		restName = metadata['argumentNames'][restNameIndex]
+		environment[restName] = rest
+	returnValue = None
+	for command in metadata['body']:
+		returnValue = evaluate(environment, command)
+	return returnValue
+
+
+def special_defmacro(environment, metadata, argumentsToDefmacro):
+	macroName = getSymbolValue(argumentsToDefmacro[0])
+	argumentNames = []
+	for argumentIndex in range(0, list_getLength(argumentsToDefmacro[1])):
+		argumentNames.append(getSymbolValue(list_get(argumentsToDefmacro[1], argumentIndex)))
+	body = []
+	for argumentIndex in range(2, len(argumentsToDefmacro)):
+		body.append(argumentsToDefmacro[argumentIndex])
+	environment["macros"][macroName] = {
+		"name": callUserDefinedMacro, 
+		"argumentNames": argumentNames,
+		"body": body,
+	}
+	return
+
+def special_defun(environment, metadata, argumentsToDefun):
+	functionName = getSymbolValue(argumentsToDefun[0])
+	argumentNames = []
+	for argumentIndex in range(0, list_getLength(argumentsToDefun[1])):
+		argumentNames.append(getSymbolValue(list_get(argumentsToDefun[1], argumentIndex)))
+	body = []
+	for argumentIndex in range(2, len(argumentsToDefun)):
+		body.append(argumentsToDefun[argumentIndex])
+	environment["functions"][functionName] = {
+		"name": callUserDefinedFunction, 
+		"argumentNames": argumentNames,
+		"body": body,
+	}
+	return
+
+def special_if(environment, metadata, arguments):
 	condition = arguments[0]
 	callIfTrue = arguments[1]
 	callIfFalse = arguments[2]
@@ -180,10 +157,34 @@ def cl_if(environment, metadata, arguments):
 	else:
 		return evaluate(environment, callIfFalse)
 
-def progn(environment, metadata, arguments):
+def special_let(environment, metadata, arguments):
+	variableToSet = getSymbolValue(arguments[0].getCar().getCar())
+	value = arguments[0].getCar().getCdr().getCar()
+	localEnvironment = copyEnvironment(environment)
+	localEnvironment[variableToSet] = value
+	body = arguments[1]
+	return evaluate(localEnvironment, body)
+
+def special_progn(environment, metadata, arguments):
 	for nextExpression in arguments:
 		lastReturnValue = evaluate(environment, nextExpression)
 	return lastReturnValue
+
+def special_quote(environment, metadata, arguments):
+	return arguments[0]
+
+def special_setf(environment, metadata, arguments):
+	environment[getSymbolValue(arguments[0])] = evaluate(environment, arguments[1])
+	return
+
+def isTrue(value):
+	if value == NIL:
+		return False
+
+	if getSymbolValue(value) == "t":
+		return True
+	else:
+		return False
 
 def createStandardEnvironment():
 	return {
@@ -250,13 +251,13 @@ def createStandardEnvironment():
 			},
 		},
 		"special": {
-			":defun": {
-				"name": special_defun,
+			":defmacro": {
+				"name": special_defmacro,
 				"argumentNames": None,
 				"body": None,
 			},
-			":defmacro": {
-				"name": special_defmacro,
+			":defun": {
+				"name": special_defun,
 				"argumentNames": None,
 				"body": None,
 			},
@@ -265,23 +266,23 @@ def createStandardEnvironment():
 				"argumentNames": None,
 				"body": None,
 			},
-			"let": {
-				"name": let,
+			"if": {
+				"name": special_if,
 				"argumentNames": None,
 				"body": None,
 			},
-			"if": {
-				"name": cl_if,
+			"let": {
+				"name": special_let,
+				"argumentNames": None,
+				"body": None,
+			},
+			"progn": {
+				"name": special_progn,
 				"argumentNames": None,
 				"body": None,
 			},
 			"quote": {
 				"name": special_quote,
-				"argumentNames": None,
-				"body": None,
-			},
-			"progn": {
-				"name": progn,
 				"argumentNames": None,
 				"body": None,
 			},
