@@ -11,13 +11,12 @@ def isTrue(value):
 		return False
 
 def function_addition(environment, metadata, arguments):
-	assert(len(arguments) == 2)
-	assert(isSymbol(arguments[0]))
-	assert(isSymbol(arguments[1]))
-	left = getSymbolValue(arguments[0])
-	right = getSymbolValue(arguments[1])
-	intResult = int(left) + int(right)
-	return Symbol(str(intResult))
+	result = 0
+	for nextArgument in arguments:
+		assert(isSymbol(nextArgument))
+		nextValue = getSymbolValue(nextArgument)
+		result += int(nextValue)
+	return Symbol(str(result))
 
 def function_append(environment, metadata, arguments):
 	result = None
