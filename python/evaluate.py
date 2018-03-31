@@ -32,10 +32,10 @@ def function_apply(environment, metadata, arguments):
 	assert(isCons(arguments[len(arguments)-1]))
 	argumentsToAppliedFunction = []
 	for argumentIndex in range(1, len(arguments)-1):
-		argumentsToAppliedFunction.append(arguments[argumentIndex]))
+		argumentsToAppliedFunction.append(arguments[argumentIndex])
 	for argumentIndex in range(0, list_getLength(arguments[len(arguments)-1])):
 		argumentsToAppliedFunction.append(list_get(arguments[len(arguments)-1], argumentIndex))
-	functionPointer = argument[0]
+	functionPointer = arguments[0]
 	metadata = functionPointer.getExtra()
 	function = metadata["name"]
 	return function(environment, metadata, argumentsToAppliedFunction)
