@@ -277,3 +277,20 @@ def test_rest_simpleList():
 	returnValue, stdout = runCode(code)
 	assert(expressionToString(returnValue) == "(2 3)")
 	assert(stdout == "")
+
+def test_rest_singleElement():
+	code = """
+		(rest '(1))
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "nil")
+	assert(stdout == "")
+
+def test_rest_emptyList():
+	code = """
+		(rest '())
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "nil")
+	assert(stdout == "")
+
