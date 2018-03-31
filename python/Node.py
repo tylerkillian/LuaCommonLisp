@@ -75,3 +75,14 @@ def isNumber(node):
 		return True
 	else:
 		return False
+
+def isFunctionPointer(node):
+	if node == NIL:
+		return False
+	if node.getValue()[0:6] != "symbol":
+		return False
+	if value:
+		if node.getValue()[7:] != value:
+			return False
+	return True
+
