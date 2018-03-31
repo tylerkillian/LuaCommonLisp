@@ -5,6 +5,14 @@ def isFunction(environment, expression):
 	if not isCons(expression):
 		return False
 
+def isTrue(value):
+	if value == NIL:
+		return False
+
+	if getSymbolValue(value) == "t":
+		return True
+	else:
+		return False
 
 def fn_addition(environment, metadata, arguments):
 	assert(len(arguments) == 2)
@@ -115,7 +123,6 @@ def callUserDefinedMacro(environment, metadata, arguments):
 		returnValue = evaluate(environment, command)
 	return returnValue
 
-
 def special_defmacro(environment, metadata, argumentsToDefmacro):
 	macroName = getSymbolValue(argumentsToDefmacro[0])
 	argumentNames = []
@@ -176,15 +183,6 @@ def special_quote(environment, metadata, arguments):
 def special_setf(environment, metadata, arguments):
 	environment[getSymbolValue(arguments[0])] = evaluate(environment, arguments[1])
 	return
-
-def isTrue(value):
-	if value == NIL:
-		return False
-
-	if getSymbolValue(value) == "t":
-		return True
-	else:
-		return False
 
 def createStandardEnvironment():
 	return {
