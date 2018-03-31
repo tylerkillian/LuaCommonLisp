@@ -164,7 +164,7 @@ def macro_assert(environment, metadata, arguments):
 
 	conditionEvaluated = evaluate(environment, condition)
 	assert(isTrue(conditionEvaluated))
-	return Symbol("t")
+	return NIL
 
 def macro_defmacro(environment, metadata, arguments):
 	result = list_new(Symbol(":defmacro"))
