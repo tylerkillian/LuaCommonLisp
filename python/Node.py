@@ -91,6 +91,6 @@ def FunctionPointer(name, pointer):
 
 def getFunctionName(node):
 	assert(isFunctionPointer(node))
-	return node.getValue()
+	return node.getValue()[9:]
 
 
