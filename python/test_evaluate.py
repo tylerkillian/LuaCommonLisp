@@ -198,3 +198,12 @@ def test_cdr_emptyList():
 	returnValue, stdout = runCode(code)
 	assert(expressionToString(returnValue) == "nil")
 	assert(stdout == "")
+
+def test_null_true():
+	code = """
+		(null nil)
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "t")
+	assert(stdout == "")
+

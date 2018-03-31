@@ -1,47 +1,6 @@
 from reader import *
 import sys
 
-def addition(environment, metadata, arguments):
-	assert(len(arguments) == 2)
-	assert(isSymbol(arguments[0]))
-	assert(isSymbol(arguments[1]))
-	left = getSymbolValue(arguments[0])
-	right = getSymbolValue(arguments[1])
-	intResult = int(left) + int(right)
-	return Symbol(str(intResult))
-
-def callUserDefinedFunction(environment, metadata, arguments):
-	assert(len(arguments) == len(metadata['argumentNames']))
-	for argumentIndex in range(0, len(arguments)):
-		argumentName = metadata['argumentNames'][argumentIndex]
-		environment[argumentName] = arguments[argumentIndex]
-	returnValue = None
-	for command in metadata['body']:
-		returnValue = evaluate(environment, command)
-	return returnValue
-
-def callUserDefinedMacro(environment, metadata, arguments):
-	gotRest = False
-	rest = None
-	for argumentIndex in range(0, len(arguments)):
-		if gotRest:
-			rest = list_append(rest, arguments[argumentIndex])
-		else:
-			argumentName = metadata['argumentNames'][argumentIndex]
-			if argumentName == "&rest":
-				gotRest = True
-				restNameIndex = argumentIndex + 1
-				rest = list_append(rest, arguments[argumentIndex])
-			else:
-				environment[argumentName] = arguments[argumentIndex]
-	if gotRest:
-		restName = metadata['argumentNames'][restNameIndex]
-		environment[restName] = rest
-	returnValue = None
-	for command in metadata['body']:
-		returnValue = evaluate(environment, command)
-	return returnValue
-
 def isFunction(environment, expression):
 	if not isCons(expression):
 		return False
@@ -101,11 +60,45 @@ def special_setf(environment, metadata, arguments):
 def special_quote(environment, metadata, arguments):
 	return arguments[0]
 
-def fn_list(environment, metadata, arguments):
-	result = None
-	for argument in arguments:
-		result = list_append(result, argument)
-	return result
+def let(environment, metadata, arguments):
+	variableToSet = getSymbolValue(arguments[0].getCar().getCar())
+	value = arguments[0].getCar().getCdr().getCar()
+	localEnvironment = copyEnvironment(environment)
+	localEnvironment[variableToSet] = value
+	body = arguments[1]
+	return evaluate(localEnvironment, body)
+
+
+def fn_addition(environment, metadata, arguments):
+	assert(len(arguments) == 2)
+	assert(isSymbol(arguments[0]))
+	assert(isSymbol(arguments[1]))
+	left = getSymbolValue(arguments[0])
+	right = getSymbolValue(arguments[1])
+	intResult = int(left) + int(right)
+	return Symbol(str(intResult))
+def callUserDefinedMacro(environment, metadata, arguments):
+	gotRest = False
+	rest = None
+	for argumentIndex in range(0, len(arguments)):
+		if gotRest:
+			rest = list_append(rest, arguments[argumentIndex])
+		else:
+			argumentName = metadata['argumentNames'][argumentIndex]
+			if argumentName == "&rest":
+				gotRest = True
+				restNameIndex = argumentIndex + 1
+				rest = list_append(rest, arguments[argumentIndex])
+			else:
+				environment[argumentName] = arguments[argumentIndex]
+	if gotRest:
+		restName = metadata['argumentNames'][restNameIndex]
+		environment[restName] = rest
+	returnValue = None
+	for command in metadata['body']:
+		returnValue = evaluate(environment, command)
+	return returnValue
+
 
 def fn_append(environment, metadata, arguments):
 	result = None
@@ -135,7 +128,7 @@ def fn_consp(environment, metadata, arguments):
 	else:
 		return NIL
 
-def format(environment, metadata, arguments):
+def fn_format(environment, metadata, arguments):
 	message = getStringValue(arguments[1])
 	message = message.replace("~%", "\n")
 	if len(arguments) > 2:
@@ -145,13 +138,27 @@ def format(environment, metadata, arguments):
 	environment["*standard-output*"].write(message)
 	return NIL
 
-def let(environment, metadata, arguments):
-	variableToSet = getSymbolValue(arguments[0].getCar().getCar())
-	value = arguments[0].getCar().getCdr().getCar()
-	localEnvironment = copyEnvironment(environment)
-	localEnvironment[variableToSet] = value
-	body = arguments[1]
-	return evaluate(localEnvironment, body)
+def fn_list(environment, metadata, arguments):
+	result = None
+	for argument in arguments:
+		result = list_append(result, argument)
+	return result
+
+def fn_null(environment, metadata, arguments):
+	if arguments[0] == NIL:
+		return Symbol("t")
+	else:
+		return NIL
+
+def callUserDefinedFunction(environment, metadata, arguments):
+	assert(len(arguments) == len(metadata['argumentNames']))
+	for argumentIndex in range(0, len(arguments)):
+		argumentName = metadata['argumentNames'][argumentIndex]
+		environment[argumentName] = arguments[argumentIndex]
+	returnValue = None
+	for command in metadata['body']:
+		returnValue = evaluate(environment, command)
+	return returnValue
 
 def isTrue(value):
 	if value == NIL:
@@ -185,7 +192,12 @@ def createStandardEnvironment():
 		"nil": NIL,
 		"functions": {
 			"+": {
-				"name": addition,
+				"name": fn_addition,
+				"argumentNames": None,
+				"body": None,
+			},
+			"append": {
+				"name": fn_append,
 				"argumentNames": None,
 				"body": None,
 			},
@@ -205,7 +217,7 @@ def createStandardEnvironment():
 				"body": None,
 			},
 			"format": {
-				"name": format,
+				"name": fn_format,
 				"argumentNames": None,
 				"body": None,
 			},
@@ -214,8 +226,8 @@ def createStandardEnvironment():
 				"argumentNames": None,
 				"body": None,
 			},
-			"append": {
-				"name": fn_append,
+			"null": {
+				"name": fn_null,
 				"argumentNames": None,
 				"body": None,
 			},
