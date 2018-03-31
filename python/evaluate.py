@@ -35,6 +35,14 @@ def function_apply(environment, metadata, arguments):
 		argumentsToAppliedFunction.append(arguments[argumentIndex]))
 	for argumentIndex in range(0, list_getLength(arguments[len(arguments)-1])):
 		argumentsToAppliedFunction.append(list_get(arguments[len(arguments)-1], argumentIndex))
+		functionName = getSymbolValue(list_get(expression, 0))
+		function = environment["functions"][functionName]["name"]
+		argumentsEvaluated = []
+		for expressionIndex in range(1, list_getLength(expression)):
+			nextArgument = list_get(expression, expressionIndex)
+			argumentsEvaluated.append(evaluate(environment, nextArgument))
+		metadata = environment["functions"][functionName]
+		return function(environment, metadata, argumentsEvaluated)
 def function_car(environment, metadata, arguments):
 	if arguments[0] == NIL:
 		return NIL
