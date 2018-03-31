@@ -233,17 +233,17 @@ def createStandardEnvironment():
 		},
 		"macros": {
 			"defun": {
-				"name": defun,
+				"name": macro_defun,
 				"argumentNames": None,
 				"body": None,
 			},
 			"defmacro": {
-				"name": defmacro,
+				"name": macro_defmacro,
 				"argumentNames": None,
 				"body": None,
 			},
 			"setf": {
-				"name": setf,
+				"name": macro_setf,
 				"argumentNames": None,
 				"body": None,
 			},
