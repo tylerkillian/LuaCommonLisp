@@ -31,7 +31,7 @@ def assertStdout(inputString, result):
 		nextExpression = read(inputStream)
 	assert(environment["*standard-output*"].read() == result)
 
-def test_evaluateSymbol():
+def test_evaluate_symbol():
 	environment = createStandardEnvironment()
 	environment["a"] = Symbol("1")
 	assert(isSymbol(evaluate(environment, Symbol("a"))))
