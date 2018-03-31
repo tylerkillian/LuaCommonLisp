@@ -86,3 +86,7 @@ def isFunctionPointer(node):
 		return False
 	return True
 
+def FunctionPointer(name, pointer):
+	return Cons("function_" + name, None, None, pointer)
+
+
