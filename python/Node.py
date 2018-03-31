@@ -1,10 +1,11 @@
 NIL = {"nil"}
 
 class Node:
-	def __init__(self, value = "", car = None, cdr = None):
+	def __init__(self, value = "", car = None, cdr = None, extra = None):
 		self.value = value
 		self.car = car
 		self.cdr = cdr
+		self.extra = extra
 	def getValue(self):
 		return self.value
 	def setValue(self, value):
@@ -17,6 +18,8 @@ class Node:
 		return self.cdr
 	def setCdr(self, cdr):
 		self.cdr = cdr
+	def getExtra(self):
+		return self.extra
 
 def isCons(node):
 	if node == NIL:
