@@ -55,7 +55,7 @@ def test_format_HelloWorld():
 def test_format_integer():
 	assertStdout('(format t "2 + 3 = ~a" 5) ', "2 + 3 = 5")
 
-def test_let():
+def test_let_singleValue():
 	code = """
 		(setf b 2)
 		(format t "b = ~a~%" b)
@@ -67,6 +67,15 @@ def test_let():
 		(format t "b = ~a~%" b)
 	"""
 	assertStdout(code, "b = 2\nb = 3\nb = 2\n")
+
+def test_let_multipleValues():
+	code = """
+		(let ((a 2) (b 3))
+			(format t "a = ~a~%" a)
+			(format t "b = ~a~%" b)
+		)
+	"""
+	assertStdout(code, "a = 2\nb = 3\n")
 
 def test_if_true():
 	code = """
