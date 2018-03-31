@@ -84,6 +84,10 @@ def function_format(environment, metadata, arguments):
 	environment["*standard-output*"].write(message)
 	return NIL
 
+def function_greaterThan(environment, metadata, arguments):
+	assert(len(arguments) == 2)
+	return Cons(arguments[0], arguments[1])
+
 def function_list(environment, metadata, arguments):
 	result = None
 	for argument in arguments:
