@@ -68,6 +68,12 @@ def function_format(environment, metadata, arguments):
 	environment["*standard-output*"].write(message)
 	return NIL
 
+def function_function(environment, metadata, arguments):
+	functionName = arguments[0]
+	assert(isSymbol(functionName))
+	assert(environment["functions"][getSymbolValue(functionName)])
+	return functionName
+
 def function_list(environment, metadata, arguments):
 	result = None
 	for argument in arguments:

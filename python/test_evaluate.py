@@ -55,6 +55,14 @@ def test_format_HelloWorld():
 def test_format_integer():
 	assertStdout('(format t "2 + 3 = ~a" 5) ', "2 + 3 = 5")
 
+def test_function():
+	code = """
+		(function let)
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "let")
+	assert(stdout == "")
+
 def test_let_singleValue():
 	code = """
 		(setf b 2)
