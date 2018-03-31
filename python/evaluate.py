@@ -78,7 +78,7 @@ def function_function(environment, metadata, arguments):
 	functionName = arguments[0]
 	assert(isSymbol(functionName))
 	assert(environment["functions"][getSymbolValue(functionName)])
-	return functionName
+	return FunctionPointer(functionName, environment["functions"][getSymbolValue(functionName)])
 
 def function_list(environment, metadata, arguments):
 	result = None
