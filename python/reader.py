@@ -308,11 +308,10 @@ class ReadMacroDispatch:
 			if function:
 				self.done = True
 				self.reader = None
-				if isSymbol(function):
-					result = Cons(Symbol("function"), Cons(function, NIL))
-				else:
+				if not isSymbol(function):
 					assert(isCons(function))
 					assert(isSymbol(list_get(function, 0), "lambda"))
+				result = Cons(Symbol("function"), Cons(function, NIL))
 				return result
 
 def getBackquoteDepth(expression, backquoteLevel = 0):
