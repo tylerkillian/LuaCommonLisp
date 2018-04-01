@@ -15,6 +15,7 @@ def runCode(code):
 	environment["*standard-output*"] = outputStream
 	nextExpression = read(inputStream)
 	while nextExpression:
+		print("evaluating " + expressionToString(nextExpression))
 		lastReturnValue = evaluate(environment, nextExpression)
 		nextExpression = read(inputStream)
 	stdout = environment["*standard-output*"].read()
@@ -345,7 +346,7 @@ def test_lambda_addThree():
 		
 def test_lambda_addTwoReadMacro():
 	code = """
-		(apply #'(lambda (x) (+ x 2) '(4)))
+		(apply #'(lambda (x) (+ x 2)) '(4))
 	"""
 	returnValue, stdout = runCode(code)
 	assert(expressionToString(returnValue) == "6")
