@@ -273,7 +273,7 @@ def special_function(environment, metadata, arguments):
 			"name": callUserDefinedFunction, 
 			"argumentNames": functionPointerArgumentNames,
 			"body": functionPointerBody,
-		}
+		})
 
 def special_if(environment, metadata, arguments):
 	condition = arguments[0]
