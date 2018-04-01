@@ -351,6 +351,14 @@ def test_lambda_addTwoReadMacro():
 	assert(expressionToString(returnValue) == "6")
 	assert(stdout == "")
 
+def test_lambda_rest():
+	code = """
+		(apply #'(lambda (x &rest yz) (+ x (car yz) (car (cdr yz)))) '(4 5 6))
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "15")
+	assert(stdout == "")
+
 def test_rest_simpleList():
 	code = """
 		(rest '(1 2 3))

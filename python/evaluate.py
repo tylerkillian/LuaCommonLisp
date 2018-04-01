@@ -157,6 +157,27 @@ def callUserDefinedFunction(environment, metadata, arguments):
 	for command in metadata['body']:
 		returnValue = evaluate(environment, command)
 	return returnValue
+	gotRest = False
+	rest = None
+	for argumentIndex in range(0, len(arguments)):
+		if gotRest:
+			rest = list_append(rest, arguments[argumentIndex])
+		else:
+			argumentName = metadata['argumentNames'][argumentIndex]
+			if argumentName == "&rest":
+				gotRest = True
+				restNameIndex = argumentIndex + 1
+				rest = list_append(rest, arguments[argumentIndex])
+			else:
+				environment[argumentName] = arguments[argumentIndex]
+	if gotRest:
+		restName = metadata['argumentNames'][restNameIndex]
+		environment[restName] = rest
+	returnValue = None
+	for command in metadata['body']:
+		returnValue = evaluate(environment, command)
+	return returnValue
+
 
 def macro_assert(environment, metadata, arguments):
 	assert(len(arguments) == 1)
