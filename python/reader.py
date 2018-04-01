@@ -312,6 +312,7 @@ class ReadMacroDispatch:
 					assert(isCons(function))
 					assert(isSymbol(list_get(function, 0), "lambda"))
 				result = Cons(Symbol("function"), Cons(function, NIL))
+				print(expressionToString(result))
 				return result
 
 def getBackquoteDepth(expression, backquoteLevel = 0):
