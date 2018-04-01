@@ -257,14 +257,19 @@ def special_function(environment, metadata, arguments):
 	else:
 		assert(isCons(arguments[0]))
 		assert(isSymbol(list_get(arguments[0], 0), "lambda"))
-		assert(False)
-		argumentNames = []
-		for argumentIndex in range(0, list_getLength(argumentsToDefun[1])):
-			argumentNames.append(getSymbolValue(list_get(argumentsToDefun[1], argumentIndex)))
-		body = []
-		for argumentIndex in range(2, len(argumentsToDefun)):
-			body.append(argumentsToDefun[argumentIndex])
-		environment["functions"][functionName] = {
+
+		lambdaForm = arguments[0]
+		lambdaArgumentNames = list_get(lambdaForm, 1) 
+
+		functionPointerArgumentNames = []
+		for lambdaArgumentIndex in range(0, list_getLength(lambdaArgumentNames)):
+			functionPointerArgumentNames.append(getSymbolValue(list_get(lambdaArgumentNames, lambdaArgumentIndex)))
+
+		functionPointerBody = []
+		for lambdaBodyIndex in range(2, len(lambdaForm)):
+			functionPointerBody.append(list_get(lambdaForm, lambdaBodyIndex))
+
+		ctionName] = {
 			"name": callUserDefinedFunction, 
 			"argumentNames": argumentNames,
 			"body": body,
