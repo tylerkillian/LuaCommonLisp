@@ -343,6 +343,13 @@ def test_lambda_addThree():
 	assert(expressionToString(returnValue) == "4")
 	assert(stdout == "")
 		
+def test_lambda_addTwoReadMacro():
+	code = """
+		(apply #'(lambda (x) (+ x 2) '(4)))
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "6")
+	assert(stdout == "")
 
 def test_rest_simpleList():
 	code = """

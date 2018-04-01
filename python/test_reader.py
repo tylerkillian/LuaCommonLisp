@@ -90,7 +90,11 @@ def test_backquoteExpansion_expandBackquoteMacro_nestedExpression():
 	treeWithExpandedBackquote = expandBackquoteMacro(tree)
 	assert(expressionToString(treeWithExpandedBackquote) == "(append (list 'a) (list (append (list 'append) (list (append (list 'list) (list (append (list 'quote) (list 'b))))) (list (append (list 'list) (list c))))) (list d))")
 
-def test_readFunction():
+def test_readFunction_symbol():
 	tree = parseString("#'a ")
 	assert(expressionToString(tree) == "(function a)")
+
+def test_readFunction_lambda():
+	tree = parseString("#'(lambda (x) (+ x 2)) ")
+	assert(expressionToString(tree) == "(function (lambda (x) (+ x 2)))")
 
