@@ -353,7 +353,7 @@ def test_lambda_addTwoReadMacro():
 
 def test_lambda_rest():
 	code = """
-		(apply #'(lambda (x &rest yz) (+ x (car yz) (car (cdr yz)))) '(4 5 6))
+		(apply #'(lambda (x &rest yz) (+ x (car yz) (cadr yz))) '(4 5 6))
 	"""
 	returnValue, stdout = runCode(code)
 	assert(expressionToString(returnValue) == "15")
