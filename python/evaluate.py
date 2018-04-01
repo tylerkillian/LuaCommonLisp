@@ -149,14 +149,6 @@ def function_zerop(environment, metadata, arguments):
 		return NIL
 
 def callUserDefinedFunction(environment, metadata, arguments):
-	assert(len(arguments) == len(metadata['argumentNames']))
-	for argumentIndex in range(0, len(arguments)):
-		argumentName = metadata['argumentNames'][argumentIndex]
-		environment[argumentName] = arguments[argumentIndex]
-	returnValue = None
-	for command in metadata['body']:
-		returnValue = evaluate(environment, command)
-	return returnValue
 	gotRest = False
 	rest = None
 	for argumentIndex in range(0, len(arguments)):
