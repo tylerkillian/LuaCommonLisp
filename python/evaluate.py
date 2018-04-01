@@ -184,6 +184,13 @@ def macro_defun(environment, metadata, arguments):
 		result = list_append(result, argument)
 	return result
 
+def macro_lambda(environment, metadata, arguments):
+	result = list_new(Symbol("function"))
+	lambdaExpression = list_new(Symbol("lambda"))
+	for argument in arguments:
+		lambdaExpression = list_append(lambdaExpression, argument)
+	return list_append(result, lambdaExpression)
+
 def macro_setf(environment, metadata, arguments):
 	result = list_new(Symbol(":setf"))
 	for argument in arguments:
