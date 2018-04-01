@@ -266,7 +266,7 @@ def special_function(environment, metadata, arguments):
 			functionPointerArgumentNames.append(getSymbolValue(list_get(lambdaArgumentNames, lambdaArgumentIndex)))
 
 		functionPointerBody = []
-		for lambdaBodyIndex in range(2, len(lambdaForm)):
+		for lambdaBodyIndex in range(2, list_getLength(lambdaForm)):
 			functionPointerBody.append(list_get(lambdaForm, lambdaBodyIndex))
 
 		return FunctionPointer("lambda", {
