@@ -334,6 +334,16 @@ def test_equal_false():
 	assert(expressionToString(returnValue) == "nil")
 	assert(stdout == "")
 
+def test_lambda_addThree():
+	code = """
+		(setf addThree (lambda (x) (+ x 3)))
+		(apply addThree '(1))
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "4")
+	assert(stdout == "")
+		
+
 def test_rest_simpleList():
 	code = """
 		(rest '(1 2 3))
