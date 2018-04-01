@@ -269,7 +269,7 @@ def special_function(environment, metadata, arguments):
 		for lambdaBodyIndex in range(2, len(lambdaForm)):
 			functionPointerBody.append(list_get(lambdaForm, lambdaBodyIndex))
 
-		return FunctionPointer("lambda", = {
+		return FunctionPointer("lambda", {
 			"name": callUserDefinedFunction, 
 			"argumentNames": argumentNames,
 			"body": body,
