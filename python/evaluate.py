@@ -271,8 +271,8 @@ def special_function(environment, metadata, arguments):
 
 		return FunctionPointer("lambda", {
 			"name": callUserDefinedFunction, 
-			"argumentNames": argumentNames,
-			"body": body,
+			"argumentNames": functionPointerArgumentNames,
+			"body": functionPointerBody,
 		}
 
 def special_if(environment, metadata, arguments):
