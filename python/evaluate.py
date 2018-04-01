@@ -250,10 +250,14 @@ def special_defun(environment, metadata, argumentsToDefun):
 	return argumentsToDefun[0]
 
 def special_function(environment, metadata, arguments):
-	assert(isSymbol(arguments[0]))
-	functionName = getSymbolValue(arguments[0])
-	assert(environment["functions"][functionName])
-	return FunctionPointer(functionName, environment["functions"][functionName])
+	if isSymbol(arguments[0]):
+		functionName = getSymbolValue(arguments[0])
+		assert(environment["functions"][functionName])
+		return FunctionPointer(functionName, environment["functions"][functionName])
+	else:
+		assert(isCons(arguments[0]))
+		assert(isSymbol(list_get(arguments[0], 0), "lambda"))
+		assert(False)
 
 def special_if(environment, metadata, arguments):
 	condition = arguments[0]
@@ -391,6 +395,11 @@ def createStandardEnvironment():
 			},
 			"defmacro": {
 				"name": macro_defmacro,
+				"argumentNames": None,
+				"body": None,
+			},
+			"lambda": {
+				"name": macro_lambda,
 				"argumentNames": None,
 				"body": None,
 			},
