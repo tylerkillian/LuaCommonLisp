@@ -258,6 +258,17 @@ def special_function(environment, metadata, arguments):
 		assert(isCons(arguments[0]))
 		assert(isSymbol(list_get(arguments[0], 0), "lambda"))
 		assert(False)
+		argumentNames = []
+		for argumentIndex in range(0, list_getLength(argumentsToDefun[1])):
+			argumentNames.append(getSymbolValue(list_get(argumentsToDefun[1], argumentIndex)))
+		body = []
+		for argumentIndex in range(2, len(argumentsToDefun)):
+			body.append(argumentsToDefun[argumentIndex])
+		environment["functions"][functionName] = {
+			"name": callUserDefinedFunction, 
+			"argumentNames": argumentNames,
+			"body": body,
+		}
 
 def special_if(environment, metadata, arguments):
 	condition = arguments[0]
