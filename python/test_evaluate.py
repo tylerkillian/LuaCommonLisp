@@ -15,7 +15,6 @@ def runCode(code):
 	environment["*standard-output*"] = outputStream
 	nextExpression = read(inputStream)
 	while nextExpression:
-		print("evaluating " + expressionToString(nextExpression))
 		lastReturnValue = evaluate(environment, nextExpression)
 		nextExpression = read(inputStream)
 	stdout = environment["*standard-output*"].read()
