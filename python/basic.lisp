@@ -7,7 +7,10 @@
 )
 
 (defun has-cars (lists)
-	(and (caar lists) (has-cars (cdr lists)))
+	(if lists
+		(and (caar lists) (has-cars (cdr lists)))
+		t
+	)
 )
 
 (defun allcars (lists)
