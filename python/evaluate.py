@@ -167,6 +167,7 @@ def callUserDefinedFunction(environment, metadata, arguments):
 	returnValue = None
 	for command in metadata['body']:
 		returnValue = evaluate(environment, command)
+	print("returning " + expressionToString(returnValue))
 	return returnValue
 
 
