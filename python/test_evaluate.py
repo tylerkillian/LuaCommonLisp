@@ -403,3 +403,12 @@ def test_zerop_false():
 	returnValue, stdout = runCode(code)
 	assert(expressionToString(returnValue) == "nil")
 	assert(stdout == "")
+
+def test_mapcar_addTen():
+	code = """
+		(mapcar #'(lambda (x) (+ x 10)) '(1 2 3))
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "(11 12 13)")
+	assert(stdout == "")
+
