@@ -50,7 +50,6 @@ def function_cdr(environment, metadata, arguments):
 		return NIL
 
 	assert(isCons(arguments[0]))
-	print("returning " + expressionToString(arguments[0].getCdr()))
 	return arguments[0].getCdr()
 
 def function_cons(environment, metadata, arguments):
