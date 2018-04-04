@@ -25,8 +25,8 @@ def function_append(environment, metadata, arguments):
 
 def function_apply(environment, metadata, arguments):
 	assert(isFunctionPointer(arguments[0]))
-	print(len(arguments))
-	print(expressionToString(arguments[len(arguments)-1]))
+	#print(len(arguments))
+	#print(expressionToString(arguments[len(arguments)-1]))
 	assert(isCons(arguments[len(arguments)-1]))
 	argumentsToAppliedFunction = []
 	for argumentIndex in range(1, len(arguments)-1):
@@ -167,7 +167,10 @@ def callUserDefinedFunction(environment, metadata, arguments):
 	returnValue = None
 	for command in metadata['body']:
 		returnValue = evaluate(environment, command)
-	print("returning " + expressionToString(returnValue))
+	#if "_saveName" in metadata: # TODO: remove!
+	#	print(metadata["_saveName"] + " returning " + expressionToString(returnValue))
+	#else:
+	#	print("anonymous returning " + expressionToString(returnValue))
 	return returnValue
 
 
@@ -561,7 +564,8 @@ def evaluate(environment, expression):
 			nextArgument = list_get(expression, expressionIndex)
 			argumentsEvaluated.append(evaluate(environment, nextArgument))
 		metadata = environment["functions"][functionName]
-		print("calling function = " + functionName)
+		metadata["_saveName"] = functionName # TODO: remove!
+		#print("calling function = " + functionName)
 		return function(environment, metadata, argumentsEvaluated)
 	elif isMacro(environment, expression):
 		macroName = getSymbolValue(list_get(expression, 0))
