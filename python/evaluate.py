@@ -4,11 +4,8 @@ import sys
 def isTrue(value):
 	if value == NIL:
 		return False
-
-	if getSymbolValue(value) == "t":
-		return True
 	else:
-		return False
+		return True
 
 def function_addition(environment, metadata, arguments):
 	result = 0
