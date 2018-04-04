@@ -21,7 +21,10 @@
 )
 
 (defun has-cdrs (lists)
-	(and (cdar lists) (has-cdrs (cdr lists)))
+	(if lists
+		(and (cdar lists) (has-cdrs (cdr lists)))
+		t
+	)
 )
 
 (defun allcdrs (lists)
