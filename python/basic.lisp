@@ -1,4 +1,5 @@
 (defun rest (x) (cdr x))
+(defun caar (x) (car (car x)))
 (defun cadr (x) (car (cdr x)))
 
 (defun and (a b)
