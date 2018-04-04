@@ -34,7 +34,7 @@
 (defun get-all-cdrs (lists)
         (if lists
                 (if (has-cdrs lists)
-                        (cons (cdar2 lists) (get-all-cdrs (cdr lists)))
+                        (cons (cdar lists) (get-all-cdrs (cdr lists)))
                         nil
                 )
                 nil
