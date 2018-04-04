@@ -404,7 +404,7 @@ def test_zerop_false():
 	assert(expressionToString(returnValue) == "nil")
 	assert(stdout == "")
 
-def _test_mapcar_addTen():
+def test_mapcar_addTen():
 	code = """
 		(mapcar #'(lambda (x) (+ x 10)) '(1 2 3))
 	"""
