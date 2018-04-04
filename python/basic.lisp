@@ -26,3 +26,15 @@
 		nil
 	)
 )
+
+(defun mapcar (f &rest lists)
+	(if (has-cars lists)
+		(append
+			(apply f (allcars lists))
+			(apply #'mapcar f (allcdrs lists))
+		)
+		nil
+	)
+)
+
+
