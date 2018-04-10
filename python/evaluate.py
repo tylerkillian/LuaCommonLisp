@@ -560,7 +560,6 @@ def evaluate(environment, expression):
 			nextArgument = list_get(expression, expressionIndex)
 			argumentsEvaluated.append(evaluate(environment, nextArgument))
 		metadata = environment["functions"][functionName]
-		metadata["_saveName"] = functionName # TODO: remove!
 		return function(environment, metadata, argumentsEvaluated)
 	elif isMacro(environment, expression):
 		macroName = getSymbolValue(list_get(expression, 0))

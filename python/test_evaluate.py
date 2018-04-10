@@ -468,6 +468,14 @@ def test_hasCdrs_false():
 	assert(expressionToString(returnValue) == "nil")
 	assert(stdout == "")
 
+def _test_mapcar_emptyList():
+	code = """
+		(mapcar #'(lambda (x) (+ x 10)) '(1 2 3))
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "(11 12 13)")
+	assert(stdout == "")
+
 def _test_mapcar_addTen():
 	code = """
 		(mapcar #'(lambda (x) (+ x 10)) '(1 2 3))
