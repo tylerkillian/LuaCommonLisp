@@ -211,6 +211,7 @@ def macro_setf(environment, metadata, arguments):
 def callUserDefinedMacro(environment, metadata, arguments):
 	gotRest = False
 	rest = None
+	newEnvironment = copyEnvironment(environment)
 	for argumentIndex in range(0, len(arguments)):
 		if gotRest:
 			rest = list_append(rest, arguments[argumentIndex])
@@ -221,13 +222,13 @@ def callUserDefinedMacro(environment, metadata, arguments):
 				restNameIndex = argumentIndex + 1
 				rest = list_append(rest, arguments[argumentIndex])
 			else:
-				environment[argumentName] = arguments[argumentIndex]
+				newEnvironment[argumentName] = arguments[argumentIndex]
 	if gotRest:
 		restName = metadata['argumentNames'][restNameIndex]
-		environment[restName] = rest
+		newEnvironment[restName] = rest
 	returnValue = None
 	for command in metadata['body']:
-		returnValue = evaluate(environment, command)
+		returnValue = evaluate(newEnvironment, command)
 	return returnValue
 
 def special_defmacro(environment, metadata, argumentsToDefmacro):
