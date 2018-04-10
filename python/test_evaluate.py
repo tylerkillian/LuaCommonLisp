@@ -452,6 +452,22 @@ def test_getAllCdrs_notAllListsHaveCdrs():
 	assert(expressionToString(returnValue) == "nil")
 	assert(stdout == "")
 
+def test_hasCdrs_true():
+	code = """
+		(has-cdrs '((a b c) (1 2 3)))
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "t")
+	assert(stdout == "")
+
+def test_hasCdrs_false():
+	code = """
+		(has-cdrs '((a b c) (d) (d e f)))
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "nil")
+	assert(stdout == "")
+
 def _test_mapcar_addTen():
 	code = """
 		(mapcar #'(lambda (x) (+ x 10)) '(1 2 3))
