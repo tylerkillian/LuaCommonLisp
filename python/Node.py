@@ -66,18 +66,12 @@ def getStringValue(node):
 	return node.getValue()[7:]
 
 def isNumber(node):
-	if isSymbol(node, "0"):
-		return True
-	elif isSymbol(node, "1"):
-		return True
-	elif isSymbol(node, "2"):
-		return True
-	elif isSymbol(node, "3"):
-		return True
-	elif isSymbol(node, "4"):
-		return True
-	elif isSymbol(node, "5"):
-		return True
+	if isSymbol(node):
+		try:
+			int(getSymbolValue(node))
+			return True
+		except:
+			return False
 	else:
 		return False
 
