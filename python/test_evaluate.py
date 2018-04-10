@@ -404,6 +404,22 @@ def test_zerop_false():
 	assert(expressionToString(returnValue) == "nil")
 	assert(stdout == "")
 
+def test_hasCars_true():
+	code = """
+		(has-cars '((a b c) (1 2 3)))
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "t")
+	assert(stdout == "")
+
+def test_hasCars_false():
+	code = """
+		(has-cars '((a b c) () (d e f)))
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "nil")
+	assert(stdout == "")
+
 def _test_mapcar_addTen():
 	code = """
 		(mapcar #'(lambda (x) (+ x 10)) '(1 2 3))
