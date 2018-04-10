@@ -15,13 +15,10 @@
 )
 
 (defun get-all-cars (lists)
-        (if lists
                 (if (has-cars lists)
-                        (cons (caar lists) (get-all-cars (cdr lists)))
+                        lists
                         nil
                 )
-                nil
-        )
 )
 
 (defun has-cdrs (lists)
