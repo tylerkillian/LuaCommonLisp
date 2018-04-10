@@ -436,6 +436,14 @@ def test_getAllCars_notAllListsHaveCars():
 	assert(expressionToString(returnValue) == "nil")
 	assert(stdout == "")
 
+def test_getAllCdrs_thereAreCdrs():
+	code = """
+		(get-all-cars '((a b c) (1 2 3)))
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "((b c) (2 3))")
+	assert(stdout == "")
+
 def _test_mapcar_addTen():
 	code = """
 		(mapcar #'(lambda (x) (+ x 10)) '(1 2 3))
