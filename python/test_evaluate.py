@@ -476,9 +476,9 @@ def test_mapcar_emptyList():
 	assert(expressionToString(returnValue) == "nil")
 	assert(stdout == "")
 
-def _test_mapcarViaApply_emptyList():
+def test_mapcarViaApply_emptyList():
 	code = """
-		(apply #'mapcar #'(lambda (x) (+ x 10)) nil)
+		(apply #'mapcar #'(lambda (x) (+ x 10)) '(()))
 	"""
 	returnValue, stdout = runCode(code)
 	assert(expressionToString(returnValue) == "nil")
