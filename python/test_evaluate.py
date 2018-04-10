@@ -444,6 +444,14 @@ def test_getAllCdrs_thereAreCdrs():
 	assert(expressionToString(returnValue) == "((b c) (2 3))")
 	assert(stdout == "")
 
+def test_getAllCdrs_notAllListsHaveCdrs():
+	code = """
+		(get-all-cdrs '((b c) (d) (1 2 3)))
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "nil")
+	assert(stdout == "")
+
 def _test_mapcar_addTen():
 	code = """
 		(mapcar #'(lambda (x) (+ x 10)) '(1 2 3))
