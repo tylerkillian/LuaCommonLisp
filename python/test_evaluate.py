@@ -425,7 +425,6 @@ def test_getAllCars_thereAreCars():
 		(get-all-cars '((a b c) (1 2 3)))
 	"""
 	returnValue, stdout = runCode(code)
-	print(expressionToString(returnValue))
 	assert(expressionToString(returnValue) == "(a 1)")
 	assert(stdout == "")
 
