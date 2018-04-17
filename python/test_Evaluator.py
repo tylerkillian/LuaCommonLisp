@@ -500,3 +500,7 @@
 #	assert(expressionToString(returnValue) == "(11 12 13)")
 #	assert(stdout == "")
 #
+
+def test_construct():
+	evaluator = Evaluator()
+
