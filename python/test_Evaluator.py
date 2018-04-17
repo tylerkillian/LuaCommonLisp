@@ -501,8 +501,30 @@
 #	assert(stdout == "")
 #
 
-from Evaluator import Evaluator
+from Evaluator import *
+from Stream import Stream
+from read import read
+
+def runCode(code):
+	inputStream = Stream(code)
+	environment = createStandardEnvironment()
+	outputStream = Stream()
+	environment["*standard-output*"] = outputStream
+	nextExpression = read(inputStream)
+	while nextExpression:
+		lastReturnValue = evaluate(environment, nextExpression)
+		nextExpression = read(inputStream)
+	stdout = environment["*standard-output*"].read()
+	return lastReturnValue, stdout
 
 def test_construct():
 	evaluator = Evaluator()
+
+def test_greaterThan_true():
+	code = """
+		(> 2 1)
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "t")
+	assert(stdout == "")
 
