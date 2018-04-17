@@ -582,3 +582,5 @@ def evaluate(environment, expression):
 		print("failed on " + expressionToString(expression))
 		assert(False)
 
+class Evaluator:
+	def __init__(self):
