@@ -501,7 +501,7 @@
 #	assert(stdout == "")
 #
 
-from Evalutor import Evaluator
+from Evaluator import Evaluator
 
 def test_construct():
 	evaluator = Evaluator()

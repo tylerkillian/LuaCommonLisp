@@ -584,3 +584,4 @@ def evaluate(environment, expression):
 
 class Evaluator:
 	def __init__(self):
+		pass
