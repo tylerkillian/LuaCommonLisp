@@ -25,12 +25,15 @@ def function_append(environment, metadata, arguments):
 
 def function_apply(environment, metadata, arguments):
 	assert(isFunctionPointer(arguments[0]))
-	assert(isCons(arguments[len(arguments)-1]))
+	assert(isCons(arguments[len(arguments)-1]) or arguments[len(arguments)-1] == NIL)
 	argumentsToAppliedFunction = []
 	for argumentIndex in range(1, len(arguments)-1):
 		argumentsToAppliedFunction.append(arguments[argumentIndex])
-	for argumentIndex in range(0, list_getLength(arguments[len(arguments)-1])):
-		argumentsToAppliedFunction.append(list_get(arguments[len(arguments)-1], argumentIndex))
+	if arguments[len(arguments)-1] == NIL:
+		argumentsToAppliedFunction.append(NIL)
+	else:
+		for argumentIndex in range(0, list_getLength(arguments[len(arguments)-1])):
+			argumentsToAppliedFunction.append(list_get(arguments[len(arguments)-1], argumentIndex))
 	functionPointer = arguments[0]
 	metadata = functionPointer.getExtra()
 	function = metadata["name"]

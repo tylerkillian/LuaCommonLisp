@@ -484,7 +484,7 @@ def test_mapcarViaApply_emptyList():
 	assert(expressionToString(returnValue) == "nil")
 	assert(stdout == "")
 
-def _test_mapcarViaApply_singleNumber():
+def test_mapcarViaApply_singleNumber():
 	code = """
 		(apply #'mapcar #'(lambda (x) (+ x 10)) '((1)))
 	"""
@@ -492,7 +492,7 @@ def _test_mapcarViaApply_singleNumber():
 	assert(expressionToString(returnValue) == "(11)")
 	assert(stdout == "")
 
-def _test_mapcar_addTen():
+def test_mapcar_addTen():
 	code = """
 		(mapcar #'(lambda (x) (+ x 10)) '(1 2 3))
 	"""
