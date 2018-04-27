@@ -55,5 +55,11 @@
 )
 
 (defun assoc (key alist)
-	
+	(if alist
+		(if (eql (caar alist) key)
+			(car alist)
+			(assoc key (cdr alist))
+		)
+		nil
+	)
 )
