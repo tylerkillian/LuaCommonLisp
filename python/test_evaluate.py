@@ -39,13 +39,22 @@ def test_apply():
 	assert(expressionToString(returnValue) == "15")
 	assert(stdout == "")
 
-def test_assoc():
+def test_assoc_found():
 	code = """
 		(setf a '((d . 3) (e . 4) (f . 5)))
 		(list (assoc 'f a) (assoc 'd a) (assoc 'e a))
 	"""
 	returnValue, stdout = runCode(code)
 	assert(expressionToString(returnValue) == "((f . 5) (d . 3) (e . 4))")
+	assert(stdout == "")
+
+def test_assoc_notFound():
+	code = """
+		(setf a '((d . 3) (e . 4) (f . 5)))
+		(assoc 'g a)
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "nil")
 	assert(stdout == "")
 
 def test_evaluate_symbol():
