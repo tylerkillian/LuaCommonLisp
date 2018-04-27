@@ -258,38 +258,6 @@ def test_cdr_emptyList():
 	assert(expressionToString(returnValue) == "nil")
 	assert(stdout == "")
 
-def test_greaterThan_true():
-	code = """
-		(> 2 1)
-	"""
-	returnValue, stdout = runCode(code)
-	assert(expressionToString(returnValue) == "t")
-	assert(stdout == "")
-
-def test_greaterThan_false():
-	code = """
-		(> 1 2)
-	"""
-	returnValue, stdout = runCode(code)
-	assert(expressionToString(returnValue) == "nil")
-	assert(stdout == "")
-
-def test_null_true():
-	code = """
-		(null nil)
-	"""
-	returnValue, stdout = runCode(code)
-	assert(expressionToString(returnValue) == "t")
-	assert(stdout == "")
-
-def test_null_false():
-	code = """
-		(null 'a)
-	"""
-	returnValue, stdout = runCode(code)
-	assert(expressionToString(returnValue) == "nil")
-	assert(stdout == "")
-
 def test_eql_sameSymbol():
 	code = """
 		(eql 'abc 'abc)
@@ -352,6 +320,22 @@ def test_equal_false():
 	assert(expressionToString(returnValue) == "nil")
 	assert(stdout == "")
 
+def test_greaterThan_true():
+	code = """
+		(> 2 1)
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "t")
+	assert(stdout == "")
+
+def test_greaterThan_false():
+	code = """
+		(> 1 2)
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "nil")
+	assert(stdout == "")
+
 def test_lambda_addThree():
 	code = """
 		(setf addThree (lambda (x) (+ x 3)))
@@ -375,6 +359,22 @@ def test_lambda_rest():
 	"""
 	returnValue, stdout = runCode(code)
 	assert(expressionToString(returnValue) == "15")
+	assert(stdout == "")
+
+def test_null_true():
+	code = """
+		(null nil)
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "t")
+	assert(stdout == "")
+
+def test_null_false():
+	code = """
+		(null 'a)
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "nil")
 	assert(stdout == "")
 
 def test_rest_simpleList():
