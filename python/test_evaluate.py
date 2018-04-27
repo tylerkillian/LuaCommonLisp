@@ -45,7 +45,8 @@ def test_assoc():
 		(list (assoc 'f a) (assoc 'd a) (assoc 'e a))
 	"""
 	returnValue, stdout = runCode(code)
-	assert(expressionToString(returnValue) == "(5 3 4)")
+	print(expressionToString(returnValue))
+	assert(expressionToString(returnValue) == "((f . 5) (d . 3) (e . 4))")
 	assert(stdout == "")
 
 def test_evaluate_symbol():
