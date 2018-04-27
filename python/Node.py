@@ -23,7 +23,7 @@ class Node:
 
 def isCons(node):
 	if node == NIL:
-		return False
+		return True
 	if node.getValue() == "cons":
 		return True
 	return False
