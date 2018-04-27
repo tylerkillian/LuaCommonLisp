@@ -54,3 +54,6 @@
         )
 )
 
+(defun assoc (key alist)
+	
+)
