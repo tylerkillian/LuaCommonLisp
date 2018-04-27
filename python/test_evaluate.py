@@ -401,6 +401,14 @@ def test_rest_emptyList():
 	assert(expressionToString(returnValue) == "nil")
 	assert(stdout == "")
 
+def test_reverse_simpleList():
+	code = """
+		(reverse '(1 2 3 4 5))
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "(5 4 3 2 1)")
+	assert(stdout == "")
+
 def test_subtraction():
 	environment = createStandardEnvironment()
 	expression = createExpressionFromString("(- 1 2 3 4) ")
