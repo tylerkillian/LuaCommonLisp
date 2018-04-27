@@ -45,7 +45,6 @@ def test_assoc():
 		(list (assoc 'f a) (assoc 'd a) (assoc 'e a))
 	"""
 	returnValue, stdout = runCode(code)
-	print(expressionToString(returnValue))
 	assert(expressionToString(returnValue) == "((f . 5) (d . 3) (e . 4))")
 	assert(stdout == "")
 

@@ -56,7 +56,7 @@ def expressionToString(node, addParenthesis = True):
 		elif isCons(node.getCdr()):
 			result = expressionToString(node.getCar()) + " " + expressionToString(node.getCdr(), False)
 		else:
-			result = expressionToString(node.getCar()) + " " + expressionToString(node.getCdr())
+			result = expressionToString(node.getCar()) + " . " + expressionToString(node.getCdr())
 		if addParenthesis:
 			result = "(" + result + ")" 
 		return result
