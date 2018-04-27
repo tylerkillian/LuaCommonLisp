@@ -63,3 +63,11 @@
 		nil
 	)
 )
+
+(defun reverse (sequence)
+        (if sequence
+                (append (reverse (cdr sequence)) (list (car sequence)))
+                nil
+        )
+)
+
