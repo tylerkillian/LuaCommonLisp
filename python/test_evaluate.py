@@ -4,7 +4,16 @@ from read import read
 from reader import expressionToString
 from Stream import Stream
 
+# BEGIN ATOMS
+
 TOLERANCE = 1.0e-6
+
+def test_addition():
+	result = function_addition({}, {}, [Number(1), Number(2), Number(3), Number(4), Number(5)])
+	assert(isNumber(result))
+	assert(abs(getNumberValue(result) - 15) < TOLERANCE)
+
+# END ATOMS
 
 def createExpressionFromString(string):
 	inputStream = Stream(string)
@@ -63,11 +72,6 @@ def test_evaluate_symbol():
 	environment = createStandardEnvironment()
 	environment["a"] = Symbol("1")
 	assert(isSymbol(evaluate(environment, Symbol("a"))))
-
-def test_addition():
-	result = function_addition({}, {}, [Number(1), Number(2), Number(3), Number(4), Number(5)])
-	assert(isNumber(result))
-	assert(abs(getNumberValue(result) - 15) < TOLERANCE)
 
 def test_defun_sum():
 	environment = createStandardEnvironment()
