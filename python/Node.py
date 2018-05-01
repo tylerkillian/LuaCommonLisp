@@ -100,4 +100,18 @@ def getFunctionName(node):
 	assert(isFunctionPointer(node))
 	return node.getValue()[9:]
 
+def Expression(*values):
+	if len(values) == 0:
+		return NIL
+
+	previousCons = None
+	for nextValue in values:
+		nextCons = Cons(nextValue, NIL)
+		if previousCons:
+			previousCons.setCdr(nextCons)
+		else:
+			firstCons = nextCons
+		previousCons = nextCons
+	return firstCons
+
 
