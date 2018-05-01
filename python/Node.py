@@ -48,6 +48,9 @@ def getSymbolValue(node):
 	assert(isSymbol(node))
 	return node.getValue()[7:]
 
+def Number(value = 0):
+	return Symbol(str(value))
+
 def isString(node, value = None):
 	if node == NIL:
 		return False
@@ -68,7 +71,7 @@ def getStringValue(node):
 def isNumber(node):
 	if isSymbol(node):
 		try:
-			int(getSymbolValue(node))
+			float(getSymbolValue(node))
 			return True
 		except:
 			return False
