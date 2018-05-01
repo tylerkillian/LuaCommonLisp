@@ -78,6 +78,14 @@ def isNumber(node):
 	else:
 		return False
 
+def getNumberValue(node):
+	assert(isSymbol(node))
+	try:
+		value = float(getSymbolValue(node))
+		return value
+	except:
+		assert(False)
+
 def isFunctionPointer(node):
 	if node == NIL:
 		return False

@@ -65,11 +65,9 @@ def test_evaluate_symbol():
 	assert(isSymbol(evaluate(environment, Symbol("a"))))
 
 def test_addition():
-	environment = createStandardEnvironment()
-	expression = createExpressionFromString("(+ 1 2 3 4 5) ")
-	assert(isSymbol(evaluate(environment, expression), "15"))
 	result = function_addition({}, {}, [Number(1), Number(2), Number(3), Number(4), Number(5)])
-	#assert(isNumber(result, 15, TOLERANCE))
+	assert(isNumber(result))
+	assert(abs(getNumberValue(result) - 15) < TOLERANCE)
 
 def test_defun_sum():
 	environment = createStandardEnvironment()
