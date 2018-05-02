@@ -13,6 +13,22 @@ def test_addition():
 	assert(isNumber(result))
 	assert(abs(getNumberValue(result) - 15) < TOLERANCE)
 
+def test_apply():
+	functionToApply = FunctionPointer("+",
+		{
+			"name": function_addition,
+			"argumentNames": None,
+			"body": None,
+		}
+	)
+	arguments = [Number(1), Number(2), Expression(Number(3), Number(4), Number(5))]
+	code = """
+		(apply #'+ '1 '2 '(3 4 5))
+	"""	
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "15")
+	assert(stdout == "")
+
 # END ATOMS
 
 def createExpressionFromString(string):
@@ -41,14 +57,6 @@ def assertStdout(inputString, result):
 		evaluate(environment, nextExpression)
 		nextExpression = read(inputStream)
 	assert(environment["*standard-output*"].read() == result)
-
-def test_apply():
-	code = """
-		(apply #'+ '1 '2 '(3 4 5))
-	"""	
-	returnValue, stdout = runCode(code)
-	assert(expressionToString(returnValue) == "15")
-	assert(stdout == "")
 
 def test_assoc_found():
 	code = """
