@@ -13,7 +13,7 @@ def test_addition():
 	assert(isNumber(result))
 	assert(abs(getNumberValue(result) - 15) < TOLERANCE)
 
-def test_apply():
+def _test_apply():
 	functionToApply = FunctionPointer("+",
 		{
 			"name": function_addition,

@@ -1,5 +1,6 @@
 from reader import *
 import sys
+import uuid
 
 def isTrue(value):
 	if value == NIL:
@@ -36,6 +37,10 @@ def function_apply(environment, metadata, arguments):
 			argumentsToAppliedFunction.append(list_get(arguments[-1], argumentIndex))
 	functionPointer = arguments[0]
 	metadata = functionPointer.getExtra()
+	function = metadata["name"]
+
+	functionName = getFunctionName(functionPointer)
+	metadata = environment["functions"][functionName]
 	function = metadata["name"]
 	return function(environment, metadata, argumentsToAppliedFunction)
 
@@ -284,12 +289,14 @@ def special_function(environment, metadata, arguments):
 		for lambdaBodyIndex in range(2, list_getLength(lambdaForm)):
 			functionPointerBody.append(list_get(lambdaForm, lambdaBodyIndex))
 
-		return FunctionPointer("lambda", {
+		functionName = "lambda_" + str(uuid.uuid4())
+		functionDefinition = {
 			"name": callUserDefinedFunction, 
 			"argumentNames": functionPointerArgumentNames,
 			"body": functionPointerBody,
-		})
-
+		}
+		environment["functions"][functionName] = functionDefinition
+		return FunctionPointer(functionName, functionDefinition)
 def special_if(environment, metadata, arguments):
 	condition = arguments[0]
 	callIfTrue = arguments[1]
