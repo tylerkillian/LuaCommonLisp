@@ -13,16 +13,19 @@ def test_addition():
 	assert(isNumber(result))
 	assert(abs(getNumberValue(result) - 15) < TOLERANCE)
 
-def _test_apply():
-	functionToApply = FunctionPointer("+",
-		{
-			"name": function_addition,
-			"argumentNames": None,
-			"body": None,
+def test_apply():
+	functionToApply = FunctionPointer("+")
+	environment = {
+		"functions": {
+			"+": {
+				"name": function_addition,
+				"argumentNames": None,
+				"body": None,
+			}
 		}
-	)
+	}
 	arguments = [functionToApply, Number(1), Number(2), Expression(Number(3), Number(4), Number(5))]
-	result = function_apply({}, {}, arguments)
+	result = function_apply(environment, {}, arguments)
 	assert(abs(getNumberValue(result) - 15) < TOLERANCE)
 
 # END ATOMS
