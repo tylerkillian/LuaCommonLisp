@@ -21,13 +21,9 @@ def test_apply():
 			"body": None,
 		}
 	)
-	arguments = [Number(1), Number(2), Expression(Number(3), Number(4), Number(5))]
-	code = """
-		(apply #'+ '1 '2 '(3 4 5))
-	"""	
-	returnValue, stdout = runCode(code)
-	assert(expressionToString(returnValue) == "15")
-	assert(stdout == "")
+	arguments = [functionToApply, Number(1), Number(2), Expression(Number(3), Number(4), Number(5))]
+	result = function_apply({}, {}, arguments)
+	assert(abs(getNumberValue(result) - 15) < TOLERANCE)
 
 # END ATOMS
 
