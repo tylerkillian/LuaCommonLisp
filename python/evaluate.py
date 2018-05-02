@@ -36,9 +36,6 @@ def function_apply(environment, metadata, arguments):
 		for argumentIndex in range(0, list_getLength(arguments[-1])):
 			argumentsToAppliedFunction.append(list_get(arguments[-1], argumentIndex))
 	functionPointer = arguments[0]
-	metadata = functionPointer.getExtra()
-	function = metadata["name"]
-
 	functionName = getFunctionName(functionPointer)
 	metadata = environment["functions"][functionName]
 	function = metadata["name"]
@@ -273,7 +270,7 @@ def special_function(environment, metadata, arguments):
 	if isSymbol(arguments[0]):
 		functionName = getSymbolValue(arguments[0])
 		assert(environment["functions"][functionName])
-		return FunctionPointer(functionName, environment["functions"][functionName])
+		return FunctionPointer(functionName)
 	else:
 		assert(isCons(arguments[0]))
 		assert(isSymbol(list_get(arguments[0], 0), "lambda"))
@@ -296,7 +293,7 @@ def special_function(environment, metadata, arguments):
 			"body": functionPointerBody,
 		}
 		environment["functions"][functionName] = functionDefinition
-		return FunctionPointer(functionName, functionDefinition)
+		return FunctionPointer(functionName)
 def special_if(environment, metadata, arguments):
 	condition = arguments[0]
 	callIfTrue = arguments[1]
