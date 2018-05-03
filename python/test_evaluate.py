@@ -33,7 +33,7 @@ def test_apply():
 	result = function_apply(environment, {}, arguments)
 	assert(abs(getNumberValue(result) - 15) < TOLERANCE)
 
-def test_apply_nilArgument():
+def _test_apply_nilArgument():
 	functionToApply = FunctionPointer("+")
 	environment = {
 		"nil": NIL,
