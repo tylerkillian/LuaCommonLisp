@@ -13,6 +13,11 @@ def test_addition():
 	assert(isNumber(result))
 	assert(abs(getNumberValue(result) - 15) < TOLERANCE)
 
+def test_addition_noArguments():
+	result = function_addition({}, {}, [])
+	assert(isNumber(result))
+	assert(abs(getNumberValue(result)) < TOLERANCE)
+
 def test_apply():
 	functionToApply = FunctionPointer("+")
 	environment = {
@@ -27,6 +32,38 @@ def test_apply():
 	arguments = [functionToApply, Number(1), Number(2), Expression(Number(3), Number(4), Number(5))]
 	result = function_apply(environment, {}, arguments)
 	assert(abs(getNumberValue(result) - 15) < TOLERANCE)
+
+def test_apply_nilArgument():
+	functionToApply = FunctionPointer("+")
+	environment = {
+		"nil": NIL,
+		"functions": {
+			"+": {
+				"name": function_addition,
+				"argumentNames": None,
+				"body": None,
+			}
+		}
+	}
+	arguments = [functionToApply, NIL]
+	result = function_apply(environment, {}, arguments)
+	assert(abs(getNumberValue(result)) < TOLERANCE)
+
+def test_apply_emptyListAsArgument():
+	functionToApply = FunctionPointer("+")
+	environment = {
+		"nil": NIL,
+		"functions": {
+			"+": {
+				"name": function_addition,
+				"argumentNames": None,
+				"body": None,
+			}
+		}
+	}
+	arguments = [functionToApply, Expression()]
+	result = function_apply(environment, {}, arguments)
+	assert(abs(getNumberValue(result)) < TOLERANCE)
 
 # END ATOMS
 
