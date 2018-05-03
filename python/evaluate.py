@@ -31,6 +31,7 @@ def function_apply(environment, metadata, arguments):
 	for argumentIndex in range(1, len(arguments)-1):
 		argumentsToAppliedFunction.append(arguments[argumentIndex])
 	if arguments[-1] == NIL:
+		print("yep")
 		argumentsToAppliedFunction.append(NIL)
 	else:
 		for argumentIndex in range(0, list_getLength(arguments[-1])):
