@@ -49,16 +49,6 @@ def test_apply_nilArgument():
 	result = function_apply(environment, {}, arguments)
 	assert(abs(getNumberValue(result)) < TOLERANCE)
 
-def test_assoc_found():
-	code = """
-		(setf a '((d . 3) (e . 4) (f . 5)))
-		(list (assoc 'f a) (assoc 'd a) (assoc 'e a))
-	"""
-	returnValue, stdout = runCode(code)
-	assert(expressionToString(returnValue) == "((f . 5) (d . 3) (e . 4))")
-	assert(stdout == "")
-
-
 # END ATOMS
 
 def createExpressionFromString(string):
@@ -87,6 +77,15 @@ def assertStdout(inputString, result):
 		evaluate(environment, nextExpression)
 		nextExpression = read(inputStream)
 	assert(environment["*standard-output*"].read() == result)
+
+def test_assoc_found():
+	code = """
+		(setf a '((d . 3) (e . 4) (f . 5)))
+		(list (assoc 'f a) (assoc 'd a) (assoc 'e a))
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "((f . 5) (d . 3) (e . 4))")
+	assert(stdout == "")
 
 def test_assoc_notFound():
 	code = """
