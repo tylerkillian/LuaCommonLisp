@@ -30,17 +30,12 @@ def function_apply(environment, metadata, arguments):
 	argumentsToAppliedFunction = []
 	for argumentIndex in range(1, len(arguments)-1):
 		argumentsToAppliedFunction.append(arguments[argumentIndex])
-	if arguments[-1] == NIL:
-		print("yep")
-		argumentsToAppliedFunction.append(NIL)
-	else:
-		for argumentIndex in range(0, list_getLength(arguments[-1])):
-			argumentsToAppliedFunction.append(list_get(arguments[-1], argumentIndex))
+	for argumentIndex in range(0, list_getLength(arguments[-1])):
+		argumentsToAppliedFunction.append(list_get(arguments[-1], argumentIndex))
 	functionPointer = arguments[0]
 	functionName = getFunctionName(functionPointer)
 	metadata = environment["functions"][functionName]
 	function = metadata["name"]
-	print(expressionToString(argumentsToAppliedFunction[0]))
 	return function(environment, metadata, argumentsToAppliedFunction)
 
 def function_car(environment, metadata, arguments):
@@ -170,6 +165,10 @@ def callUserDefinedFunction(environment, metadata, arguments):
 	if gotRest:
 		restName = metadata['argumentNames'][restNameIndex]
 		newEnvironment[restName] = rest
+	else:
+		if "&rest" in metadata['argumentNames']:
+			restName = metadata['argumentNames'][-1]
+			newEnvironment[restName] = NIL
 	returnValue = None
 	for command in metadata['body']:
 		returnValue = evaluate(newEnvironment, command)
