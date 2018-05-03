@@ -39,6 +39,7 @@ def function_apply(environment, metadata, arguments):
 	functionName = getFunctionName(functionPointer)
 	metadata = environment["functions"][functionName]
 	function = metadata["name"]
+	print(expressionToString(argumentsToAppliedFunction[0]))
 	return function(environment, metadata, argumentsToAppliedFunction)
 
 def function_car(environment, metadata, arguments):

@@ -49,22 +49,6 @@ def test_apply_nilArgument():
 	result = function_apply(environment, {}, arguments)
 	assert(abs(getNumberValue(result)) < TOLERANCE)
 
-def test_apply_emptyListAsArgument():
-	functionToApply = FunctionPointer("+")
-	environment = {
-		"nil": NIL,
-		"functions": {
-			"+": {
-				"name": function_addition,
-				"argumentNames": None,
-				"body": None,
-			}
-		}
-	}
-	arguments = [functionToApply, Expression()]
-	result = function_apply(environment, {}, arguments)
-	assert(abs(getNumberValue(result)) < TOLERANCE)
-
 # END ATOMS
 
 def createExpressionFromString(string):
