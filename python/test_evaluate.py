@@ -61,6 +61,9 @@ def test_defun_sum():
 	}
 	arguments = [Symbol("sum"), Expression(Symbol("x"), Symbol("y")), Expression(Symbol("+"), Symbol("x"), Symbol("y"))]
 	special_defun(environment, {}, argumentsToDefun)
+	callSum = Expression(Symbol("sum"), Number(2), Number(3))
+	result = evaluate(environment, callSum)
+	assert(abs(getNumberValue(result) - 5) < TOLERANCE)
 
 	environment = createStandardEnvironment()
 	defineSum = createExpressionFromString("(defun sum (x y) (+ x y)) ")
