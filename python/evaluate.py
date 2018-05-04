@@ -106,7 +106,7 @@ def function_format(environment, metadata, arguments):
 	if len(arguments) > 2:
 		variableToLookup = arguments[2]
 		value = evaluate(environment, variableToLookup)
-		message = message.replace("~a", getSymbolValue(value))
+		message = message.replace("~a", expressionToString(value))
 	environment["*standard-output*"].write(message)
 	return NIL
 
