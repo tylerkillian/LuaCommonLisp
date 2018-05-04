@@ -60,17 +60,10 @@ def test_defun_sum():
 		}
 	}
 	arguments = [Symbol("sum"), Expression(Symbol("x"), Symbol("y")), Expression(Symbol("+"), Symbol("x"), Symbol("y"))]
-	special_defun(environment, {}, argumentsToDefun)
+	special_defun(environment, {}, arguments)
 	callSum = Expression(Symbol("sum"), Number(2), Number(3))
 	result = evaluate(environment, callSum)
 	assert(abs(getNumberValue(result) - 5) < TOLERANCE)
-
-	environment = createStandardEnvironment()
-	defineSum = createExpressionFromString("(defun sum (x y) (+ x y)) ")
-	evaluate(environment, defineSum)
-	callSum = createExpressionFromString("(setf result (sum 2 3)) ")
-	evaluate(environment, callSum)
-	assert(isSymbol(environment["result"], "5"))
 
 # END ATOMS
 
@@ -123,14 +116,6 @@ def test_evaluate_symbol():
 	environment = createStandardEnvironment()
 	environment["a"] = Symbol("1")
 	assert(isSymbol(evaluate(environment, Symbol("a")), "1"))
-
-def test_defun_sum():
-	environment = createStandardEnvironment()
-	defineSum = createExpressionFromString("(defun sum (x y) (+ x y)) ")
-	evaluate(environment, defineSum)
-	callSum = createExpressionFromString("(setf result (sum 2 3)) ")
-	evaluate(environment, callSum)
-	assert(isSymbol(environment["result"], "5"))
 
 def test_format_HelloWorld():
 	assertStdout('(format t "hello, world~%") ', "hello, world\n")
