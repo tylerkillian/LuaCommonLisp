@@ -1,6 +1,7 @@
 set -e
 
 python3 main.py -q test_atoms.lisp
+python3 main.py -q test_basic.lisp
 
 python3 tester.py test_Evaluator
 python3 tester.py test_reader
