@@ -94,15 +94,6 @@ def assertStdout(inputString, result):
 		nextExpression = read(inputStream)
 	assert(environment["*standard-output*"].read() == result)
 
-def test_assoc_notFound():
-	code = """
-		(setf a '((d . 3) (e . 4) (f . 5)))
-		(assoc 'g a)
-	"""
-	returnValue, stdout = runCode(code)
-	assert(expressionToString(returnValue) == "nil")
-	assert(stdout == "")
-
 def test_evaluate_symbol():
 	environment = createStandardEnvironment()
 	environment["a"] = Symbol("1")

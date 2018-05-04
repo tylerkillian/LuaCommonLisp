@@ -9,5 +9,11 @@
 	)
 )
 
+(defun test-assoc-not-found ()
+	(let ( (a '((d . 3) (e . 4) (f . 5))) )
+		(assert (not (assoc 'g a)))
+	)
+)
+
 (__run-all-tests__)
 

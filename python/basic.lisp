@@ -7,6 +7,10 @@
         (if a (if b t nil) nil)
 )
 
+(defun not (x)
+	(if x nil t)
+)
+
 (defun has-cars (lists)
         (if lists
                 (and (caar lists) (has-cars (cdr lists)))
