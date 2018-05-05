@@ -250,6 +250,23 @@ def special_defmacro(environment, metadata, argumentsToDefmacro):
 	}
 	return
 
+class Defun:
+	def __init__(self, functionMaker):
+		self.functionMaker = functionMaker
+	def __call__(self, environment, metadata, arguments):
+		functionName = getSymbolValue(arguments[0])
+		argumentNames = []
+		for argumentIndex in range(0, list_getLength(arguments[1])):
+			argumentNames.append(getSymbolValue(list_get(arguments[1], argumentIndex)))
+		body = []
+		for argumentIndex in range(2, len(arguments)):
+			body.append(arguments[argumentIndex])
+		environment["functions"][functionName] = {
+			"name": self.functionMaker(argumentNames, body), 
+		}
+		return arguments[0]
+		
+
 def special_defun(environment, metadata, argumentsToDefun):
 	functionName = getSymbolValue(argumentsToDefun[0])
 	argumentNames = []

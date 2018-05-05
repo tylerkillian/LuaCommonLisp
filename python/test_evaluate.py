@@ -41,6 +41,25 @@ class FakeEnvironment:
 		assert(self.lookup["functions"][name])
 		return FunctionPointer(name)
 
+class FakeSum:
+	def __init__(self):
+		pass
+	def __call__(self, environment, metadata, arguments):
+		assert(len(arguments) == 2)
+		assert(isNumber(arguments[0], 2, TOLERANCE))
+		assert(isNumber(arguments[1], 3, TOLERANCE))
+		return Number(5)
+
+class FakeSumMaker:
+	def __init__(self):
+		pass
+	def __call__(self, argumentNames, body):
+		assert(len(argumentNames) == 2)
+		assert(argumentNames[0] == "x")
+		assert(argumentNames[1] == "y")
+		assert(len(body) == 1)
+		assert(expressionToString(body[0]) == "(+ x y)")
+		return FakeSum()
 
 def test_addition():
 	result = function_addition({}, {}, [Number(1), Number(2), Number(3), Number(4), Number(5)])
@@ -76,6 +95,8 @@ def test_defun_sum():
 			}
 		}
 	}
+	environment = FakeEnvironment()
+	special_defun = Defun(FakeSumMaker())
 	arguments = [Symbol("sum"), Expression(Symbol("x"), Symbol("y")), Expression(Symbol("+"), Symbol("x"), Symbol("y"))]
 	special_defun(environment, {}, arguments)
 	callSum = Expression(Symbol("sum"), Number(2), Number(3))
