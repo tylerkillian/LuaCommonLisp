@@ -14,7 +14,7 @@ class FakeAddition:
 	def __call__(self, environment, metadata, arguments):
 		numArguments = len(arguments)
 		if numArguments == 0:
-			return 0
+			return Number(0)
 		elif numArguments == 5:
 			assert(isNumber(arguments[0], 1, TOLERANCE))
 			assert(isNumber(arguments[1], 2, TOLERANCE))
@@ -64,7 +64,6 @@ def test_apply_nilArgument():
 	functionToApply = environment.getFunctionPointer("+")
 	arguments = [functionToApply, NIL]
 	result = function_apply(environment, {}, arguments)
-	print(result)
 	assert(abs(getNumberValue(result)) < TOLERANCE)
 
 def test_defun_sum():
