@@ -8,6 +8,22 @@ from Stream import Stream
 
 TOLERANCE = 1.0e-6
 
+class FakeAddition:
+	def __init__(self):
+		pass
+	def __call__(self, environment, metadata, arguments):
+		numArguments = len(arguments)
+		if numArguments == 0:
+			return 0
+		elif numArguments == 5:
+			assert(isNumber(arguments[0], 1, TOLERANCE))
+			assert(isNumber(arguments[1], 2, TOLERANCE))
+			assert(isNumber(arguments[2], 3, TOLERANCE))
+			assert(isNumber(arguments[3], 4, TOLERANCE))
+			assert(isNumber(arguments[4], 5, TOLERANCE))
+			return Number(15)
+
+
 def test_addition():
 	result = function_addition({}, {}, [Number(1), Number(2), Number(3), Number(4), Number(5)])
 	assert(isNumber(result))
@@ -23,7 +39,7 @@ def test_apply():
 	environment = {
 		"functions": {
 			"+": {
-				"name": function_addition,
+				"name": FakeAddition(),
 				"argumentNames": None,
 				"body": None,
 			}

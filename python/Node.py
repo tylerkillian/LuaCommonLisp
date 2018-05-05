@@ -65,11 +65,14 @@ def getStringValue(node):
 	assert(isString(node))
 	return node.getValue()[7:]
 
-def isNumber(node):
+def isNumber(node, value = None, tolerance = None):
 	if isSymbol(node):
 		try:
 			float(getSymbolValue(node))
-			return True
+			if tolerance:
+				return abs(getNumberValue(node) - value) < tolerance
+			else:
+				return True
 		except:
 			return False
 	else:
