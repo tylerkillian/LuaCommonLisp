@@ -104,9 +104,7 @@ def function_format(environment, metadata, arguments):
 	message = getStringValue(arguments[1])
 	message = message.replace("~%", "\n")
 	if len(arguments) > 2:
-		variableToLookup = arguments[2]
-		value = evaluate(environment, variableToLookup)
-		message = message.replace("~a", expressionToString(value))
+		message = message.replace("~a", expressionToString(arguments[2]))
 	environment["*standard-output*"].write(message)
 	return NIL
 
