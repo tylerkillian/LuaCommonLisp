@@ -293,6 +293,7 @@ def special_function(environment, metadata, arguments):
 		}
 		environment["functions"][functionName] = functionDefinition
 		return FunctionPointer(functionName)
+
 def special_if(environment, metadata, arguments):
 	condition = arguments[0]
 	callIfTrue = arguments[1]
