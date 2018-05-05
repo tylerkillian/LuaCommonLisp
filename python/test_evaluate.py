@@ -23,6 +23,17 @@ class FakeAddition:
 			assert(isNumber(arguments[4], 5, TOLERANCE))
 			return Number(15)
 
+def FakeEnvironment():
+	return {
+		"functions": {
+			"+": {
+				"name": FakeAddition(),
+				"argumentNames": None,
+				"body": None,
+			}
+		}
+	}
+
 
 def test_addition():
 	result = function_addition({}, {}, [Number(1), Number(2), Number(3), Number(4), Number(5)])
@@ -36,17 +47,8 @@ def test_addition_noArguments():
 
 def test_apply():
 	functionToApply = FunctionPointer("+")
-	environment = {
-		"functions": {
-			"+": {
-				"name": FakeAddition(),
-				"argumentNames": None,
-				"body": None,
-			}
-		}
-	}
 	arguments = [functionToApply, Number(1), Number(2), Expression(Number(3), Number(4), Number(5))]
-	result = function_apply(environment, {}, arguments)
+	result = function_apply(FakeEnvironment(), {}, arguments)
 	assert(abs(getNumberValue(result) - 15) < TOLERANCE)
 
 def test_apply_nilArgument():
