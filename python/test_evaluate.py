@@ -64,6 +64,7 @@ def test_apply_nilArgument():
 	functionToApply = environment.getFunctionPointer("+")
 	arguments = [functionToApply, NIL]
 	result = function_apply(environment, {}, arguments)
+	print(result)
 	assert(abs(getNumberValue(result)) < TOLERANCE)
 
 def test_defun_sum():
