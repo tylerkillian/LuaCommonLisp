@@ -23,16 +23,23 @@ class FakeAddition:
 			assert(isNumber(arguments[4], 5, TOLERANCE))
 			return Number(15)
 
-def FakeEnvironment():
-	return {
-		"functions": {
-			"+": {
-				"name": FakeAddition(),
-				"argumentNames": None,
-				"body": None,
+class FakeEnvironment:
+	def __init__(self):
+		self.lookup = {
+			"functions": {
+				"+": {
+					"name": FakeAddition(),
+					"argumentNames": None,
+					"body": None,
+				}
 			}
 		}
-	}
+	def __getitem__(self, key):
+		assert(self.lookup[key])
+		return self.lookup[key]
+	def getFunctionPointer(self, name):
+		assert(self.lookup["functions"][name])
+		return FunctionPointer(name)
 
 
 def test_addition():
@@ -46,23 +53,15 @@ def test_addition_noArguments():
 	assert(abs(getNumberValue(result)) < TOLERANCE)
 
 def test_apply():
-	functionToApply = FunctionPointer("+")
+	environment = FakeEnvironment()
+	functionToApply = environment.getFunctionPointer("+")
 	arguments = [functionToApply, Number(1), Number(2), Expression(Number(3), Number(4), Number(5))]
-	result = function_apply(FakeEnvironment(), {}, arguments)
+	result = function_apply(environment, {}, arguments)
 	assert(abs(getNumberValue(result) - 15) < TOLERANCE)
 
 def test_apply_nilArgument():
-	functionToApply = FunctionPointer("+")
-	environment = {
-		"nil": NIL,
-		"functions": {
-			"+": {
-				"name": function_addition,
-				"argumentNames": None,
-				"body": None,
-			}
-		}
-	}
+	environment = FakeEnvironment()
+	functionToApply = environment.getFunctionPointer("+")
 	arguments = [functionToApply, NIL]
 	result = function_apply(environment, {}, arguments)
 	assert(abs(getNumberValue(result)) < TOLERANCE)
