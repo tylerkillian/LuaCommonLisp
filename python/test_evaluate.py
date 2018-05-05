@@ -86,15 +86,6 @@ def test_apply_nilArgument():
 	assert(abs(getNumberValue(result)) < TOLERANCE)
 
 def test_defun_sum():
-	environment = {
-		"functions": {
-			"+": {
-				"name": function_addition,
-				"argumentNames": None,
-				"body": None,
-			}
-		}
-	}
 	environment = FakeEnvironment()
 	special_defun = Defun(FakeSumMaker())
 	arguments = [Symbol("sum"), Expression(Symbol("x"), Symbol("y")), Expression(Symbol("+"), Symbol("x"), Symbol("y"))]
