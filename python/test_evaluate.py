@@ -88,10 +88,10 @@ def test_apply_nilArgument():
 def test_defun_sum():
 	environment = FakeEnvironment()
 	special_defun = Defun(FakeSumMaker())
+
 	arguments = [Symbol("sum"), Expression(Symbol("x"), Symbol("y")), Expression(Symbol("+"), Symbol("x"), Symbol("y"))]
 	special_defun(environment, {}, arguments)
-	callSum = Expression(Symbol("sum"), Number(2), Number(3))
-	result = evaluate(environment, callSum)
+	result = environment["functions"]["sum"]["name"](environment, {}, [Number(2), Number(3)])
 	assert(abs(getNumberValue(result) - 5) < TOLERANCE)
 
 # END ATOMS
