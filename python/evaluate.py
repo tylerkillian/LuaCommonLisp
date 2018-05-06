@@ -349,6 +349,21 @@ def special_let(environment, metadata, arguments):
 		lastReturnValue = evaluate(localEnvironment, nextExpression)
 	return lastReturnValue
 
+def Let(environment, metadata, arguments):
+	def __init__(self):
+		pass
+	assert(len(arguments) >= 2)
+	localEnvironment = copyEnvironment(environment)
+	for variableIdx in range(0, list_getLength(arguments[0])):
+		variableDefinition = list_get(arguments[0], variableIdx)
+		variableToSet = getSymbolValue(list_get(variableDefinition, 0))
+		variableValue = evaluate(environment, list_get(variableDefinition, 1))
+		localEnvironment[variableToSet] = variableValue
+	for expressionIdx in range(1, len(arguments)):
+		nextExpression = arguments[expressionIdx]
+		lastReturnValue = evaluate(localEnvironment, nextExpression)
+	return lastReturnValue
+
 def special_progn(environment, metadata, arguments):
 	for nextExpression in arguments:
 		lastReturnValue = evaluate(environment, nextExpression)
