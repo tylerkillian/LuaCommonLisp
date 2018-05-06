@@ -34,6 +34,8 @@ class FakeEnvironment:
 				}
 			}
 		}
+	def __contains__(self, key):
+		return key in self.lookup
 	def __getitem__(self, key):
 		assert(self.lookup[key])
 		return self.lookup[key]
@@ -177,6 +179,34 @@ def test_let_multipleValues():
 		)
 	"""
 	assertStdout(code, "a = 2\nb = 3\n")
+	def evaluate(environment, expression):
+		if expression == "get value of a":
+			assert(isNumber(environment["a"], 2))
+			return environment["a"]
+		elif expression == "get value of b":
+			assert(isNumber(environment["b"], 3))
+			return environment["b"]
+		elif isNumber(expression, 2):
+			return Number("2")
+		elif isNumber(expression, 3):
+			return Number("3")
+		else:
+			assert(False)
+	environment = FakeEnvironment()
+	special_let = Let()
+
+	arguments = [
+		Expression(
+			Expression(Symbol("a"), Number("2")),
+			Expression(Symbol("b"), Number("3"))
+		),
+		"get value of a",
+		"get value of b"
+	]
+	result = special_let(evaluate, environment, arguments)
+	assert(isNumber(result, 3))
+	assert(not "a" in environment)
+	assert(not "b" in environment)
 
 # END ATOMS
 
