@@ -173,10 +173,10 @@ def test_let_singleValue():
 
 def test_let_multipleValues():
 	def evaluate(environment, expression):
-		if expression == "get value of a":
+		if expression == "check value of a":
 			assert(isNumber(environment["a"], 2))
 			return environment["a"]
-		elif expression == "get value of b":
+		elif expression == "check value of b":
 			assert(isNumber(environment["b"], 3))
 			return environment["b"]
 		elif isNumber(expression, 2):
@@ -193,8 +193,8 @@ def test_let_multipleValues():
 			Expression(Symbol("a"), Number("2")),
 			Expression(Symbol("b"), Number("3"))
 		),
-		"get value of a",
-		"get value of b"
+		"check value of a",
+		"check value of b"
 	]
 	result = special_let(evaluate, environment, arguments)
 	assert(isNumber(result, 3))
