@@ -263,24 +263,20 @@ class Defun:
 			body.append(arguments[argumentIndex])
 		environment["functions"][functionName] = {
 			"name": self.functionMaker(argumentNames, body), 
+			"argumentNames": argumentNames, # remove once callUserDefinedFunction is made into an object
+			"body": body, # remove once callUserDefinedFunction is made into an objet
 		}
 		return arguments[0]
 		
 
-def special_defun(environment, metadata, argumentsToDefun):
-	functionName = getSymbolValue(argumentsToDefun[0])
-	argumentNames = []
-	for argumentIndex in range(0, list_getLength(argumentsToDefun[1])):
-		argumentNames.append(getSymbolValue(list_get(argumentsToDefun[1], argumentIndex)))
-	body = []
-	for argumentIndex in range(2, len(argumentsToDefun)):
-		body.append(argumentsToDefun[argumentIndex])
-	environment["functions"][functionName] = {
-		"name": callUserDefinedFunction, 
-		"argumentNames": argumentNames,
-		"body": body,
-	}
-	return argumentsToDefun[0]
+# Remove once callUserDefinedFunction is made into an object
+class TemporaryFunctionMaker:
+	def __init__(self):
+		pass
+	def __call__(self, argumentNames, body):
+		return callUserDefinedFunction
+
+special_defun = Defun(TemporaryFunctionMaker())
 
 def special_function(environment, metadata, arguments):
 	if isSymbol(arguments[0]):
