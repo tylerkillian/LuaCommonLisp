@@ -39,6 +39,10 @@ class FakeEnvironment:
 		return self.lookup[key]
 	def __setitem__(self, key, value):
 		self.lookup[key] = value
+	def copy(self):
+		theCopy = FakeEnvironment()
+		for key in self.lookup:
+			theCopy[key] = self.lookup[key]
 	def getFunctionPointer(self, name):
 		assert(self.lookup["functions"][name])
 		return FunctionPointer(name)
