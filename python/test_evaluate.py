@@ -43,6 +43,7 @@ class FakeEnvironment:
 		theCopy = FakeEnvironment()
 		for key in self.lookup:
 			theCopy[key] = self.lookup[key]
+		return theCopy
 	def getFunctionPointer(self, name):
 		assert(self.lookup["functions"][name])
 		return FunctionPointer(name)
@@ -163,8 +164,21 @@ def test_let_singleValue():
 		(format t "b = ~a~%" b)
 	"""
 	assertStdout(code, "b = 2\nb = 3\nb = 2\n")
+	def evaluate(environment, expression):
+		if expression == "get value of b":
+			return environment["b"]
+		elif isNumber(expression, 3):
+			return Number("3")
+		else:
+			assert(False)
 	environment = FakeEnvironment()
 	environment["b"] = Number(2)
+	special_let = Let()
+
+	arguments = [Expression(Expression(Symbol("b"), Number("3"))), "get value of b"]
+	result = special_let(evaluate, environment, arguments)
+	assert(isNumber(result, 3))
+	assert(isNumber(environment["b"], 2))
 
 def test_let_multipleValues():
 	code = """
