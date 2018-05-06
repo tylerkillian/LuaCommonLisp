@@ -121,7 +121,7 @@ def test_if_true():
 	special_if = If(fakeIsTrue)
 
 	arguments = ["this evaluates to true", "first expression", "second expression"]
-	result = special_if(evaluate, environment, {}, arguments)
+	result = special_if(evaluate, environment, arguments)
 	assert(result == "first expression evaluated")
 	history = evaluate.getHistory()
 	assert(len(history) == 2)
@@ -129,13 +129,6 @@ def test_if_true():
 	assert(history[1] == "first expression")
 
 def test_if_false():
-	code = """
-		(if nil
-			(format t "true")
-			(format t "false")
-		)
-	"""	
-	assertStdout(code, "false")
 	evaluate = FakeEvaluator({
 		"this evaluates to false" : "false",
 		"first expression" : "first expression evaluated",
@@ -145,7 +138,7 @@ def test_if_false():
 	special_if = If(fakeIsTrue)
 
 	arguments = ["this evaluates to false", "first expression", "second expression"]
-	result = special_if(evaluate, environment, {}, arguments)
+	result = special_if(evaluate, environment, arguments)
 	assert(result == "second expression evaluated")
 	history = evaluate.getHistory()
 	assert(len(history) == 2)

@@ -321,7 +321,7 @@ def special_if(environment, metadata, arguments):
 class If:
 	def __init__(self, isTrue):
 		self.isTrue = isTrue
-	def __call__(self, evaluate, environment, metadata, arguments):
+	def __call__(self, evaluate, environment, arguments):
 		condition = arguments[0]
 		callIfTrue = arguments[1]
 		callIfFalse = arguments[2]
@@ -334,7 +334,7 @@ class If:
 
 _special_if = If(isTrue)
 def special_if(environment, metadata, arguments):
-	return _special_if(evaluate, environment, metadata, arguments)
+	return _special_if(evaluate, environment, arguments)
 
 def special_let(environment, metadata, arguments):
 	assert(len(arguments) >= 2)
