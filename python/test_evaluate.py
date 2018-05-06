@@ -37,6 +37,8 @@ class FakeEnvironment:
 	def __getitem__(self, key):
 		assert(self.lookup[key])
 		return self.lookup[key]
+	def __setitem__(self, key, value):
+		self.lookup[key] = value
 	def getFunctionPointer(self, name):
 		assert(self.lookup["functions"][name])
 		return FunctionPointer(name)
@@ -157,6 +159,8 @@ def test_let_singleValue():
 		(format t "b = ~a~%" b)
 	"""
 	assertStdout(code, "b = 2\nb = 3\nb = 2\n")
+	environment = FakeEnvironment()
+	environment["b"] = Number(2)
 
 def test_let_multipleValues():
 	code = """

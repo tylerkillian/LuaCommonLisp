@@ -69,8 +69,11 @@ def isNumber(node, value = None, tolerance = None):
 	if isSymbol(node):
 		try:
 			float(getSymbolValue(node))
-			if tolerance:
-				return abs(getNumberValue(node) - value) < tolerance
+			if value:
+				if not tolerance:
+					return getNumberValue(node) == value
+				else:
+					return abs(getNumberValue(node) - value) < tolerance
 			else:
 				return True
 		except:
