@@ -136,6 +136,21 @@ def test_if_false():
 		)
 	"""	
 	assertStdout(code, "false")
+	evaluate = FakeEvaluator({
+		"this evaluates to false" : "false",
+		"first expression" : "first expression evaluated",
+		"second expression" : "second expression evaluated",
+	})
+	environment = FakeEnvironment()
+	special_if = If(fakeIsTrue)
+
+	arguments = ["this evaluates to false", "first expression", "second expression"]
+	result = special_if(evaluate, environment, {}, arguments)
+	assert(result == "second expression evaluated")
+	history = evaluate.getHistory()
+	assert(len(history) == 2)
+	assert(history[0] == "this evaluates to false")
+	assert(history[1] == "second expression")
 
 
 # END ATOMS
