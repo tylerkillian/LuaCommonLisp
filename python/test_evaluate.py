@@ -172,13 +172,6 @@ def test_let_singleValue():
 	assert(isNumber(environment["b"], 2))
 
 def test_let_multipleValues():
-	code = """
-		(let ((a 2) (b 3))
-			(format t "a = ~a~%" a)
-			(format t "b = ~a~%" b)
-		)
-	"""
-	assertStdout(code, "a = 2\nb = 3\n")
 	def evaluate(environment, expression):
 		if expression == "get value of a":
 			assert(isNumber(environment["a"], 2))
