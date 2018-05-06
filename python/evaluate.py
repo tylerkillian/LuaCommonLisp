@@ -318,6 +318,24 @@ def special_if(environment, metadata, arguments):
 	else:
 		return evaluate(environment, callIfFalse)
 
+class If:
+	def __init__(self, isTrue):
+		self.isTrue = isTrue
+	def __call__(self, evaluate, environment, metadata, arguments):
+		condition = arguments[0]
+		callIfTrue = arguments[1]
+		callIfFalse = arguments[2]
+
+		conditionEvaluated = evaluate(environment, condition)
+		if self.isTrue(conditionEvaluated):
+			return evaluate(environment, callIfTrue)
+		else:
+			return evaluate(environment, callIfFalse)
+
+_special_if = If(isTrue)
+def special_if(environment, metadata, arguments):
+	return _special_if(evaluate, environment, metadata, arguments)
+
 def special_let(environment, metadata, arguments):
 	assert(len(arguments) >= 2)
 	localEnvironment = copyEnvironment(environment)

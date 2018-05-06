@@ -41,6 +41,17 @@ class FakeEnvironment:
 		assert(self.lookup["functions"][name])
 		return FunctionPointer(name)
 
+class FakeEvaluator:
+	def __init__(self, responses):
+		self.history = []
+		self.responses = responses
+	def __call__(self, environment, expression):
+		self.history.append(expression)
+		assert(self.responses[expression])
+		return self.responses[expression]
+	def getHistory(self):
+		return self.history
+
 class FakeSum:
 	def __init__(self):
 		pass
@@ -60,6 +71,12 @@ class FakeSumMaker:
 		assert(len(body) == 1)
 		assert(expressionToString(body[0]) == "(+ x y)")
 		return FakeSum()
+
+def fakeIsTrue(expression):
+	if expression == "true":
+		return True
+	else:
+		return False
 
 def test_addition():
 	result = function_addition({}, {}, [Number(1), Number(2), Number(3), Number(4), Number(5)])
@@ -93,6 +110,33 @@ def test_defun_sum():
 	special_defun(environment, {}, arguments)
 	result = environment["functions"]["sum"]["name"](environment, {}, [Number(2), Number(3)])
 	assert(abs(getNumberValue(result) - 5) < TOLERANCE)
+
+def test_if_true():
+	evaluate = FakeEvaluator({
+		"this evaluates to true" : "true",
+		"first expression" : "first expression evaluated",
+		"second expression" : "second expression evaluated",
+	})
+	environment = FakeEnvironment()
+	special_if = If(fakeIsTrue)
+
+	arguments = ["this evaluates to true", "first expression", "second expression"]
+	result = special_if(evaluate, environment, {}, arguments)
+	assert(result == "first expression evaluated")
+	history = evaluate.getHistory()
+	assert(len(history) == 2)
+	assert(history[0] == "this evaluates to true")
+	assert(history[1] == "first expression")
+
+def test_if_false():
+	code = """
+		(if nil
+			(format t "true")
+			(format t "false")
+		)
+	"""	
+	assertStdout(code, "false")
+
 
 # END ATOMS
 
@@ -171,24 +215,6 @@ def test_let_multipleValues():
 		)
 	"""
 	assertStdout(code, "a = 2\nb = 3\n")
-
-def test_if_true():
-	code = """
-		(if t
-			(format t "true")
-			(format t "false")
-		)
-	"""	
-	assertStdout(code, "true")
-
-def test_if_false():
-	code = """
-		(if nil
-			(format t "true")
-			(format t "false")
-		)
-	"""	
-	assertStdout(code, "false")
 
 def test_progn():
 	code = """
