@@ -153,17 +153,6 @@ def test_if_false():
 	assert(history[1] == "second expression")
 
 def test_let_singleValue():
-	code = """
-		(setf b 2)
-		(format t "b = ~a~%" b)
-
-		(let ((b 3))
-			(format t "b = ~a~%" b)
-		)
-
-		(format t "b = ~a~%" b)
-	"""
-	assertStdout(code, "b = 2\nb = 3\nb = 2\n")
 	def evaluate(environment, expression):
 		if expression == "get value of b":
 			return environment["b"]
