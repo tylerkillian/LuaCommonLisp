@@ -145,6 +145,27 @@ def test_if_false():
 	assert(history[0] == "this evaluates to false")
 	assert(history[1] == "second expression")
 
+def test_let_singleValue():
+	code = """
+		(setf b 2)
+		(format t "b = ~a~%" b)
+
+		(let ((b 3))
+			(format t "b = ~a~%" b)
+		)
+
+		(format t "b = ~a~%" b)
+	"""
+	assertStdout(code, "b = 2\nb = 3\nb = 2\n")
+
+def test_let_multipleValues():
+	code = """
+		(let ((a 2) (b 3))
+			(format t "a = ~a~%" a)
+			(format t "b = ~a~%" b)
+		)
+	"""
+	assertStdout(code, "a = 2\nb = 3\n")
 
 # END ATOMS
 
@@ -201,28 +222,6 @@ def test_function_readMacro():
 	returnValue, stdout = runCode(code)
 	assert(expressionToString(returnValue) == "rest")
 	assert(stdout == "")
-
-def test_let_singleValue():
-	code = """
-		(setf b 2)
-		(format t "b = ~a~%" b)
-
-		(let ((b 3))
-			(format t "b = ~a~%" b)
-		)
-
-		(format t "b = ~a~%" b)
-	"""
-	assertStdout(code, "b = 2\nb = 3\nb = 2\n")
-
-def test_let_multipleValues():
-	code = """
-		(let ((a 2) (b 3))
-			(format t "a = ~a~%" a)
-			(format t "b = ~a~%" b)
-		)
-	"""
-	assertStdout(code, "a = 2\nb = 3\n")
 
 def test_progn():
 	code = """
