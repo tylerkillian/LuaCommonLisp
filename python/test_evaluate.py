@@ -60,6 +60,25 @@ class FakeEvaluator:
 		return self.responses[expression]
 	def getHistory(self):
 		return self.history
+class FakeMacro:
+	def __init__(self):
+		pass
+	def __call__(self, environment, metadata, arguments):
+		assert(len(arguments) == 2)
+		assert(arguments[0] == "value assigned to x")
+		assert(arguments[1] == "value assigned to y")
+		return "this is the macro expansion"
+
+class FakeMacroMaker:
+	def __init__(self):
+		pass
+	def __call__(self, argumentNames, body):
+		assert(len(argumentNames) == 2)
+		assert(argumentNames[0] == "x")
+		assert(argumentNames[1] == "y")
+		assert(len(body) == 1)
+		assert(body[0] == "this is the macro body")
+		return FakeMacro()
 
 class FakeSum:
 	def __init__(self):
@@ -129,6 +148,14 @@ def test_defmacro():
 	returnValue, stdout = runCode(code)
 	assert(returnValue == NIL)
 	assert(stdout == "one\ntwo\nthree\n")
+	evaluate = FakeEvaluator({
+		"this is the macro expansion" : "this should be the result",
+	})
+	environment = FakeEnvironment()
+	special_defmacro = Defmacro(FakeMacroMaker)
+	arguments = [Symbol("example-macro"), Expression(Symbol("x"), Symbol("y")), "this is the macro body"]
+	result = environment["functions"]["sum"]["name"](environment, {}, [Number(2), Number(3)])
+	assert(abs(getNumberValue(result) - 5) < TOLERANCE)
 
 
 def test_defun_sum():
