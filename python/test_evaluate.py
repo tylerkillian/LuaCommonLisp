@@ -154,8 +154,9 @@ def test_defmacro():
 	environment = FakeEnvironment()
 	special_defmacro = Defmacro(FakeMacroMaker)
 	arguments = [Symbol("example-macro"), Expression(Symbol("x"), Symbol("y")), "this is the macro body"]
-	result = environment["functions"]["sum"]["name"](environment, {}, [Number(2), Number(3)])
-	assert(abs(getNumberValue(result) - 5) < TOLERANCE)
+	special_defmacro(environment, {}, arguments)
+	result = environment["macros"]["example-macro"]["name"](environment, {}, ["value assigned to x", "value assigned to y"])
+	assert(result == "this should be the result")
 
 
 def test_defun_sum():
