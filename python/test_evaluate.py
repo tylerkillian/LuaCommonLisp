@@ -133,23 +133,6 @@ def test_apply_nilArgument():
 	assert(abs(getNumberValue(result)) < TOLERANCE)
 
 def test_defmacro():
-	code = """
-		(defmacro when (condition &rest body)
-			`(if ,condition
-				(progn ,@body)
-				nil
-			)	
-		)
-
-		(when t
-			(format t "one~%")
-			(format t "two~%")
-			(format t "three~%")
-		)
-	"""
-	returnValue, stdout = runCode(code)
-	assert(returnValue == NIL)
-	assert(stdout == "one\ntwo\nthree\n")
 	evaluate = FakeEvaluator({
 		"this is the macro expansion" : "this should be the result",
 	})
