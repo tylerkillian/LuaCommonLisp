@@ -254,13 +254,13 @@ class Defmacro:
 	def __init__(self, macroMaker):
 		self.macroMaker = macroMaker
 	def __call__(self, environment, metadata, arguments):
-		macroName = getSymbolValue(argumentsToDefmacro[0])
+		macroName = getSymbolValue(arguments[0])
 		argumentNames = []
-		for argumentIndex in range(0, list_getLength(argumentsToDefmacro[1])):
-			argumentNames.append(getSymbolValue(list_get(argumentsToDefmacro[1], argumentIndex)))
+		for argumentIndex in range(0, list_getLength(arguments[1])):
+			argumentNames.append(getSymbolValue(list_get(arguments[1], argumentIndex)))
 		body = []
-		for argumentIndex in range(2, len(argumentsToDefmacro)):
-			body.append(argumentsToDefmacro[argumentIndex])
+		for argumentIndex in range(2, len(arguments)):
+			body.append(arguments[argumentIndex])
 		environment["macros"][macroName] = {
 			"name": self.macroMaker(argumentNames, body), 
 			"argumentNames": argumentNames, # remove once callUserMacro is made into an object
@@ -270,13 +270,13 @@ class Defmacro:
 		
 
 # Remove once callUserDefinedMacro is made into an object
-class TemporaryFunctionMaker:
+class TemporaryMacroMaker:
 	def __init__(self):
 		pass
 	def __call__(self, argumentNames, body):
-		return callUserDefinedFunction
+		return callUserDefinedMacro
 
-special_defun = Defun(TemporaryFunctionMaker())
+special_defmacro = Defmacro(TemporaryMacroMaker())
 
 
 class Defun:
