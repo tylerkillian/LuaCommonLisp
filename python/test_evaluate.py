@@ -31,13 +31,18 @@ class FakeEnvironment:
 					"name": FakeAddition(),
 					"argumentNames": None,
 					"body": None,
-				}
-			}
+				},
+			},
+			"macros": {
+			},
 		}
+		self.lookup["macros"] = {}
+		assert(self.lookup["functions"])
+		assert(self.lookup["macros"])
 	def __contains__(self, key):
 		return key in self.lookup
 	def __getitem__(self, key):
-		assert(self.lookup[key])
+		assert(key in self.lookup)
 		return self.lookup[key]
 	def __setitem__(self, key, value):
 		self.lookup[key] = value
@@ -152,11 +157,12 @@ def test_defmacro():
 		"this is the macro expansion" : "this should be the result",
 	})
 	environment = FakeEnvironment()
-	special_defmacro = Defmacro(FakeMacroMaker)
+	special_defmacro = Defmacro(FakeMacroMaker())
 	arguments = [Symbol("example-macro"), Expression(Symbol("x"), Symbol("y")), "this is the macro body"]
 	special_defmacro(environment, {}, arguments)
-	result = environment["macros"]["example-macro"]["name"](environment, {}, ["value assigned to x", "value assigned to y"])
-	assert(result == "this should be the result")
+	macroExpansionResult = environment["macros"]["example-macro"]["name"](environment, {}, ["value assigned to x", "value assigned to y"])
+	macroCallResult = evaluate(environment, macroExpansionResult)
+	assert(macroCallResult == "this should be the result")
 
 
 def test_defun_sum():
