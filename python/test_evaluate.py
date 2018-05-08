@@ -36,9 +36,6 @@ class FakeEnvironment:
 			"macros": {
 			},
 		}
-		self.lookup["macros"] = {}
-		assert(self.lookup["functions"])
-		assert(self.lookup["macros"])
 	def __contains__(self, key):
 		return key in self.lookup
 	def __getitem__(self, key):
