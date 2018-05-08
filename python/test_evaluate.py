@@ -111,6 +111,26 @@ def test_apply_nilArgument():
 	result = function_apply(environment, {}, arguments)
 	assert(abs(getNumberValue(result)) < TOLERANCE)
 
+def test_defmacro():
+	code = """
+		(defmacro when (condition &rest body)
+			`(if ,condition
+				(progn ,@body)
+				nil
+			)	
+		)
+
+		(when t
+			(format t "one~%")
+			(format t "two~%")
+			(format t "three~%")
+		)
+	"""
+	returnValue, stdout = runCode(code)
+	assert(returnValue == NIL)
+	assert(stdout == "one\ntwo\nthree\n")
+
+
 def test_defun_sum():
 	environment = FakeEnvironment()
 	special_defun = Defun(FakeSumMaker())
@@ -294,25 +314,6 @@ def test_quote():
 	returnValue, stdout = runCode(code)
 	assert(expressionToString(returnValue) == "a")
 	assert(stdout == "")
-
-def test_defmacro():
-	code = """
-		(defmacro when (condition &rest body)
-			`(if ,condition
-				(progn ,@body)
-				nil
-			)	
-		)
-
-		(when t
-			(format t "one~%")
-			(format t "two~%")
-			(format t "three~%")
-		)
-	"""
-	returnValue, stdout = runCode(code)
-	assert(returnValue == NIL)
-	assert(stdout == "one\ntwo\nthree\n")
 
 def test_cons():
 	code = """
