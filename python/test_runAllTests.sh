@@ -17,9 +17,3 @@ do
 	testCommand="python3 main.py -q $nextTest.lisp"
 	assertEquals "$testCommand" "$referenceCommand"
 done
-
-# remove these
-bash test_let.sh
-bash test_sum.sh
-
-
