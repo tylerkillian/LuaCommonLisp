@@ -8,15 +8,17 @@ do
 	python3 tester.py $nextTest
 done
 
-
-for nextTest in $( ls *.capture )
+source test_utilities.sh
+for nextTest in $( ls *.capture | sed 's/.capture$//' )
 do
-	echo $nextTest
+	echo "capture $nextTest"
+
+	referenceCommand="cat $nextTest.capture"
+	testCommand="python3 main.py -q $nextTest.lisp"
+	assertEquals "$testCommand" "$referenceCommand"
 done
 
 # remove these
-bash test_hello.sh
-bash test_test1.sh
 bash test_let.sh
 bash test_sum.sh
 
