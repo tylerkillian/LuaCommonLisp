@@ -3,14 +3,16 @@ set -e
 python3 main.py -q test_atoms.lisp
 python3 main.py -q test_basic.lisp
 
-python3 tester.py test_Evaluator
-python3 tester.py test_reader
-python3 tester.py test_Stream
-python3 tester.py test_read
-python3 tester.py test_evaluate
+for nextTest in $( ls test_*.py | sed 's/.py$//' )
+do
+	python3 tester.py $nextTest
+done
 
 
-
+for nextTest in $( ls *.capture )
+do
+	echo $nextTest
+done
 
 # remove these
 bash test_hello.sh
