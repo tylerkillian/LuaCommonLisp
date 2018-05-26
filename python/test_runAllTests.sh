@@ -9,7 +9,7 @@ do
 done
 
 source test_utilities.sh
-for nextTest in $( ls *.capture | sed 's/.capture$//' )
+for nextTest in $( ls test_*.lisp | sed 's/.lisp$//' )
 do
 	echo "capture $nextTest"
 
