@@ -118,6 +118,14 @@ def test_addition_noArguments():
 	assert(isNumber(result))
 	assert(abs(getNumberValue(result)) < TOLERANCE)
 
+def test_append():
+	code = """
+		(append (list 1 2 3) (list 4 5))
+	"""
+	returnValue, stdout = runCode(code)
+	assert(expressionToString(returnValue) == "(1 2 3 4 5)")
+	assert(stdout == "")
+
 def test_apply():
 	environment = FakeEnvironment()
 	functionToApply = environment.getFunctionPointer("+")
@@ -308,14 +316,6 @@ def test_progn():
 def test_list():
 	code = """
 		(list 1 2 3 4 5)
-	"""
-	returnValue, stdout = runCode(code)
-	assert(expressionToString(returnValue) == "(1 2 3 4 5)")
-	assert(stdout == "")
-
-def test_append():
-	code = """
-		(append (list 1 2 3) (list 4 5))
 	"""
 	returnValue, stdout = runCode(code)
 	assert(expressionToString(returnValue) == "(1 2 3 4 5)")
