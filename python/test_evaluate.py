@@ -119,17 +119,17 @@ def test_addition_noArguments():
 	assert(abs(getNumberValue(result)) < TOLERANCE)
 
 def test_append():
-	code = """
-		(append (list 1 2 3) (list 4 5))
-	"""
 	arguments = [
 		list_new(Number(1), Number(2), Number(3)),
 		list_new(Number(4), Number(5))
 	]
 	result = function_append({}, {}, arguments)
-	returnValue, stdout = runCode(code)
-	assert(expressionToString(returnValue) == "(1 2 3 4 5)")
-	assert(stdout == "")
+	assert(list_getLength(result) == 5)
+	assert(isNumber(list_get(result, 0), 1))
+	assert(isNumber(list_get(result, 1), 2))
+	assert(isNumber(list_get(result, 2), 3))
+	assert(isNumber(list_get(result, 3), 4))
+	assert(isNumber(list_get(result, 4), 5))
 
 def test_apply():
 	environment = FakeEnvironment()
