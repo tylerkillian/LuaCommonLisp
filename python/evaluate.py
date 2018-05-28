@@ -14,7 +14,7 @@ def function_addition(environment, metadata, arguments):
 		assert(isSymbol(nextArgument))
 		nextValue = getSymbolValue(nextArgument)
 		result += int(nextValue)
-	return Symbol(str(result))
+	return Number(str(result))
 
 def function_append(environment, metadata, arguments):
 	result = None
