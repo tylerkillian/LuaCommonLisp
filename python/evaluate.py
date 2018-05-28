@@ -24,6 +24,11 @@ def function_append(environment, metadata, arguments):
 			result = list_append(result, nextElement)
 	return result
 
+def apply_essence(function, arguments):
+	assert(isFunction(function))
+	assert(len(arguments) >= 1)
+	assert(isList(argument))
+
 def function_apply(environment, metadata, arguments):
 	assert(isFunctionPointer(arguments[0]))
 	assert(isCons(arguments[-1]) or arguments[-1] == NIL)
