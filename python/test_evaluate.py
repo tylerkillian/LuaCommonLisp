@@ -122,6 +122,11 @@ def test_append():
 	code = """
 		(append (list 1 2 3) (list 4 5))
 	"""
+	arguments = [
+		list_new(Number(1), Number(2), Number(3)),
+		list_new(Number(4), Number(5))
+	]
+	result = function_append({}, {}, arguments)
 	returnValue, stdout = runCode(code)
 	assert(expressionToString(returnValue) == "(1 2 3 4 5)")
 	assert(stdout == "")
@@ -151,7 +156,6 @@ def test_defmacro():
 	macroExpansionResult = environment["macros"]["example-macro"]["name"](environment, {}, ["value assigned to x", "value assigned to y"])
 	macroCallResult = evaluate(environment, macroExpansionResult)
 	assert(macroCallResult == "this should be the result")
-
 
 def test_defun_sum():
 	environment = FakeEnvironment()
