@@ -28,6 +28,8 @@ def apply_essence(function, arguments):
 	assert(isFunction(function))
 	assert(len(arguments) >= 1)
 	assert(isList(arguments[-1]))
+	argumentsToFunction = arguments[0:-1] + arguments[-1]
+	return function(arguments)
 
 def function_apply(environment, metadata, arguments):
 	assert(isFunctionPointer(arguments[0]))
