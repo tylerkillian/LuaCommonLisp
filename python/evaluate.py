@@ -25,7 +25,6 @@ def function_append(environment, metadata, arguments):
 	return result
 
 def apply_essence(function, arguments):
-	assert(isFunction(function))
 	assert(len(arguments) >= 1)
 	assert(isList(arguments[-1]))
 	argumentsToFunction = arguments[0:-1] + arguments[-1]
