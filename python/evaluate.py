@@ -27,7 +27,7 @@ def function_append(environment, metadata, arguments):
 def apply_essence(function, arguments):
 	assert(isFunction(function))
 	assert(len(arguments) >= 1)
-	assert(isList(argument))
+	assert(isList(arguments[-1]))
 
 def function_apply(environment, metadata, arguments):
 	assert(isFunctionPointer(arguments[0]))
