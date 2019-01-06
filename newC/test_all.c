@@ -3,6 +3,32 @@
 #include <stdlib.h>
 #include <string.h>
 
+typedef enum {
+	TRUE,
+	FALSE
+} Boolean;
+
+typedef struct {
+	Boolean isTrue;
+} LispObj;
+
+LispObj* LispObj_new(Boolean isTrue) {
+	LispObj* result = (LispObj*)malloc(sizeof(LispObj));
+	result->isTrue = isTrue;
+	return result;
+}
+
+Boolean LispObj_isTrue(LispObj* obj) {
+	return obj->isTrue;
+}
+
+void LispObj_free(LispObj* obj) {
+	free(obj);
+}
+
+typedef struct {
+} Environment;
+
 int stringsEqual(char *a, char *b) {
 	if (strcmp(a, b) == 0) {
 		return 1;
@@ -35,8 +61,21 @@ void test_getRemainingExpressionAfterRead() {
 	free(result);
 }
 
+LispObj* eval(Environment *environment, char *expression) {
+	LispObj* result = LispObj_new(FALSE);
+	return result;
+}
+
+void test_eval() {
+	LispObj* result = eval(NULL, NULL);
+	assert(LispObj_isTrue(result) == FALSE);
+	LispObj_free(result);
+}
+
 void test_all() {
 	test_getToken();
 	test_getRemainingExpressionAfterRead();
+
+	test_eval();
 }
 
