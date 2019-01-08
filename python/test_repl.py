@@ -2,7 +2,9 @@ from repl import repl
 
 class FakeReader:
     def __init__(self, *tokens):
-        self.tokens = tokens
+        self.tokens = []
+        for token in tokens:
+            self.tokens.append(token)
     def read(self):
         if len(self.tokens) == 0:
             return
