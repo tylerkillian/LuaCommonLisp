@@ -12,8 +12,10 @@ class FakeReader:
             return self.tokens.pop(0)
 
 class FakeEvaluator:
-    def __init__(self, **tokenToValueMappings):
-        self.tokenToValueMappings = tokenToValueMappings
+    def __init__(self, **expressionToValueMapping):
+        self.expressionToValueMapping = {}
+        for expression in expressionToValueMapping:
+            self.expressionToValueMapping[expression] = expressionToValueMapping[expression]
 
 class FakePrinter:
     def __init__(self):
