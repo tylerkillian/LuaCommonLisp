@@ -3,6 +3,11 @@ from repl import repl
 class FakeReader:
     def __init__(self, *tokens):
         self.tokens = tokens
+    def read(self):
+        if len(self.tokens) == 0:
+            return
+        else:
+            return self.tokens.pop(0)
 
 class FakeEvaluator:
     def __init__(self, **tokenToValueMappings):
