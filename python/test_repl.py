@@ -2,11 +2,11 @@ from repl import repl
 
 class FakeReader:
     def __init__(self, *tokens):
-        self.tokens = args
+        self.tokens = tokens
 
 class FakeEvaluator:
-    def __init__(self, **values):
-        self.values = values
+    def __init__(self, **tokenToValueMappings):
+        self.tokenToValueMappings = tokenToValueMappings
 
 class FakePrinter:
     def __init__(self):
