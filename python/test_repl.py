@@ -34,4 +34,4 @@ def test_repl():
 
     result = repl(reader, evaluator, printer)
 
-    assert(printer.getAllOutput() == "value1\nvalue2\nvalue3\n")
+    assert(printer.getAllOutput() == "value1value2value3")
