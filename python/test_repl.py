@@ -22,6 +22,8 @@ class FakeEvaluator:
 class FakePrinter:
     def __init__(self):
         self.output = ""
+    def print(self, value):
+        self.output = self.output + value
     def getAllOutput(self):
         return self.output
 
