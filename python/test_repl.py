@@ -16,6 +16,8 @@ class FakeEvaluator:
         self.expressionToValueMapping = {}
         for expression in expressionToValueMapping:
             self.expressionToValueMapping[expression] = expressionToValueMapping[expression]
+    def evaluate(self, expression):
+        return self.expressionToValueMapping[expression]
 
 class FakePrinter:
     def __init__(self):
