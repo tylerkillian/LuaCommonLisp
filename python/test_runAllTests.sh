@@ -11,6 +11,12 @@ assertEquals() {
 	testValue=`echo . ; $1 ; echo .`
 	referenceValue=`echo . ; $2 ; echo .`
 	if [ "$testValue" != "$referenceValue" ]; then
+		echo
+		echo "!ERROR!"
+		echo "testValue = $testValue"
+		echo
+		echo "referenceValue = $referenceValue"
+		echo
 		exit 1
 	fi
 }
@@ -28,3 +34,6 @@ do
 		python3 main.py -q $nextTest.lisp
 	fi
 done
+
+echo "ALL TESTS SUCCESSFUL"
+
