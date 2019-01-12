@@ -662,3 +662,9 @@ def evaluate(environment, expression):
 		print("failed on " + expressionToString(expression))
 		assert(False)
 
+
+class Evaluator:
+    def __init__(self, environment):
+        self.environment = environment
+    def __call__(self, form):
+        return evaluate(self.environment, form)
