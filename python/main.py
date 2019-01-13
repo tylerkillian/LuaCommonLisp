@@ -47,18 +47,12 @@ class LispFileReader:
 	def read(self):
 		nextCharacter = input.read(1)
 		while nextCharacter:
-			expression = reader.readNextCharacter(nextCharacter)
-		if expression:
-			reader = RootReader()
-
-		if isTestCommand(expression):
-			launchAllTests(environment)
-		else:
-			result = evaluate(environment, expression)
-		if mode == "normal":
-			print(expressionToString(result))
-		else:
-			nextCharacter = input.read(1)
+			expression = self.reader.readNextCharacter(nextCharacter)
+			if expression:
+				self.reader = RootReader()
+				return expression
+			else:
+				nextCharacter = input.read(1)
 
 mode, filename = parseCommandLineFlags(sys.argv)
 lisp(mode, filename)
