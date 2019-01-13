@@ -54,6 +54,23 @@ class LispFileReader:
 			else:
 				nextCharacter = input.read(1)
 
+class Evaluator:
+	def __init__(self):
+		self.environment = createStandardEnvironment()
+	def evaluate(self, expression):
+		if isTestCommand(expression):
+			launchAllTests(self.environment)
+		else
+			return evaluate(self.environment, expression)
+
+class Printer:
+	def __init__(self, mode):
+		self.mode = mode
+	def print(self, value):
+		if mode == "normal":
+			print(expressionToString(result))
+		
+
 mode, filename = parseCommandLineFlags(sys.argv)
 lisp(mode, filename)
 
