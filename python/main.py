@@ -52,7 +52,6 @@ class Printer:
 		if self.mode == "normal":
 			print(expressionToString(result))
 		
-
 mode, filename = parseCommandLineFlags(sys.argv)
 
 reader = LispFileReader(filename)
