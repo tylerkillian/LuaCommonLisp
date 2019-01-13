@@ -40,25 +40,25 @@ def parseCommandLineFlags(argv):
 	else:
 		return "normal", argv[1]
 
-#class LispFileReader:
-#    def __init__(self, inputFile):
-#	self.input = open(inputFile, "r")
-#self.reader = RootReader()
-#	def read(self):
-#nextCharacter = input.read(1)
-#while nextCharacter:
-#expression = reader.readNextCharacter(nextCharacter)
-#if expression:
-#reader = RootReader()
-#
-#if isTestCommand(expression):
-#launchAllTests(environment)
-#else:
-#result = evaluate(environment, expression)
-#if mode == "normal":
-#print(expressionToString(result))
-#else:
-#nextCharacter = input.read(1)
+class LispFileReader:
+	def __init__(self, inputFile):
+		self.input = open(inputFile, "r")
+		self.reader = RootReader()
+	def read(self):
+		nextCharacter = input.read(1)
+		while nextCharacter:
+			expression = reader.readNextCharacter(nextCharacter)
+		if expression:
+			reader = RootReader()
+
+		if isTestCommand(expression):
+			launchAllTests(environment)
+		else:
+			result = evaluate(environment, expression)
+		if mode == "normal":
+			print(expressionToString(result))
+		else:
+			nextCharacter = input.read(1)
 
 mode, filename = parseCommandLineFlags(sys.argv)
 lisp(mode, filename)
