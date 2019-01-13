@@ -623,7 +623,24 @@ def isSpecial(environment, expression):
 
 	return False
 
+def isTestCommand(expression):
+        if expressionToString(expression) == "(__run-all-tests__)":
+                return True
+        else:
+                return False
+
+def launchAllTests(environment):
+        for functionName in environment["functions"]:
+                if functionName[0:5] == "test-":
+                        print(functionName)
+                        testExpression = Cons(Symbol(functionName), NIL)
+                        evaluate(environment, testExpression)
+
 def evaluate(environment, expression):
+	if isTestCommand(expression):
+		launchAllTests(environment)
+		return
+
 	if expression == NIL:
 		return NIL
 	if isNumber(expression):

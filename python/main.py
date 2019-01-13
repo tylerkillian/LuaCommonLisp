@@ -40,10 +40,7 @@ class Evaluator:
 	def __init__(self):
 		self.environment = createStandardEnvironment()
 	def evaluate(self, expression):
-		if isTestCommand(expression):
-			launchAllTests(self.environment)
-		else:
-			return evaluate(self.environment, expression)
+		return evaluate(self.environment, expression)
 
 class Printer:
 	def __init__(self, mode):
