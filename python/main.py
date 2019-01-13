@@ -1,6 +1,7 @@
 import sys
 from reader import *
 from evaluate import evaluate, createStandardEnvironment
+from repl import repl
 
 def isTestCommand(expression):
 	if expressionToString(expression) == "(__run-all-tests__)":
@@ -15,25 +16,6 @@ def launchAllTests(environment):
 			testExpression = Cons(Symbol(functionName), NIL)
 			evaluate(environment, testExpression)
 
-def lisp(mode, inputFile):
-	input = open(inputFile, "r")
-	nextCharacter = input.read(1)
-	environment = createStandardEnvironment()
-	reader = RootReader()
-	while nextCharacter:
-		expression = reader.readNextCharacter(nextCharacter)
-		if expression:
-			reader = RootReader()
-
-			if isTestCommand(expression):
-				launchAllTests(environment)
-			else:
-				result = evaluate(environment, expression)
-				if mode == "normal":
-					print(expressionToString(result))
-		else:
-			nextCharacter = input.read(1)
-
 def parseCommandLineFlags(argv):
 	if argv[1] == "-q":
 		return "quiet", argv[2]
@@ -45,14 +27,14 @@ class LispFileReader:
 		self.input = open(inputFile, "r")
 		self.reader = RootReader()
 	def read(self):
-		nextCharacter = input.read(1)
+		nextCharacter = self.input.read(1)
 		while nextCharacter:
 			expression = self.reader.readNextCharacter(nextCharacter)
 			if expression:
 				self.reader = RootReader()
 				return expression
 			else:
-				nextCharacter = input.read(1)
+				nextCharacter = self.input.read(1)
 
 class Evaluator:
 	def __init__(self):
@@ -72,11 +54,10 @@ class Printer:
 		
 
 mode, filename = parseCommandLineFlags(sys.argv)
-lisp(mode, filename)
 
-#reader = LispFileReader(filename)
-#evaluator = Evaluator()
-#printer = Printer(mode)
-#
-#repl(reader, evaluator, printer)
+reader = LispFileReader(filename)
+evaluator = Evaluator()
+printer = Printer(mode)
+
+repl(reader, evaluator, printer)
 
