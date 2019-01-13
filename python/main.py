@@ -34,17 +34,12 @@ def lisp(mode, inputFile):
 		else:
 			nextCharacter = input.read(1)
 
-if sys.argv[1] == "-q":
-	mode = "quiet"
-	filename = sys.argv[2]
-else:
-	mode = "normal"
-	filename = sys.argv[1]
+def parseCommandLineFlags(argv):
+    if argv[1] == "-q":
+        return "quiet", argv[2]
+    else:
+        return "normal", argv[1]
+
+mode, filename = parseCommandLineFlags(sys.argv)
 lisp(mode, filename)
-
-
-
-
-
-
 
