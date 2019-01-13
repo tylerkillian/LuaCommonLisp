@@ -41,3 +41,10 @@ else:
 	mode = "normal"
 	filename = sys.argv[1]
 lisp(mode, filename)
+
+
+
+
+
+
+
