@@ -3,19 +3,6 @@ from reader import *
 from evaluate import evaluate, createStandardEnvironment
 from repl import repl
 
-def isTestCommand(expression):
-	if expressionToString(expression) == "(__run-all-tests__)":
-		return True
-	else:
-		return False
-
-def launchAllTests(environment):
-	for functionName in environment["functions"]:
-		if functionName[0:5] == "test-":
-			print(functionName)
-			testExpression = Cons(Symbol(functionName), NIL)
-			evaluate(environment, testExpression)
-
 def parseCommandLineFlags(argv):
 	if argv[1] == "-q":
 		return "quiet", argv[2]
