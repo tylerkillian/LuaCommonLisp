@@ -60,7 +60,7 @@ class Evaluator:
 	def evaluate(self, expression):
 		if isTestCommand(expression):
 			launchAllTests(self.environment)
-		else
+		else:
 			return evaluate(self.environment, expression)
 
 class Printer:
