@@ -1,20 +1,14 @@
-import sys
+import getCommandLineFlags
 import LispFileReader
 import Evaluator
 import Printer
 from repl import repl
 
-def parseCommandLineFlags(argv):
-	if argv[1] == "-q":
-		return "quiet", argv[2]
-	else:
-		return "normal", argv[1]
+flags = getCommandLineFlags.getCommandLineFlags()
 
-mode, filename = parseCommandLineFlags(sys.argv)
-
-reader = LispFileReader.LispFileReader(filename)
+reader = LispFileReader.LispFileReader(flags["filename"])
 evaluator = Evaluator.Evaluator()
-printer = Printer.Printer(mode)
+printer = Printer.Printer(flags["mode"])
 
 repl(reader, evaluator, printer)
 
