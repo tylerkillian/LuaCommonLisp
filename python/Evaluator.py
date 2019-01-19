@@ -1,5 +1,8 @@
 from evaluate import evaluate, createStandardEnvironment
 
+class Form:
+	def __init
+
 class Evaluator:
 	def __init__(self):
 		self.environment = createStandardEnvironment()
