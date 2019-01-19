@@ -24,7 +24,9 @@ class Evaluator:
 		self.environment = createStandardEnvironment()
 	def evaluate(self, expression):
 		return evaluate(self.environment, expression)
-	def 
+	def evaluateSymbol(self, symbol):
+		if symbol.isVariable():
+			return self.environment.readVariableValue()
 	def new_evaluate(self, form):
 		if form.isSymbol():
 			return self.evaluateSymbol(form)
