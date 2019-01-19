@@ -16,12 +16,15 @@ class Symbol(Form):
 		self.tempImplmentation = Symbol(value)	
 	def isSymbol(self):
 		return True
+	def isVariable(self):
+		return True
 
 class Evaluator:
 	def __init__(self):
 		self.environment = createStandardEnvironment()
 	def evaluate(self, expression):
 		return evaluate(self.environment, expression)
+	def 
 	def new_evaluate(self, form):
 		if form.isSymbol():
 			return self.evaluateSymbol(form)
