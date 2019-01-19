@@ -14,6 +14,8 @@ class Symbol(Form):
 	def __init__(self, value):
 		Form.__init__(self)
 		self.tempImplmentation = Symbol(value)	
+	def isSymbol(self):
+		return True
 
 class Evaluator:
 	def __init__(self):
