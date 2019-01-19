@@ -1,7 +1,18 @@
 from evaluate import evaluate, createStandardEnvironment
 
 class Form:
-	def __init
+	def __init__(self):
+		pass
+	def isSymbol(self):
+		return False
+	def isConses(self):
+		return False
+	def isSelfEvaluatingObject(self):
+		return False
+
+class Symbol(Form):
+	def __init__(self, value):
+		
 
 class Evaluator:
 	def __init__(self):
