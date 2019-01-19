@@ -19,6 +19,9 @@ class Symbol(Form):
 	def isVariable(self):
 		return True
 
+class Environment:
+	
+
 class Evaluator:
 	def __init__(self):
 		self.environment = createStandardEnvironment()
