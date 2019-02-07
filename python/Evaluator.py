@@ -19,7 +19,7 @@ class Symbol(Form):
 	def isVariable(self):
 		return True
 
-class Environment:
+#class Environment:
 	
 
 class Evaluator:
