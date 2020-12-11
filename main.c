@@ -2,6 +2,22 @@
 #include <stdlib.h>
 #include <string.h>
 
+typedef struct {
+	char value[255];
+} Symbol;
+
+Symbol* Symbol_new() {
+	Symbol *result = NULL;
+
+	result = (Symbol*)malloc(sizeof(Symbol));
+	result->value[0] = '\0';
+	return result;
+}
+
+void Symbol_delete(Symbol *symbol) {
+	free(symbol);
+}
+
 typedef enum {
 	NUMBER,
 	SYMBOL
@@ -9,21 +25,29 @@ typedef enum {
 
 typedef struct {
 	ObjectType itsType;
-	void* object;
-	void (*delete)(void *object);
+	void* value;
 } Object;
 
-Object* Object_new(void* object, void (*delete)(void* object)) {
+Object* Object_new() {
 	Object *result = NULL;
 
 	result = (Object*)malloc(sizeof(Object));
-	result->object = object;
-	result->delete = delete;
+	result->itsType = NUMBER;
+	result->object = NULL;
 	return result;
 }
 
+void Object_set(Object *object, ObjectType itsType, void* value) {
+	object->itsType = itsType;
+	object->value = value;
+}
+
 void Object_delete(Object *object) {
-	object->delete(object->object);
+	if (object->value != NULL) {
+		if (object->itsType == SYMBOL) {
+			Symbol_delete(object->value);
+		}
+	}
 	free(object);
 }
 
@@ -77,26 +101,10 @@ void Token_addCharacter(Token *token, char character) {
 	int characterIndex = 0;
 
 	while (token->value[characterIndex] != '\0') {
-		characterIndex++
+		characterIndex++;
 	}
 	token->value[characterIndex] = character;
 	token->value[characterIndex + 1] = '\0';
-}
-
-typedef struct {
-	char value[255];
-} Symbol;
-
-Symbol* Symbol_new() {
-	Symbol *result = NULL;
-
-	result = (Symbol*)malloc(sizeof(Symbol));
-	result->value[0] = '\0';
-	return result;
-}
-
-void Symbol_delete(Symbol *symbol) {
-	free(symbol);
 }
 
 void convertTokenToObject(Token *token, Object *result) {
@@ -104,8 +112,7 @@ void convertTokenToObject(Token *token, Object *result) {
 	
 	symbol = Symbol_new();
 	strcpy(symbol->value, token->value);
-	result->object = symbol;
-	result->delete = Symbol_delete;
+	Object_set(result, SYMBOL, symbol);
 }
 
 int read(InputStream *inputStream, Object *result) {
