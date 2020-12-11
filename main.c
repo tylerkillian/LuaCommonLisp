@@ -33,7 +33,7 @@ Object* Object_new() {
 
 	result = (Object*)malloc(sizeof(Object));
 	result->itsType = NUMBER;
-	result->object = NULL;
+	result->value = NULL;
 	return result;
 }
 
@@ -133,6 +133,7 @@ int main() {
 	inputStream = InputStream_new();
 	object = Object_new();
 	read(inputStream, object);
+	printf("%s\n", ((Symbol*)(object->value))->value);
 	Object_delete(object);
 	InputStream_delete(inputStream);
 
