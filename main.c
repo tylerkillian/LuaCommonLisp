@@ -2,17 +2,28 @@
 #include <stdlib.h>
 #include <string.h>
 
+typedef enum {
+	NUMBER,
+	SYMBOL
+} ObjectType;
+
 typedef struct {
+	ObjectType itsType;
+	void* object;
+	void (*delete)(void *object);
 } Object;
 
-Object* Object_new() {
+Object* Object_new(void* object, void (*delete)(void* object)) {
 	Object *result = NULL;
 
 	result = (Object*)malloc(sizeof(Object));
+	result->object = object;
+	result->delete = delete;
 	return result;
 }
 
 void Object_delete(Object *object) {
+	object->delete(object->object);
 	free(object);
 }
 
@@ -88,7 +99,14 @@ void Symbol_delete(Symbol *symbol) {
 	free(symbol);
 }
 
-void convert
+void convertTokenToObject(Token *token, Object *result) {
+	Symbol *symbol = NULL;
+	
+	symbol = Symbol_new();
+	strcpy(symbol->value, token->value);
+	result->object = symbol;
+	result->delete = Symbol_delete;
+}
 
 int read(InputStream *inputStream, Object *result) {
 	char nextCharacter;
