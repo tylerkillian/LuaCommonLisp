@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ut_String.h>
 
 typedef struct {
 	char value[255];
@@ -136,6 +137,8 @@ int main() {
 	printf("%s\n", ((Symbol*)(object->value))->value);
 	Object_delete(object);
 	InputStream_delete(inputStream);
+
+	ut_String_run_tests();
 
 	return 0;
 }
