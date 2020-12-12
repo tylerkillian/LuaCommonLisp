@@ -11,6 +11,6 @@ void test_appendCharacter() {
 	String_delete(s);
 }
 
-void ut_String_run_tests() {
+void ut_String_runTests() {
 	test_appendCharacter();
 }

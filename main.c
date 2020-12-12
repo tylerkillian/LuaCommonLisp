@@ -4,6 +4,7 @@
 #include <ut_String.h>
 #include <String.h>
 #include <InputStream.h>
+#include <ut_InputStream.h>
 
 typedef struct {
 	char value[255];
@@ -84,7 +85,8 @@ int main() {
 	Object_delete(object);
 	InputStream_delete(inputStream);
 
-	ut_String_run_tests();
+	ut_String_runTests();
+	ut_InputStream_runTests();
 
 	return 0;
 }
