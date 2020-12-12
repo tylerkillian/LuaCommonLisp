@@ -5,6 +5,8 @@ typedef struct {
 	char *value;
 } String;
 
+#define sp(s) (s->value)
+
 String* String_new();
 void String_delete(String *s);
 

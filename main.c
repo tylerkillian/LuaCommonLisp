@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ut_String.h>
+#include <String.h>
 
 typedef struct {
 	char value[255];
@@ -82,49 +83,23 @@ int InputStream_readNextCharacter(InputStream *inputStream, char *result) {
 	return 1;
 }
 
-typedef struct {
-	char value[255];
-} Token;
-
-Token* Token_new() {
-	Token *result = NULL;
-
-	result = (Token*)malloc(sizeof(Token));
-	result->value[0] = '\0';
-	return result;
-}
-
-void Token_delete(Token *token) {
-	free(token);
-}
-
-void Token_addCharacter(Token *token, char character) {
-	int characterIndex = 0;
-
-	while (token->value[characterIndex] != '\0') {
-		characterIndex++;
-	}
-	token->value[characterIndex] = character;
-	token->value[characterIndex + 1] = '\0';
-}
-
-void convertTokenToObject(Token *token, Object *result) {
+void convertTokenToObject(String *token, Object *result) {
 	Symbol *symbol = NULL;
 	
 	symbol = Symbol_new();
-	strcpy(symbol->value, token->value);
+	strcpy(symbol->value, sp(token));
 	Object_set(result, SYMBOL, symbol);
 }
 
 int read(InputStream *inputStream, Object *result) {
 	char nextCharacter;
 
-	Token *token = Token_new();
+	String *token = String_new();
 	while (InputStream_readNextCharacter(inputStream, &nextCharacter) != 0) {
-		Token_addCharacter(token, nextCharacter);
+		sac(token, nextCharacter);
 		convertTokenToObject(token, result);
 	}
-	Token_delete(token);
+	String_delete(token);
 }
 
 int main() {
