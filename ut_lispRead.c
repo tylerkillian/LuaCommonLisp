@@ -9,6 +9,7 @@
 #include <Object.h>
 #include <Symbol.h>
 #include <lispRead.h>
+#include <assert.h>
 
 void test_readSymbol() {
         InputStream *inputStream;
@@ -17,7 +18,7 @@ void test_readSymbol() {
         inputStream = InputStream_new();
         object = Object_new();
         lispRead(inputStream, object);
-        printf("%s\n", ((Symbol*)(object->value))->value);
+        assert(strcmp(((Symbol*)(object->value))->value, "hello") == 0);
         Object_delete(object);
         InputStream_delete(inputStream);
 }
