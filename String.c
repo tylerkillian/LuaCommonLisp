@@ -1,3 +1,5 @@
+#include <stdlib.h>
+#include <string.h>
 #include <String.h>
 
 String* String_new() {
