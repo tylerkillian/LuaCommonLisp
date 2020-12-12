@@ -13,7 +13,7 @@ void _convertTokenToObject(String *token, Object *result) {
         Object_set(result, SYMBOL, symbol);
 }
 
-int read(InputStream *inputStream, Object *result) {
+void lispRead(InputStream *inputStream, Object *result) {
 	char nextCharacter;
 
 	String *token = String_new();
