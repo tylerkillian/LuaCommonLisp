@@ -3,6 +3,7 @@
 #include <string.h>
 #include <ut_String.h>
 #include <String.h>
+#include <InputStream.h>
 
 typedef struct {
 	char value[255];
@@ -51,36 +52,6 @@ void Object_delete(Object *object) {
 		}
 	}
 	free(object);
-}
-
-typedef struct {
-	int position;
-	int length;
-	char values[6];
-} InputStream;
-
-InputStream* InputStream_new() {
-	InputStream *result = NULL;
-
-	result = (InputStream*)malloc(sizeof(InputStream));
-	result->position = 0;
-	result->length = 5;
-	strcpy(result->values, "hello");
-	return result;
-}
-
-void InputStream_delete(InputStream *inputStream) {
-	free(inputStream);
-}
-
-int InputStream_readNextCharacter(InputStream *inputStream, char *result) {
-	if (inputStream->position >= inputStream->length) {
-		return 0;
-	}
-
-	*result = inputStream->values[inputStream->position];
-	inputStream->position++;
-	return 1;
 }
 
 void convertTokenToObject(String *token, Object *result) {
