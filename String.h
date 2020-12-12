@@ -1,4 +1,17 @@
 #ifndef _STRING_H_
 #define _STRING_H_
-#define sa(a, b) (String_appendCharacter(a, b))
+
+typedef struct {
+	char *value;
+} String;
+
+String* String_new();
+void String_delete(String *s);
+
+#define sac(a, b) (String_appendCharacter(a, b))
+void String_appendCharacter(String *a, char b);
+
+#define sec(a, b) (String_equalsCharacterArray(a, b))
+int String_equalsCharacterArray(String *a, char *b);
+
 #endif

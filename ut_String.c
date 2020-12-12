@@ -4,10 +4,11 @@
 void test_appendCharacter() {
 	String *s;
 	s = String_new();
-	sa(s, 'x');
-	sa(s, 'y');
-	sa(s, 'z');
-	assert(se(s, "xyz"));
+	sac(s, 'x');
+	sac(s, 'y');
+	sac(s, 'z');
+	assert(sec(s, "xyz"));
+	String_delete(s);
 }
 
 void ut_String_run_tests() {
