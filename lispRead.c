@@ -15,7 +15,12 @@ void _convertTokenToObject(String *token, Object *result) {
 
 _isConstituentCharacter(char c) {
 	if ((c >= 'a') && (c <= 'z')) {
+		return 1;
 	}
+	if ((c >= 'A') && (c <= 'Z')) {
+		return 1;
+	}
+	return 0;
 }
 
 void lispRead(InputStream *inputStream, Object *result) {
