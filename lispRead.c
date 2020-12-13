@@ -29,10 +29,11 @@ void lispRead(InputStream *inputStream, Object *result) {
 
 	token = String_new();
 	while (InputStream_readNextCharacter(inputStream, &nextCharacter) != END_OF_FILE) {
-		if (_isConstituentCharacter(nextCharacter) == 1) {
-			sac(token, nextCharacter);
+		if (_isWhitespace(nextCharacter) == 1) {
+			break;
 		}
-		else if (_isWhitespace(nextCharacter) == 1) {
+		else if (_isConstituentCharacter(nextCharacter) == 1) {
+			sac(token, nextCharacter);
 		}
 		else {
 			break;
