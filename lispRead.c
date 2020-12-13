@@ -13,13 +13,24 @@ void _convertTokenToObject(String *token, Object *result) {
         Object_set(result, SYMBOL, symbol);
 }
 
+_isConstituentCharacter(char c) {
+	if ((c >= 'a') && (c <= 'z')) {
+	}
+}
+
 void lispRead(InputStream *inputStream, Object *result) {
 	char nextCharacter;
+	String *token = NULL;
 
-	String *token = String_new();
-	while (InputStream_readNextCharacter(inputStream, &nextCharacter) != 0) {
-		sac(token, nextCharacter);
-		_convertTokenToObject(token, result);
+	token = String_new();
+	while (InputStream_readNextCharacter(inputStream, &nextCharacter) != END_OF_FILE) {
+		if (_isConstituentCharacter(nextCharacter) == 1) {
+			sac(token, nextCharacter);
+		}
+		else {
+			_convertTokenToObject(token, result);
+			break;
+		}
 	}
 	String_delete(token);
 }

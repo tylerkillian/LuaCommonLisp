@@ -17,12 +17,12 @@ void InputStream_delete(InputStream *inputStream) {
 	free(inputStream);
 }
 
-int InputStream_readNextCharacter(InputStream *inputStream, char *result) {
+ErrorType InputStream_readNextCharacter(InputStream *inputStream, char *result) {
 	if (inputStream->position >= inputStream->length) {
-		return 0;
+		return END_OF_FILE;
 	}
 
 	*result = inputStream->values[inputStream->position];
 	inputStream->position++;
-	return 1;
+	return SUCCESS;
 }
