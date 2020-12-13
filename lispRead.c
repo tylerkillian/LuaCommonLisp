@@ -13,7 +13,7 @@ void _convertTokenToObject(String *token, Object *result) {
         Object_set(result, SYMBOL, symbol);
 }
 
-_isConstituentCharacter(char c) {
+int _isConstituentCharacter(char c) {
 	if ((c >= 'a') && (c <= 'z')) {
 		return 1;
 	}
@@ -33,9 +33,9 @@ void lispRead(InputStream *inputStream, Object *result) {
 			sac(token, nextCharacter);
 		}
 		else {
-			_convertTokenToObject(token, result);
 			break;
 		}
 	}
+	_convertTokenToObject(token, result);
 	String_delete(token);
 }
