@@ -9,7 +9,7 @@ typedef enum {
 typedef struct {
 	int position;
 	int length;
-	char values[6];
+	char values[8];
 } InputStream;
 
 InputStream* InputStream_new();

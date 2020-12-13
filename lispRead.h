@@ -3,6 +3,6 @@
 #include <Object.h>
 #include <InputStream.h>
 
-void lispRead(InputStream *inputStream, Object *result);
+int lispRead(InputStream *inputStream, Object *result);
 
 #endif

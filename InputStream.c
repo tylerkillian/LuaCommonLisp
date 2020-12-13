@@ -8,8 +8,8 @@ InputStream* InputStream_new() {
 
 	result = (InputStream*)malloc(sizeof(InputStream));
 	result->position = 0;
-	result->length = 5;
-	strcpy(result->values, "hello");
+	result->length = 7;
+	strcpy(result->values, " hello ");
 	return result;
 }
 
