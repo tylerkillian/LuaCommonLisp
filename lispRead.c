@@ -32,6 +32,8 @@ void lispRead(InputStream *inputStream, Object *result) {
 		if (_isConstituentCharacter(nextCharacter) == 1) {
 			sac(token, nextCharacter);
 		}
+		else if (_isWhitespace(nextCharacter) == 1) {
+		}
 		else {
 			break;
 		}
