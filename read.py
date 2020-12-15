@@ -1,23 +1,20 @@
-def _is_whitespace(c):
-    if c == ' ':
-        return True
-    return False
-
-def _is_constituent_character(c):
-    if c > 'a' and c  < 'z':
-        return True
-    if c > 'A' and c  < 'Z':
-        return True
-    return False
+from read_common import _is_whitespace, _is_macro_character, _get_macro_reader, _is_constituent_character
+from read_s_expression import read_s_expression
 
 def read(input_stream):
     token = ''
     while not input_stream.at_eof():
-        next_character = input_stream.get_next_character()
-        if _is_whitespace(next_character) and token == '':
+        x = input_stream.get_x()
+        if _is_whitespace(x) and token == '':
             continue
-        elif _is_constituent_character(next_character):
-            token += next_character
+        elif _is_macro_character(x):
+            macro_reader = _get_macro_reader(x)
+            macro_reader_result = macro_reader(x, input_stream)
+            if macro_reader_result:
+                return macro_reader_result
+            continue
+        elif _is_constituent_character(x):
+            token += x
         else:
             return token
     return
