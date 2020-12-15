@@ -9,6 +9,7 @@ def test_read_symbol():
 def test_read_s_expression():
     input_stream = InputStream(' (+ abc def) ')
     result = read(input_stream)
+    print(result)
     assert result == ['+', 'abc' 'def']
 
 def run_tests():

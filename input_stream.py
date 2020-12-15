@@ -11,3 +11,8 @@ class InputStream:
         result = self.data[0]
         self.data = self.data[1:]
         return result
+    def prepend(self, x):
+        if not self.data:
+            self.data = x
+        else:
+            self.data = x + self.data
