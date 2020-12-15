@@ -5,13 +5,13 @@ class InputStream:
         if len(self.data) == 0:
             return True
         return False
-    def get_next_character(self):
+    def read(self):
         if not self.data:
             return
         result = self.data[0]
         self.data = self.data[1:]
         return result
-    def prepend(self, x):
+    def unread(self, x):
         if not self.data:
             self.data = x
         else:
