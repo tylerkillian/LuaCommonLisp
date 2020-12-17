@@ -11,6 +11,14 @@ def test_read_s_expression():
     result = read(input_stream)
     assert result == ['+', 'abc', 'def']
 
+def test_read_quote():
+    input_stream = InputStream("'a")
+    result = read(input_stream)
+    assert result == {
+        'form': 'quote',
+        'arg': 'a'
+    }
+
 def test_read_backquote():
     input_stream = InputStream(' ` (+ abc def) ')
     result = read(input_stream)
@@ -22,4 +30,5 @@ def test_read_backquote():
 def run_tests():
     test_read_symbol()
     test_read_s_expression()
+    test_read_quote()
     test_read_backquote()

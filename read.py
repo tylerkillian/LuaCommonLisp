@@ -4,7 +4,7 @@ def _is_whitespace(x):
     return False
 
 def _is_macro_character(x):
-    if x in '()`':
+    if x in "()'`":
         return True
     return False
 
@@ -32,6 +32,12 @@ def _read_s_expression(x, input_stream):
             if next_token:
                 result.append(next_token)
 
+def _read_quote(x, input_stream):
+    return {
+        'form': 'quote',
+        'arg': read(input_stream)
+    }
+
 def _read_backquote(x, input_stream):
     return {
         'form': 'backquote',
@@ -41,12 +47,19 @@ def _read_backquote(x, input_stream):
 def _get_macro_reader(x):
     if x == '(':
         return _read_s_expression
+    elif x == "'":
+        return _read_quote
     elif x == '`':
         return _read_backquote
 
 def read(input_stream):
     token = ''
-    while not input_stream.at_eof():
+    while True:
+        if input_stream.at_eof():
+            if token:
+                return token
+            return
+
         x = input_stream.read()
         if _is_whitespace(x) and token == '':
             continue
@@ -63,4 +76,3 @@ def read(input_stream):
             token += x
         else:
             return token
-    return
