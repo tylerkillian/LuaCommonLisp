@@ -4,12 +4,24 @@ def _is_whitespace(x):
     return False
 
 def _is_macro_character(x):
-    if x in "()'`":
+    if x in "()'`,":
         return True
     return False
 
+def _get_macro_reader(x):
+    if x == '(':
+        return _read_s_expression
+    elif x == "'":
+        return _read_quote
+    elif x == '`':
+        return _read_backquote
+    elif x == ',':
+        return _read_comma
+
 def _is_constituent_character(x):
     if x in '+-':
+        return True
+    if x in '0123456789':
         return True
     if x >= 'a' and x  <= 'z':
         return True
@@ -44,13 +56,18 @@ def _read_backquote(x, input_stream):
         'arg': read(input_stream)
     }
 
-def _get_macro_reader(x):
-    if x == '(':
-        return _read_s_expression
-    elif x == "'":
-        return _read_quote
-    elif x == '`':
-        return _read_backquote
+def _read_comma(x, input_stream):
+    form = 'comma'
+    if not input_stream.at_eof():
+        y = input_stream.read()
+        if y == '@':
+            form = 'splice'
+        else:
+            input_stream.unread(y)
+    return {
+        'form': form,
+        'arg': read(input_stream)
+    }
 
 def read(input_stream):
     token = ''

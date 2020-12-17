@@ -27,8 +27,40 @@ def test_read_backquote():
         'arg': ['+', 'abc', 'def']
     }
 
+def test_read_comma():
+    input_stream = InputStream('`(+ a ,b))')
+    result = read(input_stream)
+    assert result == {
+        'form': 'backquote',
+        'arg': [
+            '+',
+            'a',
+            {
+                'form': 'comma',
+                'arg': 'b'
+            }
+        ]
+    }
+
+def test_read_splice():
+    input_stream = InputStream('`(+ a ,@(b c))')
+    result = read(input_stream)
+    assert result == {
+        'form': 'backquote',
+        'arg': [
+            '+',
+            'a',
+            {
+                'form': 'splice',
+                'arg': ['b', 'c']
+            }
+        ]
+    }
+
 def run_tests():
     test_read_symbol()
     test_read_s_expression()
     test_read_quote()
     test_read_backquote()
+    test_read_comma()
+    test_read_splice()
