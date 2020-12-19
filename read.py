@@ -10,7 +10,6 @@ def read(input_stream):
             if token:
                 return token
             return
-
         x = input_stream.read()
         if is_whitespace(x) and token == '':
             continue
