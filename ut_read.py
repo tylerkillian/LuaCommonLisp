@@ -1,12 +1,5 @@
 from input_stream import InputStream
-import read
-import read_macro
-
-read_macro.read = read.read
-read.is_macro_character = read_macro.is_macro_character
-read.get_macro_reader = read_macro.get_macro_reader
-
-read = read.read
+from standard_read_definition import read
 
 def test_read_symbol():
     input_stream = InputStream(' hello ')
