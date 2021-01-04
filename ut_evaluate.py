@@ -1,7 +1,11 @@
 from evaluate import evaluate
 
-def test_():
-    pass
+ENVIRONMENT = {
+    'a': 3
+}
+
+def test_variable_evaluation():
+    assert evaluate(ENVIRONMENT, 'a') == 3
 
 def run_tests():
-    test_()
+    test_variable_evaluation()

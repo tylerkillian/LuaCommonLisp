@@ -1,5 +1,5 @@
 def is_symbol(form):
-    if form['type'] == 'symbol':
+    if type(form) == str:
         return True
     else:
         return False
