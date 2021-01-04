@@ -1,5 +1,5 @@
 class InputStream:
-    def __init__(self, data):
+    def __init__(self, data=''):
         self.data = data
     def at_eof(self):
         if len(self.data) == 0:
