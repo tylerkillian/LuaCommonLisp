@@ -16,3 +16,5 @@ class InputStream:
             self.data = x
         else:
             self.data = x + self.data
+    def append(self, data_to_append):
+        self.data += data_to_append
