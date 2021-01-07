@@ -41,7 +41,8 @@ def test_read_comma():
                     'form': 'comma',
                     'arg': 'b'
                 }
-        ]}
+            ]
+        }
     }
 
 def test_read_splice():
@@ -49,14 +50,20 @@ def test_read_splice():
     result = read(input_stream)
     assert result == {
         'form': 'backquote',
-        'arg': [
-            '+',
-            'a',
-            {
-                'form': 'splice',
-                'arg': ['b', 'c']
-            }
-        ]
+        'arg': {
+            'form': 'list',
+            'elements': [
+                '+',
+                'a',
+                {
+                    'form': 'splice',
+                    'arg': {
+                        'form': 'list',
+                        'elements': ['b', 'c']
+                    }
+                }
+            ]
+        }
     }
 
 def run_tests():
