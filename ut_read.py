@@ -1,22 +1,23 @@
 from input_stream import InputStream
 from standard_read_definition import read
+from symbol import Symbol
 
 def test_read_symbol():
     input_stream = InputStream(' hello ')
     result = read(input_stream)
-    assert result == 'hello'
+    assert result == Symbol('hello')
 
 def test_read_s_expression():
     input_stream = InputStream(' (+ abc def) ')
     result = read(input_stream)
-    assert result == {'form': 'list', 'elements': ['+', 'abc', 'def']}
+    assert result == {'form': 'list', 'elements': [Symbol('+'), Symbol('abc'), Symbol('def')]}
 
 def test_read_quote():
     input_stream = InputStream("'a")
     result = read(input_stream)
     assert result == {
         'form': 'quote',
-        'arg': 'a'
+        'arg': Symbol('a')
     }
 
 def test_read_backquote():
@@ -24,7 +25,7 @@ def test_read_backquote():
     result = read(input_stream)
     assert result == {
         'form': 'backquote',
-        'arg': {'form': 'list', 'elements': ['+', 'abc', 'def']}
+        'arg': {'form': 'list', 'elements': [Symbol('+'), Symbol('abc'), Symbol('def')]}
     }
 
 def test_read_comma():
@@ -35,11 +36,11 @@ def test_read_comma():
         'arg': {
             'form': 'list', 
             'elements': [
-                '+',
-                'a',
+                Symbol('+'),
+                Symbol('a'),
                 {
                     'form': 'comma',
-                    'arg': 'b'
+                    'arg': Symbol('b')
                 }
             ]
         }
@@ -53,13 +54,13 @@ def test_read_splice():
         'arg': {
             'form': 'list',
             'elements': [
-                '+',
-                'a',
+                Symbol('+'),
+                Symbol('a'),
                 {
                     'form': 'splice',
                     'arg': {
                         'form': 'list',
-                        'elements': ['b', 'c']
+                        'elements': [Symbol('b'), Symbol('c')]
                     }
                 }
             ]

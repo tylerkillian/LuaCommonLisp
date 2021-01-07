@@ -1,4 +1,5 @@
 from character import is_whitespace, is_constituent_character
+from symbol import Symbol
 
 is_macro_character = None
 get_macro_reader = None
@@ -8,7 +9,7 @@ def read(input_stream):
     while True:
         if input_stream.at_eof():
             if token:
-                return token
+                return Symbol(token)
             return
         x = input_stream.read()
         if is_whitespace(x) and token == '':
@@ -21,8 +22,8 @@ def read(input_stream):
             continue
         elif is_macro_character(x) and token != '':
             input_stream.unread(x)
-            return token
+            return Symbol(token)
         elif is_constituent_character(x):
             token += x
         else:
-            return token
+            return Symbol(token)
