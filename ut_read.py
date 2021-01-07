@@ -39,8 +39,8 @@ def test_read_comma():
                 'a',
                 {
                     'form': 'comma',
-                'arg': 'b'
-            }
+                    'arg': 'b'
+                }
         ]}
     }
 
