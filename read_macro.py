@@ -3,7 +3,10 @@ from character import is_whitespace, is_constituent_character
 read = None
 
 def _read_s_expression(x, input_stream):
-    result = []
+    result = {
+        'form': 'list',
+        'elements': []
+    }
     next_token = None
     while not input_stream.at_eof():
         x = input_stream.read()
@@ -15,7 +18,7 @@ def _read_s_expression(x, input_stream):
             input_stream.unread(x)
             next_token = read(input_stream)
             if next_token:
-                result.append(next_token)
+                result['elements'].append(next_token)
 
 def _read_quote(x, input_stream):
     return {

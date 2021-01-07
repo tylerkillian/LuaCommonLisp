@@ -9,7 +9,7 @@ def test_read_symbol():
 def test_read_s_expression():
     input_stream = InputStream(' (+ abc def) ')
     result = read(input_stream)
-    assert result == ['+', 'abc', 'def']
+    assert result == {'form': 'list', 'elements': ['+', 'abc', 'def']}
 
 def test_read_quote():
     input_stream = InputStream("'a")
@@ -24,7 +24,7 @@ def test_read_backquote():
     result = read(input_stream)
     assert result == {
         'form': 'backquote',
-        'arg': ['+', 'abc', 'def']
+        'arg': {'form': 'list', 'elements': ['+', 'abc', 'def']}
     }
 
 def test_read_comma():
@@ -32,14 +32,16 @@ def test_read_comma():
     result = read(input_stream)
     assert result == {
         'form': 'backquote',
-        'arg': [
-            '+',
-            'a',
-            {
-                'form': 'comma',
+        'arg': {
+            'form': 'list', 
+            'elements': [
+                '+',
+                'a',
+                {
+                    'form': 'comma',
                 'arg': 'b'
             }
-        ]
+        ]}
     }
 
 def test_read_splice():
