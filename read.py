@@ -3,6 +3,7 @@ from symbol import Symbol
 
 is_macro_character = None
 get_macro_reader = None
+read_symbol = None
 
 def read(input_stream):
     token = ''
@@ -24,6 +25,6 @@ def read(input_stream):
             input_stream.unread(x)
             return Symbol(token)
         elif is_constituent_character(x):
-            token += x
+            return read_symbol(x,  input_stream)
         else:
             return Symbol(token)
