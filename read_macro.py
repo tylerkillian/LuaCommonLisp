@@ -2,23 +2,26 @@ from character import is_whitespace, is_constituent_character
 
 read = None
 
-def _read_s_expression(x, input_stream):
-    result = {
+def Llist(elements):
+    return {
         'form': 'list',
-        'elements': []
+        'elements': elements
     }
+
+def _read_s_expression(x, input_stream):
+    elements = []
     next_token = None
     while not input_stream.at_eof():
         x = input_stream.read()
         if x == ')':
-            return result
+            return Llist(elements)
         elif is_whitespace(x):
             continue
         else:
             input_stream.unread(x)
             next_token = read(input_stream)
             if next_token:
-                result['elements'].append(next_token)
+                elements.append(next_token)
 
 def _read_quote(x, input_stream):
     return {
