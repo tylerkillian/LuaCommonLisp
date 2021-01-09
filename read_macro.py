@@ -32,10 +32,19 @@ def Quote(arg):
 def _read_quote(x, input_stream):
     return Quote(read(input_stream))
 
-def _read_backquote(x, input_stream):
+def Backquote(arg):
     return {
         'form': 'backquote',
-        'arg': read(input_stream)
+        'arg': arg
+    }
+
+def _read_backquote(x, input_stream):
+    return Backquote(read(input_stream))
+
+def Comma(arg):
+    return {
+        'form': 'comma',
+        'arg': arg
     }
 
 def _read_comma(x, input_stream):
@@ -46,10 +55,7 @@ def _read_comma(x, input_stream):
             form = 'splice'
         else:
             input_stream.unread(y)
-    return {
-        'form': form,
-        'arg': read(input_stream)
-    }
+    return Comma(read(input_stream))
 
 def get_macro_reader(x):
     if x == '(':
