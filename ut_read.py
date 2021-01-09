@@ -1,7 +1,7 @@
 from input_stream import InputStream
 from standard_read_definition import read
 from symbol import Symbol
-from read_macro import Llist, Quote, Backquote, Comma
+from read_macro import Llist, Quote, Backquote, Comma, Splice
 
 def test_read_symbol():
     input_stream = InputStream(' hello ')
