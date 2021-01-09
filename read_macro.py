@@ -23,11 +23,14 @@ def _read_s_expression(x, input_stream):
             if next_token:
                 elements.append(next_token)
 
-def _read_quote(x, input_stream):
+def Quote(arg):
     return {
         'form': 'quote',
-        'arg': read(input_stream)
+        'arg': arg
     }
+
+def _read_quote(x, input_stream):
+    return Quote(read(input_stream))
 
 def _read_backquote(x, input_stream):
     return {

@@ -1,6 +1,7 @@
 from input_stream import InputStream
 from standard_read_definition import read
 from symbol import Symbol
+from read_macro import Llist, Quote
 
 def test_read_symbol():
     input_stream = InputStream(' hello ')
@@ -10,15 +11,12 @@ def test_read_symbol():
 def test_read_s_expression():
     input_stream = InputStream(' (+ abc def) ')
     result = read(input_stream)
-    assert result == {'form': 'list', 'elements': [Symbol('+'), Symbol('abc'), Symbol('def')]}
+    assert result == Llist([Symbol('+'), Symbol('abc'), Symbol('def')])
 
 def test_read_quote():
     input_stream = InputStream("'a")
     result = read(input_stream)
-    assert result == {
-        'form': 'quote',
-        'arg': Symbol('a')
-    }
+    assert result == Quote(Symbol('a'))
 
 def test_read_backquote():
     input_stream = InputStream(' ` (+ abc def) ')
