@@ -7,24 +7,16 @@ read_symbol = None
 
 def read(input_stream):
     token = ''
-    while True:
-        if input_stream.at_eof():
-            if token:
-                return Symbol(token)
-            return
+    while not input_stream.at_eof():
         x = input_stream.read()
-        if is_whitespace(x) and token == '':
+        if is_whitespace(x):
             continue
-        elif is_macro_character(x) and token == '':
+        elif is_macro_character(x):
             macro_reader = get_macro_reader(x)
             macro_reader_result = macro_reader(x, input_stream)
             if macro_reader_result:
                 return macro_reader_result
             continue
-        elif is_macro_character(x) and token != '':
-            input_stream.unread(x)
-            return Symbol(token)
         elif is_constituent_character(x):
             return read_symbol(x,  input_stream)
-        else:
-            return Symbol(token)
+        assert False
