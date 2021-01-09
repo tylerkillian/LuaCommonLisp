@@ -26,12 +26,12 @@ def test_read_backquote():
 def test_read_comma():
     input_stream = InputStream('`(+ a ,b))')
     result = read(input_stream)
-    assert result == Backquote(Llist([Symbol('+'), Symbol('a'), Comma('comma', Symbol('b'))]))
+    assert result == Backquote(Llist([Symbol('+'), Symbol('a'), Comma(Symbol('b'))]))
 
 def test_read_splice():
     input_stream = InputStream('`(+ a ,@(b c))')
     result = read(input_stream)
-    assert result == Backquote(Llist([Symbol('+'), Symbol('a'), Comma('splice', Llist([Symbol('b'), Symbol('c')]))]))
+    assert result == Backquote(Llist([Symbol('+'), Symbol('a'), Splice(Llist([Symbol('b'), Symbol('c')]))]))
 
 def run_tests():
     test_read_symbol()
