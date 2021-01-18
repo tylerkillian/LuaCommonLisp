@@ -33,6 +33,11 @@ def test_read_splice():
     result = read(input_stream)
     assert result == Backquote(Llist([Symbol('+'), Symbol('a'), Splice(Llist([Symbol('b'), Symbol('c')]))]))
 
+def test_read_s_expression_with_cons():
+    input_stream = InputStream(' (a b . c) ')
+    result = read(input_stream)
+    assert result == Llist([Symbol('a'), Symbol('b'), Symbol('c')])
+
 def run_tests():
     test_read_symbol()
     test_read_s_expression()
@@ -40,3 +45,4 @@ def run_tests():
     test_read_backquote()
     test_read_comma()
     test_read_splice()
+    test_read_s_expression_with_cons()
