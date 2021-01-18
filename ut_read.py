@@ -11,7 +11,7 @@ def test_read_symbol():
 def test_read_s_expression():
     input_stream = InputStream(' (+ abc def) ')
     result = read(input_stream)
-    assert result == Llist([Symbol('+'), Symbol('abc'), Symbol('def')])
+    assert result == Llist([Symbol('+'), Symbol('abc'), Symbol('def'), None])
 
 def test_read_quote():
     input_stream = InputStream("'a")
@@ -21,17 +21,17 @@ def test_read_quote():
 def test_read_backquote():
     input_stream = InputStream(' ` (+ abc def) ')
     result = read(input_stream)
-    assert result == Backquote(Llist([Symbol('+'), Symbol('abc'), Symbol('def')]))
+    assert result == Backquote(Llist([Symbol('+'), Symbol('abc'), Symbol('def'), None]))
 
 def test_read_comma():
     input_stream = InputStream('`(+ a ,b))')
     result = read(input_stream)
-    assert result == Backquote(Llist([Symbol('+'), Symbol('a'), Comma(Symbol('b'))]))
+    assert result == Backquote(Llist([Symbol('+'), Symbol('a'), Comma(Symbol('b')), None]))
 
 def test_read_splice():
     input_stream = InputStream('`(+ a ,@(b c))')
     result = read(input_stream)
-    assert result == Backquote(Llist([Symbol('+'), Symbol('a'), Splice(Llist([Symbol('b'), Symbol('c')]))]))
+    assert result == Backquote(Llist([Symbol('+'), Symbol('a'), Splice(Llist([Symbol('b'), Symbol('c'), None])), None]))
 
 def test_read_s_expression_with_cons():
     input_stream = InputStream(' (a b . c) ')

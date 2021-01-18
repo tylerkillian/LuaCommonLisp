@@ -38,10 +38,10 @@ def _read_s_expression_cons_part(input_stream):
             assert next_token
             return next_token
 
-def _read_s_expression(x, input_stream):
+def _read_s_expression(_, input_stream):
     elements = _read_s_expression_list_part(input_stream)
     if elements[-1]:
-        _readd_s_expression_cons_part(input_stream)
+        elements.append(_read_s_expression_cons_part(input_stream))
     return Llist(elements)
 
 def Quote(arg):
