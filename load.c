@@ -2,25 +2,35 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <safe.h>
+#include <str.h>
 
 int getFileLength(char *filename) {
-	int result = 0;
-	FILE *input = fopen(filename, "r");
-	char c = fgetc(input);
+	int result;
+	char c;
+	FILE *input;
+
+	result = 0;
+
+	input = fopen(filename, "r");
+	c = fgetc(input);
 	while (c != EOF) {
 		c = fgetc(input);
 		result++;
 	}
 	fclose(input);
+
 	return result;
 }
 
 char* readFile(char *filename) {
-	int length = getFileLength(filename);
-	char *result = (char*)safe_malloc((length + 1) * sizeof(char));
+	int length, offset;
+	char *result;
+	FILE *input;
 
-	FILE *input = fopen(filename, "r");
-	int offset = 0;
+	length = getFileLength(filename);
+	result = (char*)safe_malloc((length + 1) * sizeof(char));
+
+	input = fopen(filename, "r");
 	for (offset = 0; offset < length; offset++) {
 		result[offset] = fgetc(input);
 	}
@@ -31,7 +41,9 @@ char* readFile(char *filename) {
 }
 
 void load(char *filename) {
-	char *contents = readFile(filename);
+	char *contents;
+
+	contents = readFile(filename);
 	printf("contents = %s", contents);
 	safe_free(contents);
 }

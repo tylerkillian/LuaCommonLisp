@@ -3,56 +3,51 @@
 #include <assert.h>
 #include <boolean.h>
 #include <stdlib.h>
+#include <string.h>
 
 void **g_blocks = NULL;
 int g_num_blocks = 0;
 
 void _add_g_block(void *ptr) {
-	int index = 0;
-	void **old_blocks = g_blocks;
+	void **blocks;
 
-	g_blocks = (void**)malloc((g_num_blocks + 1) * sizeof(void*));
-	for (index = 0; index < g_num_blocks; index++) {
-		g_blocks[index] = old_blocks[index];
+	blocks = (void**)malloc((g_num_blocks + 1) * sizeof(void*));
+	memcpy(blocks, g_blocks, g_num_blocks * sizeof(void*));
+	blocks[g_num_blocks] = ptr;
+
+	if (g_blocks != NULL) {
+		free(g_blocks);
 	}
-	g_blocks[g_num_blocks] = ptr;
 
+	g_blocks = blocks;
 	g_num_blocks++;
-
-	if (old_blocks != NULL) {
-		free(old_blocks);
-	}
 }
 
 void _remove_g_block(void *ptr) {
-	int old_index = 0, new_index = 0;
-	b found = FALSE;
-	void **old_blocks = g_blocks;
+	int index;
+	void **blocks;
 
-	for (old_index = 0; old_index < g_num_blocks; old_index++) {
-		if (old_blocks[old_index] == ptr) {
-			found = TRUE;
+	index = -1;
+	for (index = 0; index < g_num_blocks; index++) {
+		if (g_blocks[index] == ptr) {
 			break;
 		}
 	}
-	assert(found);
+	assert(index >= 0);
 
 	if (g_num_blocks > 1) {
-		g_blocks = (void**)malloc((g_num_blocks - 1) * sizeof(void*));
+		blocks = (void**)malloc((g_num_blocks - 1) * sizeof(void*));
 	} else {
-		g_blocks = NULL;
+		blocks = NULL;
 	}
 
-	for (old_index = 0; old_index < g_num_blocks; old_index++) {
-		if (old_blocks[old_index] != ptr) {
-			g_blocks[new_index] = old_blocks[old_index];
-			new_index++;
-		}
-	}
+	memcpy(blocks, g_blocks, index * sizeof(void*));
+	memcpy(blocks + index, g_blocks + index + 1, (g_num_blocks - index - 1) * sizeof(void*));
 
+	free(g_blocks);
+
+	g_blocks = blocks;
 	g_num_blocks--;
-
-	free(old_blocks);
 }
 
 void safe_assert_empty() {
@@ -61,7 +56,9 @@ void safe_assert_empty() {
 }
 
 void* safe_malloc(size_t size) {
-	void *result = malloc(size);
+	void *result;
+
+	result = malloc(size);
 	_add_g_block(result);
 	return result;
 }

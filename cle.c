@@ -1,10 +1,5 @@
-#include <load.h>
-#include <safe.h>
+#include <cle.h>
 
-int main(int argc, char **argv) {
-	char *filename = argv[1];
-	load(filename);
-
-	safe_assert_empty();
+int cle_main() {
 	return 0;
 }
