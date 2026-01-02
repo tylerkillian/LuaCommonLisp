@@ -1,19 +1,18 @@
 #include <assert.h>
-#include <load.h>
+#include <cl.h>
 #include <safe.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <ut_str.h>
 
 int main(int argc, char **argv) {
-	char filename[] = "run-all-tests.lsp";
+	char *filename;
 
-	assert(argc == 1);
-	assert(argv[0] != NULL);
+	assert(argc == 2);
+	filename = argv[1];
+        cl_main(filename);
 
 	ut_str_runTests();
-
-        load(filename);
 
         safe_assert_empty();
 	return 0;

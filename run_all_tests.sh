@@ -11,6 +11,6 @@ COMPILERS=(
 for compiler in "${COMPILERS[@]}"
 do
 	$compiler -pedantic -Wall -Wextra -Werror -I./ -o runAllTests *.c
-	./runAllTests
+	./runAllTests run-all-tests.lsp
 	rm runAllTests
 done

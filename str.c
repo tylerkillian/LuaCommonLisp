@@ -1,6 +1,7 @@
-#include <str.h>
+#include <assert.h>
 #include <safe.h>
 #include <stdlib.h>
+#include <str.h>
 #include <string.h>
 
 #include <stdio.h>
@@ -32,6 +33,12 @@ void str_append(str *s, char c) {
 	safe_free(s->v);
 
 	s->v = v;
+}
+
+char str_getCharacter(str *s, int index) {
+	assert(index >= 0);
+	assert(index < (int)strlen(s->v));
+	return s->v[index];
 }
 
 void str_free(str *s) {

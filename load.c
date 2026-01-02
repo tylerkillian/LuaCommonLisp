@@ -4,46 +4,38 @@
 #include <safe.h>
 #include <str.h>
 
-int getFileLength(char *filename) {
-	int result;
+str* readFile(char *filename) {
 	char c;
+	str *result;
 	FILE *input;
 
-	result = 0;
+	result = str_alloc();
 
 	input = fopen(filename, "r");
 	c = fgetc(input);
 	while (c != EOF) {
+		str_append(result, c);
 		c = fgetc(input);
-		result++;
 	}
-	fclose(input);
-
-	return result;
-}
-
-char* readFile(char *filename) {
-	int length, offset;
-	char *result;
-	FILE *input;
-
-	length = getFileLength(filename);
-	result = (char*)safe_malloc((length + 1) * sizeof(char));
-
-	input = fopen(filename, "r");
-	for (offset = 0; offset < length; offset++) {
-		result[offset] = fgetc(input);
-	}
-	result[length] = '\0';
 	fclose(input);
 
 	return result;
 }
 
 void load(char *filename) {
-	char *contents;
+	int index;
+	char character;
+	str *contents;
 
 	contents = readFile(filename);
-	printf("contents = %s", contents);
-	safe_free(contents);
+
+	for (index = 0; index < str_getLength(contents); index++) {
+		character = str_getCharacter(contents, index);
+		printf("%c\n", character);
+		if (character == '(') {
+			printf("  got parenthesis\n");
+		}
+	}
+
+	str_free(contents);
 }
