@@ -11,6 +11,30 @@ def is_whitespace(x):
 def is_macro(x):
     return x in "()"
 
+def see_next_character(stream):
+    save = ""
+    x = Stream.get_next_character(stream)
+    save += x
+    while is_whitespace(x):
+        x = Stream.get_next_character(stream)
+        save += x
+    result = x
+    for x in save[::-1]:
+        Stream.prepend(stream, x)
+    return result
+
+def read_s_expression(stream, x):
+    print("read_s_expression got", x)
+    exit()
+    result = []
+    while not see_next_character(stream) != ")":
+        result.append(read(None, stream))
+    return result
+
+def get_reader_macro_function(x):
+    if x == "(":
+        return read_s_expression
+
 def is_constituent(x):
     return not is_whitespace(x)
 

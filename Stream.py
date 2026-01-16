@@ -1,19 +1,21 @@
 def create(contents):
     return {
         "contents": contents,
-        "offset": 0
     }
 
 def get_next_character(stream):
-    if stream["offset"] < len(stream["contents"]):
-        result = stream["contents"][stream["offset"]]
-        stream["offset"] += 1
+    if stream["contents"]:
+        result = stream["contents"][0]
+        stream["contents"] = stream["contents"][1:]
         return result
     else:
         return
 
+def prepend(stream, x):
+    stream["contents"] = x + stream["contents"]
+
 def at_end_of_file(stream):
-    if stream["offset"] >= len(stream["contents"]):
+    if not stream["contents"]:
         return True
     else:
         return False
