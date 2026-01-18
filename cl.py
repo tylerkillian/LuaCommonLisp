@@ -1,5 +1,6 @@
 import Stream
 import sys
+import read_s_expression
 
 def get_file_contents(filename):
     with open(filename) as f:
@@ -23,17 +24,11 @@ def see_next_character(stream):
         Stream.prepend(stream, x)
     return result
 
-def read_s_expression(stream, x):
-    print("read_s_expression got", x)
-    exit()
-    result = []
-    while not see_next_character(stream) != ")":
-        result.append(read(None, stream))
-    return result
-
 def get_reader_macro_function(x):
+    def _read_s_expression(stream, x):
+        return read_s_expression.read_s_expression(read, stream, x)
     if x == "(":
-        return read_s_expression
+        return _read_s_expression
 
 def is_constituent(x):
     return not is_whitespace(x)
