@@ -11,6 +11,12 @@ def get_next_character(stream):
     else:
         return
 
+def see_next_character(stream):
+    if stream["contents"]:
+        return stream["contents"][0]
+    else:
+        return
+
 def prepend(stream, x):
     stream["contents"] = x + stream["contents"]
 

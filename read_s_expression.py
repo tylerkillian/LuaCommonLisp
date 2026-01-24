@@ -1,31 +1,18 @@
+from character import is_whitespace, is_macro
 import Stream
 import sys
 
-def is_whitespace(x):
-    return x in " \n"
-
-def is_macro(x):
-    return x in "()"
-
-def see_next_character(stream):
-    save = ""
-    x = Stream.get_next_character(stream)
-    save += x
+def skip_whitespace(stream):
+    x = Stream.see_next_character(stream)
     while is_whitespace(x):
-        x = Stream.get_next_character(stream)
-        save += x
-    result = x
-    for x in save[::-1]:
-        Stream.prepend(stream, x)
-    return result
+        Stream.get_next_character(stream)
+        x = Stream.see_next_character(stream)
 
 def read_s_expression(read, stream, x):
-    print("read_s_expression got", x)
-    print(see_next_character(stream))
-    print(see_next_character(stream))
     result = []
-    while see_next_character(stream) != ")":
-        print("looping")
+    skip_whitespace(stream)
+    while Stream.see_next_character(stream) != ")":
         result.append(read(None, stream))
+        skip_whitespace(stream)
     return result
 
