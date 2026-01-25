@@ -1,10 +1,11 @@
 import read_token
-import Stream
+import streams
 
 def run_tests():
-    stream = Stream.create("a")
+    stream = streams.create("a")
     result = read_token.read_token(stream)
     assert result == "a" 
 
-    print("test_read_token : SUCCESS")
-
+    stream = streams.create("abc")
+    result = read_token.read_token(stream)
+    assert result == "abc"

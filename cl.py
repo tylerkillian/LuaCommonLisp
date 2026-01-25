@@ -1,5 +1,5 @@
 import read
-import Stream
+import streams
 import sys
 
 def get_file_contents(filename):
@@ -8,7 +8,7 @@ def get_file_contents(filename):
 
 def main(filename):
     contents = get_file_contents(filename)
-    stream = Stream.create(contents)
+    stream = streams.create(contents)
     code = read.read(None, stream)
     while code:
         print("code =", code)

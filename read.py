@@ -1,7 +1,7 @@
 import read_s_expression
 import read_string
 import read_token
-import Stream
+import streams
 from character import is_whitespace, is_macro, is_constituent
 
 def get_reader_macro_function(x):
@@ -13,7 +13,7 @@ def get_reader_macro_function(x):
         return read_string.read_string
 
 def read(environment, stream):
-    x = Stream.get_next_character(stream)
+    x = streams.get_next_character(stream)
     while x:
         if is_whitespace(x):
             continue
@@ -27,4 +27,4 @@ def read(environment, stream):
         elif is_constituent(x):
             token = x + read_token.read_token(stream)
             return token
-        x = Stream.get_next_character(stream)
+        x = streams.get_next_character(stream)

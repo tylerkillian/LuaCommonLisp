@@ -1,13 +1,11 @@
 import read
-import Stream
+import streams
 
 def run_tests():
-    stream = Stream.create("()")
+    stream = streams.create("()")
     result = read.read(None, stream)
     assert result == []
 
-    stream = Stream.create("(a)")
+    stream = streams.create("(a)")
     result = read.read(None, stream)
     assert result == ["a"]
-
-    print("test_read : SUCCESS")
