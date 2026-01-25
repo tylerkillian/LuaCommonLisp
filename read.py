@@ -1,4 +1,5 @@
 import read_s_expression
+import read_string
 import read_token
 import Stream
 from character import is_whitespace, is_macro, is_constituent
@@ -8,6 +9,8 @@ def get_reader_macro_function(x):
         return read_s_expression.read_s_expression(read, stream, x)
     if x == "(":
         return _read_s_expression
+    elif x == "(":
+        return read_string.read_string
 
 def read(environment, stream):
     x = Stream.get_next_character(stream)
